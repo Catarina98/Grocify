@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GrocifyApp.BLL\GrocifyApp.BLL.csproj" />
     <ProjectReference Include="..\grocifyapp.client\GrocifyApp.UI.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
