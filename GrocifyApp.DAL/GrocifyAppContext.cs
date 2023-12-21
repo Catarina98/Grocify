@@ -9,6 +9,7 @@ namespace GrocifyApp.DAL
         public GrocifyAppContext(DbContextOptions<GrocifyAppContext> options) : base(options) { }
 
         public DbSet<ProductSection> ProductSections { get; set; }
+        public DbSet<ProductMeasure> ProductMeasures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

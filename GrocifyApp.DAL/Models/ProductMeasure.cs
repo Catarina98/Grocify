@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GrocifyApp.DAL.Models
+﻿namespace GrocifyApp.DAL.Models
 {
-    internal class ProductMeasure
+    public class ProductMeasure : BaseEntity
     {
-        //todo
+        public string Name { get; set; }
+
+        //Todo: Add FK HouseId
+
+        public ProductMeasure(string name)
+        {
+            Name = name;
+        }
     }
 }
