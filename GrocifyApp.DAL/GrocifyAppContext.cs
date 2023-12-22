@@ -17,6 +17,7 @@ namespace GrocifyApp.DAL
         public DbSet<InventoryProduct> InventoryProducts { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeProduct> RecipeProducts { get; set; }
+        public DbSet<Meal> Meal { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
