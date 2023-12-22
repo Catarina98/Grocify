@@ -1,4 +1,5 @@
 using GrocifyApp.DAL;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,5 +32,16 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
+
+using (var scope = app.Services.CreateScope())
+{
+    var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<GrocifyAppContext>>();
+    using var context = factory.CreateDbContext();
+
+    if (context.Database.IsSqlServer())
+    {
+        context.Database.Migrate();
+    }
+}
 
 app.Run();

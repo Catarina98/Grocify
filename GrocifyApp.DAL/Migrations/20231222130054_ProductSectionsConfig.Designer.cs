@@ -4,6 +4,7 @@ using GrocifyApp.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    partial class GrocifyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20231222130054_ProductSectionsConfig")]
+    partial class ProductSectionsConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,17 +49,6 @@ namespace GrocifyApp.DAL.Migrations
                     b.ToTable((string)null);
 
                     b.UseTpcMappingStrategy();
-                });
-
-            modelBuilder.Entity("GrocifyApp.DAL.Models.ProductMeasure", b =>
-                {
-                    b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("ProductMeasures");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ProductSection", b =>
