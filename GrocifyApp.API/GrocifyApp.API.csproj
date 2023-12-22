@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <SpaRoot>..\grocifyapp.client</SpaRoot>
+    <SpaRoot>..\GrocifyApp.UI</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
   </PropertyGroup>
@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\grocifyapp.client\grocifyapp.client.esproj">
+    <ProjectReference Include="..\GrocifyApp.BLL\GrocifyApp.BLL.csproj" />
+    <ProjectReference Include="..\GrocifyApp.UI\GrocifyApp.UI.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>

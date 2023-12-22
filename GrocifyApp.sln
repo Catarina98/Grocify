@@ -1,11 +1,15 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrocifyApp.Server", "GrocifyApp.Server\GrocifyApp.Server.csproj", "{5E27D1A2-D9EE-49CA-9B17-B10E8D1EAA20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrocifyApp.API", "GrocifyApp.API\GrocifyApp.API.csproj", "{5E27D1A2-D9EE-49CA-9B17-B10E8D1EAA20}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "grocifyapp.client", "grocifyapp.client\grocifyapp.client.esproj", "{EB0827DA-A456-4324-985D-619C794CC766}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "GrocifyApp.UI", "GrocifyApp.UI\GrocifyApp.UI.esproj", "{EB0827DA-A456-4324-985D-619C794CC766}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrocifyApp.DAL", "GrocifyApp.DAL\GrocifyApp.DAL.csproj", "{7F17DC0E-98FA-4E53-97A4-9A5AC44EB6AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrocifyApp.BLL", "GrocifyApp.BLL\GrocifyApp.BLL.csproj", "{94150639-8D98-44E5-90AE-87054E5A653B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +27,14 @@ Global
 		{EB0827DA-A456-4324-985D-619C794CC766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB0827DA-A456-4324-985D-619C794CC766}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB0827DA-A456-4324-985D-619C794CC766}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7F17DC0E-98FA-4E53-97A4-9A5AC44EB6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F17DC0E-98FA-4E53-97A4-9A5AC44EB6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F17DC0E-98FA-4E53-97A4-9A5AC44EB6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F17DC0E-98FA-4E53-97A4-9A5AC44EB6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94150639-8D98-44E5-90AE-87054E5A653B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94150639-8D98-44E5-90AE-87054E5A653B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94150639-8D98-44E5-90AE-87054E5A653B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94150639-8D98-44E5-90AE-87054E5A653B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

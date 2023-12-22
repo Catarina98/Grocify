@@ -1,4 +1,4 @@
-namespace GrocifyApp.Server
+namespace GrocifyApp.API
 {
     public class WeatherForecast
     {
