@@ -9,6 +9,7 @@
         public ProductSection? ProductSection { get; set; }
         public ICollection<ShoppingListProduct>? ShoppingListProducts { get; set; }
         public ICollection<InventoryProduct>? InventoryProducts { get; set; }
+        public ICollection<RecipeProduct>? RecipeProducts { get; set; }
 
         //Todo: Add FK HouseId
     }
