@@ -8,6 +8,7 @@
         public required Guid ProductSectionId { get; set; }
         public ProductSection? ProductSection { get; set; }
         public ICollection<ShoppingListProduct>? ShoppingListProducts { get; set; }
+        public ICollection<InventoryProduct>? InventoryProducts { get; set; }
 
         //Todo: Add FK HouseId
     }
