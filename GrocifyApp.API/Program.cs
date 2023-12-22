@@ -11,7 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add dependencies
-DependencyInjectionRegistry.ConfigureServices(builder.Configuration, builder.Services);
+GrocifyApp.DAL.DependencyInjectionRegistry.ConfigureServices(builder.Configuration, builder.Services);
+GrocifyApp.BLL.DependencyInjectionRegistry.ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
