@@ -10,6 +10,7 @@ namespace GrocifyApp.DAL
 
         public DbSet<ProductSection> ProductSections { get; set; }
         public DbSet<ProductMeasure> ProductMeasures { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
