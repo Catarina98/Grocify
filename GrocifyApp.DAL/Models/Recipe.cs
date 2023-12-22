@@ -8,6 +8,7 @@
         public required string Difficult { get; set; }
         public string? Image { get; set; }
         public ICollection<RecipeProduct>? RecipeProducts { get; set; }
+        public ICollection<PlanMealRecipe>? PlanMealRecipes { get; set; }
 
         //Todo: Add FK HouseId
     }
