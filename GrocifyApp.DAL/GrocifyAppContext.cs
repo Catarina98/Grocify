@@ -20,6 +20,7 @@ namespace GrocifyApp.DAL
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Plan> Plan { get; set; }
         public DbSet<PlanMealRecipe> PlanMealRecipes { get; set; }
+        public DbSet<Direction> Directions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

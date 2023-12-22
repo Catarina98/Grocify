@@ -9,6 +9,7 @@
         public string? Image { get; set; }
         public ICollection<RecipeProduct>? RecipeProducts { get; set; }
         public ICollection<PlanMealRecipe>? PlanMealRecipes { get; set; }
+        public required ICollection<Direction> Directions { get; set; }
 
         //Todo: Add FK HouseId
     }
