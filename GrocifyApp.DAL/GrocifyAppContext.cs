@@ -23,6 +23,8 @@ namespace GrocifyApp.DAL
         public DbSet<Direction> Directions { get; set; }
         public DbSet<User> Users { get; set; }
         //public DbSet<Authenticator> Authenticators { get; set; }
+        public DbSet<House> Houses { get; set; }
+        public DbSet<UserHouse> UserHouses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
