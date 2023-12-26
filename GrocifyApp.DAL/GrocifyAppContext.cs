@@ -21,6 +21,8 @@ namespace GrocifyApp.DAL
         public DbSet<Plan> Plan { get; set; }
         public DbSet<PlanMealRecipe> PlanMealRecipes { get; set; }
         public DbSet<Direction> Directions { get; set; }
+        public DbSet<User> Users { get; set; }
+        //public DbSet<Authenticator> Authenticators { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
