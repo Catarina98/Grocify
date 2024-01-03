@@ -15,17 +15,16 @@ namespace GrocifyApp.API.Controllers
             EntitiesService = _repository;
         }
 
-        //[HttpGet]
-        //public async Task<TResponse> GetAll()
-        //{
-        //    var result = await EntitiesService.GetItems();
-        //    return Mapper.Map<T, TResponse>(result.FirstOrDefault());
-        //}
-
         [HttpGet]
-        public async Task<T> Get(Guid key)
+        public async Task<List<T>> GetAll()
         {
-            return await EntitiesService.Get(key);
+            return await EntitiesService.GetItems();
+        }
+
+        [HttpGet("{key}")]
+        public async Task<T> Get(Guid id)
+        {
+            return await EntitiesService.Get(id);
         }
 
         [HttpPost]
