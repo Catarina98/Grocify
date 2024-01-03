@@ -10,13 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
-builder.Services.AddSwaggerGen(swagger =>
-{
-    swagger.EnableAnnotations(); //aqui
-
-    var filePath = Path.Combine(System.AppContext.BaseDirectory, "1.MiniShop.API.xml");
-    swagger.IncludeXmlComments(filePath);
-});
+builder.Services.AddSwaggerGen();
 
 // Add dependencies
 GrocifyApp.DAL.DependencyInjectionRegistry.ConfigureServices(builder.Configuration, builder.Services);
