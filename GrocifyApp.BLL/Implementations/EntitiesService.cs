@@ -1,13 +1,7 @@
 ﻿using GrocifyApp.BLL.Interfaces;
+using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GrocifyApp.BLL.Implementations
 {
@@ -20,39 +14,45 @@ namespace GrocifyApp.BLL.Implementations
             this.repository = repository;
         }
 
-        public async Task<T> Get(Guid id)
+        public async Task Delete(T entity, CancellationTokenSource? token = null)
+        {
+            await repository.Delete(entity, token);
+        }
+
+        public async Task<T?> Get(Guid id)
         {
             return await repository.Get(id);
         }
 
-        public async Task<W> GetById<W>(Guid id, Expression<Func<T, W>> selector)
+        public async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
         {
-            return await repository.GetById(id, selector);
+            return await repository.GetAll(token);
         }
 
-        public async Task<List<T>> GetItems(Expression<Func<T, bool>>? expression = null, int skip = 0, int take = 20)
+        public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel
         {
-            return await repository.GetWhere(expression, skip, take);
+            return await repository.GetBySearchModel(filter, token);
         }
 
-        public async Task<List<W>> GetItems<W>(Expression<Func<T, W>> selector, Expression<Func<T, bool>>? expression = null, int skip = 0, int take = 20)
+        public async Task Insert(T entity, CancellationTokenSource? token = null)
         {
-            return await repository.GetNItemsWhere(selector, expression, skip, take);
+            if (await Validate(entity))
+            {
+                await repository.Insert(entity, token);
+            }
         }
 
-        public async Task<List<T>> GetItemsOrdered<Z>(Expression<Func<T, Z>> orderedBy, bool descending, Expression<Func<T, bool>>? expression = null, int skip = 0, int take = 20)
+        public async Task Update(T entity, CancellationTokenSource? token = null)
         {
-            return await repository.GetNItemsWhereOrdered(orderedBy, descending, expression, skip, take);
+            if (await Validate(entity))
+            {
+                await repository.Update(entity, token);
+            }
         }
 
-        public async Task<List<W>> GetItemsOrdered<W, Z>(Expression<Func<T, W>> selector, Expression<Func<T, Z>> orderedBy, bool descending = true, Expression<Func<T, bool>>? expression = null, int skip = 0, int take = 20)
+        protected virtual async Task<bool> Validate(T entity)
         {
-            return await repository.GetNItemsWhereOrdered(selector, orderedBy, descending, expression, skip, take);
-        }
-
-        public async Task<T> Insert(T entity, CancellationTokenSource? token = null)
-        {
-            return await repository.Insert(entity, token);
+            return true;
         }
     }
 }
