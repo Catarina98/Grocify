@@ -9,5 +9,8 @@
         public ICollection<Plan>? Plans { get; set; }
         public ICollection<Recipe>? Recipes { get; set; }
         public ICollection<ShoppingList>? ShoppingLists { get; set; }
+        public ICollection<Product>? Products { get; set; }
+        public ICollection<ProductSection>? ProductSections { get; set; }
+        public ICollection<ProductMeasure>? ProductMeasures { get; set; }
     }
 }

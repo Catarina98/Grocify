@@ -58,6 +58,10 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<Guid>("RecipeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Steps")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasIndex("RecipeId");
 
                     b.ToTable("Directions");
@@ -82,10 +86,15 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<bool>("DefaultInventory")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("HouseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.HasIndex("HouseId");
 
                     b.ToTable("Inventories");
                 });
@@ -114,6 +123,9 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
+                    b.Property<Guid>("HouseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -121,6 +133,8 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.Property<int>("OrderIndex")
                         .HasColumnType("int");
+
+                    b.HasIndex("HouseId");
 
                     b.ToTable("Meals");
                 });
@@ -130,8 +144,11 @@ namespace GrocifyApp.DAL.Migrations
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
                     b.Property<string>("ChoosenDays")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ChoosenDays");
+
+                    b.Property<Guid>("HouseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("MonthlyView")
                         .HasColumnType("bit");
@@ -141,7 +158,9 @@ namespace GrocifyApp.DAL.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.ToTable("Plan");
+                    b.HasIndex("HouseId");
+
+                    b.ToTable("Plans");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.PlanMealRecipe", b =>
@@ -173,6 +192,9 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
+                    b.Property<Guid?>("HouseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -184,6 +206,8 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<Guid>("ProductSectionId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.HasIndex("HouseId");
+
                     b.HasIndex("ProductMeasureId");
 
                     b.ToTable("Products");
@@ -193,10 +217,15 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
+                    b.Property<Guid?>("HouseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.HasIndex("HouseId");
 
                     b.ToTable("ProductMeasures");
                 });
@@ -204,6 +233,9 @@ namespace GrocifyApp.DAL.Migrations
             modelBuilder.Entity("GrocifyApp.DAL.Models.ProductSection", b =>
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
+
+                    b.Property<Guid?>("HouseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Icon")
                         .IsRequired()
@@ -214,6 +246,8 @@ namespace GrocifyApp.DAL.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.HasIndex("HouseId");
+
                     b.ToTable("ProductSections");
                 });
 
@@ -221,9 +255,12 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
-                    b.Property<string>("Difficult")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Difficult")
+                        .HasMaxLength(8)
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("HouseId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -236,8 +273,10 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<int>("NumberOfPeople")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("time");
+
+                    b.HasIndex("HouseId");
 
                     b.ToTable("Recipes");
                 });
@@ -250,7 +289,8 @@ namespace GrocifyApp.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -275,10 +315,15 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<bool>("DefaultList")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("HouseId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
+
+                    b.HasIndex("HouseId");
 
                     b.ToTable("ShoppingLists");
                 });
@@ -350,6 +395,17 @@ namespace GrocifyApp.DAL.Migrations
                     b.Navigation("Recipe");
                 });
 
+            modelBuilder.Entity("GrocifyApp.DAL.Models.Inventory", b =>
+                {
+                    b.HasOne("GrocifyApp.DAL.Models.House", "House")
+                        .WithMany("Inventories")
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("House");
+                });
+
             modelBuilder.Entity("GrocifyApp.DAL.Models.InventoryProduct", b =>
                 {
                     b.HasOne("GrocifyApp.DAL.Models.Inventory", "Inventory")
@@ -367,6 +423,28 @@ namespace GrocifyApp.DAL.Migrations
                     b.Navigation("Inventory");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("GrocifyApp.DAL.Models.Meal", b =>
+                {
+                    b.HasOne("GrocifyApp.DAL.Models.House", "House")
+                        .WithMany("Meals")
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("House");
+                });
+
+            modelBuilder.Entity("GrocifyApp.DAL.Models.Plan", b =>
+                {
+                    b.HasOne("GrocifyApp.DAL.Models.House", "House")
+                        .WithMany("Plans")
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("House");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.PlanMealRecipe", b =>
@@ -396,6 +474,10 @@ namespace GrocifyApp.DAL.Migrations
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Product", b =>
                 {
+                    b.HasOne("GrocifyApp.DAL.Models.House", "House")
+                        .WithMany("Products")
+                        .HasForeignKey("HouseId");
+
                     b.HasOne("GrocifyApp.DAL.Models.ProductMeasure", "ProductMeasure")
                         .WithMany("Products")
                         .HasForeignKey("ProductMeasureId")
@@ -408,9 +490,38 @@ namespace GrocifyApp.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("House");
+
                     b.Navigation("ProductMeasure");
 
                     b.Navigation("ProductSection");
+                });
+
+            modelBuilder.Entity("GrocifyApp.DAL.Models.ProductMeasure", b =>
+                {
+                    b.HasOne("GrocifyApp.DAL.Models.House", "House")
+                        .WithMany("ProductMeasures")
+                        .HasForeignKey("HouseId");
+
+                    b.Navigation("House");
+                });
+
+            modelBuilder.Entity("GrocifyApp.DAL.Models.ProductSection", b =>
+                {
+                    b.HasOne("GrocifyApp.DAL.Models.House", "House")
+                        .WithMany("ProductSections")
+                        .HasForeignKey("HouseId");
+
+                    b.Navigation("House");
+                });
+
+            modelBuilder.Entity("GrocifyApp.DAL.Models.Recipe", b =>
+                {
+                    b.HasOne("GrocifyApp.DAL.Models.House", "House")
+                        .WithMany("Recipes")
+                        .HasForeignKey("HouseId");
+
+                    b.Navigation("House");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.RecipeProduct", b =>
@@ -428,6 +539,17 @@ namespace GrocifyApp.DAL.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("GrocifyApp.DAL.Models.ShoppingList", b =>
+                {
+                    b.HasOne("GrocifyApp.DAL.Models.House", "House")
+                        .WithMany("ShoppingLists")
+                        .HasForeignKey("HouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("House");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ShoppingListProduct", b =>
@@ -470,6 +592,22 @@ namespace GrocifyApp.DAL.Migrations
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.House", b =>
                 {
+                    b.Navigation("Inventories");
+
+                    b.Navigation("Meals");
+
+                    b.Navigation("Plans");
+
+                    b.Navigation("ProductMeasures");
+
+                    b.Navigation("ProductSections");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("Recipes");
+
+                    b.Navigation("ShoppingLists");
+
                     b.Navigation("UserHouses");
                 });
 
