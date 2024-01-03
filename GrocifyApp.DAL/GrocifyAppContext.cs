@@ -18,11 +18,10 @@ namespace GrocifyApp.DAL
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeProduct> RecipeProducts { get; set; }
         public DbSet<Meal> Meals { get; set; }
-        public DbSet<Plan> Plan { get; set; }
+        public DbSet<Plan> Plans { get; set; }
         public DbSet<PlanMealRecipe> PlanMealRecipes { get; set; }
         public DbSet<Direction> Directions { get; set; }
         public DbSet<User> Users { get; set; }
-        //public DbSet<Authenticator> Authenticators { get; set; }
         public DbSet<House> Houses { get; set; }
         public DbSet<UserHouse> UserHouses { get; set; }
 

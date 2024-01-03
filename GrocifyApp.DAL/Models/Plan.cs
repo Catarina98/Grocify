@@ -2,11 +2,10 @@
 {
     public class Plan : BaseEntity
     {
-        public required string Name { get; set; }
-        public required string ChoosenDays { get; set; }
+        public required string ChosenDays { get; set; }
+        public required Guid HouseId { get; set; }
+        public House? House { get; set; }
         public bool MonthlyView { get; set; }
         public ICollection<PlanMealRecipe>? PlanMealRecipes { get; set; }
-
-        //Todo: Add FK HouseId
     }
 }

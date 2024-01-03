@@ -9,6 +9,10 @@ namespace GrocifyApp.DAL.Configurations
         public void Configure(EntityTypeBuilder<ShoppingList> builder)
         {
             builder.Property(b => b.Name).HasMaxLength(60);
+
+            builder.HasOne<House>(x => x.House)
+                .WithMany(y => y.ShoppingLists)
+                .HasForeignKey(x => x.HouseId);
         }
     }
 }

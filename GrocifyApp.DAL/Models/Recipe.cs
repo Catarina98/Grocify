@@ -4,13 +4,20 @@
     {
         public required string Name { get; set; }
         public required int NumberOfPeople { get; set; }
-        public required DateTime Time { get; set; }
-        public required string Difficult { get; set; }
+        public required TimeSpan Time { get; set; }
+        public required DifficultEnum Difficult { get; set; }
+        public Guid? HouseId { get; set; }
+        public House? House { get; set; }
         public string? Image { get; set; }
         public ICollection<RecipeProduct>? RecipeProducts { get; set; }
         public ICollection<PlanMealRecipe>? PlanMealRecipes { get; set; }
         public required ICollection<Direction> Directions { get; set; }
+    }
 
-        //Todo: Add FK HouseId
+    public enum DifficultEnum
+    {
+        Easy,
+        Medium,
+        Hard
     }
 }

@@ -8,6 +8,8 @@ namespace GrocifyApp.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<RecipeProduct> builder)
         {
+            builder.Property(b => b.Name).HasMaxLength(60);
+
             builder.HasOne<Recipe>(x => x.Recipe)
                 .WithMany(y => y.RecipeProducts)
                 .HasForeignKey(x => x.RecipeId);
