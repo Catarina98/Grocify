@@ -96,7 +96,6 @@ namespace GrocifyApp.DAL.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     ChoosenDays = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MonthlyView = table.Column<bool>(type: "bit", nullable: false)
@@ -166,9 +165,9 @@ namespace GrocifyApp.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     NumberOfPeople = table.Column<int>(type: "int", nullable: false),
                     Time = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Difficult = table.Column<int>(type: "int", maxLength: 8, nullable: false),
+                    Difficult = table.Column<int>(type: "int", nullable: false),
                     HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -361,9 +360,9 @@ namespace GrocifyApp.DAL.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
-                    Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     RecipeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
                     Measure = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },

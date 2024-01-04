@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    [Migration("20240103161314_ModelsConfig")]
+    [Migration("20240104151005_ModelsConfig")]
     partial class ModelsConfig
     {
         /// <inheritdoc />
@@ -156,11 +156,6 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<bool>("MonthlyView")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
                     b.HasIndex("HouseId");
 
                     b.ToTable("Plans");
@@ -259,14 +254,13 @@ namespace GrocifyApp.DAL.Migrations
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
                     b.Property<int>("Difficult")
-                        .HasMaxLength(8)
                         .HasColumnType("int");
 
                     b.Property<Guid?>("HouseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
