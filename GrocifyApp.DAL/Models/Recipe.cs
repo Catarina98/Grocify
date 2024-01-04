@@ -8,7 +8,7 @@
         public required DifficultEnum Difficult { get; set; }
         public Guid? HouseId { get; set; }
         public House? House { get; set; }
-        public string? Image { get; set; }
+        public byte[]? Image { get; set; }
         public ICollection<RecipeProduct>? RecipeProducts { get; set; }
         public ICollection<PlanMealRecipe>? PlanMealRecipes { get; set; }
         public required ICollection<Direction> Directions { get; set; }

@@ -2,7 +2,6 @@
 {
     public class Plan : BaseEntity
     {
-        public required string Name { get; set; }
         public required List<DaysOfWeek>? ChoosenDays { get; set; }
         public required Guid HouseId { get; set; }
         public House? House { get; set; }
