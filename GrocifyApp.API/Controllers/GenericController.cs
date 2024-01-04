@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
@@ -11,19 +12,14 @@ namespace GrocifyApp.API.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter> : ControllerBase where TEntity : BaseEntity where TRequestModel : BaseEntity where TResponseModel : class where TFilter : BaseSearchModel
+    public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter>(
+        IEntitiesService<TEntity> genericBusiness,
+        IMapper mapper) : ControllerBase
+        where TEntity : BaseEntity
+        where TRequestModel : BaseEntity
+        where TResponseModel : class
+        where TFilter : BaseSearchModel
     {
-        private readonly IEntitiesService<TEntity> _genericBusiness;
-        private readonly IMapper _mapper;
-        private readonly ILogger<GenericController<TEntity, TRequestModel, TResponseModel, TFilter>> _logger;
-
-        public GenericController(IEntitiesService<TEntity> genericBusiness, IMapper mapper, ILogger<GenericController<TEntity, TRequestModel, TResponseModel, TFilter>> logger)
-        {
-            _genericBusiness = genericBusiness;
-            _mapper = mapper;
-            _logger = logger;
-        }
-
         //GET ENTITY BY ID
         /// <summary>
         /// Gets a specific entity by id.
@@ -33,7 +29,7 @@ namespace GrocifyApp.API.Controllers
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TResponseModel>> Get(Guid id)
         {
-            var getEntity = await _genericBusiness.Get(id);
+            var getEntity = await genericBusiness.Get(id);
 
             if (getEntity == null)
             {
@@ -51,7 +47,7 @@ namespace GrocifyApp.API.Controllers
         [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
-            var entities = await _genericBusiness.GetAll();
+            var entities = await genericBusiness.GetAll();
             return Ok(entities);
         }
 
@@ -64,7 +60,7 @@ namespace GrocifyApp.API.Controllers
         [HttpPost]
         public virtual async Task<ActionResult<TResponseModel>> Insert([FromBody] TRequestModel entity)
         {
-            if (entity == null || !ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(new BadRequestModel
                 {
@@ -73,11 +69,11 @@ namespace GrocifyApp.API.Controllers
                 });
             }
 
-            var u = _mapper.Map<TEntity>(entity);
+            var u = mapper.Map<TEntity>(entity);
 
             try
             {
-                await _genericBusiness.Insert(u);
+                await genericBusiness.Insert(u);
             }
             catch (Exception ex)
             {
@@ -97,7 +93,7 @@ namespace GrocifyApp.API.Controllers
         [HttpPut("{id}")]
         public virtual async Task<ActionResult<TResponseModel>> Update(Guid id, [FromBody] TRequestModel entity)
         {
-            if (entity == null || !ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(new BadRequestModel
                 {
@@ -108,17 +104,12 @@ namespace GrocifyApp.API.Controllers
 
             entity.Id = id;
 
-            var u = _mapper.Map<TEntity>(entity);
+            var u = mapper.Map<TEntity>(entity);
             u.Id = id;
-
-            if (u == null)
-            {
-                return NotFound(new { error = "The entity does not exist" });
-            }
 
             try
             {
-                await _genericBusiness.Update(u);
+                await genericBusiness.Update(u);
             }
             catch (Exception ex)
             {
