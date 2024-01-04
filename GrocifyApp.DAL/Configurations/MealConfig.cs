@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GrocifyApp.DAL.Configurations
 {
-    public class ProductSectionConfig : IEntityTypeConfiguration<ProductSection>
+    public class MealConfig : IEntityTypeConfiguration<Meal>
     {
-        public void Configure(EntityTypeBuilder<ProductSection> builder)
+        public void Configure(EntityTypeBuilder<Meal> builder)
         {
             builder.Property(b => b.Name).HasMaxLength(60);
 
             builder.HasOne<House>(x => x.House)
-                .WithMany(y => y.ProductSections)
+                .WithMany(y => y.Meals)
                 .HasForeignKey(x => x.HouseId);
         }
     }

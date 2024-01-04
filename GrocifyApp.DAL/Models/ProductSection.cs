@@ -2,15 +2,10 @@
 {
     public class ProductSection : BaseEntity
     {
-        public string Name { get; set; }
-        public string Icon { get; set; }
-
-        //Todo: Add FK HouseId
-
-        public ProductSection(string name, string icon)
-        {
-            Name = name;
-            Icon = icon;
-        }
+        public required string Name { get; set; }
+        public required string Icon { get; set; }
+        public Guid? HouseId { get; set; }
+        public House? House { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }

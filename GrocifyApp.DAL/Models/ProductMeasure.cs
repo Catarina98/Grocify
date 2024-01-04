@@ -2,13 +2,9 @@
 {
     public class ProductMeasure : BaseEntity
     {
-        public string Name { get; set; }
-
-        //Todo: Add FK HouseId
-
-        public ProductMeasure(string name)
-        {
-            Name = name;
-        }
+        public required string Name { get; set; }
+        public Guid? HouseId { get; set; }
+        public House? House { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }
