@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GrocifyApp.DAL.Repositories.Implementations;
+using GrocifyApp.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,7 +32,7 @@ namespace GrocifyApp.DAL
                          x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
             //}
 
-            //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
     }
 }
