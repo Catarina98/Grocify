@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using GrocifyApp.DAL.Models;
 
 namespace GrocifyApp.API.Models.RequestModels
 {
-    public class ProductSectionRequestRequestModel : BaseEntity
+    public class ProductSectionRequestRequestModel
     {
         /// <example>Meat</example>
         [Required]

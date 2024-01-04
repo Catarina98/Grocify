@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GrocifyApp.API.Models.RequestModels;
+using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.DAL.Models;
 
 namespace GrocifyApp.API.Models.Mapper
@@ -9,6 +10,7 @@ namespace GrocifyApp.API.Models.Mapper
         public AutoMapperProfile()
         {
             CreateMap<ProductSectionRequestRequestModel, ProductSection>().ReverseMap();
+            CreateMap<ProductSectionResponseModel, ProductSection>().ReverseMap();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
@@ -16,7 +15,7 @@ namespace GrocifyApp.API.Controllers
         IEntitiesService<TEntity> genericBusiness,
         IMapper mapper) : ControllerBase
         where TEntity : BaseEntity
-        where TRequestModel : BaseEntity
+        where TRequestModel : class
         where TResponseModel : class
         where TFilter : BaseSearchModel
     {
@@ -35,8 +34,10 @@ namespace GrocifyApp.API.Controllers
             {
                 return NotFound(new { error = "The entity does not exist" });
             }
+            
+            var response = mapper.Map<TResponseModel>(getEntity);
 
-            return Ok(getEntity);
+            return Ok(response);
         }
 
         //GET ALL ENTITIES
@@ -48,6 +49,7 @@ namespace GrocifyApp.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var entities = await genericBusiness.GetAll();
+            
             return Ok(entities);
         }
 
@@ -80,8 +82,10 @@ namespace GrocifyApp.API.Controllers
                 var errors = new List<string> { ex.Message };
                 return BadRequest(new BadRequestModel { Errors = errors });
             }
+            
+            var response = mapper.Map<TResponseModel>(entity);
 
-            return Created("Entity created successfully", entity);
+            return Created("Entity created successfully", response);
         }
 
         //UPDATE ENTITY BY ID
@@ -102,9 +106,8 @@ namespace GrocifyApp.API.Controllers
                 });
             }
 
-            entity.Id = id;
-
             var u = mapper.Map<TEntity>(entity);
+            
             u.Id = id;
 
             try
