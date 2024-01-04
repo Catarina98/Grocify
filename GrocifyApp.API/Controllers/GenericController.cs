@@ -11,9 +11,8 @@ namespace GrocifyApp.API.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter>(
-        IEntitiesService<TEntity> genericBusiness,
-        IMapper mapper) : ControllerBase
+    public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter>
+        (IEntitiesService<TEntity> genericBusiness, IMapper mapper) : ControllerBase
         where TEntity : BaseEntity
         where TRequestModel : class
         where TResponseModel : class
