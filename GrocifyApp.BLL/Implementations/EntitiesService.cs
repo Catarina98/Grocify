@@ -19,6 +19,11 @@ namespace GrocifyApp.BLL.Implementations
             await repository.Delete(entity, token);
         }
 
+        public async Task DeleteById(Guid id, CancellationTokenSource? token = null)
+        {
+            await repository.DeleteById(id, token);
+        }
+
         public async Task<T?> Get(Guid id)
         {
             return await repository.Get(id);

@@ -53,7 +53,7 @@ namespace GrocifyApp.API.Controllers
             return Ok(entities);
         }
 
-        //CREATE Entity
+        //CREATE ENTITY
         /// <summary>
         /// Creates a entity.
         /// </summary>
@@ -80,6 +80,7 @@ namespace GrocifyApp.API.Controllers
             catch (Exception ex)
             {
                 var errors = new List<string> { ex.Message };
+
                 return BadRequest(new BadRequestModel { Errors = errors });
             }
             
@@ -95,7 +96,7 @@ namespace GrocifyApp.API.Controllers
         /// <response code="201">Entity updated successfully.</response>
         /// <response code="400">Unable to update the entity due to validation error.</response>
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<TResponseModel>> Update(Guid id, [FromBody] TRequestModel entity)
+        public virtual async Task<ActionResult> Update(Guid id, [FromBody] TRequestModel entity)
         {
             if (!ModelState.IsValid)
             {
@@ -117,11 +118,34 @@ namespace GrocifyApp.API.Controllers
             catch (Exception ex)
             {
                 var errors = new List<string> { ex.Message };
+
                 return BadRequest(new BadRequestModel { Errors = errors });
             }
 
             return Ok();
+        }
 
+        //DELETE BY ID
+        /// <summary>
+        /// Delete a specific entity by id.
+        /// </summary>
+        /// <response code="201">Entity deleted successfully.</response>
+        /// <response code="400">Unable to delete the entity due to validation error.</response>
+        [HttpDelete("{id}")]
+        public virtual async Task<ActionResult> DeleteById(Guid id)
+        {
+            try
+            {
+                await genericBusiness.DeleteById(id);
+            }
+            catch (Exception ex)
+            {
+                var errors = new List<string> { ex.Message };
+
+                return BadRequest(new BadRequestModel { Errors = errors });
+            }
+
+            return Ok();
         }
     }
 }

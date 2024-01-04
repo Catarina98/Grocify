@@ -24,7 +24,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             entities = _dbContext.Set<T>();
         }
 
-        public async Task Delete(T entity, CancellationTokenSource? token = null)
+        public async Task Delete(T? entity, CancellationTokenSource? token = null)
         {
             if (entity == null)
             {
@@ -34,6 +34,13 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             entities.Remove(entity);
 
             await SaveChangesAsync(token);
+        }
+
+        public async Task DeleteById(Guid id, CancellationTokenSource? token = null)
+        {
+            var entity = await Get(id);
+
+            await Delete(entity, token);
         }
 
         public virtual async Task<T?> Get(Guid id)

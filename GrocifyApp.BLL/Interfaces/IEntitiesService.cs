@@ -11,6 +11,7 @@ namespace GrocifyApp.BLL.Interfaces
         Task Insert(T entity, CancellationTokenSource? token = null);
         Task Update(T entity, CancellationTokenSource? token = null);
         Task Delete(T entity, CancellationTokenSource? token = null);
+        Task DeleteById(Guid id, CancellationTokenSource? token = null);
         public Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel;
     }
 }
