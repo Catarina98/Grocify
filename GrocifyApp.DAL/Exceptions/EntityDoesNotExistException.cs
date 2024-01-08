@@ -2,7 +2,7 @@
 {
     public class EntityDoesNotExistException : Exception
     {
-        public EntityDoesNotExistException() : base("The entity does not exist.")
+        public EntityDoesNotExistException() : base("The entity does not exist.") //const dal
         {
         }
 
