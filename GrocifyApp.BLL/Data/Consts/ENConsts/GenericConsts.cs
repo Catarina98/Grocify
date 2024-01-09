@@ -5,7 +5,6 @@
         public static class Exceptions
         {
             public const string EmailAlreadyTaken = "This email was already taken.";
-            //public const string UserPasswordIncorrect = "User or password are incorrect.";
         }
     }
 }
