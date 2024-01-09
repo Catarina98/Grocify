@@ -12,9 +12,9 @@
         public required string Email { get; set; }
 
         /// <example>Password</example>
-        public string Password { get; set; } = String.Empty; //auth
+        public required string Password { get; set; } = String.Empty; //string.Empty needed?
 
         /// <example>Confirm password</example>
-        public string ConfirmPassword { get; set; } = String.Empty; //auth
+        public required string ConfirmPassword { get; set; } = String.Empty; //string.Empty needed?
     }
 }

@@ -1,7 +1,7 @@
-﻿using GrocifyApp.API.Models.RequestModels;
+﻿using GrocifyApp.API.Data.Consts.ENConsts;
+using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.BLL.Interfaces;
-using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -30,11 +30,11 @@ namespace _1.MiniShop.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<RegisterResponseModel>> Register([FromBody] UserRequestModel user)
         {
-            var getUser = await _userService.GetUserByEmail(user.Email); //use CheckEmailExists
+            var getUser = await _userService.GetUserByEmail(user.Email); //I cant use CheckEmailExists because this method needs id too
 
             if (getUser != null)
             {
-                var errors = new List<string> { "This email was already taken." }; //const
+                var errors = new List<string> { GenericConsts.Errors.EmailAlreadyTaken };
 
                 return BadRequest(new BadRequestModel { Errors = errors });
             }
@@ -66,7 +66,7 @@ namespace _1.MiniShop.API.Controllers
 
             if (getUser == null)
             {
-                var errors = new List<string> { "User or password are incorrect." }; //const
+                var errors = new List<string> { GenericConsts.Errors.UserPasswordIncorrect }; //and if we use the consts from DAL? If so, we only have one folder for consts, it seems more easy to search
 
                 return BadRequest(new BadRequestModel { Errors = errors });
             }
@@ -75,7 +75,7 @@ namespace _1.MiniShop.API.Controllers
                 if (!VerifyPasswordHash(user.Password, getUser.PasswordHash, getUser.PasswordSalt))
                 //if(user.Password != getUser.Password)
                 {
-                    var errors = new List<string> { "User or password are incorrect." };//const
+                    var errors = new List<string> { GenericConsts.Errors.UserPasswordIncorrect };
 
                     return BadRequest(new BadRequestModel { Errors = errors });
                 }

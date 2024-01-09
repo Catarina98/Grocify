@@ -1,4 +1,5 @@
-﻿using GrocifyApp.DAL.Exceptions;
+﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
+using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
@@ -17,7 +18,7 @@ namespace GrocifyApp.BLL.Implementations
         {
             if (await _uRepository.CheckEmailExists(user.Email, user.Id))
             {
-                throw new EmailExistsException("This email was already taken.");  //add folder on bll for consts
+                throw new EmailExistsException(GenericConsts.Exceptions.EmailAlreadyTaken);
             }
 
             return true;

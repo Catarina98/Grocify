@@ -2,10 +2,10 @@
 {
     public class RegisterResponseModel
     {
-        public byte[] PasswordHash { get; set; } = default!;
+        public required byte[] PasswordHash { get; set; }
 
-        public byte[] PasswordSalt { get; set; } = default!;
+        public required byte[] PasswordSalt { get; set; }
 
-        public string Token { get; set; } = default!;
+        public required string Token { get; set; }
     }
 }
