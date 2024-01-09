@@ -33,6 +33,7 @@ namespace GrocifyApp.DAL
             //}
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
