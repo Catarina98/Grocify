@@ -4,7 +4,7 @@
     {
         public static class Exceptions
         {
-            public const string EmailAlreadyTaken = "This email was already taken.";
+            
         }
     }
 }

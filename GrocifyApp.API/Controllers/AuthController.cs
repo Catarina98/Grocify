@@ -30,13 +30,13 @@ namespace _1.MiniShop.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<RegisterResponseModel>> Register([FromBody] UserRequestModel user)
         {
-            var getUser = await _userService.GetUserByEmail(user.Email); //I cant use CheckEmailExists because this method needs id too
+            var getUser = await _userService.GetUserByEmail(user.Email);
 
             if (getUser != null)
             {
                 var errors = new List<string> { GenericConsts.Errors.EmailAlreadyTaken };
 
-                return BadRequest(new BadRequestModel { Errors = errors });
+                return BadRequest(new BadResponseModel { Errors = errors });
             }
 
             else
@@ -68,7 +68,7 @@ namespace _1.MiniShop.API.Controllers
             {
                 var errors = new List<string> { GenericConsts.Errors.UserPasswordIncorrect }; //and if we use the consts from DAL? If so, we only have one folder for consts, it seems more easier to search
 
-                return BadRequest(new BadRequestModel { Errors = errors });
+                return BadRequest(new BadResponseModel { Errors = errors });
             }
             else
             {
@@ -77,7 +77,7 @@ namespace _1.MiniShop.API.Controllers
                 {
                     var errors = new List<string> { GenericConsts.Errors.UserPasswordIncorrect };
 
-                    return BadRequest(new BadRequestModel { Errors = errors });
+                    return BadRequest(new BadResponseModel { Errors = errors });
                 }
             }
 
@@ -102,7 +102,9 @@ namespace _1.MiniShop.API.Controllers
                 new Claim(ClaimTypes.Name, userAPI.Name)
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+            //var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value ?? "")); //try if this works
+
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

@@ -16,7 +16,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
                     .AnyAsync(b => b.Email == email && b.Id != id);
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User?> GetUserByEmail(string email)
         {
             User? user = null;
 
@@ -30,7 +30,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
                 user = null;
             }
 
-            return user; //Possible null reference return
+            return user;
         }
     }
 }

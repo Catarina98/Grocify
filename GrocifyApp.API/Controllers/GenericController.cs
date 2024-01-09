@@ -63,7 +63,7 @@ namespace GrocifyApp.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new BadRequestModel
+                return BadRequest(new BadResponseModel
                 {
                     Errors = ModelState.Values.SelectMany(x => x.Errors)
                         .Select(x => x.ErrorMessage)
@@ -80,7 +80,7 @@ namespace GrocifyApp.API.Controllers
             {
                 var errors = new List<string> { ex.Message };
 
-                return BadRequest(new BadRequestModel { Errors = errors });
+                return BadRequest(new BadResponseModel { Errors = errors });
             }
             
             var response = mapper.Map<TResponseModel>(entity);
@@ -99,7 +99,7 @@ namespace GrocifyApp.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new BadRequestModel
+                return BadRequest(new BadResponseModel
                 {
                     Errors = ModelState.Values.SelectMany(x => x.Errors)
                         .Select(x => x.ErrorMessage)
@@ -118,7 +118,7 @@ namespace GrocifyApp.API.Controllers
             {
                 var errors = new List<string> { ex.Message };
 
-                return BadRequest(new BadRequestModel { Errors = errors });
+                return BadRequest(new BadResponseModel { Errors = errors });
             }
 
             return Ok();
@@ -141,7 +141,7 @@ namespace GrocifyApp.API.Controllers
             {
                 var errors = new List<string> { ex.Message };
 
-                return BadRequest(new BadRequestModel { Errors = errors });
+                return BadRequest(new BadResponseModel { Errors = errors });
             }
 
             return Ok();

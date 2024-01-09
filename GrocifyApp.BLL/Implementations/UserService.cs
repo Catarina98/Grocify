@@ -1,5 +1,4 @@
-﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
-using GrocifyApp.DAL.Exceptions;
+﻿using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
@@ -18,13 +17,13 @@ namespace GrocifyApp.BLL.Implementations
         {
             if (await _uRepository.CheckEmailExists(user.Email, user.Id))
             {
-                throw new EmailExistsException(GenericConsts.Exceptions.EmailAlreadyTaken);
+                throw new EmailExistsException();
             }
 
             return true;
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User?> GetUserByEmail(string email)
         {
             return await _uRepository.GetUserByEmail(email);
         }
