@@ -1,7 +1,9 @@
-﻿using GrocifyApp.API.Data.Consts.ENConsts;
+﻿using AutoMapper;
+using GrocifyApp.API.Data.Consts.ENConsts;
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.BLL.Interfaces;
+using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,11 +22,15 @@ namespace _1.MiniShop.API.Controllers
 
         private readonly IUserService _userService;
 
-        public AuthController(IConfiguration configuration, IUserService userService)
+        private readonly IMapper _mapper;
+
+        public AuthController(IConfiguration configuration, IUserService userService, IMapper mapper)
         {
             _configuration = configuration;
 
             _userService = userService;
+
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -54,6 +60,12 @@ namespace _1.MiniShop.API.Controllers
                     PasswordSalt = user.PasswordSalt,
                     Token = token
                 };
+
+
+                //makes sense insert when register on authenticator?
+                var u = _mapper.Map<User>(user);
+
+                await _userService.Insert(u);
 
                 return responseModel;
             }

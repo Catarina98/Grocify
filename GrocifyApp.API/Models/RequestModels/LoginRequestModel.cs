@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GrocifyApp.API.Models.RequestModels
 {
-    public class LoginRequestModel : BaseEntity
+    public class LoginRequestModel
     {
         /// <example>joesmith@gmail.com</example>
         [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Please enter a valid email address.")]
