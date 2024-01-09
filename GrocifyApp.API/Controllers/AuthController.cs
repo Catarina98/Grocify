@@ -66,7 +66,7 @@ namespace _1.MiniShop.API.Controllers
 
             if (getUser == null)
             {
-                var errors = new List<string> { GenericConsts.Errors.UserPasswordIncorrect }; //and if we use the consts from DAL? If so, we only have one folder for consts, it seems more easy to search
+                var errors = new List<string> { GenericConsts.Errors.UserPasswordIncorrect }; //and if we use the consts from DAL? If so, we only have one folder for consts, it seems more easier to search
 
                 return BadRequest(new BadRequestModel { Errors = errors });
             }
