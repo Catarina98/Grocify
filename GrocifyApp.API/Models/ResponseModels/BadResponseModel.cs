@@ -1,6 +1,6 @@
 ﻿namespace GrocifyApp.API.Models.ResponseModels
 {
-    public class BadRequestModel
+    public class BadResponseModel //this is request or response?
     {
         public IEnumerable<string> Errors { get; set; }
     }

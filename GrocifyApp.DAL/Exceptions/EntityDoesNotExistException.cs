@@ -1,8 +1,10 @@
-﻿namespace GrocifyApp.DAL.Exceptions
+﻿using GrocifyApp.DAL.Data.Consts.ENConsts;
+
+namespace GrocifyApp.DAL.Exceptions
 {
     public class EntityDoesNotExistException : Exception
     {
-        public EntityDoesNotExistException() : base("The entity does not exist.")
+        public EntityDoesNotExistException() : base(GenericConsts.Exceptions.EntityDoesNotExist)
         {
         }
 

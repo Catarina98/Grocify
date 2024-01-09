@@ -1,6 +1,5 @@
 ﻿using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
-using System.Linq.Expressions;
 
 namespace GrocifyApp.BLL.Interfaces
 {
@@ -12,6 +11,6 @@ namespace GrocifyApp.BLL.Interfaces
         Task Update(T entity, CancellationTokenSource? token = null);
         Task Delete(T entity, CancellationTokenSource? token = null);
         Task DeleteById(Guid id, CancellationTokenSource? token = null);
-        public Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel;
+        Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel;
     }
 }
