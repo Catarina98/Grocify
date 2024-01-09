@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 namespace _1.MiniShop.API.Controllers
 {
     [Route("api/[controller]")]
-    //[ApiController]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         //public static new User User = new User() { Name = "name", Email = "email"};

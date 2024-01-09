@@ -1,6 +1,5 @@
 ﻿using GrocifyApp.BLL.Implementations;
 using GrocifyApp.BLL.Interfaces;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GrocifyApp.BLL
@@ -10,6 +9,7 @@ namespace GrocifyApp.BLL
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IEntitiesService<>), typeof(EntitiesService<>));
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

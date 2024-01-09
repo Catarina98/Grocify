@@ -4,6 +4,6 @@ namespace GrocifyApp.BLL.Interfaces
 {
     public interface IUserService : IEntitiesService<User>
     {
-        Task<User> GetUserByEmail(string Email);
+        Task<User?> GetUserByEmail(string Email);
     }
 }
