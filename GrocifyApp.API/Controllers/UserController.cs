@@ -19,11 +19,11 @@ namespace GrocifyApp.API.Controllers
         }
 
         [HttpGet("{email}")]
-        public async Task<ActionResult<User>> GetByEmail(string email)
+        public async Task<ActionResult<User>> GetUserByEmail(string email)
         {
-            if (email == null)
+            if (string.IsNullOrEmpty(email))
             {
-                return BadRequest(new { error = "Enable to get the entity" });
+                return BadRequest(new { error = "Unable to get the entity" });
             }
 
             var getEntity = await _userService.GetUserByEmail(email);
@@ -32,6 +32,7 @@ namespace GrocifyApp.API.Controllers
             {
                 return NotFound(new { error = "The entity does not exist" });
             }
+
             return Ok(getEntity);
         }
     }

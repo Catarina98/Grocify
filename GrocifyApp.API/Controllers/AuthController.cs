@@ -61,8 +61,6 @@ namespace _1.MiniShop.API.Controllers
                     Token = token
                 };
 
-
-                //makes sense insert when register on authenticator?
                 var u = _mapper.Map<User>(user);
 
                 await _userService.Insert(u);
