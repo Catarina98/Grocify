@@ -2,6 +2,7 @@
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.BLL.Interfaces;
+using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -23,14 +24,14 @@ namespace GrocifyApp.API.Controllers
         {
             if (string.IsNullOrEmpty(email))
             {
-                return BadRequest(new { error = "Unable to get the entity" });
+                return BadRequest(new { error = Data.Consts.ENConsts.GenericConsts.Errors.UnableGetEntity });
             }
 
             var getEntity = await _userService.GetUserByEmail(email);
 
             if (getEntity == null)
             {
-                return NotFound(new { error = "The entity does not exist" });
+                return NotFound(new { error = GenericConsts.Exceptions.EntityDoesNotExist });
             }
 
             return Ok(getEntity);
