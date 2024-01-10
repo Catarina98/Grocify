@@ -112,8 +112,7 @@ namespace _1.MiniShop.API.Controllers
                 new Claim(ClaimTypes.Name, userAPI.Name)
             };
 
-            //var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value ?? "")); //try if this works
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value ?? string.Empty));
 
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
