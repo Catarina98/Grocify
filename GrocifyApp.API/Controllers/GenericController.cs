@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GrocifyApp.API.Data.Consts.ENConsts;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
@@ -11,6 +12,7 @@ namespace GrocifyApp.API.Controllers
 
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter>
         (IEntitiesService<TEntity> genericBusiness, IMapper mapper) : ControllerBase
         where TEntity : BaseEntity
@@ -31,7 +33,7 @@ namespace GrocifyApp.API.Controllers
 
             if (getEntity == null)
             {
-                return NotFound(new { error = "The entity does not exist" });
+                return NotFound(new { error = DAL.Data.Consts.ENConsts.GenericConsts.Exceptions.EntityDoesNotExist });
             }
             
             var response = mapper.Map<TResponseModel>(getEntity);
@@ -83,9 +85,9 @@ namespace GrocifyApp.API.Controllers
                 return BadRequest(new BadResponseModel { Errors = errors });
             }
             
-            var response = mapper.Map<TResponseModel>(entity);
+            var response = mapper.Map<TResponseModel>(u);
 
-            return Created("Entity created successfully", response);
+            return Created(GenericConsts.APIResponses.EntityCreated, response);
         }
 
         //UPDATE ENTITY BY ID

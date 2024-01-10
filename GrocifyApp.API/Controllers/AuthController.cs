@@ -1,7 +1,9 @@
-﻿using GrocifyApp.API.Data.Consts.ENConsts;
+﻿using AutoMapper;
+using GrocifyApp.API.Data.Consts.ENConsts;
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.BLL.Interfaces;
+using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +13,7 @@ using System.Security.Cryptography;
 namespace _1.MiniShop.API.Controllers
 {
     [Route("api/[controller]")]
-    //[ApiController]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         //public static new User User = new User() { Name = "name", Email = "email"};
@@ -20,11 +22,15 @@ namespace _1.MiniShop.API.Controllers
 
         private readonly IUserService _userService;
 
-        public AuthController(IConfiguration configuration, IUserService userService)
+        private readonly IMapper _mapper;
+
+        public AuthController(IConfiguration configuration, IUserService userService, IMapper mapper)
         {
             _configuration = configuration;
 
             _userService = userService;
+
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -54,6 +60,10 @@ namespace _1.MiniShop.API.Controllers
                     PasswordSalt = user.PasswordSalt,
                     Token = token
                 };
+
+                var u = _mapper.Map<User>(user);
+
+                await _userService.Insert(u);
 
                 return responseModel;
             }
@@ -102,8 +112,7 @@ namespace _1.MiniShop.API.Controllers
                 new Claim(ClaimTypes.Name, userAPI.Name)
             };
 
-            //var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value ?? "")); //try if this works
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value ?? string.Empty));
 
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
