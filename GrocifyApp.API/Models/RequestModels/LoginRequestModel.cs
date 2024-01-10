@@ -10,6 +10,6 @@ namespace GrocifyApp.API.Models.RequestModels
         public required string Email { get; set; }
 
         /// <example>FbjYxLWIlgcQn8sX6KijffST</example>
-        public required string Password { get; set; } = String.Empty; //string.Empty needed?
+        public required string Password { get; set; }
     }
 }

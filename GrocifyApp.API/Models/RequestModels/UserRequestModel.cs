@@ -21,7 +21,7 @@ namespace GrocifyApp.API.Models.RequestModels
         /// <example>FbjYxLWIlgcQn8sX6KijffST</example>
         [StringLength(24, MinimumLength = 8)]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessage = GenericConsts.RequestModels.ValidPasswordFormat)]
-        public string ConfirmPassword { get; set; } = String.Empty; //i cant make this required because of line 84 of AuthController
+        public string ConfirmPassword { get; set; } = String.Empty;
 
         [JsonIgnore]
         public byte[]? PasswordHash { get; set; }
