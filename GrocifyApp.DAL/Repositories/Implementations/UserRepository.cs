@@ -30,7 +30,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
                 user = null;
             }
 
-            return user; //Possible null reference return
+            return user;
         }
     }
 }

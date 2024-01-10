@@ -19,7 +19,7 @@ namespace GrocifyApp.BLL.Implementations
         {
             if (await _uRepository.CheckEmailExists(user.Email, user.Id))
             {
-                throw new EmailExistsException(GenericConsts.Exceptions.EmailAlreadyTaken);
+                throw new EmailExistsException();
             }
 
             return true;
