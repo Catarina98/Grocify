@@ -7,13 +7,5 @@ namespace GrocifyApp.DAL.Exceptions
         public EmailExistsException() : base(GenericConsts.Exceptions.EmailAlreadyTaken)
         {
         }
-
-        public EmailExistsException(string message) : base(message)
-        {
-        }
-
-        public EmailExistsException(string message, Exception inner) : base(message, inner)
-        {
-        }
     }
 }
