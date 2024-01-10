@@ -1,5 +1,4 @@
 ﻿using GrocifyApp.API.Data.Consts.ENConsts;
-using GrocifyApp.DAL.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace GrocifyApp.API.Models.RequestModels
