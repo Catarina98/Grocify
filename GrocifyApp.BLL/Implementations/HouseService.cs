@@ -18,6 +18,33 @@ namespace GrocifyApp.BLL.Implementations
             _userHouseRepository = userHouseRepository;
         }
 
+        public async Task DeleteUsersFromHouse(Guid houseId, HashSet<Guid> usersId, bool forceDeleteHouse, CancellationTokenSource? token = null)
+        {
+            if (!forceDeleteHouse)
+            {
+                var houseUsers = await GetUsersFromHouse(houseId);
+
+                if(usersId.Count >= houseUsers.Count && usersId.SetEquals(houseUsers.Select(x => x.Id)))
+                {
+                    throw new CustomException(GenericConsts.Exceptions.DeleteAllUsersFromHouse);
+                }
+            }
+
+            await _userHouseRepository.DeleteMultipleLeafType(x => x.HouseId == houseId && usersId.Contains(x.UserId), token);
+
+            if (forceDeleteHouse)
+            {
+                try
+                {
+                    var houseUsers = await GetUsersFromHouse(houseId);
+                }
+                catch(NotFoundException)
+                {
+                    await DeleteById(houseId, token);
+                }
+            }
+        }
+
         public async Task<List<User>> GetUsersFromHouse(Guid houseId)
         {
             var users = await _houseRepository.GetUsersFromHouse(houseId);

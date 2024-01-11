@@ -8,6 +8,7 @@ using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using static GrocifyApp.API.Data.Consts.ENConsts.GenericConsts;
 using APIConsts = GrocifyApp.API.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers
@@ -39,6 +40,51 @@ namespace GrocifyApp.API.Controllers
             {
                 return BadRequest(new { error = GenericConsts.Exceptions.Generic });
             }
+        }
+
+        /// <summary>
+        /// Insert user to house.
+        /// </summary>
+        /// <response code="201">User inserted successfully.</response>
+        /// <response code="400">Unable to insert user due to validation error.</response>
+        [HttpPut("{houseId}/user/{userId}")]
+        public virtual async Task<ActionResult> Insert(Guid houseId, Guid userId)
+        {
+            try
+            {
+                await _houseService.InsertUserToHouse(houseId, userId);
+            }
+            catch (Exception ex)
+            {
+                var errors = new List<string> { ex.Message };
+
+                return BadRequest(new BadResponseModel { Errors = errors });
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Delete users from house.
+        /// </summary>
+        /// <response code="201">Users deleted successfully from house.</response>
+        /// <response code="400">Unable to delete users due to validation error.</response>
+        [HttpDelete("{houseId}/deleteUsers/{forceDelete}")]
+        [HttpDelete("{houseId}/deleteUsers")]
+        public virtual async Task<ActionResult> DeleteUsersFromHouse(Guid houseId, [FromBody] HashSet<Guid> usersId, bool forceDelete = false)
+        {
+            try
+            {
+                await _houseService.DeleteUsersFromHouse(houseId, usersId, forceDelete);
+            }
+            catch (Exception ex)
+            {
+                var errors = new List<string> { ex.Message };
+
+                return BadRequest(new BadResponseModel { Errors = errors });
+            }
+
+            return Ok();
         }
 
         protected override async Task InsertAction(House entity)

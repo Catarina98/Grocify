@@ -7,5 +7,6 @@ namespace GrocifyApp.BLL.Interfaces
         Task<List<User>> GetUsersFromHouse(Guid houseId);
         Task InsertWithUser(House entity, Guid userId, CancellationTokenSource? token = null);
         Task InsertUserToHouse(Guid houseId, Guid userId, CancellationTokenSource? token = null);
+        Task DeleteUsersFromHouse(Guid houseId, HashSet<Guid> usersId, bool forceDeleteHouse, CancellationTokenSource? token = null);
     }
 }
