@@ -10,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace _1.MiniShop.API.Controllers
+namespace GrocifyApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

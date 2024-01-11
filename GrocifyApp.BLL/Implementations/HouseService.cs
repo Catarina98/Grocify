@@ -2,7 +2,6 @@
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
-using GrocifyApp.DAL.Repositories.Implementations;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
 namespace GrocifyApp.BLL.Implementations
@@ -23,7 +22,7 @@ namespace GrocifyApp.BLL.Implementations
             if (!forceDeleteHouse)
             {
                 var houseUsers = await GetUsersFromHouse(houseId);
-
+                
                 if(usersId.Count >= houseUsers.Count && usersId.SetEquals(houseUsers.Select(x => x.Id)))
                 {
                     throw new CustomException(GenericConsts.Exceptions.DeleteAllUsersFromHouse);
@@ -66,11 +65,11 @@ namespace GrocifyApp.BLL.Implementations
             }, token);
         }
 
-        public async Task InsertWithUser(House entity, Guid userId, CancellationTokenSource? token = null)
+        public async Task InsertWithUser(House house, Guid userId, CancellationTokenSource? token = null)
         {
-            await Insert(entity, token);
+            await Insert(house, token);
 
-            await InsertUserToHouse(entity.Id, userId, token);
+            await InsertUserToHouse(house.Id, userId, token);
         }
     }
 }
