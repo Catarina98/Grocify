@@ -3,6 +3,8 @@ using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
+using Microsoft.Data.SqlClient;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GrocifyApp.BLL.Implementations
 {
@@ -58,11 +60,18 @@ namespace GrocifyApp.BLL.Implementations
 
         public async Task InsertUserToHouse(Guid houseId, Guid userId, CancellationTokenSource? token = null)
         {
-            await _userHouseRepository.Insert(new UserHouse
+            try
             {
-                UserId = userId,
-                HouseId = houseId
-            }, token);
+                await _userHouseRepository.Insert(new UserHouse
+                {
+                    UserId = userId,
+                    HouseId = houseId
+                }, token);
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            {
+                throw new CustomException(GenericConsts.Exceptions.InsertDuplicateUserInHouse);
+            }
         }
 
         public async Task InsertWithUser(House house, Guid userId, CancellationTokenSource? token = null)
