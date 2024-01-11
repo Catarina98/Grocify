@@ -2,10 +2,10 @@
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.BLL.Interfaces;
-using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using DALConsts = GrocifyApp.DAL.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers
 {
@@ -19,7 +19,7 @@ namespace GrocifyApp.API.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{email}")]
+        [HttpGet("email/{email}")]
         public async Task<ActionResult<User>> GetUserByEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
@@ -31,7 +31,7 @@ namespace GrocifyApp.API.Controllers
 
             if (getEntity == null)
             {
-                return NotFound(new { error = GenericConsts.Exceptions.EntityDoesNotExist });
+                return NotFound(new { error = DALConsts.GenericConsts.Exceptions.EntityDoesNotExist });
             }
 
             return Ok(getEntity);

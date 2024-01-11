@@ -1,32 +1,49 @@
-﻿using GrocifyApp.BLL.Interfaces;
+﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
+using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
+using GrocifyApp.DAL.Repositories.Implementations;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class UserService : EntitiesService<User>, IUserService
+    public class HouseService : EntitiesService<House>, IHouseService
     {
-        private readonly IUserRepository _uRepository;
+        private readonly IHouseRepository _houseRepository;
+        private readonly IRepository<UserHouse> _userHouseRepository;
 
-        public UserService(IUserRepository repository) : base(repository)
+        public HouseService(IHouseRepository repository, IRepository<UserHouse> userHouseRepository) : base(repository)
         {
-            _uRepository = repository;
+            _houseRepository = repository;
+            _userHouseRepository = userHouseRepository;
         }
 
-        protected override async Task<bool> Validate(User user)
+        public async Task<List<User>> GetUsersFromHouse(Guid houseId)
         {
-            if (await _uRepository.CheckEmailExists(user.Email, user.Id))
+            var users = await _houseRepository.GetUsersFromHouse(houseId);
+
+            if (users == null || users.Count == 0)
             {
-                throw new EmailExistsException();
+                throw new NotFoundException(GenericConsts.Exceptions.NoUsersFoundInHouse);
             }
 
-            return true;
+            return users;
         }
 
-        public async Task<User?> GetUserByEmail(string email)
+        public async Task InsertUserToHouse(Guid houseId, Guid userId, CancellationTokenSource? token = null)
         {
-            return await _uRepository.GetUserByEmail(email);
+            await _userHouseRepository.Insert(new UserHouse
+            {
+                UserId = userId,
+                HouseId = houseId
+            }, token);
+        }
+
+        public async Task InsertWithUser(House entity, Guid userId, CancellationTokenSource? token = null)
+        {
+            await Insert(entity, token);
+
+            await InsertUserToHouse(entity.Id, userId, token);
         }
     }
 }

@@ -35,18 +35,14 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             return user;
         }
 
-        public async Task<List<User>> GetUsersFromHouse(Guid houseId)
+        public async Task<List<User>?> GetUsersFromHouse(Guid houseId)
         {
             var users = await _dbContext.UserHouses
                 .Where(userHouse => userHouse.HouseId == houseId)
-                .Select(userHouse => userHouse.User)
+                .Select(userHouse => userHouse.User!)
                 .ToListAsync();
 
-            if (users == null || !users.Any()) {
-                throw new Exception(GenericConsts.Exceptions.NoUsersFoundInHouse);
-            }
-
-            return users!;
+            return users;
         }
     }
 }

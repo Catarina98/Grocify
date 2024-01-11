@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
-using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Helpers;
 

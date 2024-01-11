@@ -7,6 +7,7 @@
             public const string EmailAlreadyTaken = "This email was already taken.";
             public const string UserPasswordIncorrect = "User or password are incorrect.";
             public const string UnableGetEntity = "Unable to get the entity";
+            public const string UnableGetUser = "Unable to get authenticated user";
         }
 
         public static class RequestModels
