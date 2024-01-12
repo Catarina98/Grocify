@@ -13,7 +13,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
         public async Task<List<Product>?> GetProductsFromHouse(Guid houseId)
         {
             var products = await _dbContext.Products
-                .Where(Product => Product.HouseId == houseId && Product.HouseId == null)
+                .Where(Product => Product.HouseId == houseId || Product.HouseId == null)
                 .ToListAsync();
 
             return products;

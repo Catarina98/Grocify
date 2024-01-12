@@ -21,10 +21,42 @@ namespace GrocifyApp.BLL.Implementations
 
             if (products == null || products.Count == 0)
             {
-                throw new NotFoundException(GenericConsts.Exceptions.NoUsersFoundInHouse);
+                throw new NotFoundException(GenericConsts.Exceptions.NoPrdocutsFoundInHouse);
             }
 
             return products;
+        }
+
+        public override async Task Insert(Product product, CancellationTokenSource? token = null)
+        {
+            try
+            {
+                await InsertProduct(product);
+
+                await base.Insert(product, token);
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            {
+                throw new CustomException(string.Format(GenericConsts.Exceptions.EntityExistsFormat, GenericConsts.Entities.Product));
+            }
+        }
+
+        public async Task InsertProduct(Product product, CancellationTokenSource? token = null)
+        {
+
+            if (product.HouseId != null)
+            {
+                var productsHouse = await GetProductsFromHouse(product.HouseId ?? Guid.Empty);
+
+                if(!productsHouse.Any(x => x.Name == product.Name))
+                {
+                    await base.Insert(product, token);
+                }
+                else
+                {
+                    throw new CustomException(string.Format(GenericConsts.Exceptions.EntityExistsFormat, GenericConsts.Entities.Product));
+                }
+            }
         }
     }
 }

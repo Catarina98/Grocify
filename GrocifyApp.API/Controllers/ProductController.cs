@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
+using GrocifyApp.BLL.Implementations;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Exceptions;
@@ -26,12 +27,12 @@ namespace GrocifyApp.API.Controllers
         /// <response code="200">Success.</response>
         /// <response code="404">House or products not found!</response>
         /// <response code="400">Unable to get products due to validation error.</response>
-        [HttpGet("{id}/products")]
-        public async Task<ActionResult<List<Product>>> GetProductsFromHouse(Guid id)
+        [HttpGet("{houseId}/products")]
+        public async Task<ActionResult<List<Product>>> GetProductsFromHouse(Guid houseId)
         {
             try
             {
-                var products = await _productService.GetProductsFromHouse(id);
+                var products = await _productService.GetProductsFromHouse(houseId);
 
                 return Ok(products);
             }

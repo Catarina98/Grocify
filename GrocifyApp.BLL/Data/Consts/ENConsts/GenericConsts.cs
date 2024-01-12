@@ -6,6 +6,7 @@
         {
             public const string ProductSection = "Product section";
             public const string ProductMeasure = "Product measure";
+            public const string Product = "Product";
         }
 
         public static class Exceptions
