@@ -10,7 +10,7 @@ const LoginForm = () => {
         const data = { email, password };
 
         try {
-            const response = await fetch('https://localhost:7181/api/Auth/login', {
+            const response = await fetch('Auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const LoginForm = () => {
                 // Redirect or perform any other actions after successful login
                 console.log('Login successful');
 
-                navigate('/');
+                navigate('/weatherforecast');
             } else {
                 const errorData = await response.json();
                 console.error('Login failed', errorData);

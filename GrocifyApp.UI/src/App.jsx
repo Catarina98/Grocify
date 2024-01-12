@@ -6,7 +6,6 @@ import './App.css';
 
 function App() {
     const isAuthenticated = localStorage.getItem('token'); // Check if the user is authenticated
-    console.log("is authenticated " + isAuthenticated)
 
     return (
         <Router>

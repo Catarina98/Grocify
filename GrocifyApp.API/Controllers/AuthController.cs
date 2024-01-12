@@ -12,7 +12,7 @@ using System.Security.Cryptography;
 
 namespace GrocifyApp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
