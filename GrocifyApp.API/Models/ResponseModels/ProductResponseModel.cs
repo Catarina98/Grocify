@@ -5,6 +5,9 @@
         /// <example>Id</example>
         public required Guid Id { get; set; }
 
+        /// <example>Product Name</example>
+        public required string Name { get; set; }
+
         /// <example>ProductMeasureId</example>
         public required Guid ProductMeasureId { get; set; }
 

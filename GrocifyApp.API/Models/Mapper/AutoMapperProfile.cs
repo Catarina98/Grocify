@@ -9,7 +9,7 @@ namespace GrocifyApp.API.Models.Mapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<ProductSectionRequestRequestModel, ProductSection>().ReverseMap();
+            CreateMap<ProductSectionRequestModel, ProductSection>().ReverseMap();
             CreateMap<ProductSection, ProductSectionResponseModel>().ReverseMap();
             CreateMap<UserResponseModel, User>().ReverseMap();
             CreateMap<UserRequestModel, User>().ReverseMap();
@@ -17,6 +17,8 @@ namespace GrocifyApp.API.Models.Mapper
             CreateMap<HouseRequestModel, House>().ReverseMap();
             CreateMap<ProductResponseModel, Product>().ReverseMap();
             CreateMap<ProductRequestModel, Product>().ReverseMap();
+            CreateMap<ProductMeasureResponseModel, ProductMeasure>().ReverseMap();
+            CreateMap<ProductMeasureRequestModel, ProductMeasure>().ReverseMap();
         }
     }
 }

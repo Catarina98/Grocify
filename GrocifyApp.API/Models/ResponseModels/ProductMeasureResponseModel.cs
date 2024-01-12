@@ -1,6 +1,6 @@
 ﻿namespace GrocifyApp.API.Models.ResponseModels
 {
-    public class ProductSectionResponseModel
+    public class ProductMeasureResponseModel
     {
         ///<example>Id</example>
         public Guid Id { get; set; }
@@ -8,7 +8,7 @@
         /// <example>Meat</example>
         public required string Name { get; set; }
 
-        /// <example>Chicken Icon</example>
+        /// <example>Vegetables Icon</example>
         public required string Icon { get; set; }
 
         /// <example>HouseId</example>

@@ -13,6 +13,8 @@ namespace GrocifyApp.DAL.Configurations
             builder.HasOne<House>(x => x.House)
                 .WithMany(y => y.ProductSections)
                 .HasForeignKey(x => x.HouseId);
+
+            builder.HasIndex(u => u.Name).IsUnique();
         }
     }
 }

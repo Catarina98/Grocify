@@ -7,7 +7,7 @@ using GrocifyApp.DAL.Models;
 
 namespace GrocifyApp.API.Controllers
 {
-    public class ProductSectionController(IProductSectionService service, IMapper mapper)
-        : GenericController<ProductSection, ProductSectionRequestModel, ProductSectionResponseModel,
+    public class ProductMeasureController(IProductMeasureService service, IMapper mapper)
+        : GenericController<ProductMeasure, ProductMeasureRequestModel, ProductMeasureResponseModel,
             BaseSearchModel>(service, mapper);
 }
