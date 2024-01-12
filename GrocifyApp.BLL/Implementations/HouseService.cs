@@ -3,8 +3,6 @@ using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
-using Microsoft.Data.SqlClient;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GrocifyApp.BLL.Implementations
 {
