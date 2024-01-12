@@ -10,13 +10,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace _1.MiniShop.API.Controllers
+namespace GrocifyApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        //public static new User User = new User() { Name = "name", Email = "email"};
+        public static new UserResponseModel? User;
 
         private readonly IConfiguration _configuration;
 
@@ -99,6 +99,8 @@ namespace _1.MiniShop.API.Controllers
                 PasswordHash = getUser.PasswordHash,
                 PasswordSalt = getUser.PasswordSalt,
             };
+
+            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name };
 
             string token = CreateToken(userRequestModel);
 

@@ -13,6 +13,8 @@ namespace GrocifyApp.API.Models.Mapper
             CreateMap<ProductSection, ProductSectionResponseModel>().ReverseMap();
             CreateMap<UserResponseModel, User>().ReverseMap();
             CreateMap<UserRequestModel, User>().ReverseMap();
+            CreateMap<HouseResponseModel, House>().ReverseMap();
+            CreateMap<HouseRequestModel, House>().ReverseMap();
         }
     }
 }

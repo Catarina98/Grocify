@@ -6,6 +6,7 @@ using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using DALConsts = GrocifyApp.DAL.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers
 {
@@ -33,7 +34,7 @@ namespace GrocifyApp.API.Controllers
 
             if (getEntity == null)
             {
-                return NotFound(new { error = DAL.Data.Consts.ENConsts.GenericConsts.Exceptions.EntityDoesNotExist });
+                return NotFound(new { error = DALConsts.GenericConsts.Exceptions.EntityDoesNotExist });
             }
             
             var response = mapper.Map<TResponseModel>(getEntity);
@@ -76,7 +77,7 @@ namespace GrocifyApp.API.Controllers
 
             try
             {
-                await genericBusiness.Insert(u);
+                await InsertAction(u);
             }
             catch (Exception ex)
             {
@@ -147,6 +148,11 @@ namespace GrocifyApp.API.Controllers
             }
 
             return Ok();
+        }
+
+        protected virtual async Task InsertAction(TEntity entity)
+        {
+            await genericBusiness.Insert(entity);
         }
     }
 }
