@@ -7,8 +7,6 @@ using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using static GrocifyApp.API.Data.Consts.ENConsts.GenericConsts;
 using APIConsts = GrocifyApp.API.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers

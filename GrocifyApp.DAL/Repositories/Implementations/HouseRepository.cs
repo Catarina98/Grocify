@@ -1,8 +1,6 @@
-﻿using GrocifyApp.DAL.Data.Consts.ENConsts;
-using GrocifyApp.DAL.Models;
+﻿using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace GrocifyApp.DAL.Repositories.Implementations
 {
