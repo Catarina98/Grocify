@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function WeatherForecast() {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+
+        navigate('/login');
+    };
+
 
     const [forecasts, setForecasts] = useState();
 
@@ -36,6 +45,7 @@ function WeatherForecast() {
             <h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 

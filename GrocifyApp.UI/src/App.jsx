@@ -11,14 +11,11 @@ function App() {
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path="/login" element={<LoginForm />} />
-                    {/* Protected Route: Redirect to login if not authenticated */}
                     <Route
                         path="/weatherforecast"
-                        element={isAuthenticated ? <WeatherForecast /> : <Navigate to="/login" />}
+                        element={<WeatherForecast />}
                     />
-                    {/* Redirect to login if no match */}
-                    <Route index element={<Navigate to="/weatherforecast" />} />
+                    <Route index element={isAuthenticated ? <Navigate to="/weatherforecast" /> : <LoginForm />} />
                 </Routes>
             </div>
         </Router>
