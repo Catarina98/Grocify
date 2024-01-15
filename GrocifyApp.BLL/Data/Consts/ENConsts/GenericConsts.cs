@@ -15,7 +15,7 @@
             public const string NoUsersFoundInHouse = "No users found in house";
             public const string NoPrdocutsFoundInHouse = "No products found in house";
             public const string DeleteAllUsersFromHouse = "Delete all users from house will remove the house";
-            public const string EntityExistsFormat = "{0} already exists.";
+            public const string DuplicateEntityFormat = "{0} already exists.";
         }
     }
 }

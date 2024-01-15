@@ -37,7 +37,7 @@ namespace GrocifyApp.BLL.Implementations
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException)
             {
-                throw new CustomException(string.Format(GenericConsts.Exceptions.EntityExistsFormat, GenericConsts.Entities.Product));
+                throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.Product));
             }
         }
 
@@ -54,7 +54,7 @@ namespace GrocifyApp.BLL.Implementations
                 }
                 else
                 {
-                    throw new CustomException(string.Format(GenericConsts.Exceptions.EntityExistsFormat, GenericConsts.Entities.Product));
+                    throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.Product));
                 }
             }
         }

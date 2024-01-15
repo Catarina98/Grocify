@@ -20,7 +20,7 @@ namespace GrocifyApp.BLL.Implementations
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException)
             {
-                throw new CustomException(string.Format(GenericConsts.Exceptions.EntityExistsFormat, GenericConsts.Entities.ProductMeasure));
+                throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductMeasure));
             }
         }
     }
