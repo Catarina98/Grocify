@@ -22,9 +22,7 @@ namespace GrocifyApp.DAL.Configurations
                 .WithMany(y => y.Products)
                 .HasForeignKey(x => x.HouseId);
 
-            //builder.HasIndex(u => new { u.Name, u.HouseId }).IsUnique();
-            builder.HasIndex(u => u.Name).IsUnique();
-
+            builder.HasIndex(u => new { u.Name, u.HouseId }).IsUnique();
         }
     }
 }

@@ -16,5 +16,11 @@ namespace GrocifyApp.DAL.Repositories.Implementations
                 .Where(ProductSection => ProductSection.HouseId == houseId || ProductSection.HouseId == null)
                 .ToListAsync();
         }
+
+        public async Task<bool> CheckSectionExistsInHouse(Guid houseId, string name)
+        {
+            return await _dbContext.ProductSections
+                .AnyAsync(ProductSection => (ProductSection.HouseId == houseId || ProductSection.HouseId == null) && ProductSection.Name == name);
+        }
     }
 }

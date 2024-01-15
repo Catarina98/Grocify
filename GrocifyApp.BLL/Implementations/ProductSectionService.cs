@@ -2,6 +2,7 @@
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
+using GrocifyApp.DAL.Repositories.Implementations;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
 namespace GrocifyApp.BLL.Implementations
@@ -30,25 +31,20 @@ namespace GrocifyApp.BLL.Implementations
 
         public override async Task Insert(ProductSection productSection, CancellationTokenSource? token = null)
         {
-            await InsertProductSection(productSection);
-
-            await base.Insert(productSection, token);
-        }
-
-        public async Task InsertProductSection(ProductSection productSection, CancellationTokenSource? token = null)
-        {
             if (productSection.HouseId != null)
             {
-                var productSectionsHouse = await GetProductSectionsFromHouse(productSection.HouseId ?? Guid.Empty);
-
-                if (!productSectionsHouse.Any(x => x.Name == productSection.Name))
-                {
-                    await base.Insert(productSection, token);
-                }
-                else
+                if (await _productSectionRepository.CheckSectionExistsInHouse(productSection.HouseId.Value, productSection.Name))
                 {
                     throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductSection));
                 }
+                else
+                {
+                    await base.Insert(productSection, token);
+                }
+            }
+            else
+            {
+                throw new CustomException(GenericConsts.Exceptions.HouseCannotBeNull);
             }
         }
     }

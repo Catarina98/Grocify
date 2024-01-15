@@ -16,5 +16,11 @@ namespace GrocifyApp.DAL.Repositories.Implementations
                 .Where(ProductMeasure => ProductMeasure.HouseId == houseId || ProductMeasure.HouseId == null)
                 .ToListAsync();
         }
+
+        public async Task<bool> CheckMeasureExistsInHouse(Guid houseId, string name)
+        {
+            return await _dbContext.ProductMeasures
+                .AnyAsync(ProductMeasure => (ProductMeasure.HouseId == houseId || ProductMeasure.HouseId == null) && ProductMeasure.Name == name);
+        }
     }
 }

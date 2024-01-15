@@ -30,25 +30,20 @@ namespace GrocifyApp.BLL.Implementations
 
         public override async Task Insert(Product product, CancellationTokenSource? token = null)
         {
-            await InsertProduct(product);
-
-            await base.Insert(product, token);
-        }
-
-        public async Task InsertProduct(Product product, CancellationTokenSource? token = null)
-        {
             if (product.HouseId != null)
             {
-                var productsHouse = await GetProductsFromHouse(product.HouseId ?? Guid.Empty);
-
-                if(!productsHouse.Any(x => x.Name == product.Name))
-                {
-                    await base.Insert(product, token);
-                }
-                else
+                if (await _productRepository.CheckProductExistsInHouse(product.HouseId.Value, product.Name))
                 {
                     throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.Product));
                 }
+                else
+                {
+                    await base.Insert(product, token);
+                }
+            }
+            else
+            {
+                throw new CustomException(GenericConsts.Exceptions.HouseCannotBeNull);
             }
         }
     }
