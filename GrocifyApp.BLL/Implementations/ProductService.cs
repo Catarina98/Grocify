@@ -9,6 +9,7 @@ namespace GrocifyApp.BLL.Implementations
     public class ProductService : EntitiesService<Product>, IProductService
     {
         private readonly IProductRepository _productRepository;
+        protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.Product;
 
         public ProductService(IProductRepository repository) : base(repository)
         {
@@ -21,7 +22,7 @@ namespace GrocifyApp.BLL.Implementations
 
             if (products == null || products.Count == 0)
             {
-                throw new NotFoundException(GenericConsts.Exceptions.NoPrdocutsFoundInHouse);
+                throw new NotFoundException(GenericConsts.Exceptions.NoProductsFoundInHouse);
             }
 
             return products;
@@ -29,21 +30,13 @@ namespace GrocifyApp.BLL.Implementations
 
         public override async Task Insert(Product product, CancellationTokenSource? token = null)
         {
-            try
-            {
-                await InsertProduct(product);
+            await InsertProduct(product);
 
-                await base.Insert(product, token);
-            }
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
-            {
-                throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.Product));
-            }
+            await base.Insert(product, token);
         }
 
         public async Task InsertProduct(Product product, CancellationTokenSource? token = null)
         {
-
             if (product.HouseId != null)
             {
                 var productsHouse = await GetProductsFromHouse(product.HouseId ?? Guid.Empty);

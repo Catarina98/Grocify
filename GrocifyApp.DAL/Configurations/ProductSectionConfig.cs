@@ -15,6 +15,7 @@ namespace GrocifyApp.DAL.Configurations
                 .HasForeignKey(x => x.HouseId);
 
             builder.HasIndex(u => u.Name).IsUnique();
+            //builder.HasIndex(u => new { u.Name, u.HouseId }).IsUnique();
         }
     }
 }

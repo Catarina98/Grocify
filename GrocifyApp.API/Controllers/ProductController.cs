@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
-using GrocifyApp.BLL.Implementations;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Exceptions;

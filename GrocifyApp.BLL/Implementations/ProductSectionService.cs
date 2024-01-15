@@ -8,19 +8,47 @@ namespace GrocifyApp.BLL.Implementations
 {
     public class ProductSectionService : EntitiesService<ProductSection>, IProductSectionService
     {
-        public ProductSectionService(IRepository<ProductSection> repository) : base(repository)
+        private readonly IProductSectionRepository _productSectionRepository;
+        protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ProductSection;
+
+        public ProductSectionService(IProductSectionRepository repository) : base(repository)
         {
+            _productSectionRepository = repository;
         }
 
-        public override async Task Insert(ProductSection entity, CancellationTokenSource? token = null)
+        public async Task<List<ProductSection>> GetProductSectionsFromHouse(Guid houseId)
         {
-            try
+            var productSections = await _productSectionRepository.GetProductSectionsFromHouse(houseId);
+
+            if (productSections == null || productSections.Count == 0)
             {
-                await base.Insert(entity, token);
+                throw new NotFoundException(GenericConsts.Exceptions.NoSectionsFoundInHouse);
             }
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+
+            return productSections;
+        }
+
+        public override async Task Insert(ProductSection productSection, CancellationTokenSource? token = null)
+        {
+            await InsertProductSection(productSection);
+
+            await base.Insert(productSection, token);
+        }
+
+        public async Task InsertProductSection(ProductSection productSection, CancellationTokenSource? token = null)
+        {
+            if (productSection.HouseId != null)
             {
-                throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductSection));
+                var productSectionsHouse = await GetProductSectionsFromHouse(productSection.HouseId ?? Guid.Empty);
+
+                if (!productSectionsHouse.Any(x => x.Name == productSection.Name))
+                {
+                    await base.Insert(productSection, token);
+                }
+                else
+                {
+                    throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductSection));
+                }
             }
         }
     }
