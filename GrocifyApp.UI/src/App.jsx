@@ -9,15 +9,13 @@ function App() {
 
     return (
         <Router>
-            <div className="App">
-                <Routes>
-                    <Route
-                        path="/weatherforecast"
-                        element={<WeatherForecast />}
-                    />
-                    <Route index element={isAuthenticated ? <Navigate to="/weatherforecast" /> : <LoginForm />} />
-                </Routes>
-            </div>
+            <Routes>
+                <Route
+                    path="/weatherforecast"
+                    element={<WeatherForecast />}
+                />
+                <Route index element={isAuthenticated ? <Navigate to="/weatherforecast" /> : <LoginForm />} />
+            </Routes>
         </Router>
     );
 }

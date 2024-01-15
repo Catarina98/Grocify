@@ -1,8 +1,6 @@
 ﻿#root {
-    max-width: 1280px;
     margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+    padding: 16px;
 }
 
 tr:nth-child(even) {
@@ -16,4 +14,247 @@ tr:nth-child(odd) {
 th, td {
     padding-left: 1rem;
     padding-right: 1rem;
+}
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.input-form{
+    width: 100%;
+    text-align: center;
+}
+
+.input-box {
+    border: none;
+    border-bottom: 1px solid #BCBCBC;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.input-text {
+    padding: 12px 0;
+}
+
+.input-text, .input-label {
+    font-size: 14px;
+    line-height: 21px;
+    border: none;
+    outline: none;
+    color: #767676;
+    padding-left: 0;
+    width: 100%;
+    line-height: initial;
+}
+
+.input-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+    display: flex;
+    align-items: center;
+    color: #767676;
+}
+
+.input-text::placeholder, .input-label::placeholder {
+    opacity: 0
+}
+
+.input-box:focus-within {
+    border-color: #2D2D2D;
+}
+
+.input-box:focus-within .input-text, .input-box:focus-within .input-label {
+    color: #2D2D2D;
+}
+
+.input-text:focus ~ .input-placeholder, .input-text:not(:placeholder-shown) ~ .input-placeholder {
+    transform: scale(0.85) translateY(-24px);
+}
+
+/*section buttons*/
+
+a.primary-button {
+    text-decoration: none;
+    width: max-content
+}
+
+    a.primary-button:hover {
+        color: #fff
+    }
+
+    a.primary-button:active, a.primary-button :focus {
+        color: #fff
+    }
+
+.primary-button, a.primary-button {
+    background-color: #7AC74F;
+    color: #fff
+}
+
+    .primary-button:hover, a.primary-button:hover {
+        background-color: #72AC52;
+    }
+
+    .primary-button:active, .primary-button:focus, a.primary-button:active, a.primary-button:focus {
+        background-color: #618f47;
+        color: #fff
+    }
+
+    .primary-button:disabled, a.primary-button:disabled {
+        background-color: #E4E4E4
+    }
+
+    .primary-button svg, a.primary-button svg {
+        fill: #fff
+    }
+
+    .primary-button.error-btn, a.primary-button.error-btn {
+        background-color: #B24747
+    }
+
+        .primary-button.error-btn:hover, a.primary-button.error-btn:hover {
+            background-color: #802626
+        }
+
+        .primary-button.error-btn:active, .primary-button.error-btn :focus, a.primary-button.error-btn:active, a.primary-button.error-btn :focus {
+            background-color: #661414
+        }
+
+        .primary-button.error-btn:disabled, a.primary-button.error-btn:disabled {
+            background-color: #E4E4E4
+        }
+
+.primary-button {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    line-height: 140%;
+    position: relative;
+    transition: .2s ease;
+    width: 100%;
+}
+
+    .primary-button svg {
+        margin-right: 8px;
+        width: 16px;
+        max-width: 32px;
+        max-height: 32px
+    }
+
+    .primary-button:disabled {
+        pointer-events: none
+    }
+
+
+.subtle-button {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 16px;
+    line-height: 140%;
+    position: relative;
+    transition: .2s ease;
+    color: #7AC74F;
+    background-color: transparent;
+}
+
+    .subtle-button svg {
+        margin-right: 8px;
+        width: 16px;
+        max-width: 32px;
+        max-height: 32px
+    }
+
+    .subtle-button:disabled {
+        pointer-events: none
+    }
+
+    .subtle-button.expandable-text-btn {
+        padding-left: 0;
+        padding-right: 0
+    }
+
+    .subtle-button svg {
+        transition: 0.2s ease;
+        fill: #7AC74F
+    }
+
+    .subtle-button:hover {
+        color: #72AC52;
+        text-decoration: underline
+    }
+
+        .subtle-button:hover svg {
+            fill: #72AC52
+        }
+
+    .subtle-button:focus {
+        color: #719E58;
+        text-decoration: underline
+    }
+
+        .subtle-button:focus svg {
+            fill: #719E58
+        }
+
+    .subtle-button:active {
+        font-weight: 500;
+        color: #719E58;
+        text-decoration: underline
+    }
+
+        .subtle-button:active svg {
+            fill: #719E58
+        }
+
+    .subtle-button:disabled {
+        color: #BCBCBC
+    }
+
+        .subtle-button:disabled svg {
+            fill: #BCBCBC
+        }
+
+
+/*section margins*/
+
+.mt-1{
+    margin-top: 8px;
+}
+.mt-2{
+    margin-top: 16px;
+}
+
+.mt-3{
+    margin-top: 32px;
+}
+.mt-4{
+    margin-top: 64px;
+}
+
+/*section texts*/
+
+.text-center{
+    text-align: center;
 }
