@@ -9,7 +9,6 @@ using DALConsts = GrocifyApp.DAL.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers
 {
-    [Route("api/[controller]")]
     public class UserController : GenericController<User, UserRequestModel, UserResponseModel, BaseSearchModel>
     {
         private readonly IUserService _userService;
