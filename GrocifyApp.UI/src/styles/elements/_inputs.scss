@@ -112,29 +112,6 @@ input:-webkit-autofill {
     }
 }
 
-
-.input-file {
-    color: $color--n500;
-    position: relative;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 8px 0;
-}
-
-.close-icon {
-    opacity: 1;
-    transition: opacity .2s ease;
-    cursor: pointer;
-    display: flex;
-    align-items: flex-start;
-}
-
-.input-app-box.size-m .close-icon {
-    margin-top: 2px;
-}
-
 .input-app-box.adjust textarea {
     height: 20px;
     max-height: 80px;
@@ -336,22 +313,5 @@ input:-webkit-autofill {
     .input-text {
         background-color: transparent;
         line-height: initial;
-    }
-}
-
-.upload-item:has(:not(.upload-item-info)) {
-    overflow: hidden;
-    height: 37px;
-
-    &.completed {
-        height: 0;
-        transition: height 0.2s ease-in-out 3s;
-    }
-}
-
-@media(min-width: 900px){
-    .search-holder .input-box-holder:hover {
-        border: 1px solid $color--n500;
-        background-color: $color--n100;
     }
 }

@@ -67,7 +67,7 @@
 }
 
 .weight {
-    @include FontWeight($font-weight--600);
+    @include FontWeight($font-weight--500);
 
     &--xs {
         @include FontWeight($font-weight--400);
@@ -111,12 +111,6 @@
 
 .text-left {
     text-align: left;
-}
-
-.file-type {
-    font-family: 'Rajdhani', sans-serif;
-    text-transform: uppercase;
-    min-width: 30px;
 }
 
 .text-underline {

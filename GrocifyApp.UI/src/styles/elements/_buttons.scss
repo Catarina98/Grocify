@@ -324,19 +324,6 @@ button:focus {
     }
 }
 
-.disable-reactions-count {
-    .like-btn .reaction-count{
-        display: none;
-    }
-    .like-btn.active .reaction-count{
-        display: block;
-    }
-}
-
-.like-btn{
-    color: $color--n700;
-}
-
 .loading {
     pointer-events: none;
     min-width: 16px;
@@ -422,73 +409,6 @@ button:focus {
     }
 }
 
-@media (max-width: 577px) {
-    .float-button-mobile, .float-button-mobile--inner-btn > button {
-        bottom: 16px;
-    }
-}
-
-@media (min-width: 578px) and (max-width: 899px) {
-    .float-button-mobile, .float-button-mobile--inner-btn > button {
-        bottom: 32px;
-    }
-}
-
 .dropdown-button > svg {
     width: 16px;
-}
-
-@media (max-width: 899px){
-    .float-button-mobile, .float-button-mobile--inner-btn > button{
-        position: fixed;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 3;
-    }
-    
-    .container-body:has(.container-state) .hide-container-state{
-        display: none;
-    }
-    
-    .container-body:has(.float-button-mobile--inner-btn), .container-body:has(.float-button-mobile){
-        margin-bottom: 56px;
-    }
-    
-    .dropdown-button, .dropdown-option-item {        
-        &>*{
-            line-height: 12px!important;
-        }
-        
-        &.move-section > *{
-            line-height: 16px!important;
-        }
-    }
-
-    .dropdown-option-item {
-        height: 40px;
-    }
-
-    .tab-item:first-child:nth-last-child(2), .tab-item:last-child:nth-child(2) {
-        justify-content: center;
-        width: 124px;
-        padding: 0;
-    }
-}
-
-@media (min-width: 900px){
-    .tab-buttons {
-        height: $tab-buttons-height--xl;
-
-        .float-button-mobile, .float-button-mobile--inner-btn {
-            display: flex;
-            align-items: center;
-        }
-    }
-}
-
-@media (min-width: 1900px) {
-    .tab-buttons {
-        padding-left: $body-padding-xl;
-        padding-right: $body-padding-xl;
-    }
 }

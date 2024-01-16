@@ -73,19 +73,3 @@
   @include LineLimit($font-size, $line-limit);
   height: convertSize($line-limit * ($font-size * 1.5));
 }
-
-@mixin IncludeFormStyles(){
-  &-header{
-    padding: 22px 24px;
-    border-bottom: 1px $color--n300 solid;
-  }
-  &-body{
-    padding: $card-padding;
-  }
-  &-footer{
-    display: flex;
-    justify-content: flex-end;
-    padding: 16px 24px;
-    border-top: 1px $color--n300 solid;
-  }
-}
