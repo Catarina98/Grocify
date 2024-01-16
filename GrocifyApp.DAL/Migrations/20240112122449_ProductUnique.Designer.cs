@@ -4,6 +4,7 @@ using GrocifyApp.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    partial class GrocifyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240112122449_ProductUnique")]
+    partial class ProductUnique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,9 +231,9 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.HasIndex("Name", "HouseId")
+                    b.HasIndex("Name")
                         .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("ProductMeasures");
                 });
@@ -253,9 +256,9 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.HasIndex("Name", "HouseId")
+                    b.HasIndex("Name")
                         .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("ProductSections");
                 });
