@@ -15,66 +15,6 @@ button:focus {
     box-shadow: none!important;
 }
 
-.tab-buttons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 $body-padding;
-    height: $tab-buttons-height;
-    border-bottom: $tab-buttons-border-h $color--n300 solid;
-    position: relative;
-    background-color: $color--n100;
-    
-    &.sticky {
-        position: sticky;
-        top: 0;
-        z-index: 2;
-        transition: top .2s ease;
-    }
-
-    .value {
-        border: 1px solid $color--n300;
-        border-radius: 4px;
-        padding: 0 4px;
-        margin-left: 8px;
-        font-weight: 400;
-    }
-
-    .tab-item {
-        line-height: 1.5rem;
-        color: $color--n500;
-        text-decoration: none;
-        background: none;
-        border: none;
-        padding-left: $tab-buttons-padding-horizontal;
-        padding-right: $tab-buttons-padding-horizontal;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-
-        svg {
-            margin-right: 8px;
-            max-width: 14px;
-            fill: $color--n500;
-        }
-
-        &.active {
-            color: $primary-color;
-            border-bottom: 2px solid $primary-color;
-            font-weight: $font-weight--600;
-
-            svg {
-                fill: $primary-color;
-            }
-        }
-
-        &[disabled] {
-            opacity: 0.5;
-        }
-    }
-}
-
 .btn-error {
     color: $color--r300!important;
     svg{
@@ -164,39 +104,6 @@ button:focus {
         border: none;
         margin-left: 26px;
         padding: 0;
-    }
-}
-
-.section-button {
-    @include Button($text-size--xs, $font-weight--400);
-    background-color: $color--n100;
-    color: $color--n600;
-    border: 1px $color--n300 solid;
-    padding: 20px 22px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    &--title {
-        @include Button($text-size--s, $font-weight--500);
-        color: $color--n700;
-    }
-
-    &:hover {
-        border-color: $color--n500;
-    }
-
-    svg {
-        fill: $color--n600;
-        width: 20px;
-        height: 24px;
-        margin: 0;
-
-        &.size-s {
-            width: 12px;
-            height: 12px;
-        }
     }
 }
 

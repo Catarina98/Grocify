@@ -7,8 +7,12 @@ const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = async () => {
+    const handleLogin = async (event) => {
         const data = { email, password };
+
+        const loginButton = event.target;
+
+        loginButton.classList.add("loading");
 
         try {
             const response = await fetch('api/Auth/login', {
@@ -21,9 +25,9 @@ const LoginForm = () => {
 
             if (response.ok) {
                 const t = await response.text();
-                
+
                 localStorage.setItem('token', t);
-                
+
                 console.log('Login successful');
 
                 navigate('/weatherforecast');
@@ -33,6 +37,8 @@ const LoginForm = () => {
             }
         } catch (error) {
             console.error('Error during login', error);
+        } finally {
+            loginButton.classList.remove("loading");
         }
     };
 
@@ -60,7 +66,8 @@ const LoginForm = () => {
                 </div>
 
                 <button type="button" className="primary-button" onClick={handleLogin}>
-                    Sign in
+                    <span>Sign in</span>
+                    <div className="loading-button white"></div>
                 </button>
             </form>
 
