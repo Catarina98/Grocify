@@ -5,7 +5,8 @@ import WeatherForecast from './components/WeatherForecast';
 import './App.css';
 
 function App() {
-    const isAuthenticated = localStorage.getItem('token'); // Check if the user is authenticated
+    //Check if the user is authenticated
+    const isAuthenticated = localStorage.getItem('token');
 
     return (
         <Router>
