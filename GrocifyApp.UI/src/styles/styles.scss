@@ -1,0 +1,14 @@
+@import "core/variables/_geral-var.scss";
+@import "elements/_buttons.scss";
+@import "elements/_colors.scss";
+@import "elements/_inputs.scss";
+@import "elements/_texts.scss";
+
+body {
+    font-family: $text-font-family;
+    margin: auto;
+}
+
+.container-page {
+    padding: $body-padding $body-padding 0;
+}

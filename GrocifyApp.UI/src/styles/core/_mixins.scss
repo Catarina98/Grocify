@@ -1,0 +1,91 @@
+﻿@import "functions";
+@import "variables/colors-var";
+@import "variables/geral-var";
+
+@function convertSize($value) {
+    @return $value + px;
+}
+
+@mixin FontSize($font-size) {
+  font-size: convertSize($font-size);
+  line-height: convertSize($font-size * 1.5);
+}
+
+@mixin FontWeight($font-weight) {
+  font-weight: $font-weight;
+}
+
+@mixin Button($font-size, $font-weight) {
+  @include FontSize($font-size);
+  @include FontWeight($font-weight);
+  outline: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  line-height: 140%;
+  position: relative;
+  transition: .2s ease;
+
+  svg {
+    margin-right: 8px;
+    width: 16px;
+    max-width: 32px;
+    max-height: 32px;
+  }
+  
+  &:disabled{
+    pointer-events: none;
+  }
+}
+
+@mixin ErrorButton() {
+    background-color: $color--r300;
+
+    &:hover {
+        background-color: $color--r400;
+    }
+
+    &:active, :focus {
+        background-color: $color--r500;
+    }
+
+    &:disabled {
+        background-color: $color--n300;
+    }
+}
+
+@mixin LineLimit($font-size, $line-limit) {
+  font-size: convertSize($font-size);
+  line-height: convertSize($font-size * 1.5);
+  display: -webkit-box;
+  -webkit-line-clamp: $line-limit;
+  max-height: convertSize($line-limit * ($font-size * 1.5));
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin LineLimitFixHeight($font-size, $line-limit) {
+  @include LineLimit($font-size, $line-limit);
+  height: convertSize($line-limit * ($font-size * 1.5));
+}
+
+@mixin IncludeFormStyles(){
+  &-header{
+    padding: 22px 24px;
+    border-bottom: 1px $color--n300 solid;
+  }
+  &-body{
+    padding: $card-padding;
+  }
+  &-footer{
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 24px;
+    border-top: 1px $color--n300 solid;
+  }
+}

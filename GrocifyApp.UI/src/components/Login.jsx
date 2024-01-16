@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css';
 import ReactLogo from '../assets/logo.svg';
 
 const LoginForm = () => {
@@ -38,7 +37,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div>
+        <div className="container-page">
             <img src={ReactLogo} alt="React Logo" />
             <form className="input-form">
                 <h2>Sign in</h2>

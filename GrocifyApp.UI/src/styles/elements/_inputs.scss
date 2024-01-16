@@ -1,0 +1,357 @@
+﻿@import "../Core/variables/_colors-var.scss";
+@import "../Core/variables/_texts-var.scss";
+@import "../Core/_mixins.scss";
+
+::-ms-reveal {
+    display: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+input:-webkit-autofill {
+    -webkit-text-fill-color: $color--n500 !important;
+}
+
+.hidden-input-file {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    opacity: 0;
+    font-size: 0;
+}
+
+.input {
+    &-box {
+        border: none;
+        border-bottom: 1px solid $color--n400;
+        margin-bottom: 24px;
+        position: relative;
+
+        &:focus-within {
+            border-color: $color--n700;
+
+            .input-text, .input-label {
+                color: $color--n700;
+            }
+        }
+
+        &:not(:hover, :focus-within) {
+            .close-icon {
+                opacity: 0 !important;
+            }
+        }
+
+        svg {
+            fill: $color--n700;
+        }
+    }
+
+    &-box-holder {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &-text, &-label {
+        @include FontSize($text-size--s);
+        border: none;
+        outline: none;
+        color: $color--n500;
+        padding-left: 0;
+        width: 100%;
+        line-height: initial;
+
+        &::placeholder {
+            opacity: 0;
+        }
+    }
+
+    &-text {
+        padding: 12px 0;
+    }
+
+    &-label {
+        @include FontSize($text-size--xs);
+        @include FontWeight($font-weight--600);
+        display: none;
+    }
+
+    &-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        pointer-events: none;
+        border: 1px solid transparent;
+        transform-origin: 0 0;
+        transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+        display: flex;
+        align-items: center;
+        color: $color--n500;
+    }
+
+    &-text {
+        &:focus, &:not(:placeholder-shown) {
+            ~ .input-placeholder {
+                transform: scale(0.85) translateY(-24px);
+            }
+        }
+    }
+
+    &-width-100 {
+        width: 100%;
+    }
+}
+
+
+.input-file {
+    color: $color--n500;
+    position: relative;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.close-icon {
+    opacity: 1;
+    transition: opacity .2s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+}
+
+.input-app-box.size-m .close-icon {
+    margin-top: 2px;
+}
+
+.input-app-box.adjust textarea {
+    height: 20px;
+    max-height: 80px;
+    padding: 0;
+}
+
+.input-text, .input-app-content {
+    &::placeholder {
+        top: 0;
+        position: absolute;
+    }
+
+    &:placeholder-shown {
+        ~ .close-icon, ~ .input-app-required .close-icon {
+            opacity: 0;
+            cursor: default;
+
+            svg {
+                cursor: default;
+            }
+        }
+    }
+}
+
+.app-form{
+    .input-box, &.input-box {
+        border: none;
+    }
+    
+    &.required .input-box-holder:after{
+        content: "Required";
+        @include FontSize($text-size--xs);
+        color: $color--n700;
+    }
+    
+    .input-label {
+        @include FontSize($text-size--xs);
+        color: $color--n500;
+        display: flex;
+        margin-bottom: 8px;
+    }
+
+    .input-box-holder {
+        border: 1px solid $color--n400;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .input-text {
+        padding-bottom: 0;
+        padding-top: 0;
+        position: relative;
+
+        &::placeholder {
+            opacity: 1;
+        }
+    }
+
+    .input-placeholder{
+        display: none;
+    }
+}
+
+/*NEW*/
+.input-app {
+    color: $color--n500;
+
+    &-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+        position: relative;
+    }
+
+    &-box {
+        border: 1px solid $color--n400;
+        position: relative;
+        border-radius: 4px;
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+
+        &.size-m {
+            display: flex;
+            align-items: flex-start;
+            height: 96px;
+        }
+
+        &:not(.no-hover):hover, &:focus-within, &:has(.dropdown-trigger.active) {
+            border-color: $color--n500;
+            color: $color--n700;
+        }
+
+        &:not(:hover, :focus-within) {
+            .close-icon {
+                opacity: 0 !important;
+            }
+        }
+
+        svg {
+            fill: $color--n700;
+            cursor: pointer;
+        }
+
+        .icon {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+        }
+    }
+
+    &-label {
+        @include FontSize($text-size--xs);
+        color: $color--n500;
+        display: flex;
+        border: none;
+        outline: none;
+        padding-left: 0;
+        width: 100%;
+        pointer-events: none;
+        transform-origin: 0 0;
+        transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    &-content {
+        @include FontSize($text-size--s);
+        border: none;
+        width: 100%;
+        background-color: transparent;
+        outline: none;
+        height: 100%;
+        position: relative;
+
+        &:not(:placeholder-shown) {
+            ~ .close-icon, ~ .input-app-required .close-icon {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &-required {
+        @include FontSize($text-size--xs);
+        color: $color--n700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: min-content;
+    }
+
+    &-icon {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.no-hover {
+    border-color: $color--n400;
+    color: $color--n500;
+}
+
+.show-hide-icon {
+    cursor: pointer;
+
+    .line {
+        border-bottom: 1px solid $color--n700;
+        width: 19px;
+        transform: rotate(-45deg) translate(6px, -7px);
+        transition: .2s ease;
+    }
+}
+
+.input-text[type="password"] ~ .show-hide-icon {
+    .line {
+        opacity: 0;
+    }
+}
+
+.search-holder {    
+    &:not(:focus-within) .dropdown-search {
+        display: none;
+    }
+
+    .input-box-holder {
+        border: 1px solid $color--n200;
+        background-color: $color--n200;
+
+        &:focus-within {
+            border: 1px solid $color--n500;
+            background-color: $color--n100;
+        }
+    }
+
+    .input-text {
+        background-color: transparent;
+        line-height: initial;
+    }
+}
+
+.upload-item:has(:not(.upload-item-info)) {
+    overflow: hidden;
+    height: 37px;
+
+    &.completed {
+        height: 0;
+        transition: height 0.2s ease-in-out 3s;
+    }
+}
+
+@media(min-width: 900px){
+    .search-holder .input-box-holder:hover {
+        border: 1px solid $color--n500;
+        background-color: $color--n100;
+    }
+}

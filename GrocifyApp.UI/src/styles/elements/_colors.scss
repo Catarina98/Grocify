@@ -1,0 +1,79 @@
+﻿@import "../Core/variables/_colors-var.scss";
+
+.color {
+
+    &-n100 {
+        color: $color--n100;
+    }
+
+    &-n500 {
+        color: $color--n500;
+    }
+
+    &-n600 {
+        color: $color--n600;
+    }
+
+    &-n400 {
+        color: $color--n400;
+    }
+
+    &-n700 {
+        color: $color--n700;
+    }
+
+    &-b400 {
+        color: $primary-color--hover;
+    }
+
+    &-n100 {
+        color: $color--n100;
+    }
+
+    &-b300 {
+        color: $primary-color;
+    }
+    
+    &-r300 {
+        color: $color--r300;
+    }
+}
+
+.icon-color {
+    fill: $color--n700;
+
+    &--n100 {
+        fill: $color--n100;
+    }
+
+    &--n500 {
+        fill: $color--n500;
+    }
+
+    &--n400 {
+        fill: $color--n400;
+    }
+
+    &--n600 {
+        fill: $color--n600;
+    }
+
+    &--r300 {
+        fill: $color--r300;
+    }
+
+    &--n600 {
+        fill: $color--n600;
+    }
+
+    &--b400 {
+        fill: $primary-color--hover;
+    }
+}
+
+.icon-background{
+    &--g300{
+        background-color: $color--g300;
+        fill: $color--n100;
+    }
+}

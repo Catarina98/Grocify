@@ -1,0 +1,124 @@
+﻿@import "../Core/variables/_colors-var.scss";
+@import "../Core/variables/_texts-var.scss";
+@import "../Core/_mixins.scss";
+
+.title {
+    color: $color--n600;
+    @include FontSize($text-size--m);
+
+    &--s {
+        @include FontSize($text-size--s);
+    }
+
+    &--l {
+        @include FontSize($text-size--l);
+    }
+
+    &--xl {
+        @include FontSize($text-size--xl);
+    }
+
+    &--xxl {
+        @include FontSize($text-size--xxl);
+    }
+
+    &--xxxl {
+        @include FontSize($text-size--3xl);
+    }
+
+    &--s28 {
+        @include FontSize($text-size--28);
+    }
+}
+
+.text {
+    color: $color--n600;
+    @include FontSize($text-size--s);
+    @include FontWeight($font-weight--400);
+
+    &--xxs {
+        @include FontSize($text-size--xxs);
+    }
+
+
+    &--xs {
+        @include FontSize($text-size--xs);
+    }
+
+    &--m {
+        @include FontSize($text-size--m);
+    }
+
+    &--l {
+        @include FontSize($text-size--l);
+    }
+
+    &::placeholder {
+        color: $color--n500;
+    }
+
+    &.error {
+        color: $color--r300;
+    }
+    
+    &-right{
+        text-align: right;
+    }
+}
+
+.weight {
+    @include FontWeight($font-weight--600);
+
+    &--xs {
+        @include FontWeight($font-weight--400);
+    }
+
+    &--m {
+        @include FontWeight($font-weight--600);
+    }
+
+    &--l {
+        @include FontWeight($font-weight--700);
+    }
+
+    &--xl {
+        @include FontWeight($font-weight--bolder);
+    }
+}
+
+.text-ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.error{
+    color: $color--r300;
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+    
+    svg{
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        fill: $color--r300;
+        margin-right: 4px;
+    }
+}
+
+.text-left {
+    text-align: left;
+}
+
+.file-type {
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    min-width: 30px;
+}
+
+.text-underline {
+    text-decoration: underline;
+}
