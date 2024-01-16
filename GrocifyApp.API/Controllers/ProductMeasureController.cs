@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GrocifyApp.API.Controllers
 {
-    [Route("api/[controller]")]
     public class ProductMeasureController : GenericController<ProductMeasure, ProductMeasureRequestModel, ProductMeasureResponseModel, BaseSearchModel>
     {
         private readonly IProductMeasureService _productMeasureService;

@@ -29,7 +29,8 @@ namespace GrocifyApp.BLL.Implementations
             return productMeasures;
         }
 
-        public override async Task Insert(ProductMeasure productMeasure, CancellationTokenSource? token = null)
+
+        protected override async Task<bool> Validate(ProductMeasure productMeasure)
         {
             if (productMeasure.HouseId != null)
             {
@@ -37,15 +38,13 @@ namespace GrocifyApp.BLL.Implementations
                 {
                     throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductMeasure));
                 }
-                else
-                {
-                    await base.Insert(productMeasure, token);
-                }
             }
             else
             {
                 throw new CustomException(GenericConsts.Exceptions.HouseCannotBeNull);
             }
+
+            return true;
         }
     }
 }

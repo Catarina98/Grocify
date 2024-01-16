@@ -29,7 +29,7 @@ namespace GrocifyApp.BLL.Implementations
             return productSections;
         }
 
-        public override async Task Insert(ProductSection productSection, CancellationTokenSource? token = null)
+        protected override async Task<bool> Validate(ProductSection productSection)
         {
             if (productSection.HouseId != null)
             {
@@ -37,15 +37,13 @@ namespace GrocifyApp.BLL.Implementations
                 {
                     throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductSection));
                 }
-                else
-                {
-                    await base.Insert(productSection, token);
-                }
             }
             else
             {
                 throw new CustomException(GenericConsts.Exceptions.HouseCannotBeNull);
             }
+
+            return true;
         }
     }
 }
