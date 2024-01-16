@@ -19,25 +19,19 @@ const LoginForm = () => {
             });
 
             if (response.ok) {
-                // Assuming your API returns a token
                 const t = await response.text();
-
-                // You can store the token in local storage or a state management library
-                // For simplicity, storing in local storage here
+                
                 localStorage.setItem('token', t);
-
-                // Redirect or perform any other actions after successful login
+                
                 console.log('Login successful');
 
                 navigate('/weatherforecast');
             } else {
                 const errorData = await response.json();
                 console.error('Login failed', errorData);
-                // Handle error, display error message, etc.
             }
         } catch (error) {
             console.error('Error during login', error);
-            // Handle error, display error message, etc.
         }
     };
 
