@@ -98,25 +98,3 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
-
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseCors(builder =>
-//    {
-//        builder
-//        .AllowAnyOrigin()
-//        .AllowAnyMethod()
-//        .AllowAnyHeader();
-//    });
-//}
-//else
-//{
-//    app.UseCors(options =>
-//    {
-//        options
-//        .WithOrigins(clientUrl)
-//        .AllowAnyMethod()
-//        .AllowAnyHeader();
-//    });
-//}

@@ -105,7 +105,6 @@ namespace GrocifyApp.API.Controllers
             string token = CreateToken(userRequestModel);
 
             return Ok(token);
-            //return token;
         }
 
         private string CreateToken(UserRequestModel userAPI)

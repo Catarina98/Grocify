@@ -1,4 +1,6 @@
-﻿using GrocifyApp.BLL.Interfaces;
+﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
+using GrocifyApp.BLL.Interfaces;
+using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
@@ -8,6 +10,7 @@ namespace GrocifyApp.BLL.Implementations
     public class EntitiesService<T> : IEntitiesService<T> where T : BaseEntity
     {
         private readonly IRepository<T> repository;
+        protected virtual string duplicateEntityException { get; set; } = GenericConsts.Entities.Entity;
 
         public EntitiesService(IRepository<T> repository)
         {
@@ -42,8 +45,15 @@ namespace GrocifyApp.BLL.Implementations
         public async Task Insert(T entity, CancellationTokenSource? token = null)
         {
             if (await Validate(entity))
-            {
-                await repository.Insert(entity, token);
+            {                
+                try
+                {
+                    await repository.Insert(entity, token);
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+                {
+                    throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, duplicateEntityException));
+                }
             }
         }
 
