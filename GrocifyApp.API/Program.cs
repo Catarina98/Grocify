@@ -12,6 +12,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+var clientUrl = builder.Configuration.GetSection("AppSettings:ClientOrigin").Value!;
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
+        {
+            builder.WithOrigins(clientUrl) // Add your React app's origin
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -50,6 +63,8 @@ GrocifyApp.DAL.DependencyInjectionRegistry.ConfigureServices(builder.Configurati
 GrocifyApp.BLL.DependencyInjectionRegistry.ConfigureServices(builder.Services);
 
 var app = builder.Build();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
