@@ -4,6 +4,7 @@ using GrocifyApp.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    partial class GrocifyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240117133617_ShoppingListDefaultListUnique")]
+    partial class ShoppingListDefaultListUnique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,15 +334,11 @@ namespace GrocifyApp.DAL.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.HasIndex("DefaultList")
+                        .IsUnique()
+                        .HasFilter("[DefaultList] IS NOT NULL");
+
                     b.HasIndex("HouseId");
-
-                    b.HasIndex("DefaultList", "HouseId")
-                        .IsUnique()
-                        .HasFilter("DefaultList = 1");
-
-                    b.HasIndex("Name", "HouseId")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
                     b.ToTable("ShoppingLists");
                 });

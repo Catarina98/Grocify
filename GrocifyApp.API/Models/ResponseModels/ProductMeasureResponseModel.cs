@@ -3,7 +3,7 @@
     public class ProductMeasureResponseModel
     {
         ///<example>Id</example>
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } //required?
 
         /// <example>Meat</example>
         public required string Name { get; set; }

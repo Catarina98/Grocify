@@ -42,7 +42,7 @@ namespace GrocifyApp.BLL.Implementations
             return await repository.GetBySearchModel(filter, token);
         }
 
-        public async Task Insert(T entity, CancellationTokenSource? token = null)
+        public virtual async Task Insert(T entity, CancellationTokenSource? token = null)
         {
             if (await Validate(entity))
             {                
