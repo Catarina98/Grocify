@@ -25,10 +25,6 @@
     &--xxxl {
         @include FontSize($text-size--3xl);
     }
-
-    &--s28 {
-        @include FontSize($text-size--28);
-    }
 }
 
 .text {
@@ -39,7 +35,6 @@
     &--xxs {
         @include FontSize($text-size--xxs);
     }
-
 
     &--xs {
         @include FontSize($text-size--xs);
