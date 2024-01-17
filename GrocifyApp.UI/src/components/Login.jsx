@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 import ReactLogo from '../assets/logo_with_text.svg';
+import ArrowIcon from '../assets/arrow-ic.svg';
 import './Login.jsx.scss';
 import LoginConsts from '../consts/enconsts/LoginConsts';
 import ApiEndpoints from '../consts/ApiEndpoints';
-import ArrowIcon from '../assets/arrow-ic.svg';
-
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -82,7 +82,7 @@ const LoginForm = () => {
                     <span className="btn-text">{LoginConsts.SignUp}</span>
 
                     <div className="btn-icon">
-                        <img className="arrow-right" src={ArrowIcon} alt="Sign up" />
+                        <ReactSVG src={ArrowIcon} className="arrow-right" />
                     </div>
                 </a>
             </div>

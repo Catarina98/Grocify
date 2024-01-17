@@ -30,13 +30,6 @@
     position: relative;
     transition: .2s ease;
 
-    svg {
-        margin-right: 8px;
-        width: 16px;
-        max-width: 32px;
-        max-height: 32px;
-    }
-
     &:disabled {
         pointer-events: none;
     }
@@ -49,13 +42,17 @@
         display: flex;
     }
 
+    .btn-text {
+        margin-right: 8px;
+    }
+
     &:hover {
         .btn-text {
-            transform: translateX(-10px);
+            transform: translateX(-6px);
         }
 
         .btn-icon {
-            transform: translateX(10px);
+            transform: translateX(6px);
         }
     }
 }
