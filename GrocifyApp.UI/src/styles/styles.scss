@@ -1,8 +1,9 @@
 @import "core/variables/_geral-var.scss";
 @import "elements/_buttons.scss";
-@import "elements/_colors.scss";
 @import "elements/_inputs.scss";
 @import "elements/_texts.scss";
+@import "elements/_colors.scss";
+@import "elements/_icons.scss";
 
 body {
     font-family: $text-font-family;

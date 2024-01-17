@@ -125,7 +125,6 @@ button:focus {
     @include Button($text-size--m, $font-weight--400);
     color: $primary-color;
     background-color: transparent;
-    justify-content: normal;
     
     &.expandable-text-btn{
         padding-left: 0;

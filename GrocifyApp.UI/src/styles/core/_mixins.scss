@@ -16,30 +16,48 @@
 }
 
 @mixin Button($font-size, $font-weight) {
-  @include FontSize($font-size);
-  @include FontWeight($font-weight);
-  outline: none;
-  border: none;
-  box-shadow: none;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 7px 16px;
-  line-height: 140%;
-  position: relative;
-  transition: .2s ease;
+    @include FontSize($font-size);
+    @include FontWeight($font-weight);
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 16px;
+    line-height: 140%;
+    position: relative;
+    transition: .2s ease;
 
-  svg {
-    margin-right: 8px;
-    width: 16px;
-    max-width: 32px;
-    max-height: 32px;
-  }
-  
-  &:disabled{
-    pointer-events: none;
-  }
+    svg {
+        margin-right: 8px;
+        width: 16px;
+        max-width: 32px;
+        max-height: 32px;
+    }
+
+    &:disabled {
+        pointer-events: none;
+    }
+
+    .btn-text, .btn-icon {
+        transition: transform .2s ease;
+    }
+
+    .btn-icon {
+        display: flex;
+    }
+
+    &:hover {
+        .btn-text {
+            transform: translateX(-10px);
+        }
+
+        .btn-icon {
+            transform: translateX(10px);
+        }
+    }
 }
 
 @mixin ErrorButton() {

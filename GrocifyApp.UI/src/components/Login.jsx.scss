@@ -1,0 +1,29 @@
+.input-form {
+    text-align: center;
+    margin-top: 56px;
+    margin-bottom: 32px;
+}
+
+.form-footer{
+    text-align: center;
+}
+
+.input-form, .form-footer{
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.primary-button{
+    width: 100%;
+    margin-top: 64px;
+}
+
+.login-desc {
+    margin-top: 4px;
+    margin-bottom: 32px;
+}
+
+.subtle-button .icon{
+    transform: rotate(-90deg);
+}
