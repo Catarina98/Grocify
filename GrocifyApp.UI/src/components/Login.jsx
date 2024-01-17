@@ -4,13 +4,14 @@ import { ReactSVG } from 'react-svg';
 import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
 import './Login.jsx.scss';
-import LoginConsts from '../consts/enconsts/LoginConsts';
 import ApiEndpoints from '../consts/ApiEndpoints';
+import { GenericConsts, LoginConsts } from '../consts/ENConsts';
 
 const LoginForm = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleLogin = async (event) => {
         const data = { email, password };
@@ -38,10 +39,14 @@ const LoginForm = () => {
                 navigate('/weatherforecast');
             } else {
                 const errorData = await response.json();
-                console.error('Login failed', errorData);
+                console.error('Login failed', errorData.errors[0]);
+
+                setErrorMessage(errorData.errors[0]);
             }
         } catch (error) {
             console.error('Error during login', error);
+
+            setErrorMessage(GenericConsts.Error);
         } finally {
             loginButton.classList.remove("loading");
         }
@@ -49,10 +54,11 @@ const LoginForm = () => {
 
     return (
         <div className="container-page">
-            <img src={ReactLogo} alt="React Logo" />
+            <ReactSVG src={ReactLogo} />
             <form className="input-form">
                 <div className="title title--xl">{LoginConsts.SignIn}</div>
                 <p className="text color-n500 login-desc">{LoginConsts.EnterDetails}</p>
+                <p id="error" className="text error">{errorMessage}</p>
                 <div className="input-box mt-3">
                     <input className="input-text"
                         type="email" placeholder="name@example.com"
