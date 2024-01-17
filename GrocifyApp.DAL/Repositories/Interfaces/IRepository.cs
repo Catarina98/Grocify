@@ -10,6 +10,7 @@ namespace GrocifyApp.DAL.Repositories.Interfaces
         Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null);
         Task<T?> Get(Guid id);
         Task Insert(T entity, CancellationTokenSource? token = null);
+        Task InsertMultiple(IEnumerable<T> entitiesToAdd, CancellationTokenSource? token = null);
         Task Update(T entity, CancellationTokenSource? token = null);
         Task Delete(T? entity, CancellationTokenSource? token = null);
         Task DeleteById(Guid id, CancellationTokenSource? token = null);

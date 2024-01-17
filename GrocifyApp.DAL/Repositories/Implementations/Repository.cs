@@ -64,6 +64,18 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             await SaveChangesAsync(token);
         }
 
+        public async Task InsertMultiple(IEnumerable<T> entitiesToAdd, CancellationTokenSource? token = null)
+        {
+            if(entitiesToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(entitiesToAdd));
+            }
+
+            entities.AddRange(entitiesToAdd);
+
+            await SaveChangesAsync(token);
+        }
+
         public async Task Update(T entity, CancellationTokenSource? token = null)
         {
             if (entity == null)

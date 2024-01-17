@@ -10,11 +10,14 @@ namespace GrocifyApp.BLL.Implementations
     public class ShoppingListService : EntitiesService<ShoppingList>, IShoppingListService
     {
         private readonly IShoppingListRepository _shoppingListRepository;
+        private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ShoppingList;
 
-        public ShoppingListService(IShoppingListRepository repository) : base(repository)
+        public ShoppingListService(IShoppingListRepository repository, IRepository<ShoppingListProduct> shoppingListProductRepository) : base(repository)
         {
             _shoppingListRepository = repository;
+
+            _shoppingListProductRepository = shoppingListProductRepository;
         }
 
         public async Task<List<ShoppingList>> GetShoppingListsFromHouse(Guid houseId)
@@ -37,6 +40,34 @@ namespace GrocifyApp.BLL.Implementations
             }
 
             return true;
+        }
+
+        public async Task AddProductsToShoppingList(Guid id, IEnumerable<ShoppingListProduct> shoppingListProducts, CancellationTokenSource? token = null)
+        {            
+            //get the products from list and check if already exist the products to add, if so increment the quantity
+            //need to create on repo getproducts
+            //on remove products do the same but instead of increment, decrement the quantity
+
+            //var shoppingListProductsNew = new List<ShoppingListProduct>();
+
+            //foreach (var sLProduct in shoppingListProducts)
+            //{
+            //    shoppingListProductsNew.Add(new ShoppingListProduct
+            //    {
+            //        Quantity = sLProduct.Quantity,
+            //        ProductId = sLProduct.ProductId,
+            //        ShoppingListId = id
+            //    });
+            //}
+
+            try
+            {
+                await _shoppingListProductRepository.InsertMultiple(shoppingListProducts, token);
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            {
+                throw new CustomException(GenericConsts.Exceptions.InsertDuplicateUserInHouse);
+            }
         }
     }
 }
