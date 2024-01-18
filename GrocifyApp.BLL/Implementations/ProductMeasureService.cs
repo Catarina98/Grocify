@@ -48,7 +48,6 @@ namespace GrocifyApp.BLL.Implementations
 
         private Expression<Func<ProductMeasure, bool>> GetFilterCondition(Guid houseId, string? name = null)
         {
-
             Expression<Func<ProductMeasure, bool>> filter = productMeasure => productMeasure.HouseId == houseId || productMeasure.HouseId == null;
 
             if (!string.IsNullOrEmpty(name))
