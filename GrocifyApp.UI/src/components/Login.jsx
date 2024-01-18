@@ -5,7 +5,9 @@ import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
 import './Login.jsx.scss';
 import ApiEndpoints from '../consts/ApiEndpoints';
+import AppRoutes from '../consts/AppRoutes';
 import { GenericConsts, LoginConsts } from '../consts/ENConsts';
+import CustomInput from './CustomInput';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -54,27 +56,26 @@ const LoginForm = () => {
 
     return (
         <div className="container-page">
-            <ReactSVG src={ReactLogo} />
+            <ReactSVG className="react-svg" src={ReactLogo} />
             <form className="input-form">
-                <div className="title title--xl">{LoginConsts.SignIn}</div>
+                <div className="title title--xl color-n700">{LoginConsts.SignIn}</div>
                 <p className="text color-n500 login-desc">{LoginConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
-                <div className="input-box mt-3">
-                    <input className="input-text"
-                        type="email" placeholder="name@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <label className="input-placeholder">{LoginConsts.Email}</label>
-                </div>
-                <div className="input-box">
-                    <input className="input-text"
-                        type="password" placeholder="+assword"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <label className="input-placeholder">{LoginConsts.Password}</label>
-                </div>
+
+
+                <CustomInput className ="mt-3"
+                    type="email"
+                    placeholder="name@example.com"
+                    value={email}
+                    label={LoginConsts.Email}
+                    onChange={(e) => setEmail(e.target.value)} />
+
+                <CustomInput
+                    type="password"
+                    placeholder="password"
+                    value={password}
+                    label={LoginConsts.Password}
+                    onChange={(e) => setPassword(e.target.value)} />
 
                 <button type="button" className="primary-button btn--xl" onClick={handleLogin}>
                     <span>{LoginConsts.SignIn}</span>
@@ -84,9 +85,8 @@ const LoginForm = () => {
 
             <div className="form-footer">
                 <div className="text color-n500">{LoginConsts.HaveAccount}</div>
-                <a className="subtle-button" href="/register">
-                    <span className="btn-text">{LoginConsts.SignUp}</span>
-
+                <a className="subtle-button" href={AppRoutes.Register}>
+                    <span className="btn-text btn--m">{LoginConsts.SignUp}</span>
                     <div className="btn-icon">
                         <ReactSVG src={ArrowIcon} className="arrow-right" />
                     </div>
