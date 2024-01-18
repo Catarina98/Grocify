@@ -10,10 +10,11 @@ namespace GrocifyApp.BLL.Implementations
     public class ShoppingListService : EntitiesService<ShoppingList>, IShoppingListService
     {
         private readonly IShoppingListRepository _shoppingListRepository;
-        private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
+        //private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
+        private readonly IShoppingListProductRepository _shoppingListProductRepository;
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ShoppingList;
 
-        public ShoppingListService(IShoppingListRepository repository, IRepository<ShoppingListProduct> shoppingListProductRepository) : base(repository)
+        public ShoppingListService(IShoppingListRepository repository, IShoppingListProductRepository shoppingListProductRepository) : base(repository)
         {
             _shoppingListRepository = repository;
 
@@ -43,31 +44,60 @@ namespace GrocifyApp.BLL.Implementations
         }
 
         public async Task AddProductsToShoppingList(Guid id, IEnumerable<ShoppingListProduct> shoppingListProducts, CancellationTokenSource? token = null)
-        {            
+        {
             //get the products from list and check if already exist the products to add, if so increment the quantity
             //need to create on repo getproducts
             //on remove products do the same but instead of increment, decrement the quantity
 
-            //var shoppingListProductsNew = new List<ShoppingListProduct>();
+            //OPTION 1
+            var sLProductsToInsert = new List<ShoppingListProduct>();
 
+            var sLProductsToUpdate = new List<ShoppingListProduct>();
+
+            //get all products in list with shoppingListProducts as argument
+
+            foreach (var sLProduct in shoppingListProducts)
+            {
+                var getSLProduct = await _shoppingListProductRepository.CheckProductExistInList(id, sLProduct.ProductId);
+
+                if (getSLProduct != null)
+                {
+                    getSLProduct.Quantity += sLProduct.Quantity;
+
+                    await _shoppingListProductRepository.Update(getSLProduct);
+                }
+                else
+                {
+                    sLProductsToInsert.Add(sLProduct);
+                }
+            }
+
+            await _shoppingListProductRepository.InsertMultiple(sLProductsToInsert, token);
+
+
+            //OPTION 2
             //foreach (var sLProduct in shoppingListProducts)
             //{
-            //    shoppingListProductsNew.Add(new ShoppingListProduct
+            //    try
             //    {
-            //        Quantity = sLProduct.Quantity,
-            //        ProductId = sLProduct.ProductId,
-            //        ShoppingListId = id
-            //    });
-            //}
+            //        await _shoppingListProductRepository.Insert(sLProduct, token);
+            //    }
+            //    catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            //    {
+            //        var getSLProduct = await _shoppingListProductRepository.CheckProductExistInList(id, sLProduct.ProductId);
 
-            try
-            {
-                await _shoppingListProductRepository.InsertMultiple(shoppingListProducts, token);
-            }
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
-            {
-                throw new CustomException(GenericConsts.Exceptions.InsertDuplicateUserInHouse);
-            }
+            //        if (getSLProduct != null)
+            //        {
+            //            getSLProduct.Quantity += sLProduct.Quantity;
+
+            //            await _shoppingListProductRepository.Update(getSLProduct);
+            //        }
+            //        else
+            //        {
+            //            throw new CustomException(GenericConsts.Exceptions.InsertDuplicateProductInList);
+            //        }
+            //    }
+            //}
         }
     }
 }
