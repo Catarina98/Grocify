@@ -10,11 +10,11 @@ namespace GrocifyApp.BLL.Implementations
     public class ShoppingListService : EntitiesService<ShoppingList>, IShoppingListService
     {
         private readonly IShoppingListRepository _shoppingListRepository;
-        //private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
-        private readonly IShoppingListProductRepository _shoppingListProductRepository;
+        private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
+        //private readonly IShoppingListProductRepository _shoppingListProductRepository;
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ShoppingList;
 
-        public ShoppingListService(IShoppingListRepository repository, IShoppingListProductRepository shoppingListProductRepository) : base(repository)
+        public ShoppingListService(IShoppingListRepository repository, IRepository<ShoppingListProduct> shoppingListProductRepository) : base(repository)
         {
             _shoppingListRepository = repository;
 
@@ -52,18 +52,26 @@ namespace GrocifyApp.BLL.Implementations
         /// <param name="shoppingListProducts">Products to insert or update in the shopping list</param>
         public async Task AddProductsToShoppingList(Guid id, Dictionary<Guid, ShoppingListProduct> shoppingListProducts, CancellationTokenSource? token = null)
         {
-            var updatedEntitiesCount = await _shoppingListProductRepository.UpdateMultipleLeafType(
-                x => x.ShoppingListId == id && shoppingListProducts.ContainsKey(x.ProductId),
-                y => y.SetProperty(z => z.Quantity,
-                    z => z.Quantity + shoppingListProducts[z.ProductId].Quantity));
+            var entitiesToUpdate = await _shoppingListProductRepository.GetWhere(
+                x => x.ShoppingListId == id && shoppingListProducts.Keys.Contains(x.ProductId));
 
-            if (updatedEntitiesCount < shoppingListProducts.Count)
+            foreach (var entity in entitiesToUpdate)
             {
-                var entitiesToInsert = await _shoppingListProductRepository.GetWhere(
-                    x => x.ShoppingListId == id && !shoppingListProducts.ContainsKey(x.ProductId), x => shoppingListProducts[x.ProductId]);
+                entity.Quantity += shoppingListProducts[entity.ProductId].Quantity;
 
-                await _shoppingListProductRepository.InsertMultiple(entitiesToInsert, token);
+                await _shoppingListProductRepository.Update(entity, false, token);
             }
+
+            if (entitiesToUpdate.ToList().Count < shoppingListProducts.Count)
+            {
+                var entitiesToInsert = shoppingListProducts
+                    .Where(pair => !entitiesToUpdate.Any(entity => entity.ProductId == pair.Key))
+                    .Select(pair => pair.Value);
+
+                await _shoppingListProductRepository.InsertMultiple(entitiesToInsert, false, token);
+            }
+
+            await _shoppingListProductRepository.SaveChangesAsync(token);
         }
     }
 }

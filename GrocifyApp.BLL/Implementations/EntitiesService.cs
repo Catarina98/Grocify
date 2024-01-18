@@ -57,11 +57,11 @@ namespace GrocifyApp.BLL.Implementations
             }
         }
 
-        public async Task Update(T entity, CancellationTokenSource? token = null)
+        public async Task Update(T entity, bool saveChanges = true, CancellationTokenSource? token = null)
         {
             if (await Validate(entity))
             {
-                await repository.Update(entity, token);
+                await repository.Update(entity, saveChanges, token);
             }
         }
 

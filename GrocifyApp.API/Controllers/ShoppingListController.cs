@@ -53,7 +53,7 @@ namespace GrocifyApp.API.Controllers
         [HttpPut("{id}/products")]
         public async Task<ActionResult> AddProductsToShoppingList(Guid id, [FromBody] IEnumerable<ShoppingListProductRequestModel> shoppingListProductRequest)
         {
-            var shoppingListProducts = new List<ShoppingListProduct>();
+            var shoppingListProducts = new Dictionary<Guid, ShoppingListProduct>();
 
             foreach (var sLProduct in shoppingListProductRequest)
             {
@@ -61,7 +61,7 @@ namespace GrocifyApp.API.Controllers
 
                 e.ShoppingListId = id;
 
-                shoppingListProducts.Add(e);
+                shoppingListProducts.Add(e.ProductId, e);
             }
 
             try
