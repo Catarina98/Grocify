@@ -47,12 +47,12 @@ namespace GrocifyApp.BLL.Implementations
 
         private Expression<Func<Product, bool>> GetFilterCondition(Guid houseId, string? name = null)
         {
-            Expression<Func<Product, bool>> filter = productMeasure => productMeasure.HouseId == houseId || productMeasure.HouseId == null;
+            Expression<Func<Product, bool>> filter = product => product.HouseId == houseId || product.HouseId == null;
 
             if (!string.IsNullOrEmpty(name))
             {
                 filter = ExpressionsExtension<Product>
-                 .AndExpression(filter, productMeasure => productMeasure.Name == name);
+                 .AndExpression(filter, product => product.Name == name);
             }
 
             return filter;
