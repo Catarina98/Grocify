@@ -14,6 +14,9 @@ namespace GrocifyApp.DAL.Repositories.Interfaces
         Task Update(T entity, CancellationTokenSource? token = null);
         Task Delete(T? entity, CancellationTokenSource? token = null);
         Task DeleteById(Guid id, CancellationTokenSource? token = null);
+        Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null);
+        Task<IEnumerable<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null);
         public Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel;
         Task<int> UpdateMultipleLeafType(Expression<Func<T, bool>> expression,
             Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> setPropertyExpression,

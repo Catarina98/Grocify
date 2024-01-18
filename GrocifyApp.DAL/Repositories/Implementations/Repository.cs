@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Helpers;
+using System.Linq;
 
 namespace GrocifyApp.DAL.Repositories.Implementations
 {
@@ -86,6 +87,31 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             entities.Update(entity);
 
             await SaveChangesAsync(token);
+        }
+
+        public async Task<IEnumerable<T>> GetWhere<TSelector>(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            var s = entities.Where(filter);
+
+            return await ToListAsync(s, token);
+        }
+
+        public async Task<IEnumerable<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            var s = entities.Where(filter).Select(selector);
+
+            return await ToListAsync(s, token);
         }
 
         public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel

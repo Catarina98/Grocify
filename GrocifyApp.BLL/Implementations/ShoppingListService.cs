@@ -43,61 +43,27 @@ namespace GrocifyApp.BLL.Implementations
             return true;
         }
 
-        public async Task AddProductsToShoppingList(Guid id, IEnumerable<ShoppingListProduct> shoppingListProducts, CancellationTokenSource? token = null)
+        /// <summary>
+        /// Update the quantity of the products in the shopping list.
+        /// Update the quantity of the products that already exist in the shopping list.
+        /// Insert the products that don't exist in the shopping list.
+        /// </summary>
+        /// <param name="id">Shopping list Id</param>
+        /// <param name="shoppingListProducts">Products to insert or update in the shopping list</param>
+        public async Task AddProductsToShoppingList(Guid id, Dictionary<Guid, ShoppingListProduct> shoppingListProducts, CancellationTokenSource? token = null)
         {
-            //get the products from list and check if already exist the products to add, if so increment the quantity
-            //need to create on repo getproducts
-            //on remove products do the same but instead of increment, decrement the quantity
+            var updatedEntitiesCount = await _shoppingListProductRepository.UpdateMultipleLeafType(
+                x => x.ShoppingListId == id && shoppingListProducts.ContainsKey(x.ProductId),
+                y => y.SetProperty(z => z.Quantity,
+                    z => z.Quantity + shoppingListProducts[z.ProductId].Quantity));
 
-            //OPTION 1
-            var sLProductsToInsert = new List<ShoppingListProduct>();
-
-            var sLProductsToUpdate = new List<ShoppingListProduct>();
-
-            //get all products in list with shoppingListProducts as argument
-
-            foreach (var sLProduct in shoppingListProducts)
+            if (updatedEntitiesCount < shoppingListProducts.Count)
             {
-                var getSLProduct = await _shoppingListProductRepository.CheckProductExistInList(id, sLProduct.ProductId);
+                var entitiesToInsert = await _shoppingListProductRepository.GetWhere(
+                    x => x.ShoppingListId == id && !shoppingListProducts.ContainsKey(x.ProductId), x => shoppingListProducts[x.ProductId]);
 
-                if (getSLProduct != null)
-                {
-                    getSLProduct.Quantity += sLProduct.Quantity;
-
-                    await _shoppingListProductRepository.Update(getSLProduct);
-                }
-                else
-                {
-                    sLProductsToInsert.Add(sLProduct);
-                }
+                await _shoppingListProductRepository.InsertMultiple(entitiesToInsert, token);
             }
-
-            await _shoppingListProductRepository.InsertMultiple(sLProductsToInsert, token);
-
-
-            //OPTION 2
-            //foreach (var sLProduct in shoppingListProducts)
-            //{
-            //    try
-            //    {
-            //        await _shoppingListProductRepository.Insert(sLProduct, token);
-            //    }
-            //    catch (Microsoft.EntityFrameworkCore.DbUpdateException)
-            //    {
-            //        var getSLProduct = await _shoppingListProductRepository.CheckProductExistInList(id, sLProduct.ProductId);
-
-            //        if (getSLProduct != null)
-            //        {
-            //            getSLProduct.Quantity += sLProduct.Quantity;
-
-            //            await _shoppingListProductRepository.Update(getSLProduct);
-            //        }
-            //        else
-            //        {
-            //            throw new CustomException(GenericConsts.Exceptions.InsertDuplicateProductInList);
-            //        }
-            //    }
-            //}
         }
     }
 }
