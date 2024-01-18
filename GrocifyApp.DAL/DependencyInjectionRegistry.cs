@@ -35,7 +35,6 @@ namespace GrocifyApp.DAL
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductSectionRepository, ProductSectionRepository>();
         }
     }
 }
