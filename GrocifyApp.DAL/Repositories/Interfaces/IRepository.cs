@@ -10,6 +10,8 @@ namespace GrocifyApp.DAL.Repositories.Interfaces
         Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null);
         Task<T?> Get(Guid id);
         Task<List<T>> GetWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null);
+        Task<List<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null);
         Task<bool> AnyWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null);
         Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel;
         Task Insert(T entity, CancellationTokenSource? token = null);

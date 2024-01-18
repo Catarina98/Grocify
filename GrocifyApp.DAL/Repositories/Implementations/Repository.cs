@@ -64,6 +64,19 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             return await ToListAsync(s, token);
         }
 
+        public async Task<List<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            var s = entities.Where(filter).Select(selector);
+
+            return await ToListAsync(s, token);
+        }
+
         public async Task<bool> AnyWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
         {
             if (filter == null)
