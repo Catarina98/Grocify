@@ -51,15 +51,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
         {
             T? result;
 
-            try
-            {
-                result = await entities.SingleAsync(filter);
-            }
-
-            catch
-            {
-                result = null;
-            }
+            result = await entities.SingleOrDefaultAsync(filter);
 
             return result;
         }

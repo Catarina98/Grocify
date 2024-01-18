@@ -7,15 +7,13 @@ namespace GrocifyApp.BLL.Implementations
 {
     public class UserService : EntitiesService<User>, IUserService
     {
-        private readonly IRepository<User> _uRepository;
-
         public UserService(IRepository<User> repository) : base(repository)
         {
         }
 
         protected override async Task<bool> Validate(User user)
         {
-            if (await _uRepository.AnyWhere(b => b.Email == user.Email && b.Id != user.Id))
+            if (await repository.AnyWhere(b => b.Email == user.Email && b.Id != user.Id))
             {
                 throw new EmailExistsException();
             }
@@ -25,7 +23,7 @@ namespace GrocifyApp.BLL.Implementations
 
         public async Task<User?> GetUserByEmail(string email)
         {
-            return await _uRepository.GetSingleWhere(b => b.Email == email);
+            return await repository.GetSingleWhere(b => b.Email == email);
         }
     }
 }
