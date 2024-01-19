@@ -1,4 +1,4 @@
-//import React from 'react';
+import PropTypes from 'prop-types';
 import BottomNavbar from './BottomNavbar';
 
 const Layout = ({ children }) => {
@@ -9,6 +9,10 @@ const Layout = ({ children }) => {
             <BottomNavbar />
         </div>
     );
+};
+
+Layout.propTypes = {
+    children: PropTypes.node.isRequired,
 };
 
 export default Layout;

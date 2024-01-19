@@ -6,6 +6,14 @@ const PlaceholderConsts = {
     Search: "Search..."
 };
 
+const NavbarConsts = {
+    Lists: "Lists",
+    Inventories: "Inventories",
+    Recipes: "Recipes",
+    Plan: "Plan",
+    Settings: "Settings"
+};
+
 const LoginConsts = {
     SignIn: "Sign in",
     EnterDetails: "Please enter your details bellow",
@@ -19,5 +27,6 @@ const LoginConsts = {
 export {
     GenericConsts,
     LoginConsts,
-    PlaceholderConsts
+    PlaceholderConsts,
+    NavbarConsts
 };

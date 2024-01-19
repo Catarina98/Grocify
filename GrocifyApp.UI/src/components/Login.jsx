@@ -56,7 +56,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="container-page">
+        <>
             <ReactSVG className="react-svg" src={ReactLogo} />
             <form className="input-form">
                 <div className="title title--xl color-n700">{LoginConsts.SignIn}</div>
@@ -93,7 +93,7 @@ const LoginForm = () => {
                     </div>
                 </a>
             </div>
-        </div>
+        </>
     );
 };
 
