@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
+import { GenericConsts, LoginConsts } from '../consts/ENConsts';
 import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
-import './Login.jsx.scss';
 import ApiEndpoints from '../consts/ApiEndpoints';
 import AppRoutes from '../consts/AppRoutes';
-import { GenericConsts, LoginConsts } from '../consts/ENConsts';
 import CustomInput from './CustomInput';
+import './Login.jsx.scss';
+
 
 const LoginForm = () => {
     const navigate = useNavigate();

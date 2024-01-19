@@ -2,6 +2,10 @@ const GenericConsts = {
     Error: "Something went wrong"
 };
 
+const PlaceholderConsts = {
+    Search: "Search..."
+};
+
 const LoginConsts = {
     SignIn: "Sign in",
     EnterDetails: "Please enter your details bellow",
@@ -14,5 +18,6 @@ const LoginConsts = {
 
 export {
     GenericConsts,
-    LoginConsts
+    LoginConsts,
+    PlaceholderConsts
 };

@@ -1,5 +1,6 @@
 const AppRoutes = {
-    Register: '/register'
+    Register: '/register',
+    Settings: '/settings'
 };
 
 export default AppRoutes;

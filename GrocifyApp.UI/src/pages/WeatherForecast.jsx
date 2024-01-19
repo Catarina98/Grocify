@@ -10,6 +10,10 @@ function WeatherForecast() {
         navigate('/');
     };
 
+    const goToSettings = () => {
+        navigate('/settings');
+    };
+
 
     const [forecasts, setForecasts] = useState();
 
@@ -46,6 +50,7 @@ function WeatherForecast() {
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
             <button onClick={handleLogout}>Logout</button>
+            <button onClick={goToSettings}>Settings</button>
         </div>
     );
 
