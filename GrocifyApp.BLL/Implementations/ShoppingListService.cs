@@ -31,7 +31,7 @@ namespace GrocifyApp.BLL.Implementations
 
         /// <summary>
         /// If a house doesn't have any shopping lists yet, when you add a new one, it will automatically become the default list
-        /// </summary>S
+        /// </summary>
         protected override async Task<bool> Validate(ShoppingList shoppingList)
         {
             if (!await _shoppingListRepository.AnyWhere(GetFilterCondition(shoppingList.HouseId)))
