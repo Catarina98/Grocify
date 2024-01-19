@@ -5,10 +5,10 @@
         ///<example>Id</example>
         public Guid Id { get; set; } //required?
 
-        /// <example>Meat</example>
+        /// <example>Product Section Name</example>
         public required string Name { get; set; }
 
-        /// <example>Chicken Icon</example>
+        /// <example>Product Section Icon</example>
         public required string Icon { get; set; }
 
         /// <example>HouseId</example>
