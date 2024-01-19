@@ -8,12 +8,10 @@ namespace GrocifyApp.BLL.Implementations
 {
     public class HouseService : EntitiesService<House>, IHouseService
     {
-        private readonly IHouseRepository _houseRepository;
         private readonly IRepository<UserHouse> _userHouseRepository;
 
-        public HouseService(IHouseRepository repository, IRepository<UserHouse> userHouseRepository) : base(repository)
+        public HouseService(IRepository<House> houseRepository, IRepository<UserHouse> userHouseRepository) : base(houseRepository)
         {
-            _houseRepository = repository;
             _userHouseRepository = userHouseRepository;
         }
 
@@ -46,7 +44,7 @@ namespace GrocifyApp.BLL.Implementations
 
         public async Task<List<User>> GetUsersFromHouse(Guid houseId)
         {
-            var users = await _houseRepository.GetUsersFromHouse(houseId);
+            var users = await _userHouseRepository.GetWhere<User>(userHouse => userHouse.HouseId == houseId, userHouse => userHouse.User!);
 
             if (users == null || users.Count == 0)
             {
