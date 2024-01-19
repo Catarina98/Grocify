@@ -5,7 +5,7 @@
         public static class Errors
         {
             public const string EmailAlreadyTaken = "This email was already taken.";
-            public const string UserPasswordIncorrect = "User or password are incorrect.";
+            public const string UserPasswordIncorrect = "The email or password you entered is incorrect.";
             public const string UnableGetEntity = "Unable to get the entity";
             public const string UnableGetAuthenticatedUser = "Unable to get authenticated user";
         }
