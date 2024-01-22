@@ -1,0 +1,413 @@
+﻿@import "../Core/variables/_colors-var.scss";
+@import "../Core/variables/_texts-var.scss";
+@import "../Core/variables/_geral-var.scss";
+@import "../Core/_mixins.scss";
+
+$tab-buttons-border-h: 1px;
+
+$tab-buttons-height: 48px;
+$tab-buttons-height--xl: 56px;
+
+$tab-buttons-padding-horizontal: 32px;
+$tab-buttons-padding-vertical: 12px;
+
+button:focus {
+    box-shadow: none!important;
+}
+
+.btn-error {
+    color: $color--r300!important;
+    svg{
+        fill: $color--r300!important;
+    }
+}
+
+.primary-button, a.primary-button {
+    background-color: $primary-color;
+    color: $color--n100;
+
+    &:hover {
+        background-color: $primary-color--hover;
+        color: $color--n100;
+    }
+
+    &:active, &:focus {
+        background-color: $primary-color--pressed;
+        color: $color--n100;
+    }
+
+    &:disabled {
+        background-color: $color--n300;
+    }
+
+    svg {
+        fill: $color--n100;
+    }
+
+    &.error-btn {
+        @include ErrorButton();
+    }
+}
+
+
+.primary-button {
+    @include Button($text-size--xs, $font-weight--500);
+}
+
+.secondary-button {
+    @include Button($text-size--xs, $font-weight--500);
+    background-color: $color--n100;
+    color: $color--n600;
+    border: 1px $color--n400 solid;
+
+    &:hover {
+        border-color: $color--n500;
+    }
+
+    &:active, :focus {
+        border-color: $color--n700;
+        color: $color--n700;
+    }
+
+    &:disabled {
+        border-color: $color--n400;
+        color: $color--n400;
+    }
+
+    svg {
+        fill: $color--n700;
+    }
+    
+    &.blue{
+        border-color: $primary-color;
+        color: $primary-color;
+    }
+}
+
+.tertiary-button {
+    @include Button($text-size--s, $font-weight--400);
+    background-color: $color--n100;
+    color: $color--n600;
+    border: 1px $color--n100 solid;
+
+    &.active {
+        @include FontWeight($font-weight--600);
+        border-color: $color--n700;
+    }
+
+    &:nth-child(n+2) {
+        margin-left: 8px;
+    }
+
+    &.icon {
+        background-color: transparent;
+        border: none;
+        margin-left: 26px;
+        padding: 0;
+    }
+}
+
+.button-round {
+    outline: none;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: $color--n100;
+    border: 1px $color--n700 solid;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+.subtle-button {
+    @include Button($text-size--m, $font-weight--400);
+    color: $primary-color;
+    background-color: transparent;
+    
+    &.expandable-text-btn{
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    svg {
+        transition: 0.2s ease;
+        fill: $primary-color;
+    }
+
+    &:hover {
+        color: $primary-color--hover;
+        text-decoration: underline;
+
+        svg {
+            fill: $primary-color--hover;
+        }
+    }
+
+    &:focus {
+        color: $primary-color--pressed;
+        text-decoration: underline;
+
+        svg {
+            fill: $primary-color--pressed;
+        }
+    }
+
+    &:active {
+        @include FontWeight($font-weight--500);
+        color: $primary-color;
+        text-decoration: underline;
+
+        svg {
+            fill: $primary-color;
+        }
+    }
+
+    &:disabled {
+        color: $color--n400;
+
+        svg {
+            fill: $color--n400;
+        }
+    }
+}
+
+.link-button {
+    @include FontSize($text-size--m);
+    color: $primary-color;
+    text-decoration: underline;
+    background: none;
+    border: none;
+
+    svg {
+        fill: $primary-color;
+    }
+
+    &:hover {
+        color: $primary-color--hover;
+
+        svg {
+            fill: $primary-color--hover;
+        }
+    }
+
+    &:focus {
+        color: $primary-color--pressed;
+
+        svg {
+            fill: $primary-color--pressed;
+        }
+    }
+
+    &:active {
+        @include FontWeight($font-weight--500);
+        color: $primary-color;
+
+        svg {
+            fill: $primary-color;
+        }
+    }
+
+    &:disabled {
+        color: $color--n400;
+
+        svg {
+            fill: $color--n400;
+        }
+    }
+}
+
+.cross-icon {
+    &:hover {
+        background-color: $color--n200;
+    }
+    
+    &:focus {
+        background-color: $color--n300;
+    }
+    
+    &.btn-cross {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.icon-button {
+    @include Button($text-size--s, $font-weight--400);
+    color: $color--n700;
+    background-color: transparent;
+    justify-content: normal;
+    padding: 8px;
+    transition: background-color .2s ease;
+
+    svg {
+        fill: $color--n600;
+    }
+
+    &:disabled {
+        color: $color--n400;
+
+        svg {
+            fill: $color--n400;
+        }
+    }
+    
+    &:hover{
+        background-color: $color--n200;
+    }
+}
+
+.link {
+    @include FontSize($text-size--s);
+    color: $color--n700;
+    text-decoration: none;
+    background: none;
+    border: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.btn {
+  &--s {
+    @include FontSize($text-size--xs);
+    @include FontWeight($font-weight--700);
+  }
+
+  &--m {
+    @include FontSize($text-size--s);
+  }
+
+  &--l {
+    @include FontSize($text-size--s);
+    padding: 9px 16px;
+  }
+
+  &--xl {
+    @include FontSize($text-size--m);
+    padding: 10px 24px;
+
+    &.loading:after {
+      -webkit-mask-size: 15px 15px;
+    }
+  }
+}
+
+.btn-circle {
+    margin-right: 10px;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease;
+
+    &:hover, &.active {
+        background: $color--n200;
+        border-color: $color--n200;
+    }
+
+    &.active {
+        background: $primary-color;
+        border-color: $primary-color;
+        font-weight: bold;
+    }
+}
+
+.loading {
+    pointer-events: none;
+    min-width: 16px;
+    min-height: 16px;
+
+    * {
+        opacity: 0;
+    }
+
+    .loading-button {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        background: conic-gradient(from 180deg at 50% 50%, $color--n700 0deg, rgba(255, 255, 255, 0) 360deg);
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        opacity: 1;
+
+        &.white {
+            background: conic-gradient(from 180deg at 50% 50%, $color--n100 0deg, rgba(255, 255, 255, 0) 360deg);
+        }
+    }
+
+    .loading-button::after {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: $color--n100;
+    }
+
+    .loading-button.white::after {
+        background: $primary-color;
+    }
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.dropdown-button, .dropdown-option-item{
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: $color--n600;
+    transition: .2s ease;
+    width: 100%;
+    text-align: left;
+    border-radius: 4px;
+    
+    &.svg-24{
+        svg{
+            width: 24px;
+        }
+    }
+
+    svg {
+        margin-right: 8px;
+        fill: $color--n600;
+    }
+
+    &.active {
+        background: $color--n200;
+        font-weight: 600;
+    }
+
+    &:hover {
+        background: $color--n200;
+        cursor: pointer;
+    }
+}
+
+.dropdown-button > svg {
+    width: 16px;
+}

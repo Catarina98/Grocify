@@ -9,7 +9,7 @@ namespace GrocifyApp.BLL.Implementations
 {
     public class EntitiesService<T> : IEntitiesService<T> where T : BaseEntity
     {
-        private readonly IRepository<T> repository;
+        protected readonly IRepository<T> repository;
         protected virtual string duplicateEntityException { get; set; } = GenericConsts.Entities.Entity;
 
         public EntitiesService(IRepository<T> repository)
@@ -42,7 +42,7 @@ namespace GrocifyApp.BLL.Implementations
             return await repository.GetBySearchModel(filter, token);
         }
 
-        public virtual async Task Insert(T entity, CancellationTokenSource? token = null)
+        public async Task Insert(T entity, CancellationTokenSource? token = null)
         {
             if (await Validate(entity))
             {                

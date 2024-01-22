@@ -1,0 +1,9 @@
+.react-svg > div{
+    display: flex;
+}
+
+.arrow{
+    &-right{
+        transform: rotate(-90deg);
+    }
+}

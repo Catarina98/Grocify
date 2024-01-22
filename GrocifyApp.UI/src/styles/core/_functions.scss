@@ -1,0 +1,8 @@
+﻿@function toRem($value) {
+    $remValue: $value / 14 + rem;
+    @return $remValue;
+}
+
+@function convertSize($value) {
+    @return $value + px;
+}

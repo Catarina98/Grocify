@@ -2,19 +2,17 @@
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
-using GrocifyApp.DAL.Repositories.Implementations;
 using GrocifyApp.DAL.Repositories.Interfaces;
+using System.Linq.Expressions;
 
 namespace GrocifyApp.BLL.Implementations
 {
     public class ShoppingListService : EntitiesService<ShoppingList>, IShoppingListService
     {
-        private readonly IShoppingListRepository _shoppingListRepository;
-        private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
-        //private readonly IShoppingListProductRepository _shoppingListProductRepository;
+        private readonly IRepository<ShoppingList> _shoppingListRepository;
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ShoppingList;
 
-        public ShoppingListService(IShoppingListRepository repository, IRepository<ShoppingListProduct> shoppingListProductRepository) : base(repository)
+        public ShoppingListService(IRepository<ShoppingList> repository) : base(repository)
         {
             _shoppingListRepository = repository;
 
@@ -23,7 +21,7 @@ namespace GrocifyApp.BLL.Implementations
 
         public async Task<List<ShoppingList>> GetShoppingListsFromHouse(Guid houseId)
         {
-            var shoppingLists = await _shoppingListRepository.GetShoppingListsFromHouse(houseId);
+            var shoppingLists = await _shoppingListRepository.GetWhere(GetFilterCondition(houseId));
 
             if (shoppingLists == null || shoppingLists.Count == 0)
             {
@@ -33,9 +31,12 @@ namespace GrocifyApp.BLL.Implementations
             return shoppingLists;
         }
 
+        /// <summary>
+        /// If a house doesn't have any shopping lists yet, when you add a new one, it will automatically become the default list
+        /// </summary>
         protected override async Task<bool> Validate(ShoppingList shoppingList)
         {
-            if (!await _shoppingListRepository.AnyShoppingListInHouse(shoppingList.HouseId))
+            if (!await _shoppingListRepository.AnyWhere(GetFilterCondition(shoppingList.HouseId)))
             {
                 shoppingList.DefaultList = true;
             }

@@ -47,9 +47,76 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             return await entities.FindAsync(id);
         }
 
+        public async Task<T?> GetSingleWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
+        {
+            T? result;
+
+            result = await entities.SingleOrDefaultAsync(filter);
+
+            return result;
+        }
+
         public async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
         {
             return await entities.Where(x => !x.IsDeleted).ToListAsync();
+        }
+
+        public async Task<List<T>> GetWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            var s = entities.Where(filter);
+
+            return await ToListAsync(s, token);
+        }
+
+        public async Task<List<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            var s = entities.Where(filter).Select(selector);
+
+            return await ToListAsync(s, token);
+        }
+
+        public async Task<bool> AnyWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            if (token != null)
+            {
+                return await entities.AnyAsync(filter, token.Token);
+            }
+            else
+            {
+                return await entities.AnyAsync(filter);
+            }
+        }
+
+        public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            Expression<Func<T, bool>> expressions = ToExpression(filter);
+
+            var s = entities.Where(expressions)
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize);
+
+            return await ToListAsync(s, token);
         }
 
         public async Task Insert(T entity, CancellationTokenSource? token = null)
@@ -115,22 +182,6 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             }
 
             var s = entities.Where(filter).Select(selector);
-
-            return await ToListAsync(s, token);
-        }
-
-        public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel
-        {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
-
-            Expression<Func<T, bool>> expressions = ToExpression(filter);
-
-            var s = entities.Where(expressions)
-                .Skip((filter.PageNumber - 1) * filter.PageSize)
-                .Take(filter.PageSize);
 
             return await ToListAsync(s, token);
         }

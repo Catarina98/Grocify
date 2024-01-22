@@ -2,16 +2,13 @@
 {
     public class ProductMeasureResponseModel
     {
-        ///<example>Id</example>
-        public Guid Id { get; set; } //required?
+        ///<example>c7872109-cfd1-4332-b7f2-76c189987ae2</example>
+        public required Guid Id { get; set; }
 
-        /// <example>Meat</example>
+        /// <example>Product Measure Name</example>
         public required string Name { get; set; }
 
-        /// <example>Vegetables Icon</example>
-        public required string Icon { get; set; }
-
-        /// <example>HouseId</example>
+        /// <example>c7872109-cfd1-4332-b7f2-76c189987ae2</example>
         public Guid? HouseId { get; set; }
     }
 }
