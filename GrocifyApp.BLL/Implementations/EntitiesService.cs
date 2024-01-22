@@ -50,9 +50,9 @@ namespace GrocifyApp.BLL.Implementations
                 {
                     await repository.Insert(entity, token);
                 }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
                 {
-                    throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, duplicateEntityException));
+                    throw new SQLException(ex, duplicateEntityException);
                 }
             }
         }

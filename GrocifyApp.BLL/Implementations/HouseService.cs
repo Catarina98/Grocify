@@ -64,9 +64,9 @@ namespace GrocifyApp.BLL.Implementations
                     HouseId = houseId
                 }, token);
             }
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
-                throw new CustomException(GenericConsts.Exceptions.InsertDuplicateUserInHouse);
+                throw new SQLException(ex, GenericConsts.Exceptions.InsertDuplicateUserInHouse);
             }
         }
 
