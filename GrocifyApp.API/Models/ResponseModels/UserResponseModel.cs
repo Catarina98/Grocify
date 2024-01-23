@@ -10,5 +10,6 @@
 
         /// <example>User Email</example>
         public required string Email { get; set; }
+        public Guid? HouseId { get; set; }
     }
 }

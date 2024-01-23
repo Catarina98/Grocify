@@ -10,6 +10,8 @@ namespace GrocifyApp.DAL.Repositories.Interfaces
         Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null);
         Task<T?> Get(Guid id);
         Task<T?> GetSingleWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null);
+        Task<TSelector?> GetSingleWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector);
         Task<List<T>> GetWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null);
         Task<List<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
             Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null);

@@ -49,6 +49,8 @@ namespace GrocifyApp.BLL.Implementations
                 try
                 {
                     await repository.Insert(entity, token);
+
+                    await FinishInsert(entity);
                 }
                 catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
                 {
@@ -68,6 +70,10 @@ namespace GrocifyApp.BLL.Implementations
         protected virtual async Task<bool> Validate(T entity)
         {
             return true;
+        }
+
+        protected virtual async Task FinishInsert(T entity)
+        {
         }
     }
 }

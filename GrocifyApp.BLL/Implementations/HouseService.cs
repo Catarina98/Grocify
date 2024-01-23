@@ -54,15 +54,26 @@ namespace GrocifyApp.BLL.Implementations
             return users;
         }
 
+
+        /// <summary>
+        /// If the user doesn't have any house yet, when you add a new one, it will automatically become the default house for that user
+        /// </summary>
         public async Task InsertUserToHouse(Guid houseId, Guid userId, CancellationTokenSource? token = null)
         {
             try
             {
-                await _userHouseRepository.Insert(new UserHouse
+                var newUserHouse = new UserHouse
                 {
                     UserId = userId,
                     HouseId = houseId
-                }, token);
+                };
+
+                if (!await _userHouseRepository.AnyWhere(x => x.UserId == userId))
+                {
+                    newUserHouse.DefaultHouse = true;
+                }
+
+                await _userHouseRepository.Insert(newUserHouse, token);
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
