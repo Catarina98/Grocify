@@ -13,6 +13,10 @@ namespace GrocifyApp.DAL.Exceptions
         {
         }
 
+        public SQLException(SQLExceptionType type, string entityName) : base(GetExceptionMessage(type, entityName))
+        {
+        }
+
         private static string GetExceptionMessage(DbUpdateException ex, string entityName)
         {
             var innerException = ex.InnerException;
@@ -40,6 +44,36 @@ namespace GrocifyApp.DAL.Exceptions
 
                     message = string.Format(GenericConsts.SQLExceptions.DuplicateEntityFormat, entityName);
                 }
+            }
+
+            return GetExceptionMessage(SqlExceptionType, entityName);
+        }
+
+        private static string GetExceptionMessage(SQLExceptionType type, string entityName)
+        {
+            SqlExceptionType = type;
+
+            EntityName = entityName;
+
+            string? message;
+
+            switch (type)
+            {
+                case SQLExceptionType.ForeignKeyViolation:
+
+                    message = string.Format(GenericConsts.SQLExceptions.ForeignKeyException, ForeignKey);
+
+                    break;
+
+                case SQLExceptionType.DuplicateEntity:
+
+                    message = string.Format(GenericConsts.SQLExceptions.DuplicateEntityFormat, entityName);
+
+                    break;
+                default:
+                    message = GenericConsts.SQLExceptions.Generic;
+
+                    break;
             }
 
             return message;

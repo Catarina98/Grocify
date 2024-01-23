@@ -72,6 +72,11 @@ namespace GrocifyApp.BLL.Implementations
 
         public async Task InsertWithUser(House house, Guid userId, CancellationTokenSource? token = null)
         {
+            if(await _userHouseRepository.AnyWhere(x => x.UserId == userId && x.House != null && x.House.Name == house.Name))
+            {
+                throw new SQLException(SQLException.SQLExceptionType.DuplicateEntity, GenericConsts.Exceptions.DuplicateHouseName);
+            }
+
             await Insert(house, token);
 
             await InsertUserToHouse(house.Id, userId, token);
