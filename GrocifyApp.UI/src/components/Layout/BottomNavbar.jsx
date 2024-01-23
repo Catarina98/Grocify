@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
 import { NavbarConsts } from '../../consts/ENConsts';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CartIcon from '../../assets/cart-ic.svg';
 import InventoryIcon from '../../assets/inventory-ic.svg';
@@ -18,9 +18,9 @@ const menuItems = [
     { iconSrc: SettingsIcon, text: NavbarConsts.Settings, route: AppRoutes.Settings },
 ];
 
-const NavbarMenu = ({ iconSrc, text, route, activeNavItem, onClick }) => (
-    <div className={`navbar-menu ${activeNavItem === text ? 'active' : ''}`}
-        onClick={() => onClick(text, route)}>
+const NavbarMenu = ({ iconSrc, text, route, isActive, onClick }) => (
+    <div className={`navbar-menu ${isActive ? 'active' : ''}`}
+        onClick={() => onClick(route)}>
         <div className="navbar-menu-icon">
             <ReactSVG className="react-svg" src={iconSrc} />
         </div>
@@ -32,17 +32,26 @@ NavbarMenu.propTypes = {
     iconSrc: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     route: PropTypes.string,
-    activeNavItem: PropTypes.string.isRequired,
+    isActive: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired,
 };
 
 const BottomNavbar = () => {
     const [activeNavItem, setActiveNavItem] = useState(NavbarConsts.Lists);
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleNavItemClick = (text, route) => {        
+    useEffect(() => {
+        // Update activeNavItem when location changes
+        const currentNavItem = menuItems.find(item => item.route === location.pathname);
+        if (currentNavItem) {
+            setActiveNavItem(currentNavItem.text);
+        }
+    }, [location.pathname]);
+
+    const handleNavItemClick = (route) => {
+        setActiveNavItem(menuItems.find(item => item.route === route).text);
         navigate(route);
-        setActiveNavItem(text);
     };
 
     return (
@@ -53,7 +62,7 @@ const BottomNavbar = () => {
                     iconSrc={menuItem.iconSrc}
                     text={menuItem.text}
                     route={menuItem.route}
-                    activeNavItem={activeNavItem}
+                    isActive={activeNavItem === menuItem.text}
                     onClick={handleNavItemClick}
                 />
             ))}
