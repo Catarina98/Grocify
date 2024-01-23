@@ -30,3 +30,19 @@ $color--r200: #E58A8A;
 
 $color--y400: #805B19;
 $color--y300: #E5AD45;
+
+/*:root {
+    --new-color: red;
+}*/
+
+[data-theme="dark"] {
+    // Update primary colors
+    /*--new-color: blue;*/
+
+    // Update other colors as needed
+    // Update background and text color for dark mode
+    /*body {
+        background-color: $dark-mode-background;
+        color: $dark-mode-text;
+    }*/
+}

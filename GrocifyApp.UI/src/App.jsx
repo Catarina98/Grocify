@@ -10,7 +10,7 @@ function App() {
     const isAuthenticated = localStorage.getItem('token');
 
     return (
-        <div className="container-page">
+        <div className="container-page dark">
             <Router>
                 <Routes>
                     <Route

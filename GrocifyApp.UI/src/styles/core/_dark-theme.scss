@@ -1,0 +1,45 @@
+@import "variables/colors-var";
+
+.container-page.dark {
+    background-color: $color--n600;
+
+    //text
+    .text, .title {
+        color: $color--n200;
+
+        & .color--n700 {
+            color: $color--n100;
+        }
+
+        & .color--n500 {
+            color: $color--n300;
+        }
+    }
+
+    //card
+    .card, .card-body-row {
+        border-color: $color--n500 !important;
+
+        .icon--w16 > :not(.color-r300) svg {
+            fill: $color--n300;
+        }
+    }
+
+    //navbar
+    .bottom-navbar {
+        background-color: $color--n700;
+        border-color: $color--n700;
+
+        .navbar-menu {
+            &:not(.active) .navbar-menu-icon svg {
+                fill: $color--n300;
+            }
+
+            &:nth-child(3) {
+                .navbar-menu-icon svg {
+                    stroke: $color--n300;
+                }
+            }
+        }
+    }
+}

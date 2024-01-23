@@ -106,7 +106,7 @@ function Settings() {
                 <div className="container-cards">
                     {settingsItems.map(item => (
                         <div className="card" key={item.tableName}>
-                            <div className="card-header title--s weight--l color-n600">{item.tableName}</div>
+                            <div className="card-header title title--s weight--l">{item.tableName}</div>
 
                             <div className="card-body">
                                 {item.titles.map(title => (
