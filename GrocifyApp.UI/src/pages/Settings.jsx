@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 //import { useNavigate } from 'react-router-dom';
 import { PlaceholderConsts } from '../consts/ENConsts';
+import PropTypes from 'prop-types';
 import CustomInput from '../components/CustomInput';
 import SearchIcon from '../assets/search-ic.svg';
 import ChevronIcon from '../assets/chevron-ic.svg';
@@ -34,11 +35,17 @@ const settingsItems = [
     }
 ];
 
-function Settings() {
+function Settings(props) {
     //const navigate = useNavigate();
     const [searchInput, setSearchInput] = useState('');
-    const [darkMode, setDarkMode] = useState(false); //change to darkMode not false
+    const [darkMode, setDarkMode] = useState(false);
 
+    const sendDataToParent = () => { //not working
+        setDarkMode(!darkMode);
+
+        props.onDarkModeChange(darkMode)
+    };
+        
     return (
         <Layout>
             <div className="container-settings">
@@ -116,7 +123,7 @@ function Settings() {
 
                                         {item.tableName === SettingsConsts.Appearance ? (
                                             <label className="toggle cursor-pointer">
-                                                <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+                                                <input type="checkbox" checked={darkMode} onChange={() => sendDataToParent} />
                                                 <span className="slider"></span>
                                             </label>
                                         ) : (
@@ -138,5 +145,9 @@ function Settings() {
         </Layout>
     );
 }
+
+Settings.propTypes = {
+    onDarkModeChange: PropTypes.func.isRequired,
+};
 
 export default Settings;
