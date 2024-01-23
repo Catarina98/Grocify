@@ -131,7 +131,22 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             await SaveChangesAsync(token);
         }
 
-        public async Task Update(T entity, CancellationTokenSource? token = null)
+        public async Task InsertMultiple(IEnumerable<T> entitiesToAdd, bool saveChanges = true, CancellationTokenSource? token = null)
+        {
+            if(entitiesToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(entitiesToAdd));
+            }
+
+            entities.AddRange(entitiesToAdd);
+
+            if (saveChanges)
+            {
+                await SaveChangesAsync(token);
+            }
+        }
+
+        public async Task Update(T entity, bool saveChanges = true, CancellationTokenSource? token = null)
         {
             if (entity == null)
             {
@@ -140,7 +155,10 @@ namespace GrocifyApp.DAL.Repositories.Implementations
 
             entities.Update(entity);
 
-            await SaveChangesAsync(token);
+            if(saveChanges)
+            {
+                await SaveChangesAsync(token);
+            }
         }
 
         public virtual Expression<Func<T, bool>> ToExpression<TFilter>(TFilter filter, CancellationTokenSource? token = null)
@@ -188,7 +206,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             }
         }
 
-        private async Task SaveChangesAsync(CancellationTokenSource? token = null)
+        public async Task SaveChangesAsync(CancellationTokenSource? token = null)
         {
             if (token != null)
             {

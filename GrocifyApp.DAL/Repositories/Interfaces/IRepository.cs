@@ -16,7 +16,8 @@ namespace GrocifyApp.DAL.Repositories.Interfaces
         Task<bool> AnyWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null);
         Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel;
         Task Insert(T entity, CancellationTokenSource? token = null);
-        Task Update(T entity, CancellationTokenSource? token = null);
+        Task InsertMultiple(IEnumerable<T> entitiesToAdd, bool saveChanges = true, CancellationTokenSource? token = null);
+        Task Update(T entity, bool saveChanges = true, CancellationTokenSource? token = null);
         Task Delete(T? entity, CancellationTokenSource? token = null);
         Task DeleteById(Guid id, CancellationTokenSource? token = null);
         Task<int> UpdateMultipleLeafType(Expression<Func<T, bool>> expression,
@@ -24,5 +25,6 @@ namespace GrocifyApp.DAL.Repositories.Interfaces
             CancellationTokenSource? token = null);
         Task<int> DeleteMultipleLeafType(Expression<Func<T, bool>> expression,
             CancellationTokenSource? token = null);
+        Task SaveChangesAsync(CancellationTokenSource? token = null);
     }
 }

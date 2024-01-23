@@ -50,18 +50,18 @@ namespace GrocifyApp.BLL.Implementations
                 {
                     await repository.Insert(entity, token);
                 }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
                 {
-                    throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, duplicateEntityException));
+                    throw new SQLException(ex, duplicateEntityException);
                 }
             }
         }
 
-        public async Task Update(T entity, CancellationTokenSource? token = null)
+        public async Task Update(T entity, bool saveChanges = true, CancellationTokenSource? token = null)
         {
             if (await Validate(entity))
             {
-                await repository.Update(entity, token);
+                await repository.Update(entity, saveChanges, token);
             }
         }
 
