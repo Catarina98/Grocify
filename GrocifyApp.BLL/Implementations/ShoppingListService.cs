@@ -9,19 +9,17 @@ namespace GrocifyApp.BLL.Implementations
 {
     public class ShoppingListService : EntitiesService<ShoppingList>, IShoppingListService
     {
-        private readonly IRepository<ShoppingList> _shoppingListRepository;
+        private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ShoppingList;
 
-        public ShoppingListService(IRepository<ShoppingList> repository) : base(repository)
+        public ShoppingListService(IRepository<ShoppingList> repository, IRepository<ShoppingListProduct> shoppingListProductRepository) : base(repository)
         {
-            _shoppingListRepository = repository;
-
             _shoppingListProductRepository = shoppingListProductRepository;
         }
 
         public async Task<List<ShoppingList>> GetShoppingListsFromHouse(Guid houseId)
         {
-            var shoppingLists = await _shoppingListRepository.GetWhere(GetFilterCondition(houseId));
+            var shoppingLists = await repository.GetWhere(GetFilterCondition(houseId));
 
             if (shoppingLists == null || shoppingLists.Count == 0)
             {
@@ -36,7 +34,7 @@ namespace GrocifyApp.BLL.Implementations
         /// </summary>
         protected override async Task<bool> Validate(ShoppingList shoppingList)
         {
-            if (!await _shoppingListRepository.AnyWhere(GetFilterCondition(shoppingList.HouseId)))
+            if (!await repository.AnyWhere(GetFilterCondition(shoppingList.HouseId)))
             {
                 shoppingList.DefaultList = true;
             }
@@ -73,6 +71,11 @@ namespace GrocifyApp.BLL.Implementations
             }
 
             await _shoppingListProductRepository.SaveChangesAsync(token);
+        }
+
+        private Expression<Func<ShoppingList, bool>> GetFilterCondition(Guid houseId)
+        {
+            return x => x.HouseId == houseId;
         }
     }
 }

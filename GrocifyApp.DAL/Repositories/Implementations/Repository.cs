@@ -161,31 +161,6 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             }
         }
 
-        public async Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
-        {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
-
-            var s = entities.Where(filter);
-
-            return await ToListAsync(s, token);
-        }
-
-        public async Task<IEnumerable<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
-            Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null)
-        {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
-
-            var s = entities.Where(filter).Select(selector);
-
-            return await ToListAsync(s, token);
-        }
-
         public virtual Expression<Func<T, bool>> ToExpression<TFilter>(TFilter filter, CancellationTokenSource? token = null)
         {
             var expressions = new List<Expression<Func<T, bool>>>();

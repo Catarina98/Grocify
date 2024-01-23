@@ -14,6 +14,7 @@
         public static class Exceptions
         {
             public const string InsertDuplicateUserInHouse = "This user already exists in this house";
+            public const string DuplicateHouseName = "House name";
             public const string InsertDuplicateProductInList = "This product already exists in this shopping list";
             public const string NoUsersFoundInHouse = "No users found in house";
             public const string NoProductsFoundInHouse = "No products found in house";
