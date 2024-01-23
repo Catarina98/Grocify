@@ -7,7 +7,7 @@ import ArrowIcon from '../assets/arrow-ic.svg';
 import ApiEndpoints from '../consts/ApiEndpoints';
 import AppRoutes from '../consts/AppRoutes';
 import CustomInput from './CustomInput';
-import './Login.jsx.scss';
+import './Login.module.scss';
 
 
 const LoginForm = () => {

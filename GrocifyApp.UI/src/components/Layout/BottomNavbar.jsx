@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import { NavbarConsts } from '../../consts/ENConsts';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CartIcon from '../../assets/cart-ic.svg';
 import InventoryIcon from '../../assets/inventory-ic.svg';
 import RecipeIcon from '../../assets/recipes-ic.svg';
 import CalendarIcon from '../../assets/calendar-ic.svg';
 import SettingsIcon from '../../assets/settings-ic.svg';
-//import AppRoutes from '../../consts/AppRoutes';
+import AppRoutes from '../../consts/AppRoutes';
 
 const menuItems = [
     { iconSrc: CartIcon, text: NavbarConsts.Lists },
@@ -37,12 +37,12 @@ NavbarMenu.propTypes = {
 
 const BottomNavbar = () => {
     const [activeNavItem, setActiveNavItem] = useState(NavbarConsts.Lists);
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleNavItemClick = (itemName) => {
         setActiveNavItem(itemName);
 
-        //navigate(AppRoutes.Settings);
+        navigate(AppRoutes.Settings);
     };
 
     return (
