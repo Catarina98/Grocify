@@ -42,7 +42,7 @@ const BottomNavbar = () => {
     const handleNavItemClick = (itemName) => {
         setActiveNavItem(itemName);
 
-        //navigate(AppRoutes.Settings); dont work
+        //navigate(AppRoutes.Settings);
     };
 
     return (
