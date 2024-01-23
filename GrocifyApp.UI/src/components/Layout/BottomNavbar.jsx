@@ -12,9 +12,9 @@ import AppRoutes from '../../consts/AppRoutes';
 
 const menuItems = [
     { iconSrc: CartIcon, text: NavbarConsts.Lists, route: '/weatherforecast' },
-    { iconSrc: InventoryIcon, text: NavbarConsts.Inventories, route: '/weatherforecast' },
+    { iconSrc: InventoryIcon, text: NavbarConsts.Inventories },
     { iconSrc: RecipeIcon, text: NavbarConsts.Recipes },
-    { iconSrc: CalendarIcon, text: NavbarConsts.Plan, route: '/weatherforecast' },
+    { iconSrc: CalendarIcon, text: NavbarConsts.Plan },
     { iconSrc: SettingsIcon, text: NavbarConsts.Settings, route: AppRoutes.Settings },
 ];
 
@@ -42,7 +42,6 @@ const BottomNavbar = () => {
     const location = useLocation();
 
     useEffect(() => {
-        // Update activeNavItem when location changes
         const currentNavItem = menuItems.find(item => item.route === location.pathname);
         if (currentNavItem) {
             setActiveNavItem(currentNavItem.text);
