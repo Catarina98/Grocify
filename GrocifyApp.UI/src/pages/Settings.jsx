@@ -1,13 +1,43 @@
 import { useState } from 'react';
+import { ReactSVG } from 'react-svg';
 //import { useNavigate } from 'react-router-dom';
 import { PlaceholderConsts } from '../consts/ENConsts';
 import CustomInput from '../components/CustomInput';
 import SearchIcon from '../assets/search-ic.svg';
+import ChevronIcon from '../assets/chevron-ic.svg';
+import LogoutIcon from '../assets/logout-ic.svg';
+import TrashIcon from '../assets/trash-ic.svg';
+import { SettingsConsts } from '../consts/ENConsts';
+import './Settings.jsx.scss';
+
+const settingsItems = [
+    {
+        tableName: SettingsConsts.Products,
+        titles: [SettingsConsts.Products, SettingsConsts.ProductSections, SettingsConsts.ProductMeasures],
+    },
+    {
+        tableName: SettingsConsts.DefaultLists,
+        titles: [SettingsConsts.Inventory, SettingsConsts.ShoppingList],
+    },
+    {
+        tableName: SettingsConsts.MealPlan,
+        titles: [SettingsConsts.MealPlan, SettingsConsts.Meals],
+    },
+    {
+        tableName: SettingsConsts.Appearance,
+        titles: [SettingsConsts.DarkMode],
+    },
+    {
+        tableName: SettingsConsts.Account,
+        titles: [SettingsConsts.Logout, SettingsConsts.ClearData],
+    }
+];
 
 function Settings() {
     //const navigate = useNavigate();
     const [searchInput, setSearchInput] = useState('');
-    
+    const [darkMode, setDarkMode] = useState(false); //change to darkMode not false
+
     return (
         <div className="container-settings">
             <div className="searchbar-container">
@@ -72,17 +102,37 @@ function Settings() {
             </div>
 
             <div className="container-cards">
-                <div className="card">
-                    <div className="card-header">Products</div>
+                {settingsItems.map(item => (
+                    <div className="card" key={item.tableName}>
+                        <div className="card-header title--s weight--l color-n600">{item.tableName}</div>
 
-                    <div className="card-body">
-                        <div className="card-body-row">
-                            <div className="text">Products</div>
+                        <div className="card-body">
+                            {item.titles.map(title => (
+                                <div className="card-body-row" key={title}>
+                                    <div className="text">{title}</div>
 
-                            <div className="icon">+</div>
+
+                                    {item.tableName === SettingsConsts.Appearance ? (
+                                        <div className="private-toggle">
+                                            <label className="toggle">
+                                                <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+                                                <span className="slider"></span>
+                                            </label>
+                                        </div>
+                                    ) : (
+                                        <div className="icon--w16">
+                                            {item.tableName === SettingsConsts.Account ? (
+                                                <ReactSVG className={`react-svg ${title === SettingsConsts.ClearData ? 'color-r300' : ''}`} src={title === SettingsConsts.Logout ? LogoutIcon : TrashIcon} />
+                                            ) : (
+                                                <ReactSVG className="react-svg" src={title === SettingsConsts.DarkMode ? LogoutIcon : ChevronIcon} />
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </div>
+                ))}
             </div>
         </div>
     );

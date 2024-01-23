@@ -1,0 +1,82 @@
+@import "../core/variables/_colors-var.scss";
+
+.toggle {
+    width: 28px;
+    height: 16px;
+    position: relative;
+    display: inline-block;
+
+    input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+
+        &:checked + .slider {
+            background-color: $primary-color;
+        }
+
+        &:focus + .slider {
+            box-shadow: 0 0 1px $primary-color;
+        }
+
+        &:checked + .slider:before {
+            -webkit-transform: translateX(12px);
+            -ms-transform: translateX(12px);
+            transform: translateX(12px);
+        }
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $color--n400;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 34px;
+
+        &:hover {
+            background-color: $color--n500;
+        }
+
+        &:before {
+            position: absolute;
+            content: "";
+            width: 12px;
+            height: 12px;
+            margin: 2px;
+            background-color: $color--n100;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+            left: 0;
+        }
+
+        &.disabled {
+            background-color: $color--n300;
+
+            .slider:before {
+                background-color: $color--n400;
+            }
+        }
+    }
+
+    &.size-m {
+        width: 38px;
+        height: 20px;
+
+        .slider:before {
+            width: 16px;
+            height: 16px;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(18px);
+            -ms-transform: translateX(18px);
+            transform: translateX(18px);
+        }
+    }
+}

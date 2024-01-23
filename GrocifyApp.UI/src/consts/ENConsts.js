@@ -2,6 +2,22 @@ const GenericConsts = {
     Error: "Something went wrong"
 };
 
+const SettingsConsts = {
+    Products: "Products",
+    ProductSections: "Product sections",
+    ProductMeasures: "Product measures",
+    DefaultLists: "Default lists",
+    ShoppingList: "Shopping list",
+    Inventory: "Inventory",
+    MealPlan: "Meal plan",
+    Meals: "Meals",
+    Appearance: "Appearance",
+    DarkMode: "Dark mode",
+    Account: "Account",
+    Logout: "Logout",
+    ClearData: "Clear all data",
+};
+
 const PlaceholderConsts = {
     Search: "Search..."
 };
@@ -28,5 +44,6 @@ export {
     GenericConsts,
     LoginConsts,
     PlaceholderConsts,
-    NavbarConsts
+    NavbarConsts,
+    SettingsConsts
 };
