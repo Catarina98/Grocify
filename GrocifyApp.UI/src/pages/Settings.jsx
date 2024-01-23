@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ReactSVG } from 'react-svg';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PlaceholderConsts } from '../consts/ENConsts';
 import PropTypes from 'prop-types';
 import CustomInput from '../components/CustomInput';
@@ -36,14 +36,20 @@ const settingsItems = [
 ];
 
 function Settings(props) {
-    //const navigate = useNavigate();
     const [searchInput, setSearchInput] = useState('');
     const [darkMode, setDarkMode] = useState(false);
+    const navigate = useNavigate();
 
-    const sendDataToParent = () => { //not working
+    const sendDataToParent = () => { //not working well
         setDarkMode(!darkMode);
 
         props.onDarkModeChange(darkMode)
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+
+        navigate('/');
     };
         
     return (
@@ -120,27 +126,35 @@ function Settings(props) {
                                     <div className="card-body-row" key={title}>
                                         <div className="text">{title}</div>
 
-
                                         {item.tableName === SettingsConsts.Appearance ? (
                                             <label className="toggle cursor-pointer">
-                                                <input type="checkbox" checked={darkMode} onChange={() => sendDataToParent} />
+                                                <input type="checkbox" checked={darkMode} onChange={() => sendDataToParent()} />
                                                 <span className="slider"></span>
                                             </label>
                                         ) : (
-                                            <div className="icon--w16 cursor-pointer">
-                                                {item.tableName === SettingsConsts.Account ? (
-                                                    <ReactSVG className={`react-svg ${title === SettingsConsts.ClearData ? 'color-r300' : ''}`} src={title === SettingsConsts.Logout ? LogoutIcon : TrashIcon} />
-                                                ) : (
-                                                    <ReactSVG className="react-svg" src={title === SettingsConsts.DarkMode ? LogoutIcon : ChevronIcon} />
-                                                )}
-                                            </div>
+                                            (item.tableName === SettingsConsts.Account && title === SettingsConsts.Logout) ? (
+                                                    <div className="icon--w16 cursor-pointer" onClick={handleLogout}>
+                                                    <ReactSVG className="react-svg" src={LogoutIcon} />
+                                                </div>
+                                            ) : (
+                                                <div className="icon--w16 cursor-pointer">
+                                                    {(item.tableName === SettingsConsts.Account && title === SettingsConsts.ClearData) ? (
+                                                        <ReactSVG className="react-svg color-r300" src={TrashIcon} />
+                                                    ) : (
+                                                        <ReactSVG className="react-svg" src={title === SettingsConsts.DarkMode ? LogoutIcon : ChevronIcon} />
+                                                    )}
+                                                </div>
+                                            )
                                         )}
                                     </div>
                                 ))}
                             </div>
+
+
                         </div>
                     ))}
                 </div>
+
             </div>
         </Layout>
     );
