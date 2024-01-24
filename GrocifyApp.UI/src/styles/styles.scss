@@ -17,6 +17,7 @@ body {
 .container-page {
     padding: $body-padding $body-padding 0;
     background-color: $color--n100;
+    min-height: 100vh;
 }
 
 .cursor-pointer {

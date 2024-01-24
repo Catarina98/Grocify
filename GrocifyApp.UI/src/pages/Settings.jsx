@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
 import { useNavigate } from 'react-router-dom';
 import { PlaceholderConsts } from '../consts/ENConsts';
@@ -40,10 +40,16 @@ function Settings(props) {
     const [darkMode, setDarkMode] = useState(false);
     const navigate = useNavigate();
 
-    const sendDataToParent = () => { //not working well
-        setDarkMode(!darkMode);
+    useEffect(() => {
+        // Ensure dark mode state is updated when it changes externally
+        setDarkMode(props.isDarkMode);
+    }, [props.isDarkMode]);
 
-        props.onDarkModeChange(darkMode)
+    const sendDataToParent = () => {
+        // Toggle dark mode state and send it to the parent component
+        const newDarkMode = !darkMode;
+        setDarkMode(newDarkMode);
+        props.onDarkModeChange(newDarkMode);
     };
 
     const handleLogout = () => {
@@ -162,6 +168,7 @@ function Settings(props) {
 
 Settings.propTypes = {
     onDarkModeChange: PropTypes.func.isRequired,
+    isDarkMode: PropTypes.bool.isRequired,
 };
 
 export default Settings;
