@@ -1,4 +1,5 @@
 @import "core/variables/_geral-var.scss";
+@import "core/_dark-theme.scss";
 @import "elements/_buttons.scss";
 @import "elements/_inputs.scss";
 @import "elements/_texts.scss";
@@ -7,7 +8,6 @@
 @import "elements/_controls.scss";
 @import "components/_searchbar.scss";
 @import "components/_navbar.scss";
-@import "core/_dark-theme.scss";
 
 body {
     font-family: $text-font-family;
@@ -22,4 +22,16 @@ body {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.react-svg.icon-color--p100 svg { //move to icons
+    fill: $color--p100;
+}
+
+.react-svg.icon-color--n600 svg { //move to icons
+    fill: $color--n600;
+}
+
+.rotate-180 { //move to icons
+    transform: rotate(180deg);
 }

@@ -9,21 +9,32 @@ import ChevronIcon from '../assets/chevron-ic.svg';
 import LogoutIcon from '../assets/logout-ic.svg';
 import TrashIcon from '../assets/trash-ic.svg';
 import { SettingsConsts } from '../consts/ENConsts';
+import AppRoutes from '../consts/AppRoutes';
 import './Settings.jsx.scss';
 import Layout from '../components/Layout/Layout';
 
 const settingsItems = [
     {
         tableName: SettingsConsts.Products,
-        titles: [SettingsConsts.Products, SettingsConsts.ProductSections, SettingsConsts.ProductMeasures],
+        titles: [
+            { name: SettingsConsts.Products, route: null },
+            { name: SettingsConsts.ProductSections, route: AppRoutes.ProductSections },
+            { name: SettingsConsts.ProductMeasures, route: null },
+        ],
     },
     {
         tableName: SettingsConsts.DefaultLists,
-        titles: [SettingsConsts.Inventory, SettingsConsts.ShoppingList],
+        titles: [
+            { name: SettingsConsts.Inventory, route: null },
+            { name: SettingsConsts.ShoppingList, route: null },
+        ],
     },
     {
         tableName: SettingsConsts.MealPlan,
-        titles: [SettingsConsts.MealPlan, SettingsConsts.Meals],
+        titles: [
+            { name: SettingsConsts.MealPlan, route: null },
+            { name: SettingsConsts.Meals, route: null },
+        ],
     },
     {
         tableName: SettingsConsts.Appearance,
@@ -31,8 +42,11 @@ const settingsItems = [
     },
     {
         tableName: SettingsConsts.Account,
-        titles: [SettingsConsts.Logout, SettingsConsts.ClearData],
-    }
+        titles: [
+            { name: SettingsConsts.Logout },
+            { name: SettingsConsts.ClearData },
+        ],
+    },
 ];
 
 function Settings(props) {
@@ -57,7 +71,11 @@ function Settings(props) {
 
         navigate('/');
     };
-        
+
+    const goToRoute = (route) => {
+        navigate(route);
+    };
+
     return (
         <Layout>
             <div className="container-settings">
@@ -129,8 +147,8 @@ function Settings(props) {
 
                             <div className="card-body">
                                 {item.titles.map(title => (
-                                    <div className="card-body-row" key={title}>
-                                        <div className="text">{title}</div>
+                                    <div className="card-body-row" key={title.name}>
+                                        <div className="text">{title.name}</div>
 
                                         {item.tableName === SettingsConsts.Appearance ? (
                                             <label className="toggle cursor-pointer">
@@ -138,25 +156,23 @@ function Settings(props) {
                                                 <span className="slider"></span>
                                             </label>
                                         ) : (
-                                            (item.tableName === SettingsConsts.Account && title === SettingsConsts.Logout) ? (
-                                                    <div className="icon--w16 cursor-pointer" onClick={handleLogout}>
+                                            (item.tableName === SettingsConsts.Account && title.name === SettingsConsts.Logout) ? (
+                                                <div className="icon--w16 cursor-pointer" onClick={handleLogout}>
                                                     <ReactSVG className="react-svg" src={LogoutIcon} />
                                                 </div>
-                                            ) : (
+                                            ) : (item.tableName === SettingsConsts.Account && title.name === SettingsConsts.ClearData ?
                                                 <div className="icon--w16 cursor-pointer">
-                                                    {(item.tableName === SettingsConsts.Account && title === SettingsConsts.ClearData) ? (
-                                                        <ReactSVG className="react-svg color-r300" src={TrashIcon} />
-                                                    ) : (
-                                                        <ReactSVG className="react-svg" src={title === SettingsConsts.DarkMode ? LogoutIcon : ChevronIcon} />
-                                                    )}
+                                                    <ReactSVG className="react-svg color-r300" src={TrashIcon} />
+                                                </div>
+                                                :
+                                                <div className="icon--w16 cursor-pointer" onClick={() => goToRoute(title.route)}>
+                                                    <ReactSVG className="react-svg" src={ChevronIcon} />
                                                 </div>
                                             )
                                         )}
                                     </div>
                                 ))}
                             </div>
-
-
                         </div>
                     ))}
                 </div>

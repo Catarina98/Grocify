@@ -3,8 +3,10 @@ import { useState } from 'react';
 import LoginForm from './components/Login';
 import WeatherForecast from './pages/WeatherForecast';
 import Settings from './pages/Settings';
+import ProductSections from './pages/Products/ProductSections';
 import AppRoutes from './consts/AppRoutes';
 import './styles/styles.scss';
+
 
 function App() {
     //Check if the user is authenticated
@@ -26,6 +28,11 @@ function App() {
                         element={<Settings onDarkModeChange={(data) => setDarkMode(data)} />}
                     />
                     <Route index element={isAuthenticated ? <Navigate to={AppRoutes.Settings} /> : <LoginForm />} />
+                    <Route
+                        path={AppRoutes.ProductSections}
+                        element={<ProductSections />}
+                    />
+                    <Route index element={isAuthenticated ? <Navigate to={AppRoutes.ProductSections} /> : <LoginForm />} />
                 </Routes>
             </Router>
         </div>

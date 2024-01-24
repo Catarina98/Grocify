@@ -19,7 +19,8 @@ const SettingsConsts = {
 };
 
 const PlaceholderConsts = {
-    Search: "Search..."
+    Search: "Search...",
+    SearchSections: "Search for product sections..."
 };
 
 const NavbarConsts = {
