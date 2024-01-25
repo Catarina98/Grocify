@@ -33,7 +33,7 @@ namespace GrocifyApp.BLL.Implementations
         {
             House house = new House()
             {
-                Name = entity.Name + "'Home"
+                Name = "My House"
             };
 
             await _houseService.InsertWithUser(house, entity.Id);
