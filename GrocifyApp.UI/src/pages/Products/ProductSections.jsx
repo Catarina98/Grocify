@@ -7,16 +7,16 @@ import CustomInput from '../../components/CustomInput';
 import SearchIcon from '../../assets/search-ic.svg';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
+import IconsConsts from "../../consts/IconsConsts"
 //import { ApiEndpoints } from '../../consts/ApiEndpoints';
-//import './Settings.jsx.scss';
 import Layout from '../../components/Layout/Layout';
 import './ProductSections.jsx.scss';
 
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    //const [loading, setLoading] = useState(true);
+    //const [error, setError] = useState(null);
     //const [houseId, setHouseId] = useState('');
     //const navigate = useNavigate();
     const houseId = "70835d8c-dcc0-4d36-8172-08dc12c93d56";
@@ -39,9 +39,9 @@ function ProductSections() {
                 const data = await response.json();
                 setSections(data);
             } catch (error) {
-                setError(error);
+                /*setError(error);*/
             } finally {
-                setLoading(false);
+                //setLoading(false);
             }
         };
 
@@ -122,7 +122,7 @@ function ProductSections() {
                             <div className="section-info">
                                 {/*<div>Icon: {section.icon}</div> save icon on db */}
                                 <div className="icon--w24 cursor-pointer">
-                                    <ReactSVG className="react-svg icon-color--p100" src={SearchIcon} />
+                                    <ReactSVG className="react-svg icon-color--p100" src={ IconsConsts[section.icon] } />
                                 </div>
 
                                 <div className="text">{section.name}</div>
