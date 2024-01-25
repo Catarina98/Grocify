@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import LoginForm from './components/Login';
 import WeatherForecast from './pages/WeatherForecast';
 import Settings from './pages/Settings';
+import Logout from './components/Logout';
 import AppRoutes from './consts/AppRoutes';
 import './styles/styles.scss';
 
@@ -13,6 +14,8 @@ function App() {
         <div className="container-page">
             <Router>
                 <Routes>
+                    <Route path={AppRoutes.Logout} element={<Logout />} />
+                    <Route index element={isAuthenticated ? <Navigate to={AppRoutes.Settings} /> : <LoginForm />} />
                     <Route
                         path="/weatherforecast"
                         element={<WeatherForecast />}
@@ -22,7 +25,6 @@ function App() {
                         path={AppRoutes.Settings}
                         element={<Settings />}
                     />
-                    <Route index element={isAuthenticated ? <Navigate to={AppRoutes.Settings} /> : <LoginForm />} />
                 </Routes>
             </Router>
         </div>
