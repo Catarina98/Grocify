@@ -56,6 +56,16 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             return result;
         }
 
+        public async Task<TSelector?> GetSingleWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector)
+        {
+            TSelector? result;
+
+            result = await entities.Where(filter).Select(selector).SingleOrDefaultAsync();
+
+            return result;
+        }
+
         public async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
         {
             return await entities.Where(x => !x.IsDeleted).ToListAsync();
