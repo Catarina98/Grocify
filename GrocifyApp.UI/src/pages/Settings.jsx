@@ -47,7 +47,7 @@ function Settings() {
             items: [
                 {
                     title: SettingsConsts.DarkMode,
-                    link: () => setDarkMode(), // Pass the function
+                    link: () => setDarkMode(!darkMode),
                 }
             ]
         },
@@ -60,8 +60,8 @@ function Settings() {
         }
     ];
 
-    const [searchInput, setSearchInput] = useState(''); //change to darkMode not false
-    const [darkMode, setDarkMode] = useState(false);
+    const [searchInput, setSearchInput] = useState('');
+    const [darkMode, setDarkMode] = useState(false); //change to darkMode not false
     const navigate = useNavigate();
 
     const renderTableRowContent = (tableTitle, settingItem, darkMode) => {

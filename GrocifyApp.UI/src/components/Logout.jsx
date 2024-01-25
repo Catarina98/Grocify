@@ -16,7 +16,9 @@ const Logout = () => {
   return (
     <div>
       Logging out...
-      {/* You can add a loading spinner or any other UI elements here */}
+          {
+              //todo implement
+          }
     </div>
   );
 };
