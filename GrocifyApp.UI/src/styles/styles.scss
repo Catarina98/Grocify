@@ -32,6 +32,10 @@ body {
     fill: $color--n600;
 }
 
+.react-svg.icon-color--n100 svg { //move to icons
+    fill: $color--n100;
+}
+
 .rotate-180 { //move to icons
     transform: rotate(180deg);
 }

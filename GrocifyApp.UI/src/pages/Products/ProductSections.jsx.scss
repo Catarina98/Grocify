@@ -36,3 +36,10 @@
         }
     }
 }
+
+.primary-button {
+    position: absolute;
+    bottom: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+}

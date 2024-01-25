@@ -2,6 +2,10 @@ const GenericConsts = {
     Error: "Something went wrong"
 };
 
+const ButtonConsts = {
+    NewSection: "New section"
+};
+
 const SettingsConsts = {
     Products: "Products",
     ProductSections: "Product sections",
@@ -46,5 +50,6 @@ export {
     LoginConsts,
     PlaceholderConsts,
     NavbarConsts,
-    SettingsConsts
+    SettingsConsts,
+    ButtonConsts
 };

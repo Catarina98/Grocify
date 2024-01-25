@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
 //import { useNavigate } from 'react-router-dom';
 import { PlaceholderConsts } from '../../consts/ENConsts';
+import { ButtonConsts } from '../../consts/ENConsts';
 //import PropTypes from 'prop-types';
 import CustomInput from '../../components/CustomInput';
 import SearchIcon from '../../assets/search-ic.svg';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
-import IconsConsts from "../../consts/IconsConsts"
+import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
+import IconsConsts from "../../consts/IconsConsts";
 //import { ApiEndpoints } from '../../consts/ApiEndpoints';
 import Layout from '../../components/Layout/Layout';
 import './ProductSections.jsx.scss';
@@ -56,9 +58,6 @@ function ProductSections() {
                 </div>
 
                 <div className="searchbar-holder">
-                    {/*<CustomInputText @ref="SearchInputRef" Placeholder="@GenericsConst.Search"*/}
-                    {/*                 @bind-Value="SearchInput" class="app-form mb-0" Icon="@IconsCore.Generic.Search"*/}
-                    {/*                 OnInput="async x => await OnSearchChange(x)"/>*/}
                     <CustomInput className="app-form mb-0"
                         type="input"
                         placeholder={PlaceholderConsts.SearchSections}
@@ -66,77 +65,34 @@ function ProductSections() {
                         value={searchInput}
                         icon={SearchIcon}
                         onChange={(e) => setSearchInput(e.target.value)} />
-
-                    {/*<div className="dropdown-search">*/}
-                    {/*    <div className="tab-buttons just-center">*/}
-                    {/*        */}{/*<TabSet TabsList="Tabs" SelectedTab="@SelectedTab"*/}
-                    {/*        */}{/*        SelectedTabChanged="OnSelectedTabChanged"/>*/}
-                    {/*    </div>*/}
-                    {/*    <div className="items-list">*/}
-                    {/*        */}{/*@if (FilteredDataList is null || !FilteredDataList.Any())*/}
-                    {/*        */}{/*{*/}
-                    {/*        */}{/*    <div class="no-results text--xs">*/}
-                    {/*        */}{/*        <svg data-src="@IconsConst.MainPage.SadSmile" class="icon-color--n600"/>*/}
-
-                    {/*        */}{/*        @GenericsConst.NoResults*/}
-                    {/*        */}{/*    </div>*/}
-                    {/*        */}{/*}*/}
-                    {/*        */}{/*else*/}
-                    {/*        */}{/*{*/}
-                    {/*        */}{/*    @foreach (var item in FilteredDataList)*/}
-                    {/*        */}{/*    {*/}
-                    {/*        */}{/*        <button class="btn item-searched" @onclick="async () => await OnItemSelect(item)">*/}
-                    {/*        */}{/*            <div class="item-tab">*/}
-                    {/*        */}{/*                @if (item.Type == GlobalSearchType.Files)*/}
-                    {/*        */}{/*                {*/}
-                    {/*        */}{/*                    <div class="file-type @FilesHelper.GetFileExtensionColor(item.Icon)">*/}
-                    {/*        */}{/*                        @item.Icon*/}
-                    {/*        */}{/*                    </div>*/}
-                    {/*        */}{/*                }*/}
-                    {/*        */}{/*                else*/}
-                    {/*        */}{/*                {*/}
-                    {/*        */}{/*                    <svg data-src="@item.Icon" class="icon-color--n500"/>*/}
-                    {/*        */}{/*                }*/}
-
-                    {/*        */}{/*                <div class="text--xs">*/}
-                    {/*        */}{/*                    @item.Name*/}
-                    {/*        */}{/*                </div>*/}
-                    {/*        */}{/*            </div>*/}
-
-                    {/*        */}{/*            @if (item.Type == GlobalSearchType.Topics)*/}
-                    {/*        */}{/*            {*/}
-                    {/*        */}{/*                <FollowBtn TopicId="(int) item.Id" TopicTitle="@item.Name" IsTopicPrivate="(bool) item.Value!"/>*/}
-                    {/*        */}{/*            }*/}
-                    {/*        */}{/*        </button>*/}
-                    {/*        */}{/*    }*/}
-                    {/*        */}{/*}*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </div>
             </div>
 
-            <div>
-                <div className="container-sections">
-                    {sections.map(section => (
-                        <div className="section-row" key={section.id}>
-                            <div className="section-info">
-                                {/*<div>Icon: {section.icon}</div> save icon on db */}
-                                <div className="icon--w24 cursor-pointer">
-                                    <ReactSVG className="react-svg icon-color--p100" src={ IconsConsts[section.icon] } />
-                                </div>
-
-                                <div className="text">{section.name}</div>
+            <div className="container-sections">
+                {sections.map(section => (
+                    <div className="section-row" key={section.id}>
+                        <div className="section-info">
+                            <div className="icon--w24 cursor-pointer">
+                                <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon]} />
                             </div>
 
-                            {section.houseId != null && (
-                                <div className="icon--w16 cursor-pointer">
-                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                                </div>
-                            )}
+                            <div className="text">{section.name}</div>
                         </div>
-                    ))}
-                </div>
+
+                        {section.houseId != null && (
+                            <div className="icon--w16 cursor-pointer">
+                                <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
+
+            <button className="primary-button btn--l">
+                <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+
+                {ButtonConsts.NewSection}
+            </button>
         </Layout>
     );
 }
