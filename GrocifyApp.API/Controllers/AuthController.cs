@@ -93,6 +93,13 @@ namespace GrocifyApp.API.Controllers
                 }
 
                 houseId = await _userService.GetUserDefaultHouseId(getUser.Id);
+
+                if(houseId == null)
+                {
+                    var errors = new List<string> { GenericConsts.Errors.UserHasNoHouse };
+
+                    return BadRequest(new BadResponseModel { Errors = errors });
+                }
             }
 
             UserRequestModel userRequestModel = new UserRequestModel()
@@ -104,7 +111,7 @@ namespace GrocifyApp.API.Controllers
                 PasswordSalt = getUser.PasswordSalt,
             };
 
-            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId };
+            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, AuthenticatedHouseId = houseId.Value };
 
             string token = CreateToken(userRequestModel);
 
