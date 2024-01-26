@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
+import PropTypes from 'prop-types';
 
 //Internal components
 import Layout from '../components/Layout/Layout';
@@ -18,7 +19,7 @@ import { PlaceholderConsts } from '../consts/ENConsts';
 import { SettingsConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
 
-function Settings() {
+function Settings(props) {
     const settingsItems = [
         {
             tableName: SettingsConsts.Products,
@@ -60,9 +61,21 @@ function Settings() {
     ];
 
     const [searchInput, setSearchInput] = useState('');
-    const [darkMode, setDarkMode] = useState(false); //change to darkMode not false
+    const [darkMode, setDarkMode] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        // Ensure dark mode state is updated when it changes externally
+        setDarkMode(props.isDarkMode);
+    }, [props.isDarkMode]);
+
+    const sendDataToParent = () => {
+        // Toggle dark mode state and send it to the parent component
+        const newDarkMode = !darkMode;
+        setDarkMode(newDarkMode);
+        props.onDarkModeChange(newDarkMode);
+    };
+        
     const renderTableRowContent = (tableTitle, settingItem, darkMode) => {
         const handleLinkClick = (link) => {
             if (typeof link === 'function') {
@@ -77,7 +90,7 @@ function Settings() {
                 <div className="text">{settingItem.title}</div>
                 {tableTitle === SettingsConsts.Appearance ? (
                     <label className="toggle cursor-pointer">
-                        <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+                        <input type="checkbox" checked={darkMode} onChange={() => sendDataToParent()} />
                         <span className="slider"></span>
                     </label>
                 ) : (
@@ -107,19 +120,27 @@ function Settings() {
                 <div className="container-cards">
                     {settingsItems.map(settingTable => (
                         <div className="card" key={settingTable.tableName}>
-                            <div className="card-header title--s weight--l color-n600">{settingTable.tableName}</div>
+                            <div className="card-header title title--s weight--l color-n600">{settingTable.tableName}</div>
 
                             <div className="card-body">
                                 {settingTable.items.map(settingItem => (
                                     renderTableRowContent(settingTable.tableName, settingItem, darkMode)
                                 ))}
                             </div>
+
+
                         </div>
                     ))}
                 </div>
+
             </div>
         </Layout>
     );
 }
+
+Settings.propTypes = {
+    onDarkModeChange: PropTypes.func.isRequired,
+    isDarkMode: PropTypes.bool.isRequired,
+};
 
 export default Settings;

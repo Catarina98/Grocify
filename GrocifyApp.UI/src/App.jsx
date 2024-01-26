@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 //Internal components
 import LoginForm from './components/Login';
@@ -23,8 +24,10 @@ PrivateRoute.propTypes = {
 };
 
 function App() {
+    const [isDarkMode, setDarkMode] = useState(false);
+
     return (
-        <div className="container-page">
+        <div className={`container-page ${isDarkMode ? 'dark' : ''}`}>
             <Router>
                 <Routes>
                     {/* Define the public routes */}
@@ -33,7 +36,7 @@ function App() {
 
                     {/* Define the private routes */}
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
-                    <Route path={AppRoutes.Settings} element={<PrivateRoute><Settings /></PrivateRoute>} />
+                    <Route path={AppRoutes.Settings} element={<PrivateRoute><Settings onDarkModeChange={(data) => setDarkMode(data)} /></PrivateRoute>} />
                 </Routes>
             </Router>
         </div>

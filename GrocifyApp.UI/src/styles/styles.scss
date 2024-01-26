@@ -7,6 +7,7 @@
 @import "elements/_controls.scss";
 @import "components/_searchbar.scss";
 @import "components/_navbar.scss";
+@import "core/_dark-theme.scss";
 
 body {
     font-family: $text-font-family;
@@ -14,7 +15,9 @@ body {
 }
 
 .container-page {
-    padding: $body-padding $body-padding 64px;
+    padding: $body-padding $body-padding 0;
+    background-color: $color--n100;
+    min-height: 100vh;
 }
 
 .cursor-pointer {

@@ -28,7 +28,7 @@ const NavbarMenu = ({ iconSrc, text, route, isActive, onClick }) => (
         <div className="navbar-menu-icon">
             <ReactSVG className="react-svg" src={iconSrc} />
         </div>
-        <div className="navbar-menu-text text--xs weight--xs color-n500">{text}</div>
+        <div className="navbar-menu-text text text--xs weight--xs color-n500">{text}</div>
     </div>
 );
 
