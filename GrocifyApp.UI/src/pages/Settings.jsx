@@ -68,7 +68,7 @@ function Settings() {
             if (typeof link === 'function') {
                 link(); // Execute the function
             } else if (typeof link === 'string') {
-                navigate(link); // Navigate to the route path
+                navigate(link);
             }
         };
 
