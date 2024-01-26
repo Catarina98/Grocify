@@ -47,33 +47,70 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             return await entities.FindAsync(id);
         }
 
+        public async Task<T?> GetSingleWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
+        {
+            T? result;
+
+            result = await entities.SingleOrDefaultAsync(filter);
+
+            return result;
+        }
+
+        public async Task<TSelector?> GetSingleWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector)
+        {
+            TSelector? result;
+
+            result = await entities.Where(filter).Select(selector).SingleOrDefaultAsync();
+
+            return result;
+        }
+
         public async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
         {
             return await entities.Where(x => !x.IsDeleted).ToListAsync();
         }
 
-        public async Task Insert(T entity, CancellationTokenSource? token = null)
+        public async Task<List<T>> GetWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
         {
-            if (entity == null)
+            if (filter == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException(nameof(filter));
             }
 
-            entities.Add(entity);
+            var s = entities.Where(filter);
 
-            await SaveChangesAsync(token);
+            return await ToListAsync(s, token);
         }
 
-        public async Task Update(T entity, CancellationTokenSource? token = null)
+        public async Task<List<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null)
         {
-            if (entity == null)
+            if (filter == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException(nameof(filter));
             }
 
-            entities.Update(entity);
+            var s = entities.Where(filter).Select(selector);
 
-            await SaveChangesAsync(token);
+            return await ToListAsync(s, token);
+        }
+
+        public async Task<bool> AnyWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            if (token != null)
+            {
+                return await entities.AnyAsync(filter, token.Token);
+            }
+            else
+            {
+                return await entities.AnyAsync(filter);
+            }
         }
 
         public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel
@@ -90,6 +127,48 @@ namespace GrocifyApp.DAL.Repositories.Implementations
                 .Take(filter.PageSize);
 
             return await ToListAsync(s, token);
+        }
+
+        public async Task Insert(T entity, CancellationTokenSource? token = null)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+
+            entities.Add(entity);
+
+            await SaveChangesAsync(token);
+        }
+
+        public async Task InsertMultiple(IEnumerable<T> entitiesToAdd, bool saveChanges = true, CancellationTokenSource? token = null)
+        {
+            if(entitiesToAdd == null)
+            {
+                throw new ArgumentNullException(nameof(entitiesToAdd));
+            }
+
+            entities.AddRange(entitiesToAdd);
+
+            if (saveChanges)
+            {
+                await SaveChangesAsync(token);
+            }
+        }
+
+        public async Task Update(T entity, bool saveChanges = true, CancellationTokenSource? token = null)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+
+            entities.Update(entity);
+
+            if(saveChanges)
+            {
+                await SaveChangesAsync(token);
+            }
         }
 
         public virtual Expression<Func<T, bool>> ToExpression<TFilter>(TFilter filter, CancellationTokenSource? token = null)
@@ -137,7 +216,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             }
         }
 
-        private async Task SaveChangesAsync(CancellationTokenSource? token = null)
+        public async Task SaveChangesAsync(CancellationTokenSource? token = null)
         {
             if (token != null)
             {

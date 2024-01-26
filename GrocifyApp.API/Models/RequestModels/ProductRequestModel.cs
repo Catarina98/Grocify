@@ -1,7 +1,4 @@
-﻿using GrocifyApp.DAL.Models;
-using System.Text.Json.Serialization;
-
-namespace GrocifyApp.API.Models.RequestModels
+﻿namespace GrocifyApp.API.Models.RequestModels
 {
     public class ProductRequestModel
     {

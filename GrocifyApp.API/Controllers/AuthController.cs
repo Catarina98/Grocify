@@ -74,6 +74,8 @@ namespace GrocifyApp.API.Controllers
         {
             var getUser = await _userService.GetUserByEmail(user.Email);
 
+            Guid? houseId;
+
             if (getUser == null)
             {
                 var errors = new List<string> { GenericConsts.Errors.UserPasswordIncorrect };
@@ -89,6 +91,8 @@ namespace GrocifyApp.API.Controllers
 
                     return BadRequest(new BadResponseModel { Errors = errors });
                 }
+
+                houseId = await _userService.GetUserDefaultHouseId(getUser.Id);
             }
 
             UserRequestModel userRequestModel = new UserRequestModel()
@@ -100,7 +104,7 @@ namespace GrocifyApp.API.Controllers
                 PasswordSalt = getUser.PasswordSalt,
             };
 
-            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name };
+            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId };
 
             string token = CreateToken(userRequestModel);
 

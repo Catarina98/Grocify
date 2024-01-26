@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+
+//Internal components
 import BottomNavbar from './BottomNavbar';
 
 const Layout = ({ children }) => {

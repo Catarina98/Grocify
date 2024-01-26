@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react';
-import { ReactSVG } from 'react-svg';
-import { NavbarConsts } from '../../consts/ENConsts';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
+
+//Assets & Css
 import CartIcon from '../../assets/cart-ic.svg';
 import InventoryIcon from '../../assets/inventory-ic.svg';
 import RecipeIcon from '../../assets/recipes-ic.svg';
 import CalendarIcon from '../../assets/calendar-ic.svg';
 import SettingsIcon from '../../assets/settings-ic.svg';
+
+//Consts
+import { NavbarConsts } from '../../consts/ENConsts';
 import AppRoutes from '../../consts/AppRoutes';
 
 const menuItems = [
-    { iconSrc: CartIcon, text: NavbarConsts.Lists, route: '/weatherforecast' },
+    { iconSrc: CartIcon, text: NavbarConsts.Lists, route: '/' },
     { iconSrc: InventoryIcon, text: NavbarConsts.Inventories },
     { iconSrc: RecipeIcon, text: NavbarConsts.Recipes },
     { iconSrc: CalendarIcon, text: NavbarConsts.Plan },

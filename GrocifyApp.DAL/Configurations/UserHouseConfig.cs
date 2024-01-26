@@ -19,6 +19,8 @@ namespace GrocifyApp.DAL.Configurations
             builder
               .HasIndex(nameof(UserHouse.UserId), nameof(UserHouse.HouseId))
               .IsUnique();
+
+            builder.HasIndex(u => new { u.DefaultHouse, u.UserId }).IsUnique().HasFilter(nameof(UserHouse.DefaultHouse) + " = 1");
         }
     }
 }

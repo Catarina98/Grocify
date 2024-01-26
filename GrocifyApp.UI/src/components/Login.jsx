@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
-import { GenericConsts, LoginConsts } from '../consts/ENConsts';
+
+//Internal components
+import CustomInput from './CustomInput';
+
+//Assets & Css
 import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
 import ApiEndpoints from '../consts/ApiEndpoints';
-import AppRoutes from '../consts/AppRoutes';
-import CustomInput from './CustomInput';
 import './Login.module.scss';
 
+//Consts
+import { GenericConsts, LoginConsts } from '../consts/ENConsts';
+import AppRoutes from '../consts/AppRoutes';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -39,7 +44,7 @@ const LoginForm = () => {
 
                 console.log('Login successful');
 
-                navigate('/weatherforecast');
+                navigate('/');
             } else {
                 const errorData = await response.json();
                 console.error('Login failed', errorData.errors[0]);

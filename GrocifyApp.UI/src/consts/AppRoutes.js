@@ -1,4 +1,6 @@
 const AppRoutes = {
+    Login: '/login',
+    Logout: '/logout',
     Register: '/register',
     Settings: '/settings'
 };

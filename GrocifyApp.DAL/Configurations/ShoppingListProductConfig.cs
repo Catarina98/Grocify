@@ -15,6 +15,8 @@ namespace GrocifyApp.DAL.Configurations
             builder.HasOne<Product>(x => x.Product)
                 .WithMany(y => y.ShoppingListProducts)
                 .HasForeignKey(x => x.ProductId);
+
+            builder.HasIndex(u => new { u.ShoppingListId, u.ProductId }).IsUnique();
         }
     }
 }

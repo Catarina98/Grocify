@@ -21,6 +21,8 @@ namespace GrocifyApp.API.Controllers
         where TResponseModel : class
         where TFilter : BaseSearchModel
     {
+        public IMapper _mapper { get => mapper; set => mapper = value; }
+
         //GET ENTITY BY ID
         /// <summary>
         /// Gets a specific entity by id.
