@@ -4,6 +4,9 @@
 @import "elements/_texts.scss";
 @import "elements/_colors.scss";
 @import "elements/_icons.scss";
+@import "elements/_controls.scss";
+@import "components/_searchbar.scss";
+@import "components/_navbar.scss";
 
 body {
     font-family: $text-font-family;
@@ -11,5 +14,9 @@ body {
 }
 
 .container-page {
-    padding: $body-padding $body-padding 0;
+    padding: $body-padding $body-padding 64px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }

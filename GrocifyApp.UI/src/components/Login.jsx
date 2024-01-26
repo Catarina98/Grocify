@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
+
+//Internal components
+import CustomInput from './CustomInput';
+
+//Assets & Css
 import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
-import './Login.jsx.scss';
 import ApiEndpoints from '../consts/ApiEndpoints';
-import AppRoutes from '../consts/AppRoutes';
+import './Login.module.scss';
+
+//Consts
 import { GenericConsts, LoginConsts } from '../consts/ENConsts';
-import CustomInput from './CustomInput';
+import AppRoutes from '../consts/AppRoutes';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -38,7 +44,7 @@ const LoginForm = () => {
 
                 console.log('Login successful');
 
-                navigate('/weatherforecast');
+                navigate('/');
             } else {
                 const errorData = await response.json();
                 console.error('Login failed', errorData.errors[0]);
@@ -55,7 +61,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="container-page">
+        <>
             <ReactSVG className="react-svg" src={ReactLogo} />
             <form className="input-form">
                 <div className="title title--xl color-n700">{LoginConsts.SignIn}</div>
@@ -92,7 +98,7 @@ const LoginForm = () => {
                     </div>
                 </a>
             </div>
-        </div>
+        </>
     );
 };
 

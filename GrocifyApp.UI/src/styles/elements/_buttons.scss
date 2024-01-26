@@ -15,6 +15,66 @@ button:focus {
     box-shadow: none!important;
 }
 
+.tab-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: $tab-buttons-height;
+    border-bottom: $tab-buttons-border-h $color--n300 solid;
+    position: relative;
+    background-color: $color--n100;
+
+    &.sticky {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        transition: top .2s ease;
+    }
+
+    .value {
+        border: 1px solid $color--n300;
+        border-radius: 4px;
+        padding: 0 4px;
+        margin-left: 8px;
+        font-weight: 400;
+    }
+
+    .tab-item {
+        line-height: 1.5rem;
+        color: $color--n500;
+        text-decoration: none;
+        background: none;
+        border: none;
+        padding-left: $tab-buttons-padding-horizontal;
+        padding-right: $tab-buttons-padding-horizontal;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+
+        svg {
+            margin-right: 8px;
+            max-width: 14px;
+            fill: $color--n500;
+        }
+
+        &.active {
+            color: $color--b300;
+            border-bottom: 2px solid $color--b300;
+            font-weight: $font-weight--600;
+
+            svg {
+                fill: $color--b300;
+            }
+        }
+
+        &[disabled] {
+            opacity: 0.5;
+        }
+    }
+}
+
 .btn-error {
     color: $color--r300!important;
     svg{

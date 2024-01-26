@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Layout from '../components/Layout/Layout.jsx';
 
 function WeatherForecast() {
     const navigate = useNavigate();
@@ -8,6 +9,10 @@ function WeatherForecast() {
         localStorage.removeItem('token');
 
         navigate('/');
+    };
+
+    const goToSettings = () => {
+        navigate('/settings');
     };
 
 
@@ -40,13 +45,14 @@ function WeatherForecast() {
             </tbody>
         </table>;
 
-    return (
-        <div>
+    return (        
+        <Layout>
             <h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
             <button onClick={handleLogout}>Logout</button>
-        </div>
+            <button onClick={goToSettings}>Settings</button>
+        </Layout>
     );
 
     async function populateWeatherData() {
