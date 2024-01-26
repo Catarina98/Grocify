@@ -11,7 +11,7 @@ import SettingsIcon from '../../assets/settings-ic.svg';
 import AppRoutes from '../../consts/AppRoutes';
 
 const menuItems = [
-    { iconSrc: CartIcon, text: NavbarConsts.Lists, route: '/weatherforecast' },
+    { iconSrc: CartIcon, text: NavbarConsts.Lists, route: '/' },
     { iconSrc: InventoryIcon, text: NavbarConsts.Inventories },
     { iconSrc: RecipeIcon, text: NavbarConsts.Recipes },
     { iconSrc: CalendarIcon, text: NavbarConsts.Plan },

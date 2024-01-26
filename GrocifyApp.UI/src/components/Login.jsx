@@ -39,7 +39,7 @@ const LoginForm = () => {
 
                 console.log('Login successful');
 
-                navigate('/weatherforecast');
+                navigate('/');
             } else {
                 const errorData = await response.json();
                 console.error('Login failed', errorData.errors[0]);

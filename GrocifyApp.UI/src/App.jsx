@@ -1,28 +1,39 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+//Internal components
 import LoginForm from './components/Login';
 import WeatherForecast from './pages/WeatherForecast';
 import Settings from './pages/Settings';
-import AppRoutes from './consts/AppRoutes';
+import Logout from './components/Logout';
+
+//Assets & Css
 import './styles/styles.scss';
 
-function App() {
-    //Check if the user is authenticated
-    const isAuthenticated = localStorage.getItem('token');
+//Consts
+import AppRoutes from './consts/AppRoutes';
 
+function PrivateRoute({ children }) {
+    const isAuthenticated = !!localStorage.getItem('token');
+    return isAuthenticated ? children : <Navigate to={AppRoutes.Login} />;
+}
+
+PrivateRoute.propTypes = {
+    children: PropTypes.node.isRequired
+};
+
+function App() {
     return (
         <div className="container-page">
             <Router>
                 <Routes>
-                    <Route
-                        path="/weatherforecast"
-                        element={<WeatherForecast />}
-                    />
-                    <Route index element={isAuthenticated ? <Navigate to="/weatherforecast" /> : <LoginForm />} />
-                    <Route
-                        path={AppRoutes.Settings}
-                        element={<Settings />}
-                    />
-                    <Route index element={isAuthenticated ? <Navigate to={AppRoutes.Settings} /> : <LoginForm />} />
+                    {/* Define the public routes */}
+                    <Route path={AppRoutes.Login} element={<LoginForm />} />
+                    <Route path={AppRoutes.Logout} element={<Logout />} />
+
+                    {/* Define the private routes */}
+                    <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
+                    <Route path={AppRoutes.Settings} element={<PrivateRoute><Settings /></PrivateRoute>} />
                 </Routes>
             </Router>
         </div>
