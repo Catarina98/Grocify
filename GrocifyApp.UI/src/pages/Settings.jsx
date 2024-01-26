@@ -17,7 +17,7 @@ import './Settings.jsx.scss';
 //Consts
 import { PlaceholderConsts, SettingsConsts, GenericConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
-import ApiEndpoints from '../consts/ApiEndpoints';
+//import ApiEndpoints from '../consts/ApiEndpoints';
 
 function Settings(props) {
     const settingsItems = [
@@ -61,44 +61,50 @@ function Settings(props) {
     ];
 
     const [searchInput, setSearchInput] = useState('');
-    const [darkMode, setDarkMode] = props.isDarkMode;
+    const [darkMode, setDarkMode] = useState(props.userAuth ? props.userAuth.isDarkMode : false);
+    //const [darkMode, setDarkMode] = props.userAuth ? props.userAuth.isDarkMode : false;
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
-    //const updateUserDarkMode = async () => {
+    const updateUserDarkMode = async () => {
+        
+        try {
+            const response = await fetch(`api/User/${props.userAuth.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(props.userAuth),
+            });
 
-    //    const data = 
-
-    //    try {
-    //        const response = await fetch(ApiEndpoints.User_Endpoint, {
-    //            method: 'POST',
-    //            headers: {
-    //                'Content-Type': 'application/json',
-    //            },
-    //            body: JSON.stringify(data),
-    //        });
-
-    //        if (response.ok) {
-    //            const userData = await response.json();
-    //            setDarkMode(userData.isDarkMode);
-    //        } else {
-    //            const errorData = await response.json();
-    //            setErrorMessage(errorData.errors[0]);
-    //        }
-    //    } catch (error) {
-    //        setErrorMessage(GenericConsts.Error);
-    //    }
-    //};
+            if (response.ok) {
+                //const userData = await response.json();
+                //setDarkMode(userData.isDarkMode);
+                console.log("updated");
+            } else {
+                const errorData = await response.json();
+                setErrorMessage(errorData.errors[0]);
+            }
+        } catch (error) {
+            setErrorMessage(GenericConsts.Error);
+        }
+    };
 
     useEffect(() => {
-        // Ensure dark mode state is updated when it changes externally
-        setDarkMode(props.isDarkMode);
-    }, [props.isDarkMode]);
+        if (props.userAuth) {
+            setDarkMode(props.userAuth.isDarkMode);
+        }
+    }, [props.userAuth]);
 
     const sendDataToParent = () => {
-        // Toggle dark mode state and send it to the parent component
         const newDarkMode = !darkMode;
         setDarkMode(newDarkMode);
+
+        if (props.userAuth) {
+            props.userAuth.isDarkMode = newDarkMode;
+        }
+        
+        updateUserDarkMode();
         props.onDarkModeChange(newDarkMode);
     };
         
@@ -166,7 +172,7 @@ function Settings(props) {
 
 Settings.propTypes = {
     onDarkModeChange: PropTypes.func.isRequired,
-    isDarkMode: PropTypes.bool.isRequired,
+    userAuth: PropTypes.object,
 };
 
 export default Settings;
