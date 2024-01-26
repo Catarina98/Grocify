@@ -6,7 +6,7 @@ import { ReactSVG } from 'react-svg';
 import Layout from '../components/Layout/Layout';
 import CustomInput from '../components/CustomInput';
 
-//Assets
+//Assets & Css
 import SearchIcon from '../assets/search-ic.svg';
 import ChevronIcon from '../assets/chevron-ic.svg';
 import LogoutIcon from '../assets/logout-ic.svg';

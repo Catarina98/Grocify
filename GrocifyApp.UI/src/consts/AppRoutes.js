@@ -1,7 +1,8 @@
 const AppRoutes = {
+    Login: '/login',
+    Logout: '/logout',
     Register: '/register',
-    Settings: '/settings',
-    Logout: '/logout'
+    Settings: '/settings'
 };
 
 export default AppRoutes;
