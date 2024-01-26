@@ -42,7 +42,7 @@
         border-radius: 6px;
     }
 
-    ::deep .follow-btn {
+    .follow-btn {
         height: 21px;
     }
 }
@@ -62,37 +62,36 @@
     height: 41px;
 }
 
-::deep {
-    .tab-item {
-        &:hover {
-            color: $color--b300;
 
-            svg {
-                fill: $color--b300;
-            }
-        }
-
-        &:disabled {
-            pointer-events: none;
-        }
+.tab-item {
+    &:hover {
+        color: $color--b300;
 
         svg {
-            width: 12px;
-        }
-
-        &:nth-child(3) svg {
-            width: 10px;
+            fill: $color--b300;
         }
     }
 
-    .input-box-holder {
-        padding: 12px !important;
-        gap: 8px;
-        height: 40px;
+    &:disabled {
+        pointer-events: none;
+    }
 
-        .input-text {
-            margin-right: 2px;
-        }
+    svg {
+        width: 12px;
+    }
+
+    &:nth-child(3) svg {
+        width: 10px;
+    }
+}
+
+.input-box-holder {
+    padding: 12px !important;
+    gap: 8px;
+    height: 40px;
+
+    .input-text {
+        margin-right: 2px;
     }
 }
 
@@ -105,44 +104,11 @@
     padding: 12px;
 }
 
-::deep .primary-button {
-    padding: 4px 8px;
-}
-
-::deep .secondary-button {
-    padding: 4px 8px;
-}
-
 @media (max-width: 899px) {
-    /*.search-holder {
-        background-color: $color--n100;
-        border: 1px solid $color--n500;
-        border-radius: 4px;
-        padding: 16px 0 8px;
-    }*/
 
-    ::deep .input-box {
+    .input-box {
         padding: 0 16px;
     }
-
-    /*.search-fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 3;
-        width: 100%;
-        height: 100%;
-        padding: 16px;
-        background: rgba(0, 0, 0, 0.6);
-
-        &:not(:focus-within) {
-            height: 0;
-            opacity: 0;
-            z-index: -1;
-            overflow: hidden;
-            padding: 0;
-        }
-    }*/
 
     .dropdown-search {
         margin-top: 16px;
@@ -150,7 +116,7 @@
         .tab-buttons {
             padding: 0 16px;
 
-            ::deep .container-header {
+            .container-header {
                 width: 100%;
                 justify-content: space-between;
 
@@ -164,26 +130,7 @@
     }
 }
 
-@media (min-width: 578px) and (max-width: 899px) {
-    /*.search-holder {
-        padding-bottom: 22px;
-    }*/
-}
-
 @media (min-width: 900px) {
-    /*.search-fixed {
-        width: 100%;
-        max-width: 460px;
-    }
-
-    .search-holder {
-        position: relative;
-
-        &:has(.input-text:placeholder-shown) .dropdown-search {
-            display: none;
-        }
-    }*/
-
     .dropdown-search {
         position: absolute;
         width: 100%;

@@ -95,7 +95,7 @@ function Settings() {
                 <div className="searchbar-container">
                     <div className="searchbar-holder">
                         <CustomInput className="app-form mb-0"
-                            type="password"
+                            type="text"
                             placeholder={PlaceholderConsts.Search}
                             label={PlaceholderConsts.Search}
                             value={searchInput}
