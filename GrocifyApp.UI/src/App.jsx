@@ -36,7 +36,7 @@ function App() {
 
                     {/* Define the private routes */}
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
-                    <Route path={AppRoutes.Settings} element={<PrivateRoute><Settings /></PrivateRoute>} />
+                    <Route path={AppRoutes.Settings} element={<PrivateRoute><Settings onDarkModeChange={(data) => setDarkMode(data)} /></PrivateRoute>} />
                 </Routes>
             </Router>
         </div>

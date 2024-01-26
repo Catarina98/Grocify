@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
@@ -20,7 +19,7 @@ import { PlaceholderConsts } from '../consts/ENConsts';
 import { SettingsConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
 
-function Settings() {
+function Settings(props) {
     const settingsItems = [
         {
             tableName: SettingsConsts.Products,
@@ -61,7 +60,6 @@ function Settings() {
         }
     ];
 
-function Settings(props) {
     const [searchInput, setSearchInput] = useState('');
     const [darkMode, setDarkMode] = useState(false);
     const navigate = useNavigate();
@@ -77,12 +75,6 @@ function Settings(props) {
         setDarkMode(newDarkMode);
         props.onDarkModeChange(newDarkMode);
     };
-
-    //const handleLogout = () => {
-    //    localStorage.removeItem('token');
-
-    //    navigate('/');
-    //};
         
     const renderTableRowContent = (tableTitle, settingItem, darkMode) => {
         const handleLinkClick = (link) => {
@@ -98,7 +90,7 @@ function Settings(props) {
                 <div className="text">{settingItem.title}</div>
                 {tableTitle === SettingsConsts.Appearance ? (
                     <label className="toggle cursor-pointer">
-                        <input type="checkbox" checked={darkMode} onChange={() => sendDataToParent() />
+                        <input type="checkbox" checked={darkMode} onChange={() => sendDataToParent()} />
                         <span className="slider"></span>
                     </label>
                 ) : (
@@ -128,7 +120,7 @@ function Settings(props) {
                 <div className="container-cards">
                     {settingsItems.map(settingTable => (
                         <div className="card" key={settingTable.tableName}>
-                            <div className="card-header title--s weight--l color-n600">{settingTable.tableName}</div>
+                            <div className="card-header title title--s weight--l color-n600">{settingTable.tableName}</div>
 
                             <div className="card-body">
                                 {settingTable.items.map(settingItem => (
