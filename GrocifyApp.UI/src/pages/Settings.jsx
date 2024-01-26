@@ -15,9 +15,9 @@ import TrashIcon from '../assets/trash-ic.svg';
 import './Settings.jsx.scss';
 
 //Consts
-import { PlaceholderConsts } from '../consts/ENConsts';
-import { SettingsConsts } from '../consts/ENConsts';
+import { PlaceholderConsts, SettingsConsts, GenericConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
+import ApiEndpoints from '../consts/ApiEndpoints';
 
 function Settings(props) {
     const settingsItems = [
@@ -61,8 +61,34 @@ function Settings(props) {
     ];
 
     const [searchInput, setSearchInput] = useState('');
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = props.isDarkMode;
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+
+    //const updateUserDarkMode = async () => {
+
+    //    const data = 
+
+    //    try {
+    //        const response = await fetch(ApiEndpoints.User_Endpoint, {
+    //            method: 'POST',
+    //            headers: {
+    //                'Content-Type': 'application/json',
+    //            },
+    //            body: JSON.stringify(data),
+    //        });
+
+    //        if (response.ok) {
+    //            const userData = await response.json();
+    //            setDarkMode(userData.isDarkMode);
+    //        } else {
+    //            const errorData = await response.json();
+    //            setErrorMessage(errorData.errors[0]);
+    //        }
+    //    } catch (error) {
+    //        setErrorMessage(GenericConsts.Error);
+    //    }
+    //};
 
     useEffect(() => {
         // Ensure dark mode state is updated when it changes externally

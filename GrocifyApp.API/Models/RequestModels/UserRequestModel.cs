@@ -13,6 +13,9 @@ namespace GrocifyApp.API.Models.RequestModels
         [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = GenericConsts.RequestModels.ValidEmail)]
         public required string Email { get; set; }
 
+        /// <example>false</example>
+        public bool IsDarkMode { get; set; }
+
         /// <example>FbjYxLWIlgcQn8sX6KijffST</example>
         [StringLength(24, MinimumLength = 8)]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", ErrorMessage = GenericConsts.RequestModels.ValidPasswordFormat)]
