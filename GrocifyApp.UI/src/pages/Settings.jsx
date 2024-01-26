@@ -46,8 +46,7 @@ function Settings() {
             tableName: SettingsConsts.Appearance,
             items: [
                 {
-                    title: SettingsConsts.DarkMode,
-                    link: () => setDarkMode(!darkMode),
+                    title: SettingsConsts.DarkMode
                 }
             ]
         },
@@ -74,11 +73,11 @@ function Settings() {
         };
 
         return (
-            <div className="card-body-row" key={settingItem.title} onClick={() => handleLinkClick(settingItem.link)}>
+            <div className="card-body-row" key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
                 <div className="text">{settingItem.title}</div>
                 {tableTitle === SettingsConsts.Appearance ? (
                     <label className="toggle cursor-pointer">
-                        <input type="checkbox" checked={darkMode} />
+                        <input type="checkbox" checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
                         <span className="slider"></span>
                     </label>
                 ) : (
