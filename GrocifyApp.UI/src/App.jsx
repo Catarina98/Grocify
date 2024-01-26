@@ -32,8 +32,7 @@ function App() {
                     <Route path={AppRoutes.Logout} element={<Logout />} />
 
                     {/* Define the private routes */}
-                    <Route index element={<PrivateRoute><Settings /></PrivateRoute>} />
-                    <Route path="/weatherforecast" element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
+                    <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
                     <Route path={AppRoutes.Settings} element={<PrivateRoute><Settings /></PrivateRoute>} />
                 </Routes>
             </Router>
