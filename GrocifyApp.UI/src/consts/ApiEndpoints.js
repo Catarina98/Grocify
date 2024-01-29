@@ -1,7 +1,6 @@
 const ApiEndpoints = {
     Login_Endpoint: 'api/Auth/login',
-    Users_Endpoint: 'api/',
-    User_Endpoint: '`api/User/${props.userAuth.id}`'
+    User_Endpoint: (userId) => `api/User/${userId}`
 };
 
 export default ApiEndpoints;

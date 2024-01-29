@@ -17,7 +17,7 @@ import styles from './Settings.module.scss';
 //Consts
 import { PlaceholderConsts, SettingsConsts, GenericConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
-//import ApiEndpoints from '../consts/ApiEndpoints';
+import ApiEndpoints from '../consts/ApiEndpoints';
 
 function Settings(props) {
     const settingsItems = [
@@ -62,7 +62,6 @@ function Settings(props) {
 
     const [searchInput, setSearchInput] = useState('');
     const [darkMode, setDarkMode] = useState(props.userAuth ? props.userAuth.isDarkMode : false);
-    //const [darkMode, setDarkMode] = props.userAuth ? props.userAuth.isDarkMode : false;
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
@@ -73,7 +72,7 @@ function Settings(props) {
 
             props.userAuth.confirmPassword = p; //change
 
-            const response = await fetch(`api/User/${props.userAuth.id}`, {
+            const response = await fetch(ApiEndpoints.User_Endpoint(props.userAuth.id), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
