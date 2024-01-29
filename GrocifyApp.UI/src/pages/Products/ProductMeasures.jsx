@@ -11,15 +11,14 @@ import SearchIcon from '../../assets/search-ic.svg';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
-import './ProductSections.jsx.scss';
+//import './ProductSections.jsx.scss';
 
 //Consts
 import { PlaceholderConsts } from '../../consts/ENConsts';
 import { ButtonConsts } from '../../consts/ENConsts';
-import IconsConsts from "../../consts/IconsConsts";
 //import { ApiEndpoints } from '../../consts/ApiEndpoints';
 
-function ProductSections() {
+function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
     //const [loading, setLoading] = useState(true);
@@ -31,7 +30,7 @@ function ProductSections() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`api/ProductSection/${houseId}/products`, {
+                const response = await fetch(`api/ProductMeasure/${houseId}/products`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -65,7 +64,7 @@ function ProductSections() {
                 <div className="searchbar-holder">
                     <CustomInput className="app-form mb-0"
                         type="input"
-                        placeholder={PlaceholderConsts.SearchSections}
+                        placeholder={PlaceholderConsts.SearchMeasures}
                         label={PlaceholderConsts.Search}
                         value={searchInput}
                         icon={SearchIcon}
@@ -76,13 +75,7 @@ function ProductSections() {
             <div className="container-sections">
                 {sections.map(section => (
                     <div className="section-row" key={section.id}>
-                        <div className="section-info">
-                            <div className="icon--w24 cursor-pointer">
-                                <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon]} />
-                            </div>
-
-                            <div className="text">{section.name}</div>
-                        </div>
+                        <div className="text">{section.name}</div>
 
                         {section.houseId != null && (
                             <div className="icon--w16 cursor-pointer">
@@ -96,10 +89,10 @@ function ProductSections() {
             <button className="primary-button btn--l">
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
-                {ButtonConsts.NewSection}
+                {ButtonConsts.NewMeasure}
             </button>
         </Layout>
     );
 }
 
-export default ProductSections;
+export default ProductMeasures;

@@ -3,7 +3,8 @@ const GenericConsts = {
 };
 
 const ButtonConsts = {
-    NewSection: "New section"
+    NewSection: "New section",
+    NewMeasure: "New measure"
 };
 
 const SettingsConsts = {
@@ -24,7 +25,8 @@ const SettingsConsts = {
 
 const PlaceholderConsts = {
     Search: "Search...",
-    SearchSections: "Search for product sections..."
+    SearchSections: "Search for product sections...",
+    SearchMeasures: "Search for product measures..."
 };
 
 const NavbarConsts = {

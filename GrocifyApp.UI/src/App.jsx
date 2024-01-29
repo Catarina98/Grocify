@@ -8,6 +8,7 @@ import WeatherForecast from './pages/WeatherForecast';
 import Settings from './pages/Settings';
 import Logout from './components/Logout';
 import ProductSections from './pages/Products/ProductSections';
+import ProductMeasures from './pages/Products/ProductMeasures';
 
 //Assets & Css
 import './styles/styles.scss';
@@ -39,6 +40,7 @@ function App() {
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
                     <Route path={AppRoutes.Settings} element={<PrivateRoute><Settings onDarkModeChange={(data) => setDarkMode(data)} /></PrivateRoute>} />
                     <Route path={AppRoutes.ProductSections} element={<PrivateRoute><ProductSections/></PrivateRoute>} />
+                    <Route path={AppRoutes.ProductMeaures} element={<PrivateRoute><ProductMeasures/></PrivateRoute>} />
                 </Routes>
             </Router>
         </div>
