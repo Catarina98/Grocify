@@ -50,6 +50,10 @@ const BottomNavbar = () => {
         if (currentNavItem) {
             setActiveNavItem(currentNavItem.text);
         }
+        else {
+            // If there's no current navigation item, keep the last one as active
+            setActiveNavItem(menuItems[menuItems.length - 1].text);
+        }
     }, [location.pathname]);
 
     const handleNavItemClick = (route) => {
