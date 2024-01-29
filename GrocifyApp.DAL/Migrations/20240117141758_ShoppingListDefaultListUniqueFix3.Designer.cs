@@ -4,6 +4,7 @@ using GrocifyApp.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    partial class GrocifyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240117141758_ShoppingListDefaultListUniqueFix3")]
+    partial class ShoppingListDefaultListUniqueFix3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -359,9 +362,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("ShoppingListId", "ProductId")
-                        .IsUnique()
-                        .HasFilter("[ShoppingListId] IS NOT NULL AND [ProductId] IS NOT NULL");
+                    b.HasIndex("ShoppingListId");
 
                     b.ToTable("ShoppingListProducts");
                 });
@@ -401,9 +402,6 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
-                    b.Property<bool>("DefaultHouse")
-                        .HasColumnType("bit");
-
                     b.Property<Guid>("HouseId")
                         .HasColumnType("uniqueidentifier");
 
@@ -411,10 +409,6 @@ namespace GrocifyApp.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasIndex("HouseId");
-
-                    b.HasIndex("DefaultHouse", "UserId")
-                        .IsUnique()
-                        .HasFilter("DefaultHouse = 1");
 
                     b.HasIndex("UserId", "HouseId")
                         .IsUnique()

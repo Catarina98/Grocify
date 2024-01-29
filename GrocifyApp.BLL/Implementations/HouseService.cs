@@ -8,12 +8,10 @@ namespace GrocifyApp.BLL.Implementations
 {
     public class HouseService : EntitiesService<House>, IHouseService
     {
-        private readonly IHouseRepository _houseRepository;
         private readonly IRepository<UserHouse> _userHouseRepository;
 
-        public HouseService(IHouseRepository repository, IRepository<UserHouse> userHouseRepository) : base(repository)
+        public HouseService(IRepository<House> houseRepository, IRepository<UserHouse> userHouseRepository) : base(houseRepository)
         {
-            _houseRepository = repository;
             _userHouseRepository = userHouseRepository;
         }
 
@@ -46,7 +44,7 @@ namespace GrocifyApp.BLL.Implementations
 
         public async Task<List<User>> GetUsersFromHouse(Guid houseId)
         {
-            var users = await _houseRepository.GetUsersFromHouse(houseId);
+            var users = await _userHouseRepository.GetWhere<User>(userHouse => userHouse.HouseId == houseId, userHouse => userHouse.User!);
 
             if (users == null || users.Count == 0)
             {
@@ -56,24 +54,40 @@ namespace GrocifyApp.BLL.Implementations
             return users;
         }
 
+
+        /// <summary>
+        /// If the user doesn't have any house yet, when you add a new one, it will automatically become the default house for that user
+        /// </summary>
         public async Task InsertUserToHouse(Guid houseId, Guid userId, CancellationTokenSource? token = null)
         {
             try
             {
-                await _userHouseRepository.Insert(new UserHouse
+                var newUserHouse = new UserHouse
                 {
                     UserId = userId,
                     HouseId = houseId
-                }, token);
+                };
+
+                if (!await _userHouseRepository.AnyWhere(x => x.UserId == userId))
+                {
+                    newUserHouse.DefaultHouse = true;
+                }
+
+                await _userHouseRepository.Insert(newUserHouse, token);
             }
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
-                throw new CustomException(GenericConsts.Exceptions.InsertDuplicateUserInHouse);
+                throw new SQLException(ex, GenericConsts.Exceptions.InsertDuplicateUserInHouse);
             }
         }
 
         public async Task InsertWithUser(House house, Guid userId, CancellationTokenSource? token = null)
         {
+            if(await _userHouseRepository.AnyWhere(x => x.UserId == userId && x.House != null && x.House.Name == house.Name))
+            {
+                throw new SQLException(SQLException.SQLExceptionType.DuplicateEntity, GenericConsts.Exceptions.DuplicateHouseName);
+            }
+
             await Insert(house, token);
 
             await InsertUserToHouse(house.Id, userId, token);

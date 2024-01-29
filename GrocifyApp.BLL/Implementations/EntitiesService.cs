@@ -9,7 +9,7 @@ namespace GrocifyApp.BLL.Implementations
 {
     public class EntitiesService<T> : IEntitiesService<T> where T : BaseEntity
     {
-        private readonly IRepository<T> repository;
+        protected readonly IRepository<T> repository;
         protected virtual string duplicateEntityException { get; set; } = GenericConsts.Entities.Entity;
 
         public EntitiesService(IRepository<T> repository)
@@ -49,25 +49,31 @@ namespace GrocifyApp.BLL.Implementations
                 try
                 {
                     await repository.Insert(entity, token);
+
+                    await FinishInsert(entity);
                 }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
                 {
-                    throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, duplicateEntityException));
+                    throw new SQLException(ex, duplicateEntityException);
                 }
             }
         }
 
-        public async Task Update(T entity, CancellationTokenSource? token = null)
+        public async Task Update(T entity, bool saveChanges = true, CancellationTokenSource? token = null)
         {
             if (await Validate(entity))
             {
-                await repository.Update(entity, token);
+                await repository.Update(entity, saveChanges, token);
             }
         }
 
         protected virtual async Task<bool> Validate(T entity)
         {
             return true;
+        }
+
+        protected virtual async Task FinishInsert(T entity)
+        {
         }
     }
 }

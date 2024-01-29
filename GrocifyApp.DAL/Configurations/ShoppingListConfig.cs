@@ -13,6 +13,10 @@ namespace GrocifyApp.DAL.Configurations
             builder.HasOne<House>(x => x.House)
                 .WithMany(y => y.ShoppingLists)
                 .HasForeignKey(x => x.HouseId);
+
+            builder.HasIndex(u => new { u.DefaultList, u.HouseId }).IsUnique().HasFilter(nameof(ShoppingList.DefaultList) + " = 1");
+
+            builder.HasIndex(u => new { u.Name, u.HouseId }).IsUnique();
         }
     }
 }

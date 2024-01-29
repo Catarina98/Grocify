@@ -1,24 +1,24 @@
 ﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
+using GrocifyApp.DAL.Helpers;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
+using System.Linq.Expressions;
 
 namespace GrocifyApp.BLL.Implementations
 {
     public class ProductSectionService : EntitiesService<ProductSection>, IProductSectionService
     {
-        private readonly IProductSectionRepository _productSectionRepository;
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ProductSection;
 
-        public ProductSectionService(IProductSectionRepository repository) : base(repository)
+        public ProductSectionService(IRepository<ProductSection> repository) : base(repository)
         {
-            _productSectionRepository = repository;
         }
 
         public async Task<List<ProductSection>> GetProductSectionsFromHouse(Guid houseId)
         {
-            var productSections = await _productSectionRepository.GetProductSectionsFromHouse(houseId);
+            var productSections = await repository.GetWhere(GetFilterCondition(houseId));
 
             if (productSections == null || productSections.Count == 0)
             {
@@ -32,7 +32,7 @@ namespace GrocifyApp.BLL.Implementations
         {
             if (productSection.HouseId != null)
             {
-                if (await _productSectionRepository.CheckSectionExistsInHouse(productSection.HouseId.Value, productSection.Name))
+                if (await repository.AnyWhere(GetFilterCondition(productSection.HouseId.Value, productSection.Name)))
                 {
                     throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductSection));
                 }
@@ -43,6 +43,19 @@ namespace GrocifyApp.BLL.Implementations
             }
 
             return true;
+        }
+
+        private Expression<Func<ProductSection, bool>> GetFilterCondition(Guid houseId, string? name = null)
+        {
+            Expression<Func<ProductSection, bool>> filter = productSection => productSection.HouseId == houseId || productSection.HouseId == null;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                filter = ExpressionsExtension<ProductSection>
+                 .AndExpression(filter, productSection => productSection.Name == name);
+            }
+
+            return filter;
         }
     }
 }

@@ -4,6 +4,7 @@ using GrocifyApp.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    partial class GrocifyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240118095933_ShoppingListProductUnique")]
+    partial class ShoppingListProductUnique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -401,9 +404,6 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
-                    b.Property<bool>("DefaultHouse")
-                        .HasColumnType("bit");
-
                     b.Property<Guid>("HouseId")
                         .HasColumnType("uniqueidentifier");
 
@@ -411,10 +411,6 @@ namespace GrocifyApp.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasIndex("HouseId");
-
-                    b.HasIndex("DefaultHouse", "UserId")
-                        .IsUnique()
-                        .HasFilter("DefaultHouse = 1");
 
                     b.HasIndex("UserId", "HouseId")
                         .IsUnique()
