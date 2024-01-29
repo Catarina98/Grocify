@@ -69,8 +69,12 @@ function Settings(props) {
     const updateUserDarkMode = async () => {
         
         try {
+            var p = props.userAuth.password; //change
+
+            props.userAuth.confirmPassword = p; //change
+
             const response = await fetch(`api/User/${props.userAuth.id}`, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },

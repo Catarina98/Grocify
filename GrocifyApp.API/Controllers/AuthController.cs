@@ -104,7 +104,7 @@ namespace GrocifyApp.API.Controllers
                 PasswordSalt = getUser.PasswordSalt,
             };
 
-            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId };
+            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId, Password = getUser.Password, ConfirmPassword = getUser.Password };
 
             string token = CreateToken(userRequestModel);
 
