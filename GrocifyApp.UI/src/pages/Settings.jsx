@@ -24,7 +24,7 @@ function Settings(props) {
             tableName: SettingsConsts.Products,
             items: [
                 { title: SettingsConsts.Products },
-                { title: SettingsConsts.ProductSections },
+                { title: SettingsConsts.ProductSections, link: AppRoutes.ProductSections },
                 { title: SettingsConsts.ProductMeasures },
             ]
         },

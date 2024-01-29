@@ -8,7 +8,6 @@ import WeatherForecast from './pages/WeatherForecast';
 import Settings from './pages/Settings';
 import Logout from './components/Logout';
 import ProductSections from './pages/Products/ProductSections';
-import AppRoutes from './consts/AppRoutes';
 
 //Assets & Css
 import './styles/styles.scss';
