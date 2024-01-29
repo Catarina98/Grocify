@@ -12,7 +12,7 @@ import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 import IconsConsts from "../../consts/IconsConsts";
 //import { ApiEndpoints } from '../../consts/ApiEndpoints';
 import Layout from '../../components/Layout/Layout';
-import './ProductSections.jsx.scss';
+import styles from './ProductSections.module.scss';
 
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
@@ -52,12 +52,12 @@ function ProductSections() {
 
     return (
         <Layout>
-            <div className="searchbar-container"> {/*missing border*/}
+            <div className={styles.searchbarContainer + " searchbar-container"}> {/*missing border*/}
                 <div className="icon--w16 cursor-pointer rotate-180">
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
 
-                <div className="searchbar-holder">
+                <div className={styles.searchbarHolder + " searchbar-holder"}>
                     <CustomInput className="app-form mb-0"
                         type="input"
                         placeholder={PlaceholderConsts.SearchSections}
@@ -68,11 +68,11 @@ function ProductSections() {
                 </div>
             </div>
 
-            <div className="container-sections">
+            <div className={styles.containerSections}>
                 {sections.map(section => (
-                    <div className="section-row" key={section.id}>
-                        <div className="section-info">
-                            <div className="icon--w24 cursor-pointer">
+                    <div className={styles.sectionRow} key={section.id}>
+                        <div className={styles.sectionInfo}>
+                            <div className={styles.iconW24 + " cursor-pointer"}>
                                 <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon]} />
                             </div>
 

@@ -1,31 +1,32 @@
 @import "../../styles/core/variables/_colors-var.scss";
 
-.searchbar-container {
+.searchbarContainer {
     display: flex;
     align-items: center;
     gap: 4px;
+    margin-bottom: 24px;
 
-    .searchbar-holder {
+    .searchbarHolder {
         width: 100%;
     }
 }
 
-.container-sections {
+.containerSections {
     display: flex;
     flex-direction: column;
     gap: 8px;
 
-    .section-row {
+    .sectionRow {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .section-info {
+        .sectionInfo {
             display: flex;
             align-items: center;
             gap: 4px;
 
-            .icon--w24 {
+            .iconW24 {
                 padding: 4px;
 
                 svg {
@@ -35,11 +36,4 @@
             }
         }
     }
-}
-
-.primary-button {
-    position: absolute !important;
-    bottom: 72px;
-    left: 50%;
-    transform: translateX(-50%);
 }

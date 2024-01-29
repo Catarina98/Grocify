@@ -474,3 +474,10 @@ button .react-svg svg {
 .dropdown-button > svg {
     width: 16px;
 }
+
+.primary-button {
+    position: absolute !important;
+    bottom: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+}

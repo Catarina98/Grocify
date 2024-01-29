@@ -16,7 +16,7 @@ import AppRoutes from '../../consts/AppRoutes';
 
 const menuItems = [
     { iconSrc: CartIcon, text: NavbarConsts.Lists, route: '/' },
-    { iconSrc: InventoryIcon, text: NavbarConsts.Inventories, route: AppRoutes.ProductSections },
+    { iconSrc: InventoryIcon, text: NavbarConsts.Inventories },
     { iconSrc: RecipeIcon, text: NavbarConsts.Recipes },
     { iconSrc: CalendarIcon, text: NavbarConsts.Plan },
     { iconSrc: SettingsIcon, text: NavbarConsts.Settings, route: AppRoutes.Settings },
