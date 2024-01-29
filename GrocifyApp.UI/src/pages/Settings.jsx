@@ -12,7 +12,7 @@ import SearchIcon from '../assets/search-ic.svg';
 import ChevronIcon from '../assets/chevron-ic.svg';
 import LogoutIcon from '../assets/logout-ic.svg';
 import TrashIcon from '../assets/trash-ic.svg';
-import './Settings.jsx.scss';
+import styles from './Settings.module.scss';
 
 //Consts
 import { PlaceholderConsts, SettingsConsts } from '../consts/ENConsts';
@@ -85,7 +85,7 @@ function Settings(props) {
         };
 
         return (
-            <div className="card-body-row" key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
+            <div className={styles.cardBodyRow + " card-body-row"} key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
                 <div className="text">{settingItem.title}</div>
                 {tableTitle === SettingsConsts.Appearance ? (
                     <label className="toggle cursor-pointer">
@@ -104,7 +104,7 @@ function Settings(props) {
     return (
         <Layout>
             <div className="container-settings">
-                <div className="searchbar-container">
+                <div className={styles.searchbarContainer}>
                     <div className="searchbar-holder">
                         <CustomInput className="app-form mb-0"
                             type="text"
@@ -116,10 +116,10 @@ function Settings(props) {
                     </div>
                 </div>
 
-                <div className="container-cards">
+                <div className={styles.containerCards}>
                     {settingsItems.map(settingTable => (
-                        <div className="card" key={settingTable.tableName}>
-                            <div className="card-header title title--s weight--l color-n600">{settingTable.tableName}</div>
+                        <div className={styles.card + " card"} key={settingTable.tableName}>
+                            <div className={styles.cardHeader + " card-header title title--s weight--l"}>{settingTable.tableName}</div>
 
                             <div className="card-body">
                                 {settingTable.items.map(settingItem => (
