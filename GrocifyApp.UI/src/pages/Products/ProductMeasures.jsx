@@ -3,11 +3,10 @@ import { ReactSVG } from 'react-svg';
 //import { useNavigate } from 'react-router-dom';
 
 //Internal components
-import CustomInput from '../../components/CustomInput';
+import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 
 //Assets & Css
-import SearchIcon from '../../assets/search-ic.svg';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
@@ -61,15 +60,10 @@ function ProductMeasures() {
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
 
-                <div className="searchbar-holder">
-                    <CustomInput className="app-form mb-0"
-                        type="input"
-                        placeholder={PlaceholderConsts.SearchMeasures}
-                        label={PlaceholderConsts.Search}
-                        value={searchInput}
-                        icon={SearchIcon}
-                        onChange={(e) => setSearchInput(e.target.value)} />
-                </div>
+                <Searchbar placeholder={PlaceholderConsts.SearchMeasures}
+                    label={PlaceholderConsts.SearchMeasures}
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
             <div className="container-sections">
