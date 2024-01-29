@@ -5,6 +5,7 @@ namespace GrocifyApp.BLL.Interfaces
 {
     public interface IEntitiesService<T> where T : BaseEntity
     {
+        public Guid? HouseId { get; set; }
         Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null);
         Task<T?> Get(Guid id);
         Task Insert(T entity, CancellationTokenSource? token = null);

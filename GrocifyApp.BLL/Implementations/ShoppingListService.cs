@@ -34,7 +34,7 @@ namespace GrocifyApp.BLL.Implementations
         /// </summary>
         protected override async Task<bool> Validate(ShoppingList shoppingList)
         {
-            if (!await repository.AnyWhere(GetFilterCondition(shoppingList.HouseId)))
+            if (!await repository.AnyWhere(GetFilterCondition(shoppingList.HouseId!.Value)))
             {
                 shoppingList.DefaultList = true;
             }

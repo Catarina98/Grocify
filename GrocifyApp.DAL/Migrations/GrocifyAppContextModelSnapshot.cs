@@ -86,7 +86,7 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<bool>("DefaultInventory")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -123,7 +123,7 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -147,7 +147,7 @@ namespace GrocifyApp.DAL.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ChoosenDays");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("MonthlyView")
@@ -323,7 +323,7 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<bool>("DefaultList")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -404,7 +404,7 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<bool>("DefaultHouse")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -438,9 +438,7 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasOne("GrocifyApp.DAL.Models.House", "House")
                         .WithMany("Inventories")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HouseId");
 
                     b.Navigation("House");
                 });
@@ -468,9 +466,7 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasOne("GrocifyApp.DAL.Models.House", "House")
                         .WithMany("Meals")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HouseId");
 
                     b.Navigation("House");
                 });
@@ -479,9 +475,7 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasOne("GrocifyApp.DAL.Models.House", "House")
                         .WithMany("Plans")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HouseId");
 
                     b.Navigation("House");
                 });
@@ -584,9 +578,7 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasOne("GrocifyApp.DAL.Models.House", "House")
                         .WithMany("ShoppingLists")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HouseId");
 
                     b.Navigation("House");
                 });
@@ -614,9 +606,7 @@ namespace GrocifyApp.DAL.Migrations
                 {
                     b.HasOne("GrocifyApp.DAL.Models.House", "House")
                         .WithMany("UserHouses")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HouseId");
 
                     b.HasOne("GrocifyApp.DAL.Models.User", "User")
                         .WithMany("UserHouses")

@@ -14,14 +14,21 @@ namespace GrocifyApp.API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter>
-        (IEntitiesService<TEntity> genericBusiness, IMapper mapper) : ControllerBase
+    public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter> : ControllerBase
         where TEntity : BaseEntity
         where TRequestModel : class
         where TResponseModel : class
         where TFilter : BaseSearchModel
     {
-        public IMapper _mapper { get => mapper; set => mapper = value; }
+        public IEntitiesService<TEntity> _genericBusiness { get; set; }
+        public IMapper _mapper { get; set; }
+
+        public GenericController(IEntitiesService<TEntity> genericBusiness, IMapper mapper)
+        {
+            _genericBusiness = genericBusiness;
+
+            _mapper = mapper;
+        }
 
         //GET ENTITY BY ID
         /// <summary>
@@ -32,14 +39,14 @@ namespace GrocifyApp.API.Controllers
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TResponseModel>> Get(Guid id)
         {
-            var getEntity = await genericBusiness.Get(id);
+            var getEntity = await _genericBusiness.Get(id);
 
             if (getEntity == null)
             {
                 return NotFound(new { error = DALConsts.GenericConsts.Exceptions.EntityDoesNotExist });
             }
             
-            var response = mapper.Map<TResponseModel>(getEntity);
+            var response = _mapper.Map<TResponseModel>(getEntity);
 
             return Ok(response);
         }
@@ -52,7 +59,7 @@ namespace GrocifyApp.API.Controllers
         [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
-            var entities = await genericBusiness.GetAll();
+            var entities = await _genericBusiness.GetAll();
             
             return Ok(entities);
         }
@@ -75,7 +82,7 @@ namespace GrocifyApp.API.Controllers
                 });
             }
 
-            var u = mapper.Map<TEntity>(entity);
+            var u = _mapper.Map<TEntity>(entity);
 
             try
             {
@@ -88,7 +95,7 @@ namespace GrocifyApp.API.Controllers
                 return BadRequest(new BadResponseModel { Errors = errors });
             }
             
-            var response = mapper.Map<TResponseModel>(u);
+            var response = _mapper.Map<TResponseModel>(u);
 
             return Created(GenericConsts.APIResponses.EntityCreated, response);
         }
@@ -111,13 +118,13 @@ namespace GrocifyApp.API.Controllers
                 });
             }
 
-            var u = mapper.Map<TEntity>(entity);
+            var u = _mapper.Map<TEntity>(entity);
             
             u.Id = id;
 
             try
             {
-                await genericBusiness.Update(u);
+                await _genericBusiness.Update(u);
             }
             catch (Exception ex)
             {
@@ -140,7 +147,7 @@ namespace GrocifyApp.API.Controllers
         {
             try
             {
-                await genericBusiness.DeleteById(id);
+                await _genericBusiness.DeleteById(id);
             }
             catch (Exception ex)
             {
@@ -154,7 +161,7 @@ namespace GrocifyApp.API.Controllers
 
         protected virtual async Task InsertAction(TEntity entity)
         {
-            await genericBusiness.Insert(entity);
+            await _genericBusiness.Insert(entity);
         }
     }
 }
