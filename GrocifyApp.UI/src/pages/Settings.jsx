@@ -169,8 +169,7 @@ function Settings(props) {
 }
 
 Settings.propTypes = {
-    onDarkModeChange: PropTypes.func.isRequired,
-    isDarkMode: PropTypes.bool.isRequired,
+    onDarkModeChange: PropTypes.func.isRequired
 };
 
 export default Settings;
