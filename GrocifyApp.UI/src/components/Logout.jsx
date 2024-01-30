@@ -6,6 +6,8 @@ const Logout = () => {
 
     useEffect(() => {
         localStorage.removeItem('token');
+        localStorage.removeItem('isDarkMode');
+        localStorage.removeItem('userId');
         
         navigate('/');
     }, [navigate]);

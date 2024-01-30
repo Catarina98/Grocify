@@ -61,9 +61,7 @@ function Settings(props) {
     ];
 
     const token = localStorage.getItem('token');
-    const darkMode = localStorage.getItem('isDarkMode');
     const [searchInput, setSearchInput] = useState('');
-    const [isDarkMode, setDarkMode] = useState(darkMode == undefined ? false : darkMode);
     const navigate = useNavigate();    
 
     const updateUserDarkMode = async () => {
@@ -92,19 +90,12 @@ function Settings(props) {
         }
     };
 
-    useEffect(() => {
-        if (isDarkMode) {
-            setDarkMode(isDarkMode);
-        }
-    }, [isDarkMode]);
-
-    const sendDataToParent = () => {
-        const newDarkMode = !isDarkMode;
-        setDarkMode(newDarkMode);
-                
+    const sendDataToParent = () => {                
         updateUserDarkMode();
-        props.onDarkModeChange(newDarkMode);
+        props.onDarkModeChange(!props.isDarkMode);
     };
+
+    let isDarkMode = props.isDarkMode;
         
     const renderTableRowContent = (tableTitle, settingItem, darkMode) => {
         const handleLinkClick = (link) => {
@@ -169,7 +160,8 @@ function Settings(props) {
 }
 
 Settings.propTypes = {
-    onDarkModeChange: PropTypes.func.isRequired
+    onDarkModeChange: PropTypes.func.isRequired,
+    isDarkMode: PropTypes.bool.isRequired
 };
 
 export default Settings;
