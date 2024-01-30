@@ -26,8 +26,8 @@ PrivateRoute.propTypes = {
 };
 
 function App() {
-    const storedDarkMode = localStorage.getItem('isDarkMode');
-    const [isDarkMode, setDarkMode] = useState(storedDarkMode === 'true');
+    const darkMode = localStorage.getItem('isDarkMode');
+    const [isDarkMode, setDarkMode] = useState(darkMode == undefined ? false : darkMode);
 
     const handleDarkModeChange = (newDarkMode) => {
         setDarkMode(newDarkMode);
