@@ -30,19 +30,22 @@ const NavbarConsts = {
     Settings: "Settings"
 };
 
-const LoginConsts = {
+const AuthConsts = {
     SignIn: "Sign in",
     EnterDetails: "Please enter your details bellow",
     HaveAccount: "Don't have an account?",
+    AlreadyHaveAccount: "Already have an account?",
     SignUp: "Sign up",
     Email: "Email",
     Password: "Password",
+    Name: "Name",
+    ConfirmPassword: "ConfirmPassword",
     ErrorMessage: "The email or password you entered is incorrect."
 };
 
 export {
     GenericConsts,
-    LoginConsts,
+    AuthConsts,
     PlaceholderConsts,
     NavbarConsts,
     SettingsConsts
