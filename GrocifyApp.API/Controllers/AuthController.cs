@@ -70,7 +70,7 @@ namespace GrocifyApp.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login([FromBody] LoginRequestModel user)
+        public async Task<ActionResult<LoginResponseModel>> Login([FromBody] LoginRequestModel user)
         {
             var getUser = await _userService.GetUserByEmail(user.Email);
 
@@ -99,23 +99,32 @@ namespace GrocifyApp.API.Controllers
             {
                 Name = getUser.Name,
                 Email = getUser.Email,
+                IsDarkMode = getUser.IsDarkMode,
                 Password = getUser.Password,
                 PasswordHash = getUser.PasswordHash,
                 PasswordSalt = getUser.PasswordSalt,
             };
 
-            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId, Password = getUser.Password, ConfirmPassword = getUser.Password };
+            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId, IsDarkMode = getUser.IsDarkMode };
 
             string token = CreateToken(userRequestModel);
 
-            return Ok(token);
+            var loginResponseModel = new LoginResponseModel
+            {
+                Token = token,
+                UserId = getUser.Id,
+                IsDarkMode = getUser.IsDarkMode
+            };
+
+            return Ok(loginResponseModel);
         }
 
         private string CreateToken(UserRequestModel userAPI)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, userAPI.Name)
+                new Claim(ClaimTypes.Name, userAPI.Name),
+                new Claim(ClaimTypes.Email, userAPI.Email)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value ?? string.Empty));

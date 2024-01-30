@@ -38,9 +38,11 @@ const LoginForm = () => {
             });
 
             if (response.ok) {
-                const t = await response.text();
+                const userLogged = await response.json();
 
-                localStorage.setItem('token', t);
+                localStorage.setItem('token', userLogged.token);
+                localStorage.setItem('userId', userLogged.userId);
+                localStorage.setItem('isDarkMode', userLogged.isDarkMode);
 
                 console.log('Login successful');
 

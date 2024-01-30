@@ -11,12 +11,6 @@
         /// <example>User Email</example>
         public required string Email { get; set; }
 
-        /// <example>Password</example>
-        public required string Password { get; set; }
-
-        /// <example>Confirm Password</example>
-        public required string ConfirmPassword { get; set; }
-
         /// <example>false</example>
         public bool IsDarkMode { get; set; }
 

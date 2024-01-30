@@ -60,29 +60,29 @@ function Settings(props) {
         }
     ];
 
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
     const [searchInput, setSearchInput] = useState('');
-    const [darkMode, setDarkMode] = useState(props.userAuth ? props.userAuth.isDarkMode : false);
+    const [isDarkMode, setDarkMode] = useState(localStorage.getItem('isDarkMode') == undefined ?? false);
     const [errorMessage, setErrorMessage] = useState('');
-    const navigate = useNavigate();
+    const navigate = useNavigate();    
 
     const updateUserDarkMode = async () => {
         
         try {
-            var p = props.userAuth.password; //change
+            if (token == undefined) {
+                return;
+            }
 
-            props.userAuth.confirmPassword = p; //change
-
-            const response = await fetch(ApiEndpoints.User_Endpoint(props.userAuth.id), {
+            const response = await fetch(ApiEndpoints.UserDarkMode_Endpoint, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(props.userAuth),
             });
-
+            
             if (response.ok) {
-                //const userData = await response.json();
-                //setDarkMode(userData.isDarkMode);
                 console.log("updated");
             } else {
                 const errorData = await response.json();
@@ -94,19 +94,15 @@ function Settings(props) {
     };
 
     useEffect(() => {
-        if (props.userAuth) {
-            setDarkMode(props.userAuth.isDarkMode);
+        if (isDarkMode) {
+            setDarkMode(isDarkMode);
         }
-    }, [props.userAuth]);
+    }, [isDarkMode]);
 
     const sendDataToParent = () => {
-        const newDarkMode = !darkMode;
+        const newDarkMode = !isDarkMode;
         setDarkMode(newDarkMode);
-
-        if (props.userAuth) {
-            props.userAuth.isDarkMode = newDarkMode;
-        }
-        
+                
         updateUserDarkMode();
         props.onDarkModeChange(newDarkMode);
     };
@@ -159,7 +155,7 @@ function Settings(props) {
 
                             <div className="card-body">
                                 {settingTable.items.map(settingItem => (
-                                    renderTableRowContent(settingTable.tableName, settingItem, darkMode)
+                                    renderTableRowContent(settingTable.tableName, settingItem, isDarkMode)
                                 ))}
                             </div>
 
@@ -175,7 +171,7 @@ function Settings(props) {
 
 Settings.propTypes = {
     onDarkModeChange: PropTypes.func.isRequired,
-    userAuth: PropTypes.object,
+    isDarkMode: PropTypes.bool.isRequired,
 };
 
 export default Settings;

@@ -27,36 +27,38 @@ PrivateRoute.propTypes = {
 
 function App() {
     const [isDarkMode, setDarkMode] = useState(false);
-    const [userAuth, setUserAuth] = useState(null);
-    const userId = "581ccc32-dd5d-455b-d2c2-08dc11ed02ad";
+    //const [userAuth, setUserAuth] = useState(null);
+    //const userId = "581ccc32-dd5d-455b-d2c2-08dc11ed02ad";
+    //const token = localStorage.getItem('token');
+    //const userId = localStorage.getItem('userId');
     const [errorMessage, setErrorMessage] = useState('');
 
-    useEffect(() => {
-        getUserDarkMode();
-    }, []);
+    //useEffect(() => {
+    //    getUserDarkMode();
+    //}, []);
 
-    const getUserDarkMode = async () => {
-        try {
-            const response = await fetch(`api/User/${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+    //const getUserDarkMode = async () => {
+        //try {
+        //    const response = await fetch(`api/User/${userId}`, {
+        //        method: 'GET',
+        //        headers: {
+        //            'Content-Type': 'application/json',
+        //        },
+        //    });
 
-            if (response.ok) {
-                const userData = await response.json();
-                setUserAuth(userData);
-                setDarkMode(userData.isDarkMode);
-            } else {
-                const errorData = await response.json();
-                setErrorMessage(errorData.errors[0]);
-            }
-        } catch (error) {
-            console.error(error);
-            // setErrorMessage(GenericConsts.Error);
-        }
-    };
+        //    if (response.ok) {
+        //        const userData = await response.json();
+        //        //setUserAuth(userData);
+        //        setDarkMode(userData.isDarkMode);
+        //    } else {
+        //        const errorData = await response.json();
+        //        setErrorMessage(errorData.errors[0]);
+        //    }
+        //} catch (error) {
+        //    console.error(error);
+        //    // setErrorMessage(GenericConsts.Error);
+        //}
+    //};
 
     return (
         <div className={`container-page ${isDarkMode ? 'dark' : ''}`}>
@@ -70,7 +72,7 @@ function App() {
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
                     <Route path={AppRoutes.Settings} element={
                         <PrivateRoute>
-                            <Settings onDarkModeChange={(data) => setDarkMode(data)} userAuth={userAuth} />
+                            <Settings onDarkModeChange={(data) => setDarkMode(data)} />
                         </PrivateRoute>} />
                 </Routes>
             </Router>
