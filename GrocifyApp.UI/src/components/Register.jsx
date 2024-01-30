@@ -40,10 +40,6 @@ const RegisterForm = () => {
             });
 
             if (response.ok) {
-                //const t = await response.text();
-
-                //localStorage.setItem('token', t);
-
                 console.log('Register successful');
 
                 navigate('/');
@@ -73,28 +69,24 @@ const RegisterForm = () => {
 
                 <CustomInput className ="mt-3"
                     type="text"
-                    placeholder="Joe Smith"
                     value={name}
                     label={AuthConsts.Name}
                     onChange={(e) => setName(e.target.value)} />
 
                 <CustomInput className="mt-3"
                     type="email"
-                    placeholder="name@example.com"
                     value={email}
                     label={AuthConsts.Email}
                     onChange={(e) => setEmail(e.target.value)} />
 
                 <CustomInput
                     type="password"
-                    placeholder="password"
                     value={password}
                     label={AuthConsts.Password}
                     onChange={(e) => setPassword(e.target.value)} />
 
                 <CustomInput
                     type="password"
-                    placeholder="password"
                     value={confirmPassword}
                     label={AuthConsts.ConfirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)} />

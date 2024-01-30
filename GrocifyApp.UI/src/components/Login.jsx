@@ -71,14 +71,14 @@ const LoginForm = () => {
 
                 <CustomInput className ="mt-3"
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder={AuthConsts.EmailPlaceholer}
                     value={email}
                     label={AuthConsts.Email}
                     onChange={(e) => setEmail(e.target.value)} />
 
                 <CustomInput
                     type="password"
-                    placeholder="password"
+                    placeholder={AuthConsts.PasswordPlaceholer}
                     value={password}
                     label={AuthConsts.Password}
                     onChange={(e) => setPassword(e.target.value)} />

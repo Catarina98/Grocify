@@ -40,7 +40,9 @@ const AuthConsts = {
     Password: "Password",
     Name: "Name",
     ConfirmPassword: "ConfirmPassword",
-    ErrorMessage: "The email or password you entered is incorrect."
+    ErrorMessage: "The email or password you entered is incorrect.",
+    EmailPlaceholer: "name@example.com",
+    PasswordPlaceholer: "password"
 };
 
 export {
