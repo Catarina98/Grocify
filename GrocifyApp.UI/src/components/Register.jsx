@@ -4,6 +4,7 @@ import { ReactSVG } from 'react-svg';
 
 //Internal components
 import CustomInput from './CustomInput';
+import UserPassword from './UserPassword';
 
 //Assets & Css
 import ReactLogo from '../assets/logo_with_text.svg';
@@ -19,12 +20,12 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    //const [password, setPassword] = useState('');
+    //const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleRegister = async (event) => {
-        const data = { name, email, password, confirmPassword };
+        const data = { name, email };
 
         const registerButton = event.target;
 
@@ -66,7 +67,6 @@ const RegisterForm = () => {
                 <p className={styles.loginDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
 
-
                 <CustomInput className ="mt-3"
                     type="text"
                     value={name}
@@ -79,17 +79,19 @@ const RegisterForm = () => {
                     label={AuthConsts.Email}
                     onChange={(e) => setEmail(e.target.value)} />
 
-                <CustomInput
-                    type="password"
-                    value={password}
-                    label={AuthConsts.Password}
-                    onChange={(e) => setPassword(e.target.value)} />
+                {/*<CustomInput*/}
+                {/*    type="password"*/}
+                {/*    value={password}*/}
+                {/*    label={AuthConsts.Password}*/}
+                {/*    onChange={(e) => setPassword(e.target.value)} />*/}
 
-                <CustomInput
-                    type="password"
-                    value={confirmPassword}
-                    label={AuthConsts.ConfirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)} />
+                {/*<CustomInput*/}
+                {/*    type="password"*/}
+                {/*    value={confirmPassword}*/}
+                {/*    label={AuthConsts.ConfirmPassword}*/}
+                {/*    onChange={(e) => setConfirmPassword(e.target.value)} />*/}
+
+                <UserPassword />
 
                 <button type="button" className={styles.btn + " primary-button btn--xl"} onClick={handleRegister}>
                     <span>{AuthConsts.SignUp}</span>
