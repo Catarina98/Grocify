@@ -61,10 +61,9 @@ function Settings(props) {
     ];
 
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
+    const darkMode = localStorage.getItem('isDarkMode');
     const [searchInput, setSearchInput] = useState('');
-    const [isDarkMode, setDarkMode] = useState(localStorage.getItem('isDarkMode') == undefined ?? false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [isDarkMode, setDarkMode] = useState(darkMode == undefined ? false : darkMode);
     const navigate = useNavigate();    
 
     const updateUserDarkMode = async () => {
@@ -86,10 +85,10 @@ function Settings(props) {
                 console.log("updated");
             } else {
                 const errorData = await response.json();
-                setErrorMessage(errorData.errors[0]);
+                console.log(errorData.errors[0]);
             }
         } catch (error) {
-            setErrorMessage(GenericConsts.Error);
+            console.log(GenericConsts.Error);
         }
     };
 

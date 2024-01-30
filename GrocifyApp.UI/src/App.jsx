@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 
 //Internal components
 import LoginForm from './components/Login';
@@ -26,39 +26,8 @@ PrivateRoute.propTypes = {
 };
 
 function App() {
-    const [isDarkMode, setDarkMode] = useState(false);
-    //const [userAuth, setUserAuth] = useState(null);
-    //const userId = "581ccc32-dd5d-455b-d2c2-08dc11ed02ad";
-    //const token = localStorage.getItem('token');
-    //const userId = localStorage.getItem('userId');
-    const [errorMessage, setErrorMessage] = useState('');
-
-    //useEffect(() => {
-    //    getUserDarkMode();
-    //}, []);
-
-    //const getUserDarkMode = async () => {
-        //try {
-        //    const response = await fetch(`api/User/${userId}`, {
-        //        method: 'GET',
-        //        headers: {
-        //            'Content-Type': 'application/json',
-        //        },
-        //    });
-
-        //    if (response.ok) {
-        //        const userData = await response.json();
-        //        //setUserAuth(userData);
-        //        setDarkMode(userData.isDarkMode);
-        //    } else {
-        //        const errorData = await response.json();
-        //        setErrorMessage(errorData.errors[0]);
-        //    }
-        //} catch (error) {
-        //    console.error(error);
-        //    // setErrorMessage(GenericConsts.Error);
-        //}
-    //};
+    const darkMode = localStorage.getItem('isDarkMode');
+    const [isDarkMode, setDarkMode] = useState(darkMode == undefined ? false : darkMode);
 
     return (
         <div className={`container-page ${isDarkMode ? 'dark' : ''}`}>
