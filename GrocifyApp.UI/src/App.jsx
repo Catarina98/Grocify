@@ -13,8 +13,6 @@ import './styles/styles.scss';
 
 //Consts
 import AppRoutes from './consts/AppRoutes';
-//import ApiEndpoints from './src/consts/ApiEndpoints';
-//import { GenericConsts } from '.././src/consts/ENConsts';
 
 function PrivateRoute({ children }) {
     const isAuthenticated = !!localStorage.getItem('token');
