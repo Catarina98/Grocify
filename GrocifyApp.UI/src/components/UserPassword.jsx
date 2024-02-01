@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
 
 //Internal components
@@ -17,6 +16,30 @@ const UserPasswordForm = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isValidInitial, setValidInitial] = useState(false);
+    const [validationResults, setValidationResults] = useState({
+        length: false,
+        lowerUpper: false,
+        numberCharacter: false,
+        passwordMatch: false,
+    });
+
+    useEffect(() => {
+        // Validate password criteria
+        const lengthValid = password.length >= 8;
+        const lowerUpperValid = /[a-z]/.test(password) && /[A-Z]/.test(password);
+        const numberCharacterValid = /\d/.test(password) || /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        const passwordMatchValid = confirmPassword === password;
+
+        setValidationResults({
+            length: lengthValid,
+            lowerUpper: lowerUpperValid,
+            numberCharacter: numberCharacterValid,
+            passwordMatch: passwordMatchValid,
+        });
+
+        // Set isValidInitial to true if all criteria are met
+        setValidInitial(lengthValid && lowerUpperValid && numberCharacterValid && passwordMatchValid);
+    }, [password, confirmPassword]);
 
     return (
         <>
@@ -32,38 +55,37 @@ const UserPasswordForm = () => {
                 label={AuthConsts.ConfirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)} />
 
-            <div id="errorslist" className={`${isValidInitial ? '' : 'invalid-initial'} errors-list`}> {/*@(_firstInputChanged ? string.Empty : "init")*/}
-                <div id="length" className={styles.errorRow}>
+            <div id="errorslist" className={`${isValidInitial ? '' : 'invalid-initial'} errors-list`}>
+                <div id="length" className={`${styles.errorRow} ${validationResults.length ? styles.valid : ""}`}>
                     <div className={styles.iconMT4 + " icon--w16"}>
-                        <ReactSVG className="react-svg color-n300" src={CheckmarkIcon} />
+                        <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
-                    
                     <span className="text text-left">
                         Your password must be at least 8 characters long
                     </span>
                 </div>
-                <div id="lowerupper" className={styles.errorRow}>
-                    <div className={styles.iconMT4 + " icon--w16"}>
-                        <ReactSVG className="react-svg color-n300" src={CheckmarkIcon} />
-                    </div>
 
+                <div id="lowerupper" className={`${styles.errorRow} ${validationResults.lowerUpper ? styles.valid : ""}`}>
+                    <div className={styles.iconMT4 + " icon--w16"}>
+                        <ReactSVG className="react-svg" src={CheckmarkIcon} />
+                    </div>
                     <span className="text text-left">Must contain both uppercase and lowercase letters</span>
                 </div>
-                <div id="numbercharacter" className={styles.errorRow}>
-                    <div className={styles.iconMT4 + " icon--w16"}>
-                        <ReactSVG className="react-svg color-n300" src={CheckmarkIcon} />
-                    </div>
 
+                <div id="numbercharacter" className={`${styles.errorRow} ${validationResults.numberCharacter ? styles.valid : ""}`}>
+                    <div className={styles.iconMT4 + " icon--w16"}>
+                        <ReactSVG className="react-svg" src={CheckmarkIcon} />
+                    </div>
                     <span className="text text-left">Must contain at least one number or special character</span>
                 </div>
-                <div id="passwordmatch" className={styles.errorRow}>
-                    <div className={styles.iconMT4 + " icon--w16"}>
-                        <ReactSVG className="react-svg color-n300" src={CheckmarkIcon} />
-                    </div>
 
+                <div id="passwordmatch" className={`${styles.errorRow} ${validationResults.passwordMatch ? styles.valid : ""}`}>
+                    <div className={styles.iconMT4 + " icon--w16"}>
+                        <ReactSVG className="react-svg" src={CheckmarkIcon} />
+                    </div>
                     <span className="text text-left">Passwords must match</span>
                 </div>
-            </div >
+            </div>
         </>
     );
 };

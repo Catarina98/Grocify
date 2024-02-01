@@ -20,10 +20,9 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    //const [password, setPassword] = useState('');
-    //const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPart1, setShowPart1] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
-
+    
     const handleRegister = async (event) => {
         const data = { name, email };
 
@@ -67,47 +66,56 @@ const RegisterForm = () => {
                 <p className={styles.loginDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
 
-                <CustomInput className ="mt-3"
-                    type="text"
-                    value={name}
-                    label={AuthConsts.Name}
-                    onChange={(e) => setName(e.target.value)} />
+                {showPart1 ? (
+                    <>
+                        <CustomInput className ="mt-3"
+                            type="text"
+                            value={name}
+                            label={AuthConsts.Name}
+                            onChange={(e) => setName(e.target.value)} />
 
-                <CustomInput className="mt-3"
-                    type="email"
-                    value={email}
-                    label={AuthConsts.Email}
-                    onChange={(e) => setEmail(e.target.value)} />
+                        <CustomInput className="mt-3"
+                            type="email"
+                            value={email}
+                            label={AuthConsts.Email}
+                            onChange={(e) => setEmail(e.target.value)} />
+                    </>
+                ) : (
+                    <UserPassword />
+                )}
 
-                {/*<CustomInput*/}
-                {/*    type="password"*/}
-                {/*    value={password}*/}
-                {/*    label={AuthConsts.Password}*/}
-                {/*    onChange={(e) => setPassword(e.target.value)} />*/}
+                {showPart1 && (
+                    <button type="button" className={styles.btn + ' primary-button btn--xl'} onClick={() => setShowPart1(false)}>
+                        <span>Proceed</span>
+                    </button>
+                )}
 
-                {/*<CustomInput*/}
-                {/*    type="password"*/}
-                {/*    value={confirmPassword}*/}
-                {/*    label={AuthConsts.ConfirmPassword}*/}
-                {/*    onChange={(e) => setConfirmPassword(e.target.value)} />*/}
+                {!showPart1 && (
+                    <div className={styles.buttons}>
+                        <button type="button" className={styles.btn + ' secondary-button btn--xl'} onClick={() => setShowPart1(true)}>
+                            <span>Back</span>
+                        </button>
 
-                <UserPassword />
-
-                <button type="button" className={styles.btn + " primary-button btn--xl"} onClick={handleRegister}>
-                    <span>{AuthConsts.SignUp}</span>
-                    <div className="loading-button white"></div>
-                </button>
+                        <button type="button" className={styles.btn + " primary-button btn--xl"} onClick={handleRegister}>
+                            <span>{AuthConsts.SignUp}</span>
+                            <div className="loading-button white"></div>
+                        </button>
+                    </div>
+                )}
             </form>
 
-            <div className={styles.formFooter}>
-                <div className="text color-n500">{AuthConsts.AlreadyHaveAccount}</div>
-                <a className="subtle-button" href={AppRoutes.Login}>
-                    <span className="btn-text btn--m">{AuthConsts.SignIn}</span>
-                    <div className="btn-icon">
-                        <ReactSVG src={ArrowIcon} className="arrow-right" />
-                    </div>
-                </a>
-            </div>
+            {showPart1 && (
+                <div className={styles.formFooter}>
+                    <div className="text color-n500">{AuthConsts.AlreadyHaveAccount}</div>
+                    <a className="subtle-button" href={AppRoutes.Login}>
+                        <span className="btn-text btn--m">{AuthConsts.SignIn}</span>
+                        <div className="btn-icon">
+                            <ReactSVG src={ArrowIcon} className="arrow-right" />
+                        </div>
+                    </a>
+                </div>
+            )}
+            
         </div>
     );
 };
