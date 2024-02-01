@@ -10,7 +10,30 @@ namespace GrocifyApp.BLL.Implementations
     public class EntitiesService<T> : IEntitiesService<T> where T : BaseEntity
     {
         protected readonly IRepository<T> repository;
-        protected virtual string duplicateEntityException { get; set; } = GenericConsts.Entities.Entity;
+
+        protected virtual string duplicateEntityException
+        {
+            get
+            {
+                string typeName = typeof(T).Name;
+
+                var fieldInfo = typeof(GenericConsts.Entities).GetField(typeName);
+
+                if (fieldInfo != null)
+                {
+                    return (string)fieldInfo.GetValue(null)!;
+                }
+                else
+                {
+                    return GenericConsts.Entities.Entity;
+                }
+            }
+
+            set
+            {
+                duplicateEntityException = value;
+            }
+        }
 
         public EntitiesService(IRepository<T> repository)
         {
