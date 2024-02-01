@@ -16,7 +16,7 @@ namespace GrocifyApp.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public static new UserResponseModel? User;
+        public static UserResponseModel? AuthUser;
 
         private readonly IConfiguration _configuration;
 
@@ -52,7 +52,13 @@ namespace GrocifyApp.API.Controllers
                 user.PasswordSalt = passwordSalt;
                 user.PasswordHash = passwordHash;
 
-                string token = CreateToken(user);
+                var u = _mapper.Map<User>(user);
+
+                await _userService.Insert(u);
+
+                var loginResult = await Login(new LoginRequestModel() { Email = user.Email, Password = user.Password });
+
+                var token = ((LoginResponseModel)((ObjectResult)loginResult.Result!).Value!).Token;
 
                 RegisterResponseModel responseModel = new RegisterResponseModel()
                 {
@@ -61,16 +67,12 @@ namespace GrocifyApp.API.Controllers
                     Token = token
                 };
 
-                var u = _mapper.Map<User>(user);
-
-                await _userService.Insert(u);
-
                 return responseModel;
             }
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login([FromBody] LoginRequestModel user)
+        public async Task<ActionResult<LoginResponseModel>> Login([FromBody] LoginRequestModel user)
         {
             var getUser = await _userService.GetUserByEmail(user.Email);
 
@@ -95,27 +97,26 @@ namespace GrocifyApp.API.Controllers
                 houseId = await _userService.GetUserDefaultHouseId(getUser.Id);
             }
 
-            UserRequestModel userRequestModel = new UserRequestModel()
+            AuthUser = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId, IsDarkMode = getUser.IsDarkMode };
+
+            string token = CreateToken(AuthUser);
+
+            var loginResponseModel = new LoginResponseModel
             {
-                Name = getUser.Name,
-                Email = getUser.Email,
-                Password = getUser.Password,
-                PasswordHash = getUser.PasswordHash,
-                PasswordSalt = getUser.PasswordSalt,
+                Token = token,
+                UserId = getUser.Id,
+                IsDarkMode = getUser.IsDarkMode
             };
 
-            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId };
-
-            string token = CreateToken(userRequestModel);
-
-            return Ok(token);
+            return Ok(loginResponseModel);
         }
 
-        private string CreateToken(UserRequestModel userAPI)
+        private string CreateToken(UserResponseModel userAPI)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, userAPI.Name)
+                new Claim(ClaimTypes.Name, userAPI.Name),
+                new Claim(ClaimTypes.Email, userAPI.Email)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value ?? string.Empty));
