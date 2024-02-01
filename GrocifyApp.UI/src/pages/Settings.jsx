@@ -62,10 +62,9 @@ function Settings(props) {
 
     const token = localStorage.getItem('token');
     const [searchInput, setSearchInput] = useState('');
-    const navigate = useNavigate();    
+    const navigate = useNavigate();  
 
-    const updateUserDarkMode = async () => {
-        
+    const updateUserDarkMode = async () => {        
         try {
             if (token == undefined) {
                 return;

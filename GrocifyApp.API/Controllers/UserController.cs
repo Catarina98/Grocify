@@ -5,7 +5,6 @@ using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using DALConsts = GrocifyApp.DAL.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers

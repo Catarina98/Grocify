@@ -1,35 +1,36 @@
 import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
-//import { useNavigate } from 'react-router-dom';
-import { PlaceholderConsts } from '../../consts/ENConsts';
-import { ButtonConsts } from '../../consts/ENConsts';
-//import PropTypes from 'prop-types';
+
+//Internal components
 import CustomInput from '../../components/CustomInput';
+import Layout from '../../components/Layout/Layout';
+
+//Assets & Css
 import SearchIcon from '../../assets/search-ic.svg';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
+
+//Consts
+import { PlaceholderConsts } from '../../consts/ENConsts';
+import { ButtonConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
-//import { ApiEndpoints } from '../../consts/ApiEndpoints';
-import Layout from '../../components/Layout/Layout';
+import { ApiEndpoints } from '../../consts/ApiEndpoints';
 import styles from './ProductSections.module.scss';
 
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
-    //const [loading, setLoading] = useState(true);
-    //const [error, setError] = useState(null);
-    //const [houseId, setHouseId] = useState('');
-    //const navigate = useNavigate();
-    const houseId = "70835d8c-dcc0-4d36-8172-08dc12c93d56";
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`api/ProductSection/${houseId}/products`, {
+                const response = await fetch(ApiEndpoints.ProductSections(user.houseId), {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
                     },
                 });
 
