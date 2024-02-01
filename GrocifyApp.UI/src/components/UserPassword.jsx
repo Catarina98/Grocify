@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
+import PropTypes from 'prop-types';
 
 //Internal components
 import CustomInput from './CustomInput';
@@ -12,7 +13,7 @@ import styles from './UserPassword.module.scss';
 import { AuthConsts } from '../consts/ENConsts';
 //import AppRoutes from '../consts/AppRoutes';
 
-const UserPasswordForm = () => {
+const UserPasswordForm = (props) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isValidInitial, setValidInitial] = useState(false);
@@ -24,11 +25,10 @@ const UserPasswordForm = () => {
     });
 
     useEffect(() => {
-        // Validate password criteria
         const lengthValid = password.length >= 8;
         const lowerUpperValid = /[a-z]/.test(password) && /[A-Z]/.test(password);
         const numberCharacterValid = /\d/.test(password) || /[!@#$%^&*(),.?":{}|<>]/.test(password);
-        const passwordMatchValid = confirmPassword === password;
+        const passwordMatchValid = password != "" && confirmPassword === password;
 
         setValidationResults({
             length: lengthValid,
@@ -37,9 +37,16 @@ const UserPasswordForm = () => {
             passwordMatch: passwordMatchValid,
         });
 
-        // Set isValidInitial to true if all criteria are met
         setValidInitial(lengthValid && lowerUpperValid && numberCharacterValid && passwordMatchValid);
     }, [password, confirmPassword]);
+    
+    useEffect(() => {
+        props.onButtonDisableChanged({
+            isValidInitial,
+            password,
+            confirmPassword,
+        });
+    }, [isValidInitial, password, confirmPassword]);
 
     return (
         <>
@@ -88,6 +95,10 @@ const UserPasswordForm = () => {
             </div>
         </>
     );
+};
+
+UserPasswordForm.propTypes = {
+    onButtonDisableChanged: PropTypes.func.isRequired,
 };
 
 export default UserPasswordForm;
