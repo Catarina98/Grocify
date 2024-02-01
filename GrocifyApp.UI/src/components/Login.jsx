@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
+import PropTypes from 'prop-types';
 
 //Internal components
 import CustomInput from './CustomInput';
@@ -15,7 +16,7 @@ import styles from './Login.module.scss';
 import { GenericConsts, LoginConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
 
-const LoginForm = () => {
+const LoginForm = (props) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,6 +46,8 @@ const LoginForm = () => {
                 localStorage.setItem('isDarkMode', userLogged.isDarkMode);
 
                 console.log('Login successful');
+
+                props.onDarkModeChange(userLogged.isDarkMode);
 
                 navigate('/');
             } else {
@@ -102,6 +105,10 @@ const LoginForm = () => {
             </div>
         </div>
     );
+};
+
+LoginForm.propTypes = {
+    onDarkModeChange: PropTypes.func.isRequired
 };
 
 export default LoginForm;

@@ -16,7 +16,7 @@ namespace GrocifyApp.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public static new UserResponseModel? User;
+        public static UserResponseModel? AuthUser;
 
         private readonly IConfiguration _configuration;
 
@@ -107,7 +107,7 @@ namespace GrocifyApp.API.Controllers
                 PasswordSalt = getUser.PasswordSalt,
             };
 
-            User = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId, IsDarkMode = getUser.IsDarkMode };
+            AuthUser = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId, IsDarkMode = getUser.IsDarkMode };
 
             string token = CreateToken(userRequestModel);
 

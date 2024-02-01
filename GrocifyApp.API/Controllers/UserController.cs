@@ -40,16 +40,7 @@ namespace GrocifyApp.API.Controllers
         [HttpPut("toggleDarkMode")]
         public async Task<ActionResult<User>> ToggleDarKMode()
         {
-            var emailClaim = User.FindFirst(ClaimTypes.Email);
-
-            if (emailClaim == null)
-            {
-                return NotFound(new { error = DALConsts.GenericConsts.Exceptions.EntityDoesNotExist });
-            }
-
-            string userEmail = emailClaim.Value;
-
-            var currentUser = await _userService.GetUserByEmail(userEmail);
+            var currentUser = await _userService.GetUserByEmail(AuthController.AuthUser!.Email);
 
             if (currentUser == null)
             {

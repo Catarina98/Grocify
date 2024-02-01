@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useState} from 'react';
+import { useState, useEffect } from 'react';
 
 //Internal components
 import LoginForm from './components/Login';
@@ -37,8 +37,8 @@ function App() {
             <Router>
                 <Routes>
                     {/* Define the public routes */}
-                    <Route path={AppRoutes.Login} element={<LoginForm />} />
-                    <Route path={AppRoutes.Logout} element={<Logout />} />
+                    <Route path={AppRoutes.Login} element={<LoginForm onDarkModeChange={handleDarkModeChange} />} />
+                    <Route path={AppRoutes.Logout} element={<Logout onDarkModeChange={handleDarkModeChange} />} />
 
                     {/* Define the private routes */}
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
