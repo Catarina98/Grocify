@@ -97,19 +97,9 @@ namespace GrocifyApp.API.Controllers
                 houseId = await _userService.GetUserDefaultHouseId(getUser.Id);
             }
 
-            UserRequestModel userRequestModel = new UserRequestModel()
-            {
-                Name = getUser.Name,
-                Email = getUser.Email,
-                IsDarkMode = getUser.IsDarkMode,
-                Password = getUser.Password,
-                PasswordHash = getUser.PasswordHash,
-                PasswordSalt = getUser.PasswordSalt,
-            };
-
             AuthUser = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId, IsDarkMode = getUser.IsDarkMode };
 
-            string token = CreateToken(userRequestModel);
+            string token = CreateToken(AuthUser);
 
             var loginResponseModel = new LoginResponseModel
             {
@@ -121,7 +111,7 @@ namespace GrocifyApp.API.Controllers
             return Ok(loginResponseModel);
         }
 
-        private string CreateToken(UserRequestModel userAPI)
+        private string CreateToken(UserResponseModel userAPI)
         {
             List<Claim> claims = new List<Claim>
             {
