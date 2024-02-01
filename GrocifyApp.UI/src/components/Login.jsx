@@ -9,7 +9,7 @@ import CustomInput from './CustomInput';
 import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
 import ApiEndpoints from '../consts/ApiEndpoints';
-import './Login.module.scss';
+import styles from './Login.module.scss';
 
 //Consts
 import { GenericConsts, LoginConsts } from '../consts/ENConsts';
@@ -61,11 +61,11 @@ const LoginForm = () => {
     };
 
     return (
-        <>
+        <div className={styles.login}>
             <ReactSVG className="react-svg" src={ReactLogo} />
-            <form className="input-form">
-                <div className="title title--xl color-n700">{LoginConsts.SignIn}</div>
-                <p className="text color-n500 login-desc">{LoginConsts.EnterDetails}</p>
+            <form className={styles.inputForm + " input-form"}>
+                <div className="title title--xl">{LoginConsts.SignIn}</div>
+                <p className={styles.loginDesc + " text color-n500"}>{LoginConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
 
 
@@ -83,13 +83,13 @@ const LoginForm = () => {
                     label={LoginConsts.Password}
                     onChange={(e) => setPassword(e.target.value)} />
 
-                <button type="button" className="primary-button btn--xl" onClick={handleLogin}>
+                <button type="button" className={styles.btn + " primary-button btn--xl"} onClick={handleLogin}>
                     <span>{LoginConsts.SignIn}</span>
                     <div className="loading-button white"></div>
                 </button>
             </form>
 
-            <div className="form-footer">
+            <div className={styles.formFooter}>
                 <div className="text color-n500">{LoginConsts.HaveAccount}</div>
                 <a className="subtle-button" href={AppRoutes.Register}>
                     <span className="btn-text btn--m">{LoginConsts.SignUp}</span>
@@ -98,7 +98,7 @@ const LoginForm = () => {
                     </div>
                 </a>
             </div>
-        </>
+        </div>
     );
 };
 
