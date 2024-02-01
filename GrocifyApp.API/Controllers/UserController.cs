@@ -5,6 +5,7 @@ using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using DALConsts = GrocifyApp.DAL.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers
@@ -34,6 +35,36 @@ namespace GrocifyApp.API.Controllers
             }
 
             return Ok(getEntity);
+        }
+
+        [HttpPut("toggleDarkMode")]
+        public async Task<ActionResult<User>> ToggleDarKMode()
+        {
+            var currentUser = await _userService.GetUserByEmail(AuthController.AuthUser!.Email);
+
+            if (currentUser == null)
+            {
+                return NotFound(new { error = DALConsts.GenericConsts.Exceptions.EntityDoesNotExist });
+            }
+            else
+            {
+                currentUser.IsDarkMode = !currentUser.IsDarkMode;
+
+                try
+                {
+                    await _userService.Update(currentUser);
+                }
+                catch (Exception ex)
+                {
+                    var errors = new List<string> { ex.Message };
+
+                    return BadRequest(new BadResponseModel { Errors = errors });
+                }
+
+                var userResponseModel = _mapper.Map<UserResponseModel>(currentUser);
+
+                return Ok(userResponseModel);
+            }
         }
     }
 }
