@@ -11,7 +11,7 @@ namespace GrocifyApp.BLL.Implementations
     {
         protected readonly IRepository<T> repository;
 
-        protected virtual string duplicateEntityException
+        protected virtual string entityName
         {
             get
             {
@@ -31,7 +31,7 @@ namespace GrocifyApp.BLL.Implementations
 
             set
             {
-                duplicateEntityException = value;
+                entityName = value;
             }
         }
 
@@ -77,7 +77,7 @@ namespace GrocifyApp.BLL.Implementations
                 }
                 catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
                 {
-                    throw new SQLException(ex, duplicateEntityException);
+                    throw new SQLException(ex, entityName);
                 }
             }
         }

@@ -20,31 +20,6 @@ namespace GrocifyApp.API.Controllers
         }
 
         /// <summary>
-        /// Get shoppingLists from house
-        /// </summary>
-        /// <response code="200">Success.</response>
-        /// <response code="404">House or shoppingLists not found!</response>
-        /// <response code="400">Unable to get shoppingLists due to validation error.</response>
-        [HttpGet("{houseId}/shoppingLists")]
-        public async Task<ActionResult<List<ShoppingList>>> GetShoppingListsFromHouse(Guid houseId)
-        {
-            try
-            {
-                var shoppingLists = await _shoppingListService.GetShoppingListsFromHouse(houseId);
-
-                return Ok(shoppingLists);
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(new { error = ex.Message });
-            }
-            catch (Exception)
-            {
-                return BadRequest(new { error = GenericConsts.Exceptions.Generic });
-            }
-        }
-
-        /// <summary>
         /// Add products to shoppingList
         /// </summary>
         /// <response code="201">Products added successfully.</response>

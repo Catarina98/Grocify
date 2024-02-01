@@ -1,4 +1,6 @@
-﻿using GrocifyApp.BLL.Interfaces;
+﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
+using GrocifyApp.BLL.Interfaces;
+using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
@@ -19,7 +21,14 @@ namespace GrocifyApp.BLL.Implementations
 
         public override async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
         {
-            return await repository.GetWhere(x =>  x.HouseId == HouseId || x.HouseId == null);
+            var list = await repository.GetWhere(x =>  x.HouseId == HouseId || x.HouseId == null);
+
+            if (list == null || list.Count == 0)
+            {
+                throw new NotFoundException(string.Format(GenericConsts.Exceptions.NoListsFoundInHouse, entityName));
+            }
+
+            return list;
         }
 
         protected override Task<bool> Validate(T entity)
