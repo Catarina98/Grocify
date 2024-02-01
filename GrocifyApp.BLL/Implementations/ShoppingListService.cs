@@ -1,10 +1,7 @@
 ﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
 using GrocifyApp.BLL.Interfaces;
-using GrocifyApp.DAL.Exceptions;
-using GrocifyApp.DAL.Migrations;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
-using System.Linq.Expressions;
 
 namespace GrocifyApp.BLL.Implementations
 {
