@@ -52,7 +52,13 @@ namespace GrocifyApp.API.Controllers
                 user.PasswordSalt = passwordSalt;
                 user.PasswordHash = passwordHash;
 
-                string token = CreateToken(user);
+                var u = _mapper.Map<User>(user);
+
+                await _userService.Insert(u);
+
+                var loginResult = await Login(new LoginRequestModel() { Email = user.Email, Password = user.Password });
+
+                var token = ((LoginResponseModel)((ObjectResult)loginResult.Result!).Value!).Token;
 
                 RegisterResponseModel responseModel = new RegisterResponseModel()
                 {
@@ -60,10 +66,6 @@ namespace GrocifyApp.API.Controllers
                     PasswordSalt = user.PasswordSalt,
                     Token = token
                 };
-
-                var u = _mapper.Map<User>(user);
-
-                await _userService.Insert(u);
 
                 return responseModel;
             }
