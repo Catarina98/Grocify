@@ -9,7 +9,6 @@ namespace GrocifyApp.BLL.Implementations
 {
     public class EntitiesService<T> : IEntitiesService<T> where T : BaseEntity
     {
-        public Guid? HouseId { get; set; }
         protected readonly IRepository<T> repository;
         protected virtual string duplicateEntityException { get; set; } = GenericConsts.Entities.Entity;
 
@@ -28,28 +27,14 @@ namespace GrocifyApp.BLL.Implementations
             await repository.DeleteById(id, token);
         }
 
-        public async Task<T?> Get(Guid id)
+        public virtual async Task<T?> Get(Guid id)
         {
-            if (IsEntityWithHouse())
-            {
-                return await repository.Get(id);
-            }
-            else
-            {
-                return await repository.GetSingleWhere(x => x.Id == id && IsHouseId(x));
-            }
+            return await repository.Get(id);
         }
 
-        public async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
+        public virtual async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
         {
-            if (IsEntityWithHouse())
-            {
-                return await repository.GetWhere(x => IsHouseId(x));
-            }
-            else
-            {
-                return await repository.GetAll(token);
-            }
+            return await repository.GetAll(token);
         }
 
         public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel
@@ -89,18 +74,6 @@ namespace GrocifyApp.BLL.Implementations
 
         protected virtual async Task FinishInsert(T entity)
         {
-        }
-
-        private bool IsEntityWithHouse()
-        {
-            return typeof(T).IsSubclassOf(typeof(BaseEntityWithHouse));
-        }
-
-        private bool IsHouseId(T entity)
-        {
-            var x = entity as BaseEntityWithHouse;
-
-            return x?.HouseId == HouseId || x?.HouseId == null;
         }
     }
 }

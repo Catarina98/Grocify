@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class ProductMeasureService : EntitiesService<ProductMeasure>, IProductMeasureService
+    public class ProductMeasureService : EntitiesServiceWithHouse<ProductMeasure>, IProductMeasureService
     {
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ProductMeasure;
 

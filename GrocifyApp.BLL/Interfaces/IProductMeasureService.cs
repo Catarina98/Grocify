@@ -2,7 +2,7 @@
 
 namespace GrocifyApp.BLL.Interfaces
 {
-    public interface IProductMeasureService : IEntitiesService<ProductMeasure>
+    public interface IProductMeasureService : IEntitiesServiceWithHouse<ProductMeasure>
     {
         Task<List<ProductMeasure>> GetProductMeasuresFromHouse(Guid houseId);
     }

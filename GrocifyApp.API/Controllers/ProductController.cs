@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GrocifyApp.API.Controllers
 {
-    public class ProductController : GenericController<Product, ProductRequestModel, ProductResponseModel, BaseSearchModel>
+    public class ProductController : GenericControllerWithHouse<Product, ProductRequestModel, ProductResponseModel, BaseSearchModel>
     {
         private readonly IProductService _productService;
 

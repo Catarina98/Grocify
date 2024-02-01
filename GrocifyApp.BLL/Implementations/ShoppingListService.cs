@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class ShoppingListService : EntitiesService<ShoppingList>, IShoppingListService
+    public class ShoppingListService : EntitiesServiceWithHouse<ShoppingList>, IShoppingListService
     {
         private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ShoppingList;

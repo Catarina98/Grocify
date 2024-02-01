@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class ProductSectionService : EntitiesService<ProductSection>, IProductSectionService
+    public class ProductSectionService : EntitiesServiceWithHouse<ProductSection>, IProductSectionService
     {
         protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ProductSection;
 
@@ -28,22 +28,22 @@ namespace GrocifyApp.BLL.Implementations
             return productSections;
         }
 
-        protected override async Task<bool> Validate(ProductSection productSection)
-        {
-            if (productSection.HouseId != null)
-            {
-                if (await repository.AnyWhere(GetFilterCondition(productSection.HouseId.Value, productSection.Name)))
-                {
-                    throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductSection));
-                }
-            }
-            else
-            {
-                throw new CustomException(GenericConsts.Exceptions.HouseCannotBeNull);
-            }
+        //protected override async Task<bool> Validate(ProductSection productSection)
+        //{
+        //    if (await base.Validate(productSection))
+        //    {
+        //        if (await repository.AnyWhere(GetFilterCondition(productSection.HouseId!.Value, productSection.Name)))
+        //        {
+        //            throw new CustomException(string.Format(GenericConsts.Exceptions.DuplicateEntityFormat, GenericConsts.Entities.ProductSection));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new CustomException(GenericConsts.Exceptions.HouseCannotBeNull);
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         private Expression<Func<ProductSection, bool>> GetFilterCondition(Guid houseId, string? name = null)
         {
