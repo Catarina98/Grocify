@@ -27,24 +27,31 @@ const RegisterForm = () => {
     const [showPart1, setShowPart1] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(true);
-
+    
     useEffect(() => {
         const isValidName = name.trim() !== '';
-        const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
-
+        
         if (name != '' && email != '') {
             if (!isValidName) {
                 setErrorMessage("Please enter your name.");
-            } else if (!isValidEmail) {
-                setErrorMessage("Please enter a valid email address.");
-            }
-            else {
+            } else {
                 setErrorMessage('');
                 setButtonDisabled(false);
             }
         }
         
     }, [name, email]);
+
+    const handleProceed = () => {
+        const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
+
+        if (!isValidEmail) {
+            setErrorMessage("Please enter a valid email address.");
+        } else {
+            setErrorMessage('');
+            setShowPart1(false);
+        }
+    };
     
     const handleButtonDisableChange = (data) => {
         const { isValidInitial, password, confirmPassword } = data;
@@ -71,7 +78,8 @@ const RegisterForm = () => {
 
             if (response.ok) {
                 const t = await response.text();
-                localStorage.setItem('token', t['token']);
+                const parsedT = JSON.parse(t);
+                localStorage.setItem('token', parsedT.token);
 
                 console.log('Register successful');
                 navigate('/');
@@ -117,7 +125,7 @@ const RegisterForm = () => {
                 )}
 
                 {showPart1 && (
-                    <button type="button" disabled={isButtonDisabled} className={stylesAuth.btn + ' primary-button btn--xl'} onClick={() => setShowPart1(false)}>
+                    <button type="button" disabled={isButtonDisabled} className={stylesAuth.btn + ' primary-button btn--xl'} onClick={handleProceed}>
                         <span>{ButtonConsts.Proceed}</span>
                     </button>
                 )}
