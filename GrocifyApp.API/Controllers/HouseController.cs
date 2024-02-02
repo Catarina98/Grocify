@@ -98,12 +98,12 @@ namespace GrocifyApp.API.Controllers
 
         protected override async Task InsertAction(House entity)
         {
-            if (AuthController.User == null)
+            if (AuthController.AuthUser == null)
             {
                 throw new CustomException(APIConsts.GenericConsts.Errors.UnableGetAuthenticatedUser);
             }
 
-            await _houseService.InsertWithUser(entity, AuthController.User.Id);
+            await _houseService.InsertWithUser(entity, AuthController.AuthUser.Id);
         }
     }
 }
