@@ -27,39 +27,31 @@ const RegisterForm = () => {
     const [showPart1, setShowPart1] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(true);
-    
+
     useEffect(() => {
         const isValidName = name.trim() !== '';
-        
-        if (name != '' && email != '') {
-            if (!isValidName) {
-                setErrorMessage("Please enter your name.");
-            } else {
-                setErrorMessage('');
-                setButtonDisabled(false);
-            }
-        }
-        
-    }, [name, email]);
-
-    const handleProceed = () => {
         const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
 
-        if (!isValidEmail) {
-            setErrorMessage("Please enter a valid email address.");
+        if (!isValidName) {
+            setErrorMessage(AuthConsts.NameError);
+            setButtonDisabled(true);
+        } else if (!isValidEmail) {
+            setErrorMessage(AuthConsts.EmailError);
+            setButtonDisabled(true);
         } else {
             setErrorMessage('');
-            setShowPart1(false);
+            setButtonDisabled(false);
         }
-    };
-    
+
+    }, [name, email]);
+
     const handleButtonDisableChange = (data) => {
         const { isValidInitial, password, confirmPassword } = data;
         setButtonDisabled(!isValidInitial);
         setPassword(password);
         setConfirmPassword(confirmPassword);
     };
-    
+
     const handleRegister = async (event) => {
         const data = { name, email, password, confirmPassword };
 
@@ -108,7 +100,7 @@ const RegisterForm = () => {
 
                 {showPart1 ? (
                     <>
-                        <CustomInput className ="mt-3"
+                        <CustomInput className="mt-3"
                             type="text"
                             value={name}
                             label={AuthConsts.Name}
@@ -121,11 +113,11 @@ const RegisterForm = () => {
                             onChange={(e) => setEmail(e.target.value)} />
                     </>
                 ) : (
-                        <UserPassword onButtonDisableChanged={(data) => handleButtonDisableChange(data)} />
+                    <UserPassword onButtonDisableChanged={(data) => handleButtonDisableChange(data)} />
                 )}
 
                 {showPart1 && (
-                    <button type="button" disabled={isButtonDisabled} className={stylesAuth.btn + ' primary-button btn--xl'} onClick={handleProceed}>
+                    <button type="button" disabled={isButtonDisabled} className={stylesAuth.btn + ' primary-button btn--xl'} onClick={() => setShowPart1(false)}>
                         <span>{ButtonConsts.Proceed}</span>
                     </button>
                 )}
@@ -155,7 +147,7 @@ const RegisterForm = () => {
                     </a>
                 </div>
             )}
-            
+
         </div>
     );
 };

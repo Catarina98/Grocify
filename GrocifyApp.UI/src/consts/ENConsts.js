@@ -47,7 +47,9 @@ const AuthConsts = {
     ConfirmPassword: "ConfirmPassword",
     ErrorMessage: "The email or password you entered is incorrect.",
     EmailPlaceholer: "name@example.com",
-    PasswordPlaceholer: "password"
+    PasswordPlaceholer: "password",
+    NameError: "Please enter your name",
+    EmailError: "Please enter a valid email address"
 };
 
 const PassRulesConsts = {
