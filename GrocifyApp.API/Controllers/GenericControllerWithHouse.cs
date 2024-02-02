@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GrocifyApp.API.Controllers
@@ -18,9 +20,10 @@ namespace GrocifyApp.API.Controllers
     where TResponseModel : class
     where TFilter : BaseSearchModel
     {
-        public GenericControllerWithHouse(IEntitiesServiceWithHouse<TEntity> genericBusiness, IMapper mapper) : base(genericBusiness, mapper)
+        public GenericControllerWithHouse(IEntitiesServiceWithHouse<TEntity> genericBusiness, IMapper mapper, ICurrentUserService currentUserService)
+            : base(genericBusiness, mapper, currentUserService)
         {
-            genericBusiness.HouseId = AuthController.AuthUser?.AuthenticatedHouseId;
+            genericBusiness.HouseId = currentUserService.CurrentUser?.AuthenticatedHouseId;
         }
     }
 

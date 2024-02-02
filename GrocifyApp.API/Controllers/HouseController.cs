@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
+using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Exceptions;
@@ -15,7 +16,7 @@ namespace GrocifyApp.API.Controllers
     {
         private readonly IHouseService _houseService;
 
-        public HouseController(IHouseService houseService, IMapper mapper) : base(houseService, mapper)
+        public HouseController(IHouseService houseService, IMapper mapper, ICurrentUserService currentUserService) : base(houseService, mapper, currentUserService)
         {
             _houseService = houseService;
         }
@@ -98,12 +99,12 @@ namespace GrocifyApp.API.Controllers
 
         protected override async Task InsertAction(House entity)
         {
-            if (AuthController.AuthUser == null)
+            if (CurrentUserService.CurrentUser == null)
             {
                 throw new CustomException(APIConsts.GenericConsts.Errors.UnableGetAuthenticatedUser);
             }
 
-            await _houseService.InsertWithUser(entity, AuthController.AuthUser.Id);
+            await _houseService.InsertWithUser(entity, CurrentUserService.CurrentUser.Id);
         }
     }
 }

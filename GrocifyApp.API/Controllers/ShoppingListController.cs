@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
+using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Exceptions;
@@ -14,7 +15,8 @@ namespace GrocifyApp.API.Controllers
     {
         private readonly IShoppingListService _shoppingListService;
 
-        public ShoppingListController(IShoppingListService shoppingListService, IMapper mapper) : base(shoppingListService, mapper)
+        public ShoppingListController(IShoppingListService shoppingListService, IMapper mapper, ICurrentUserService currentUserService)
+            : base(shoppingListService, mapper, currentUserService)
         {
             _shoppingListService = shoppingListService;
         }

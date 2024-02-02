@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GrocifyApp.API.Data.Consts.ENConsts;
 using GrocifyApp.API.Models.ResponseModels;
+using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
@@ -14,7 +15,7 @@ namespace GrocifyApp.API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class GenericControllerBase<TEntity, TRequestModel, TResponseModel, TFilter, TService>(TService genericBusiness, IMapper mapper) : ControllerBase
+    public class GenericControllerBase<TEntity, TRequestModel, TResponseModel, TFilter, TService>(TService genericBusiness, IMapper mapper, ICurrentUserService currentUserService) : ControllerBase
         where TEntity : BaseEntity
         where TRequestModel : class
         where TResponseModel : class
@@ -23,6 +24,7 @@ namespace GrocifyApp.API.Controllers
     {
         public IEntitiesService<TEntity> _genericBusiness { get; set; } = genericBusiness;
         public IMapper _mapper { get; set; } = mapper;
+        public ICurrentUserService CurrentUserService { get; } = currentUserService;
 
         //GET ENTITY BY ID
         /// <summary>

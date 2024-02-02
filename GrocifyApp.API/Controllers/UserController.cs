@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
+using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using DALConsts = GrocifyApp.DAL.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers
@@ -14,7 +14,8 @@ namespace GrocifyApp.API.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService, IMapper mapper) : base(userService, mapper)
+        public UserController(IUserService userService, IMapper mapper, ICurrentUserService currentUserService)
+            : base(userService, mapper, currentUserService)
         {
             _userService = userService;
         }
@@ -40,7 +41,7 @@ namespace GrocifyApp.API.Controllers
         [HttpPut("toggleDarkMode")]
         public async Task<ActionResult<User>> ToggleDarKMode()
         {
-            var currentUser = await _userService.GetUserByEmail(AuthController.AuthUser!.Email);
+            var currentUser = await _userService.GetUserByEmail(CurrentUserService.CurrentUser!.Email);
 
             if (currentUser == null)
             {
