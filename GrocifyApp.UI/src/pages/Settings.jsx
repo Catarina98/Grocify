@@ -65,12 +65,10 @@ function Settings(props) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Ensure dark mode state is updated when it changes externally
         setDarkMode(props.isDarkMode);
     }, [props.isDarkMode]);
 
     const sendDataToParent = () => {
-        // Toggle dark mode state and send it to the parent component
         const newDarkMode = !darkMode;
         setDarkMode(newDarkMode);
         props.onDarkModeChange(newDarkMode);

@@ -16,6 +16,7 @@ import styles from './Register.module.scss';
 //Consts
 import { GenericConsts, AuthConsts, ButtonConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
+import { useEffect } from 'react';
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -25,22 +26,26 @@ const RegisterForm = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPart1, setShowPart1] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isButtonDisabled, setButtonDisabled] = useState(true);
 
-    const isValidName = name.trim() !== '';
-    const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
-    const [isButtonDisabled, setButtonDisabled] = useState(false);
-    
-    const handleProceed = () => { //instead of set the error, we could disable the button to proceed. what do you think?
-        if (!isValidName) {
-            setErrorMessage("Please enter your name.");
-        } else if (!isValidEmail) {
-            setErrorMessage("Please enter a valid email address.");
-        } else {
-            setShowPart1(false);
-            setErrorMessage('');
+    useEffect(() => {
+        const isValidName = name.trim() !== '';
+        const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
+
+        if (name != '' && email != '') {
+            if (!isValidName) {
+                setErrorMessage("Please enter your name.");
+            } else if (!isValidEmail) {
+                setErrorMessage("Please enter a valid email address.");
+            }
+            else {
+                setErrorMessage('');
+                setButtonDisabled(false);
+            }
         }
-    };
-
+        
+    }, [name, email]);
+    
     const handleButtonDisableChange = (data) => {
         const { isValidInitial, password, confirmPassword } = data;
         setButtonDisabled(!isValidInitial);
@@ -65,8 +70,10 @@ const RegisterForm = () => {
             });
 
             if (response.ok) {
-                console.log('Register successful');
+                const t = await response.text();
+                localStorage.setItem('token', t['token']);
 
+                console.log('Register successful');
                 navigate('/');
             } else {
                 const errorData = await response.json();
@@ -110,7 +117,7 @@ const RegisterForm = () => {
                 )}
 
                 {showPart1 && (
-                    <button type="button" className={stylesAuth.btn + ' primary-button btn--xl'} onClick={handleProceed}>
+                    <button type="button" disabled={isButtonDisabled} className={stylesAuth.btn + ' primary-button btn--xl'} onClick={() => setShowPart1(false)}>
                         <span>{ButtonConsts.Proceed}</span>
                     </button>
                 )}
