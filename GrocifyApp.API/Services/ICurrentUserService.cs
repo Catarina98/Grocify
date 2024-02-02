@@ -5,7 +5,7 @@ namespace GrocifyApp.API.Services
 {
     public interface ICurrentUserService
     {
-        public UserResponseModel? CurrentUser { get; }
-        public Task AuthenticateUser(ClaimsPrincipal claimsPrincipal);
+        UserResponseModel? CurrentUser { get; }
+        Task AuthenticateUser(ClaimsPrincipal claimsPrincipal);
     }
 }
