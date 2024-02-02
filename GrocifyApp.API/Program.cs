@@ -1,7 +1,8 @@
 using System.Reflection;
 using System.Text;
-using GrocifyApp.API.Filters;
+using GrocifyApp.API.Middlewares;
 using GrocifyApp.API.Models.Mapper;
+using GrocifyApp.API.Services;
 using GrocifyApp.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -62,10 +63,7 @@ builder.Services.AddSwaggerGen(swagger =>
 // Add dependencies
 GrocifyApp.DAL.DependencyInjectionRegistry.ConfigureServices(builder.Configuration, builder.Services);
 GrocifyApp.BLL.DependencyInjectionRegistry.ConfigureServices(builder.Services);
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add<InitializeUserFilter>();
-});
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 var app = builder.Build();
 
@@ -86,6 +84,10 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseCurrentUserMiddleware();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.MapControllers();
 
