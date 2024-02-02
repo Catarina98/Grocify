@@ -52,6 +52,7 @@ namespace GrocifyApp.API.Controllers
         /// Gets all entities.
         /// </summary>
         /// <response code="200">Success.</response>
+        /// <response code="404">No results found.</response>
         [HttpGet, AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
@@ -80,17 +81,8 @@ namespace GrocifyApp.API.Controllers
 
             var u = _mapper.Map<TEntity>(entity);
 
-            try
-            {
-                await InsertAction(u);
-            }
-            catch (Exception ex)
-            {
-                var errors = new List<string> { ex.Message };
+            await InsertAction(u);
 
-                return BadRequest(new BadResponseModel { Errors = errors });
-            }
-            
             var response = _mapper.Map<TResponseModel>(u);
 
             return Created(GenericConsts.APIResponses.EntityCreated, response);
@@ -118,16 +110,7 @@ namespace GrocifyApp.API.Controllers
             
             u.Id = id;
 
-            try
-            {
-                await _genericBusiness.Update(u);
-            }
-            catch (Exception ex)
-            {
-                var errors = new List<string> { ex.Message };
-
-                return BadRequest(new BadResponseModel { Errors = errors });
-            }
+            await _genericBusiness.Update(u);
 
             return Ok();
         }
@@ -141,16 +124,7 @@ namespace GrocifyApp.API.Controllers
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult> DeleteById(Guid id)
         {
-            try
-            {
-                await _genericBusiness.DeleteById(id);
-            }
-            catch (Exception ex)
-            {
-                var errors = new List<string> { ex.Message };
-
-                return BadRequest(new BadResponseModel { Errors = errors });
-            }
+            await _genericBusiness.DeleteById(id);
 
             return Ok();
         }

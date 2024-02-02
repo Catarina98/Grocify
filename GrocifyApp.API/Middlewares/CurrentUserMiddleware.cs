@@ -1,6 +1,6 @@
 ﻿using GrocifyApp.API.Services;
 
-namespace GrocifyApp.API.Filters
+namespace GrocifyApp.API.Middlewares
 {
     public class CurrentUserMiddleware
     {

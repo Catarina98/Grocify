@@ -51,16 +51,7 @@ namespace GrocifyApp.API.Controllers
             {
                 currentUser.IsDarkMode = !currentUser.IsDarkMode;
 
-                try
-                {
-                    await _userService.Update(currentUser);
-                }
-                catch (Exception ex)
-                {
-                    var errors = new List<string> { ex.Message };
-
-                    return BadRequest(new BadResponseModel { Errors = errors });
-                }
+                await _userService.Update(currentUser);
 
                 var userResponseModel = _mapper.Map<UserResponseModel>(currentUser);
 

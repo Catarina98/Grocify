@@ -1,6 +1,6 @@
 using System.Reflection;
 using System.Text;
-using GrocifyApp.API.Filters;
+using GrocifyApp.API.Middlewares;
 using GrocifyApp.API.Models.Mapper;
 using GrocifyApp.API.Services;
 using GrocifyApp.DAL;
@@ -86,6 +86,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCurrentUserMiddleware();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.MapControllers();
 

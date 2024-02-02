@@ -40,24 +40,9 @@ namespace GrocifyApp.API.Controllers
                 shoppingListProducts.Add(e.ProductId, e);
             }
 
-            try
-            {
-                await _shoppingListService.AddProductsToShoppingList(id, shoppingListProducts);
-            }
-            catch (CustomException exception)
-            {
-                var errors = new List<string> { exception.Message };
-
-                return BadRequest(new BadResponseModel { Errors = errors });
-            }
-            catch (Exception)
-            {
-                var errors = new List<string> { GenericConsts.Exceptions.Generic };
-
-                return BadRequest(new BadResponseModel { Errors = errors });
-            }
+            await _shoppingListService.AddProductsToShoppingList(id, shoppingListProducts);
 
             return Ok();
-        } //when i insert a product that already exists in list, the product quantity increment
+        }
     }
 }
