@@ -3,7 +3,9 @@ const GenericConsts = {
 };
 
 const ButtonConsts = {
-    NewSection: "New section"
+    NewSection: "New section",
+    Proceed: "Proceed",
+    Back: "Back"
 };
 
 const SettingsConsts = {
@@ -34,11 +36,6 @@ const NavbarConsts = {
     Plan: "Plan",
     Settings: "Settings"
 };
-
-const ButtonConsts = {
-    Proceed: "Proceed",
-    Back: "Back"
-}
 
 const AuthConsts = {
     SignIn: "Sign in",
