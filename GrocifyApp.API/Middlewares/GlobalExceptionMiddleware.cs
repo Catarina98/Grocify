@@ -1,5 +1,4 @@
-﻿using GrocifyApp.API.Models.ResponseModels;
-using GrocifyApp.DAL.Data.Consts.ENConsts;
+﻿using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Exceptions;
 using System.Net;
 using System.Text.Json;
