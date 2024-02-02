@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
-//import { useNavigate } from 'react-router-dom';
-import { PlaceholderConsts } from '../../consts/ENConsts';
-import { ButtonConsts } from '../../consts/ENConsts';
-//import PropTypes from 'prop-types';
-import CustomInput from '../../components/CustomInput';
-import SearchIcon from '../../assets/search-ic.svg';
+
+//Internal components
+import Searchbar from '../../components/Searchbar';
+import Layout from '../../components/Layout/Layout';
+
+//Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
