@@ -10,8 +10,7 @@ import CheckmarkIcon from '../assets/checkmark.svg';
 import styles from './UserPassword.module.scss';
 
 //Consts
-import { AuthConsts } from '../consts/ENConsts';
-//import AppRoutes from '../consts/AppRoutes';
+import { AuthConsts, PassRulesConsts } from '../consts/ENConsts';
 
 const UserPasswordForm = (props) => {
     const [password, setPassword] = useState('');
@@ -46,7 +45,7 @@ const UserPasswordForm = (props) => {
             password,
             confirmPassword,
         });
-    }, [isValidInitial, password, confirmPassword]);
+    }, [isValidInitial, password, confirmPassword, props]);
 
     return (
         <>
@@ -67,30 +66,28 @@ const UserPasswordForm = (props) => {
                     <div className={styles.iconMT4 + " icon--w16"}>
                         <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
-                    <span className="text text-left">
-                        Your password must be at least 8 characters long
-                    </span>
+                    <span className="text text-left">{PassRulesConsts.PasswordLong}</span>
                 </div>
 
                 <div id="lowerupper" className={`${styles.errorRow} ${validationResults.lowerUpper ? styles.valid : ""}`}>
                     <div className={styles.iconMT4 + " icon--w16"}>
                         <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
-                    <span className="text text-left">Must contain both uppercase and lowercase letters</span>
+                    <span className="text text-left">{PassRulesConsts.PassUpperLower}</span>
                 </div>
 
                 <div id="numbercharacter" className={`${styles.errorRow} ${validationResults.numberCharacter ? styles.valid : ""}`}>
                     <div className={styles.iconMT4 + " icon--w16"}>
                         <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
-                    <span className="text text-left">Must contain at least one number or special character</span>
+                    <span className="text text-left">{PassRulesConsts.PassSpecialCharacters}</span>
                 </div>
 
                 <div id="passwordmatch" className={`${styles.errorRow} ${validationResults.passwordMatch ? styles.valid : ""}`}>
                     <div className={styles.iconMT4 + " icon--w16"}>
                         <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
-                    <span className="text text-left">Passwords must match</span>
+                    <span className="text text-left">{PassRulesConsts.PasswordMatch}</span>
                 </div>
             </div>
         </>

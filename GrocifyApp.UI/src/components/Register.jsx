@@ -10,10 +10,11 @@ import UserPassword from './UserPassword';
 import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
 import ApiEndpoints from '../consts/ApiEndpoints';
+import stylesAuth from './Auth.module.scss';
 import styles from './Register.module.scss';
 
 //Consts
-import { GenericConsts, AuthConsts } from '../consts/ENConsts';
+import { GenericConsts, AuthConsts, ButtonConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
 
 const RegisterForm = () => {
@@ -83,11 +84,11 @@ const RegisterForm = () => {
     };
 
     return (
-        <div className={styles.login}>
+        <div className={stylesAuth.auth}>
             <ReactSVG className="react-svg" src={ReactLogo} />
-            <form className={styles.inputForm + " input-form"}>
+            <form className={stylesAuth.inputForm + " input-form"}>
                 <div className="title title--xl">{AuthConsts.SignUp}</div>
-                <p className={styles.loginDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
+                <p className={stylesAuth.authDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
 
                 {showPart1 ? (
@@ -109,18 +110,18 @@ const RegisterForm = () => {
                 )}
 
                 {showPart1 && (
-                    <button type="button" className={styles.btn + ' primary-button btn--xl'} onClick={handleProceed}>
-                        <span>Proceed</span>
+                    <button type="button" className={stylesAuth.btn + ' primary-button btn--xl'} onClick={handleProceed}>
+                        <span>{ButtonConsts.Proceed}</span>
                     </button>
                 )}
 
                 {!showPart1 && (
                     <div className={styles.buttons}>
-                        <button type="button" className={styles.btn + ' secondary-button btn--xl'} onClick={() => setShowPart1(true)}>
-                            <span>Back</span>
+                        <button type="button" className={stylesAuth.btn + ' secondary-button btn--xl'} onClick={() => setShowPart1(true)}>
+                            <span>{ButtonConsts.Back}</span>
                         </button>
 
-                        <button type="button" disabled={isButtonDisabled} className={styles.btn + " primary-button btn--xl"} onClick={handleRegister}>
+                        <button type="button" disabled={isButtonDisabled} className={stylesAuth.btn + " primary-button btn--xl"} onClick={handleRegister}>
                             <span>{AuthConsts.SignUp}</span>
                             <div className="loading-button white"></div>
                         </button>
@@ -129,7 +130,7 @@ const RegisterForm = () => {
             </form>
 
             {showPart1 && (
-                <div className={styles.formFooter}>
+                <div className={stylesAuth.formFooter}>
                     <div className="text color-n500">{AuthConsts.AlreadyHaveAccount}</div>
                     <a className="subtle-button" href={AppRoutes.Login}>
                         <span className="btn-text btn--m">{AuthConsts.SignIn}</span>

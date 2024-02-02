@@ -30,6 +30,11 @@ const NavbarConsts = {
     Settings: "Settings"
 };
 
+const ButtonConsts = {
+    Proceed: "Proceed",
+    Back: "Back"
+}
+
 const AuthConsts = {
     SignIn: "Sign in",
     EnterDetails: "Please enter your details bellow",
@@ -45,10 +50,19 @@ const AuthConsts = {
     PasswordPlaceholer: "password"
 };
 
+const PassRulesConsts = {
+    PasswordLong: "Your password must be at least 8 characters long",
+    PassUpperLower: "Must contain both uppercase and lowercase letters",
+    PassSpecialCharacters: "Must contain at least one number or special character",
+    PasswordMatch: "Passwords must match",
+}
+
 export {
     GenericConsts,
-    AuthConsts,
+    SettingsConsts,
     PlaceholderConsts,
-    NavbarConsts,
-    SettingsConsts
+    NavbarConsts,   
+    ButtonConsts,
+    AuthConsts,
+    PassRulesConsts
 };

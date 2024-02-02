@@ -9,7 +9,7 @@ import CustomInput from './CustomInput';
 import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
 import ApiEndpoints from '../consts/ApiEndpoints';
-import styles from './Login.module.scss';
+import styles from './Auth.module.scss';
 
 //Consts
 import { GenericConsts, AuthConsts } from '../consts/ENConsts';
@@ -61,11 +61,11 @@ const LoginForm = () => {
     };
 
     return (
-        <div className={styles.login}>
+        <div className={styles.auth}>
             <ReactSVG className="react-svg" src={ReactLogo} />
             <form className={styles.inputForm + " input-form"}>
                 <div className="title title--xl">{AuthConsts.SignIn}</div>
-                <p className={styles.loginDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
+                <p className={styles.authDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
 
 
