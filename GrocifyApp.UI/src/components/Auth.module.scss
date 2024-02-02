@@ -1,9 +1,5 @@
-.container-page {
+.auth {
     margin-top: 16px;
-}
-
-.loginForm {
-    height: 34px
 }
 
 .inputForm {
@@ -12,26 +8,22 @@
     margin-bottom: 32px;
 }
 
-.form-footer{
+.formFooter{
     text-align: center;
 }
 
-.input-form, .form-footer{
+.inputForm, .formFooter{
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.primary-button{
+.btn{
     width: 100%;
     margin-top: 64px;
 }
 
-.login-desc {
+.authDesc {
     margin-top: 4px;
     margin-bottom: 32px;
-}
-
-.subtle-button .icon{
-    transform: rotate(-90deg);
 }

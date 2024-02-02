@@ -4,6 +4,8 @@ const GenericConsts = {
 
 const ButtonConsts = {
     NewSection: "New section",
+    Proceed: "Proceed",
+    Back: "Back",
     NewMeasure: "New measure"
 };
 
@@ -37,21 +39,36 @@ const NavbarConsts = {
     Settings: "Settings"
 };
 
-const LoginConsts = {
+const AuthConsts = {
     SignIn: "Sign in",
     EnterDetails: "Please enter your details bellow",
     HaveAccount: "Don't have an account?",
+    AlreadyHaveAccount: "Already have an account?",
     SignUp: "Sign up",
     Email: "Email",
     Password: "Password",
-    ErrorMessage: "The email or password you entered is incorrect."
+    Name: "Name",
+    ConfirmPassword: "ConfirmPassword",
+    ErrorMessage: "The email or password you entered is incorrect.",
+    EmailPlaceholer: "name@example.com",
+    PasswordPlaceholer: "password",
+    NameError: "Please enter your name",
+    EmailError: "Please enter a valid email address"
 };
+
+const PassRulesConsts = {
+    PasswordLong: "Your password must be at least 8 characters long",
+    PassUpperLower: "Must contain both uppercase and lowercase letters",
+    PassSpecialCharacters: "Must contain at least one number or special character",
+    PasswordMatch: "Passwords must match",
+}
 
 export {
     GenericConsts,
-    LoginConsts,
-    PlaceholderConsts,
-    NavbarConsts,
     SettingsConsts,
-    ButtonConsts
+    PlaceholderConsts,
+    NavbarConsts,   
+    ButtonConsts,
+    AuthConsts,
+    PassRulesConsts
 };

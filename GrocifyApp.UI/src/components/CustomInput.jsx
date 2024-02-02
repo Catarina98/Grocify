@@ -25,7 +25,7 @@ const CustomInput = ({ type, placeholder, value, onChange, label, className, ico
 
 CustomInput.propTypes = {
     type: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,

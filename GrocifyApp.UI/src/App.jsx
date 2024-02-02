@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 //Internal components
 import LoginForm from './components/Login';
+import RegisterForm from './components/Register';
 import WeatherForecast from './pages/WeatherForecast';
 import Settings from './pages/Settings';
 import Logout from './components/Logout';
@@ -26,21 +27,33 @@ PrivateRoute.propTypes = {
 };
 
 function App() {
-    const [isDarkMode, setDarkMode] = useState(false);
+    const darkMode = localStorage.getItem('isDarkMode') === 'true';
+    const [isDarkMode, setDarkMode] = useState(darkMode == undefined ? false : darkMode);
+
+    const handleDarkModeChange = (newDarkMode) => {
+        setDarkMode(newDarkMode);
+        localStorage.setItem('isDarkMode', newDarkMode.toString());
+    };
 
     return (
         <div className={`container-page ${isDarkMode ? 'dark' : ''}`}>
             <Router>
                 <Routes>
                     {/* Define the public routes */}
-                    <Route path={AppRoutes.Login} element={<LoginForm />} />
-                    <Route path={AppRoutes.Logout} element={<Logout />} />
+                    <Route path={AppRoutes.Login} element={<LoginForm onDarkModeChange={handleDarkModeChange} />} />
+                    <Route path={AppRoutes.Logout} element={<Logout onDarkModeChange={handleDarkModeChange} />} />
+                    <Route path={AppRoutes.Register} element={<RegisterForm />} />
 
                     {/* Define the private routes */}
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
-                    <Route path={AppRoutes.Settings} element={<PrivateRoute><Settings onDarkModeChange={(data) => setDarkMode(data)} /></PrivateRoute>} />
-                    <Route path={AppRoutes.ProductSections} element={<PrivateRoute><ProductSections/></PrivateRoute>} />
-                    <Route path={AppRoutes.ProductMeaures} element={<PrivateRoute><ProductMeasures/></PrivateRoute>} />
+
+                    <Route path={AppRoutes.Settings} element={
+                        <PrivateRoute>
+                            <Settings onDarkModeChange={handleDarkModeChange} isDarkMode={isDarkMode} />
+                        </PrivateRoute>} />
+
+                    <Route path={AppRoutes.ProductSections} element={<PrivateRoute><ProductSections /></PrivateRoute>} />
+                    <Route path={AppRoutes.ProductMeaures} element={<PrivateRoute><ProductMeasures /></PrivateRoute>} />
                 </Routes>
             </Router>
         </div>

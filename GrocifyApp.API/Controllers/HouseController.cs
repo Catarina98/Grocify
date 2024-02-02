@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
+using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
-using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
@@ -15,7 +15,7 @@ namespace GrocifyApp.API.Controllers
     {
         private readonly IHouseService _houseService;
 
-        public HouseController(IHouseService houseService, IMapper mapper) : base(houseService, mapper)
+        public HouseController(IHouseService houseService, IMapper mapper, ICurrentUserService currentUserService) : base(houseService, mapper, currentUserService)
         {
             _houseService = houseService;
         }
@@ -29,20 +29,9 @@ namespace GrocifyApp.API.Controllers
         [HttpGet("{id}/users")]        
         public async Task<ActionResult<List<User>>> GetUsersFromHouse(Guid id)
         {
-            try
-            {
-                var users = await _houseService.GetUsersFromHouse(id);
+            var users = await _houseService.GetUsersFromHouse(id);
 
-                return Ok(users);
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(new { error = ex.Message });
-            }
-            catch (Exception)
-            {
-                return BadRequest(new { error = GenericConsts.Exceptions.Generic });
-            }
+            return Ok(users);
         }
 
         /// <summary>
@@ -53,22 +42,7 @@ namespace GrocifyApp.API.Controllers
         [HttpPut("{houseId}/user/{userId}")]
         public async Task<ActionResult> InsertUserToHouse(Guid houseId, Guid userId)
         {
-            try
-            {
-                await _houseService.InsertUserToHouse(houseId, userId);
-            }
-            catch (CustomException exception)
-            {
-                var errors = new List<string> { exception.Message };
-
-                return BadRequest(new BadResponseModel { Errors = errors });
-            }
-            catch (Exception)
-            {
-                var errors = new List<string> { GenericConsts.Exceptions.Generic };
-
-                return BadRequest(new BadResponseModel { Errors = errors });
-            }
+            await _houseService.InsertUserToHouse(houseId, userId);
 
             return Ok();
         }
@@ -82,28 +56,19 @@ namespace GrocifyApp.API.Controllers
         [HttpDelete("{houseId}/deleteUsers")]
         public async Task<ActionResult> DeleteUsersFromHouse(Guid houseId, [FromBody] HashSet<Guid> usersId, bool forceDeleteHouse = false)
         {
-            try
-            {
-                await _houseService.DeleteUsersFromHouse(houseId, usersId, forceDeleteHouse);
-            }
-            catch (Exception ex)
-            {
-                var errors = new List<string> { ex.Message };
-
-                return BadRequest(new BadResponseModel { Errors = errors });
-            }
+            await _houseService.DeleteUsersFromHouse(houseId, usersId, forceDeleteHouse);
 
             return Ok();
         }
 
         protected override async Task InsertAction(House entity)
         {
-            if (AuthController.User == null)
+            if (CurrentUserService.CurrentUser == null)
             {
                 throw new CustomException(APIConsts.GenericConsts.Errors.UnableGetAuthenticatedUser);
             }
 
-            await _houseService.InsertWithUser(entity, AuthController.User.Id);
+            await _houseService.InsertWithUser(entity, CurrentUserService.CurrentUser.Id);
         }
     }
 }

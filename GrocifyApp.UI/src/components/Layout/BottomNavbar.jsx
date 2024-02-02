@@ -16,7 +16,7 @@ import AppRoutes from '../../consts/AppRoutes';
 
 const menuItems = [
     { iconSrc: CartIcon, text: NavbarConsts.Lists, route: '/' },
-    { iconSrc: InventoryIcon, text: NavbarConsts.Inventories, route: AppRoutes.ProductSections },
+    { iconSrc: InventoryIcon, text: NavbarConsts.Inventories },
     { iconSrc: RecipeIcon, text: NavbarConsts.Recipes },
     { iconSrc: CalendarIcon, text: NavbarConsts.Plan },
     { iconSrc: SettingsIcon, text: NavbarConsts.Settings, route: AppRoutes.Settings },
@@ -49,6 +49,10 @@ const BottomNavbar = () => {
         const currentNavItem = menuItems.find(item => item.route === location.pathname);
         if (currentNavItem) {
             setActiveNavItem(currentNavItem.text);
+        }
+        else {
+            // If there's no current navigation item, keep the last one as active
+            setActiveNavItem(menuItems[menuItems.length - 1].text);
         }
     }, [location.pathname]);
 

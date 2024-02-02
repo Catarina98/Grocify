@@ -6,6 +6,7 @@
         {
             public const string EmailAlreadyTaken = "This email was already taken.";
             public const string UserPasswordIncorrect = "The email or password you entered is incorrect.";
+            public const string UserHasNoHouse = "This user does not have an house. Please contact the administrator.";
             public const string UnableGetEntity = "Unable to get the entity";
             public const string UnableGetAuthenticatedUser = "Unable to get authenticated user";
         }

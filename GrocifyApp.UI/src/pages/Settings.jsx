@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
@@ -12,11 +12,12 @@ import SearchIcon from '../assets/search-ic.svg';
 import ChevronIcon from '../assets/chevron-ic.svg';
 import LogoutIcon from '../assets/logout-ic.svg';
 import TrashIcon from '../assets/trash-ic.svg';
-import './Settings.jsx.scss';
+import styles from './Settings.module.scss';
 
 //Consts
-import { PlaceholderConsts, SettingsConsts } from '../consts/ENConsts';
+import { PlaceholderConsts, SettingsConsts, GenericConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
+import ApiEndpoints from '../consts/ApiEndpoints';
 
 function Settings(props) {
     const settingsItems = [
@@ -59,21 +60,41 @@ function Settings(props) {
         }
     ];
 
+    const token = localStorage.getItem('token');
     const [searchInput, setSearchInput] = useState('');
-    const [darkMode, setDarkMode] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useNavigate();  
 
-    useEffect(() => {
-        // Ensure dark mode state is updated when it changes externally
-        setDarkMode(props.isDarkMode);
-    }, [props.isDarkMode]);
+    const updateUserDarkMode = async () => {        
+        try {
+            if (token == undefined) {
+                return;
+            }
 
-    const sendDataToParent = () => {
-        // Toggle dark mode state and send it to the parent component
-        const newDarkMode = !darkMode;
-        setDarkMode(newDarkMode);
-        props.onDarkModeChange(newDarkMode);
+            const response = await fetch(ApiEndpoints.UserDarkMode_Endpoint, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            
+            if (response.ok) {
+                console.log("updated");
+            } else {
+                const errorData = await response.json();
+                console.log(errorData.errors[0]);
+            }
+        } catch (error) {
+            console.log(GenericConsts.Error);
+        }
     };
+
+    const sendDataToParent = () => {                
+        updateUserDarkMode();
+        props.onDarkModeChange(!props.isDarkMode);
+    };
+
+    let isDarkMode = props.isDarkMode;
         
     const renderTableRowContent = (tableTitle, settingItem, darkMode) => {
         const handleLinkClick = (link) => {
@@ -85,7 +106,7 @@ function Settings(props) {
         };
 
         return (
-            <div className="card-body-row" key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
+            <div className={styles.cardBodyRow + " card-body-row"} key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
                 <div className="text">{settingItem.title}</div>
                 {tableTitle === SettingsConsts.Appearance ? (
                     <label className="toggle cursor-pointer">
@@ -104,7 +125,7 @@ function Settings(props) {
     return (
         <Layout>
             <div className="container-settings">
-                <div className="searchbar-container">
+                <div className={styles.searchbarContainer}>
                     <div className="searchbar-holder">
                         <CustomInput className="app-form mb-0"
                             type="text"
@@ -116,14 +137,14 @@ function Settings(props) {
                     </div>
                 </div>
 
-                <div className="container-cards">
+                <div className={styles.containerCards}>
                     {settingsItems.map(settingTable => (
-                        <div className="card" key={settingTable.tableName}>
-                            <div className="card-header title title--s weight--l color-n600">{settingTable.tableName}</div>
+                        <div className={styles.card + " card"} key={settingTable.tableName}>
+                            <div className={styles.cardHeader + " card-header title title--s weight--l"}>{settingTable.tableName}</div>
 
                             <div className="card-body">
                                 {settingTable.items.map(settingItem => (
-                                    renderTableRowContent(settingTable.tableName, settingItem, darkMode)
+                                    renderTableRowContent(settingTable.tableName, settingItem, isDarkMode)
                                 ))}
                             </div>
                         </div>
@@ -137,7 +158,7 @@ function Settings(props) {
 
 Settings.propTypes = {
     onDarkModeChange: PropTypes.func.isRequired,
-    isDarkMode: PropTypes.bool.isRequired,
+    isDarkMode: PropTypes.bool.isRequired
 };
 
 export default Settings;

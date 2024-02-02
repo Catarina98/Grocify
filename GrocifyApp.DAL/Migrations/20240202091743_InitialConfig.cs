@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GrocifyApp.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class ModelsConfig : Migration
+    public partial class InitialConfig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +35,11 @@ namespace GrocifyApp.DAL.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsDarkMode = table.Column<bool>(type: "bit", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +56,7 @@ namespace GrocifyApp.DAL.Migrations
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     DefaultInventory = table.Column<bool>(type: "bit", nullable: false),
-                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,8 +65,7 @@ namespace GrocifyApp.DAL.Migrations
                         name: "FK_Inventories_Houses_HouseId",
                         column: x => x.HouseId,
                         principalTable: "Houses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -75,7 +78,7 @@ namespace GrocifyApp.DAL.Migrations
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     OrderIndex = table.Column<int>(type: "int", nullable: false),
-                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -84,8 +87,7 @@ namespace GrocifyApp.DAL.Migrations
                         name: "FK_Meals_Houses_HouseId",
                         column: x => x.HouseId,
                         principalTable: "Houses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -97,8 +99,8 @@ namespace GrocifyApp.DAL.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     ChoosenDays = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MonthlyView = table.Column<bool>(type: "bit", nullable: false)
+                    MonthlyView = table.Column<bool>(type: "bit", nullable: false),
+                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -107,8 +109,7 @@ namespace GrocifyApp.DAL.Migrations
                         name: "FK_Plans_Houses_HouseId",
                         column: x => x.HouseId,
                         principalTable: "Houses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -166,8 +167,8 @@ namespace GrocifyApp.DAL.Migrations
                     NumberOfPeople = table.Column<int>(type: "int", nullable: false),
                     Time = table.Column<TimeSpan>(type: "time", nullable: false),
                     Difficult = table.Column<int>(type: "int", nullable: false),
-                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -189,7 +190,7 @@ namespace GrocifyApp.DAL.Migrations
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     DefaultList = table.Column<bool>(type: "bit", nullable: false),
-                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,8 +199,7 @@ namespace GrocifyApp.DAL.Migrations
                         name: "FK_ShoppingLists_Houses_HouseId",
                         column: x => x.HouseId,
                         principalTable: "Houses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -211,7 +211,8 @@ namespace GrocifyApp.DAL.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DefaultHouse = table.Column<bool>(type: "bit", nullable: false),
+                    HouseId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -220,8 +221,7 @@ namespace GrocifyApp.DAL.Migrations
                         name: "FK_UserHouses_Houses_HouseId",
                         column: x => x.HouseId,
                         principalTable: "Houses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UserHouses_Users_UserId",
                         column: x => x.UserId,
@@ -258,8 +258,8 @@ namespace GrocifyApp.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_ProductSections_ProductMeasureId",
-                        column: x => x.ProductMeasureId,
+                        name: "FK_Products_ProductSections_ProductSectionId",
+                        column: x => x.ProductSectionId,
                         principalTable: "ProductSections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -462,9 +462,23 @@ namespace GrocifyApp.DAL.Migrations
                 column: "HouseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductMeasures_Name_HouseId",
+                table: "ProductMeasures",
+                columns: new[] { "Name", "HouseId" },
+                unique: true,
+                filter: "[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_HouseId",
                 table: "Products",
                 column: "HouseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_Name_HouseId",
+                table: "Products",
+                columns: new[] { "Name", "HouseId" },
+                unique: true,
+                filter: "[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductMeasureId",
@@ -472,9 +486,21 @@ namespace GrocifyApp.DAL.Migrations
                 column: "ProductMeasureId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_ProductSectionId",
+                table: "Products",
+                column: "ProductSectionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductSections_HouseId",
                 table: "ProductSections",
                 column: "HouseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductSections_Name_HouseId",
+                table: "ProductSections",
+                columns: new[] { "Name", "HouseId" },
+                unique: true,
+                filter: "[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecipeProducts_ProductId",
@@ -497,9 +523,18 @@ namespace GrocifyApp.DAL.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingListProducts_ShoppingListId",
+                name: "IX_ShoppingListProducts_ShoppingListId_ProductId",
                 table: "ShoppingListProducts",
-                column: "ShoppingListId");
+                columns: new[] { "ShoppingListId", "ProductId" },
+                unique: true,
+                filter: "[ShoppingListId] IS NOT NULL AND [ProductId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingLists_DefaultList_HouseId",
+                table: "ShoppingLists",
+                columns: new[] { "DefaultList", "HouseId" },
+                unique: true,
+                filter: "DefaultList = 1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingLists_HouseId",
@@ -507,14 +542,30 @@ namespace GrocifyApp.DAL.Migrations
                 column: "HouseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShoppingLists_Name_HouseId",
+                table: "ShoppingLists",
+                columns: new[] { "Name", "HouseId" },
+                unique: true,
+                filter: "[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserHouses_DefaultHouse_UserId",
+                table: "UserHouses",
+                columns: new[] { "DefaultHouse", "UserId" },
+                unique: true,
+                filter: "DefaultHouse = 1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserHouses_HouseId",
                 table: "UserHouses",
                 column: "HouseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserHouses_UserId",
+                name: "IX_UserHouses_UserId_HouseId",
                 table: "UserHouses",
-                column: "UserId");
+                columns: new[] { "UserId", "HouseId" },
+                unique: true,
+                filter: "[UserId] IS NOT NULL AND [HouseId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
