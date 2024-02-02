@@ -4,7 +4,6 @@ using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GrocifyApp.API.Controllers

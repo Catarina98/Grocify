@@ -15,7 +15,7 @@ import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 import { PlaceholderConsts } from '../../consts/ENConsts';
 import { ButtonConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
-import { ApiEndpoints } from '../../consts/ApiEndpoints';
+import ApiEndpoints from '../../consts/ApiEndpoints';
 import styles from './ProductSections.module.scss';
 
 function ProductSections() {
@@ -26,7 +26,7 @@ function ProductSections() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(ApiEndpoints.ProductSections(user.houseId), {
+                const response = await fetch(ApiEndpoints.ProductSections_Endpoint, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -37,19 +37,16 @@ function ProductSections() {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch data: ${response.statusText}`);
                 }
-
-                // Parse the response body as JSON
+                                
                 const data = await response.json();
                 setSections(data);
             } catch (error) {
-                /*setError(error);*/
-            } finally {
-                //setLoading(false);
+                console.log('');
             }
         };
 
         fetchData();
-    }, []); // The empty dependency array means this effect runs once, similar to componentDidMount
+    }, []);
 
     return (
         <Layout>
@@ -89,7 +86,7 @@ function ProductSections() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l">
+            <button className="primary-button btn--l btn-float">
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewSection}
