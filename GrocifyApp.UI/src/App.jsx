@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 //Internal components
 import LoginForm from './components/Login';
+import RegisterForm from './components/Register';
 import WeatherForecast from './pages/WeatherForecast';
 import Settings from './pages/Settings';
 import Logout from './components/Logout';
@@ -40,6 +41,7 @@ function App() {
                     {/* Define the public routes */}
                     <Route path={AppRoutes.Login} element={<LoginForm onDarkModeChange={handleDarkModeChange} />} />
                     <Route path={AppRoutes.Logout} element={<Logout onDarkModeChange={handleDarkModeChange} />} />
+                    <Route path={AppRoutes.Register} element={<RegisterForm />} />
 
                     {/* Define the private routes */}
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />

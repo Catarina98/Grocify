@@ -1,32 +1,18 @@
 ﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
 using GrocifyApp.BLL.Interfaces;
-using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
-using System.Linq.Expressions;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class ShoppingListService : EntitiesService<ShoppingList>, IShoppingListService
+    public class ShoppingListService : EntitiesServiceWithHouse<ShoppingList>, IShoppingListService
     {
         private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
-        protected override string duplicateEntityException { get; set; } = GenericConsts.Entities.ShoppingList;
+        protected override string entityName { get; set; } = GenericConsts.Entities.ShoppingList;
 
         public ShoppingListService(IRepository<ShoppingList> repository, IRepository<ShoppingListProduct> shoppingListProductRepository) : base(repository)
         {
             _shoppingListProductRepository = shoppingListProductRepository;
-        }
-
-        public async Task<List<ShoppingList>> GetShoppingListsFromHouse(Guid houseId)
-        {
-            var shoppingLists = await repository.GetWhere(GetFilterCondition(houseId));
-
-            if (shoppingLists == null || shoppingLists.Count == 0)
-            {
-                throw new NotFoundException(GenericConsts.Exceptions.NoListsFoundInHouse);
-            }
-
-            return shoppingLists;
         }
 
         /// <summary>
@@ -34,7 +20,9 @@ namespace GrocifyApp.BLL.Implementations
         /// </summary>
         protected override async Task<bool> Validate(ShoppingList shoppingList)
         {
-            if (!await repository.AnyWhere(GetFilterCondition(shoppingList.HouseId)))
+            await base.Validate(shoppingList);
+
+            if (!await repository.AnyWhere(x => x.HouseId == shoppingList.HouseId))
             {
                 shoppingList.DefaultList = true;
             }
@@ -71,11 +59,6 @@ namespace GrocifyApp.BLL.Implementations
             }
 
             await _shoppingListProductRepository.SaveChangesAsync(token);
-        }
-
-        private Expression<Func<ShoppingList, bool>> GetFilterCondition(Guid houseId)
-        {
-            return x => x.HouseId == houseId;
         }
     }
 }

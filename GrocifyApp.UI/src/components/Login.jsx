@@ -10,10 +10,10 @@ import CustomInput from './CustomInput';
 import ReactLogo from '../assets/logo_with_text.svg';
 import ArrowIcon from '../assets/arrow-ic.svg';
 import ApiEndpoints from '../consts/ApiEndpoints';
-import styles from './Login.module.scss';
+import styles from './Auth.module.scss';
 
 //Consts
-import { GenericConsts, LoginConsts } from '../consts/ENConsts';
+import { GenericConsts, AuthConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
 
 const LoginForm = (props) => {
@@ -66,38 +66,38 @@ const LoginForm = (props) => {
     };
 
     return (
-        <div className={styles.login}>
+        <div className={styles.auth}>
             <ReactSVG className="react-svg" src={ReactLogo} />
             <form className={styles.inputForm + " input-form"}>
-                <div className="title title--xl">{LoginConsts.SignIn}</div>
-                <p className={styles.loginDesc + " text color-n500"}>{LoginConsts.EnterDetails}</p>
+                <div className="title title--xl">{AuthConsts.SignIn}</div>
+                <p className={styles.authDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
 
 
                 <CustomInput className ="mt-3"
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder={AuthConsts.EmailPlaceholer}
                     value={email}
-                    label={LoginConsts.Email}
+                    label={AuthConsts.Email}
                     onChange={(e) => setEmail(e.target.value)} />
 
                 <CustomInput
                     type="password"
-                    placeholder="password"
+                    placeholder={AuthConsts.PasswordPlaceholer}
                     value={password}
-                    label={LoginConsts.Password}
+                    label={AuthConsts.Password}
                     onChange={(e) => setPassword(e.target.value)} />
 
                 <button type="button" className={styles.btn + " primary-button btn--xl"} onClick={handleLogin}>
-                    <span>{LoginConsts.SignIn}</span>
+                    <span>{AuthConsts.SignIn}</span>
                     <div className="loading-button white"></div>
                 </button>
             </form>
 
             <div className={styles.formFooter}>
-                <div className="text color-n500">{LoginConsts.HaveAccount}</div>
+                <div className="text color-n500">{AuthConsts.HaveAccount}</div>
                 <a className="subtle-button" href={AppRoutes.Register}>
-                    <span className="btn-text btn--m">{LoginConsts.SignUp}</span>
+                    <span className="btn-text btn--m">{AuthConsts.SignUp}</span>
                     <div className="btn-icon">
                         <ReactSVG src={ArrowIcon} className="arrow-right" />
                     </div>

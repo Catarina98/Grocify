@@ -16,8 +16,6 @@ namespace GrocifyApp.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public static UserResponseModel? AuthUser;
-
         private readonly IConfiguration _configuration;
 
         private readonly IUserService _userService;
@@ -95,11 +93,16 @@ namespace GrocifyApp.API.Controllers
                 }
 
                 houseId = await _userService.GetUserDefaultHouseId(getUser.Id);
+
+                if(houseId == null)
+                {
+                    var errors = new List<string> { GenericConsts.Errors.UserHasNoHouse };
+
+                    return BadRequest(new BadResponseModel { Errors = errors });
+                }
             }
 
-            AuthUser = new UserResponseModel() { Id = getUser.Id, Email = getUser.Email, Name = getUser.Name, HouseId = houseId, IsDarkMode = getUser.IsDarkMode };
-
-            string token = CreateToken(AuthUser);
+            string token = CreateToken(getUser);
 
             var loginResponseModel = new LoginResponseModel
             {
@@ -111,7 +114,7 @@ namespace GrocifyApp.API.Controllers
             return Ok(loginResponseModel);
         }
 
-        private string CreateToken(UserResponseModel userAPI)
+        private string CreateToken(User userAPI)
         {
             List<Claim> claims = new List<Claim>
             {

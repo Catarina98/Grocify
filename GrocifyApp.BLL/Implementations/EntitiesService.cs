@@ -10,7 +10,30 @@ namespace GrocifyApp.BLL.Implementations
     public class EntitiesService<T> : IEntitiesService<T> where T : BaseEntity
     {
         protected readonly IRepository<T> repository;
-        protected virtual string duplicateEntityException { get; set; } = GenericConsts.Entities.Entity;
+
+        protected virtual string entityName
+        {
+            get
+            {
+                string typeName = typeof(T).Name;
+
+                var fieldInfo = typeof(GenericConsts.Entities).GetField(typeName);
+
+                if (fieldInfo != null)
+                {
+                    return (string)fieldInfo.GetValue(null)!;
+                }
+                else
+                {
+                    return GenericConsts.Entities.Entity;
+                }
+            }
+
+            set
+            {
+                entityName = value;
+            }
+        }
 
         public EntitiesService(IRepository<T> repository)
         {
@@ -27,12 +50,12 @@ namespace GrocifyApp.BLL.Implementations
             await repository.DeleteById(id, token);
         }
 
-        public async Task<T?> Get(Guid id)
+        public virtual async Task<T?> Get(Guid id)
         {
             return await repository.Get(id);
         }
 
-        public async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
+        public virtual async Task<IEnumerable<T>> GetAll(CancellationTokenSource? token = null)
         {
             return await repository.GetAll(token);
         }
@@ -54,7 +77,7 @@ namespace GrocifyApp.BLL.Implementations
                 }
                 catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
                 {
-                    throw new SQLException(ex, duplicateEntityException);
+                    throw new SQLException(ex, entityName);
                 }
             }
         }
