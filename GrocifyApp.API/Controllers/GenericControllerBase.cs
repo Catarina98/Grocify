@@ -53,7 +53,7 @@ namespace GrocifyApp.API.Controllers
         /// </summary>
         /// <response code="200">Success.</response>
         /// <response code="404">No results found.</response>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var entities = await _genericBusiness.GetAll();
