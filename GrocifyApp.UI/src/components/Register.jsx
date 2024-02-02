@@ -27,8 +27,14 @@ const RegisterForm = () => {
     const [showPart1, setShowPart1] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(true);
+    const [firstTime, setFirstTime] = useState(true);
 
     useEffect(() => {
+        if (firstTime) {
+            setFirstTime(false);
+            return;
+        }
+
         const isValidName = name.trim() !== '';
         const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
 
