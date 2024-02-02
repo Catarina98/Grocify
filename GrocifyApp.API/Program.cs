@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using GrocifyApp.API.Filters;
 using GrocifyApp.API.Models.Mapper;
 using GrocifyApp.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -61,6 +62,10 @@ builder.Services.AddSwaggerGen(swagger =>
 // Add dependencies
 GrocifyApp.DAL.DependencyInjectionRegistry.ConfigureServices(builder.Configuration, builder.Services);
 GrocifyApp.BLL.DependencyInjectionRegistry.ConfigureServices(builder.Services);
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<InitializeUserFilter>();
+});
 
 var app = builder.Build();
 

@@ -20,7 +20,7 @@ namespace GrocifyApp.API.Controllers
     {
         public GenericControllerWithHouse(IEntitiesServiceWithHouse<TEntity> genericBusiness, IMapper mapper) : base(genericBusiness, mapper)
         {
-            genericBusiness.HouseId = AuthController.User?.AuthenticatedHouseId;
+            genericBusiness.HouseId = AuthController.AuthUser?.AuthenticatedHouseId;
         }
     }
 

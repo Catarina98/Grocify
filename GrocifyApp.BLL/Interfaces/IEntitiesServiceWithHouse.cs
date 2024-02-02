@@ -1,5 +1,4 @@
-﻿using GrocifyApp.DAL.Filters;
-using GrocifyApp.DAL.Models;
+﻿using GrocifyApp.DAL.Models;
 
 namespace GrocifyApp.BLL.Interfaces
 {

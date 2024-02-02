@@ -24,21 +24,27 @@ PrivateRoute.propTypes = {
 };
 
 function App() {
-    const [isDarkMode, setDarkMode] = useState(false);
+    const darkMode = localStorage.getItem('isDarkMode') === 'true';
+    const [isDarkMode, setDarkMode] = useState(darkMode == undefined ? false : darkMode);
+
+    const handleDarkModeChange = (newDarkMode) => {
+        setDarkMode(newDarkMode);
+        localStorage.setItem('isDarkMode', newDarkMode.toString());
+    };
 
     return (
         <div className={`container-page ${isDarkMode ? 'dark' : ''}`}>
             <Router>
                 <Routes>
                     {/* Define the public routes */}
-                    <Route path={AppRoutes.Login} element={<LoginForm />} />
-                    <Route path={AppRoutes.Logout} element={<Logout />} />
+                    <Route path={AppRoutes.Login} element={<LoginForm onDarkModeChange={handleDarkModeChange} />} />
+                    <Route path={AppRoutes.Logout} element={<Logout onDarkModeChange={handleDarkModeChange} />} />
 
                     {/* Define the private routes */}
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
                     <Route path={AppRoutes.Settings} element={
                         <PrivateRoute>
-                            <Settings onDarkModeChange={(data) => setDarkMode(data)} isDarkMode={isDarkMode} />
+                            <Settings onDarkModeChange={handleDarkModeChange} isDarkMode={isDarkMode} />
                         </PrivateRoute>} />
                 </Routes>
             </Router>

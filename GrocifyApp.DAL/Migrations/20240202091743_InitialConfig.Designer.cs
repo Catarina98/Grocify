@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    [Migration("20240126152152_House")]
-    partial class House
+    [Migration("20240202091743_InitialConfig")]
+    partial class InitialConfig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -376,6 +376,9 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDarkMode")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
