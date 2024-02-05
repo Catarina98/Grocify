@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    [Migration("20240202091743_InitialConfig")]
+    [Migration("20240205204931_InitialConfig")]
     partial class InitialConfig
     {
         /// <inheritdoc />

@@ -64,7 +64,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Directions", (string)null);
+                    b.ToTable("Directions");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.House", b =>
@@ -76,7 +76,7 @@ namespace GrocifyApp.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.ToTable("Houses", (string)null);
+                    b.ToTable("Houses");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Inventory", b =>
@@ -96,7 +96,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Inventories", (string)null);
+                    b.ToTable("Inventories");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.InventoryProduct", b =>
@@ -116,7 +116,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("InventoryProducts", (string)null);
+                    b.ToTable("InventoryProducts");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Meal", b =>
@@ -136,7 +136,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Meals", (string)null);
+                    b.ToTable("Meals");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Plan", b =>
@@ -155,7 +155,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Plans", (string)null);
+                    b.ToTable("Plans");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.PlanMealRecipe", b =>
@@ -180,7 +180,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("PlanMealRecipes", (string)null);
+                    b.ToTable("PlanMealRecipes");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Product", b =>
@@ -211,7 +211,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ProductMeasure", b =>
@@ -232,7 +232,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("ProductMeasures", (string)null);
+                    b.ToTable("ProductMeasures");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ProductSection", b =>
@@ -257,7 +257,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("ProductSections", (string)null);
+                    b.ToTable("ProductSections");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Recipe", b =>
@@ -286,7 +286,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.RecipeProduct", b =>
@@ -313,7 +313,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeProducts", (string)null);
+                    b.ToTable("RecipeProducts");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ShoppingList", b =>
@@ -341,7 +341,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("ShoppingLists", (string)null);
+                    b.ToTable("ShoppingLists");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ShoppingListProduct", b =>
@@ -363,7 +363,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[ShoppingListId] IS NOT NULL AND [ProductId] IS NOT NULL");
 
-                    b.ToTable("ShoppingListProducts", (string)null);
+                    b.ToTable("ShoppingListProducts");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.User", b =>
@@ -397,7 +397,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.UserHouse", b =>
@@ -423,7 +423,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("UserHouses", (string)null);
+                    b.ToTable("UserHouses");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Direction", b =>

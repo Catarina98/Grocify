@@ -44,77 +44,60 @@ namespace GrocifyApp.DAL
 
             SeedProductMeasures(modelBuilder);
 
-            SeedProducts(modelBuilder);
+            //SeedProducts(modelBuilder);
         }
 
         private static void SeedProductSections(ModelBuilder modelBuilder)
         {
-            try
+            ProductSections productSectionsInstance = new ProductSections();
+
+            Type sectionsType = typeof(ProductSections);
+
+            foreach (FieldInfo field in sectionsType.GetFields())
             {
-                Type sectionNamesType = typeof(ProductSectionNames);
+                var p = field.GetValue(productSectionsInstance);
 
-                Type sectionIconsType = typeof(ProductSectionIcons);
-
-                foreach (FieldInfo field in sectionNamesType.GetFields(BindingFlags.Public | BindingFlags.Static))
+                if (p != null)
                 {
-                    string? sectionName = field.GetValue(null)?.ToString();
+                    ProductSectionModel? productSection = (ProductSectionModel)p;
 
-                    string? iconName = sectionIconsType.GetField(field.Name)?.GetValue(null)?.ToString();
-
-                    if (!string.IsNullOrEmpty(sectionName) && !string.IsNullOrEmpty(iconName))
+                    var section = new ProductSection
                     {
-                        if (!ProductSections.ContainsKey(sectionName))
-                        {
-                            var productSection =
-                                new ProductSection
-                                {
-                                    Id = Guids[currentGuidIndex],
-                                    HouseId = null,
-                                    IsDeleted = false,
-                                    Name = sectionName,
-                                    Icon = iconName
-                                };
+                        Id = Guids[currentGuidIndex],
+                        Name = productSection.Name,
+                        Icon = productSection.Icon,
+                    };
 
-                            modelBuilder.Entity<ProductSection>().HasData(productSection);
+                    modelBuilder.Entity<ProductSection>().HasData(section);
 
-                            Console.WriteLine(productSection.Id);
-
-                            ProductSections.Add(sectionName, Guids[currentGuidIndex]);
-
-                            currentGuidIndex++;
-                        }
-                    }
+                    currentGuidIndex++;
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
             }
         }
 
         private static void SeedProductMeasures(ModelBuilder modelBuilder)
         {
-            Type measureTypes = typeof(ProductMeasureNames);
+            ProductMeasures productMeasuresInstance = new ProductMeasures();
 
-            foreach (FieldInfo field in measureTypes.GetFields(BindingFlags.Public | BindingFlags.Static))
+            Type measuresType = typeof(ProductMeasures);
+
+            foreach (FieldInfo field in measuresType.GetFields())
             {
-                string? measureName = field.GetValue(null)?.ToString();
+                var p = field.GetValue(productMeasuresInstance);
 
-                if (!string.IsNullOrEmpty(measureName))
+                if (p != null)
                 {
-                    if (!ProductMeasures.ContainsKey(measureName))
+                    ProductMeasureModel? productMeasure = (ProductMeasureModel)p;
+
+                    var measure = new ProductMeasure
                     {
-                        Guid id = Guids[currentGuidIndex];
+                        Id = Guids[currentGuidIndex],
+                        Name = productMeasure.Name
+                    };
 
-                        modelBuilder.Entity<ProductMeasure>().HasData(
-                            new ProductMeasure { Id = id, Name = measureName }
-                        );
-                        Console.WriteLine(id);
+                    modelBuilder.Entity<ProductMeasure>().HasData(measure);
 
-                        ProductMeasures.Add(measureName, id);
-
-                        currentGuidIndex++;
-                    }
+                    currentGuidIndex++;
                 }
             }
         }
@@ -138,11 +121,10 @@ namespace GrocifyApp.DAL
                         {
                             Id = Guids[currentGuidIndex],
                             Name = product.Name,
-                            ProductMeasureId = ProductMeasures[product.Measure],
+                            ProductMeasureId = ProductMeasures[product.Measure], //remove dictionary
                             ProductSectionId = ProductSections[product.Section]
                         }
                     );
-                    Console.WriteLine(Guids[currentGuidIndex]);
 
                     currentGuidIndex++;
                 }
