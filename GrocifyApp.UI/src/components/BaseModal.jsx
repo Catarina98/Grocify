@@ -8,8 +8,13 @@ import styles from './BaseModal.module.scss';
 //Consts
 import { ButtonConsts, ModalConsts } from '../consts/ENConsts';
 
-const BaseModal = ({ isOpen, onClose, children }) => {
+const BaseModal = ({ isOpen, onClose, children, buttonConfirm }) => {
     const toggleModal = () => {
+        onClose(!isOpen);
+    };
+
+    const confirmModal = () => {
+        buttonConfirm();
         onClose(!isOpen);
     };
 
@@ -35,7 +40,7 @@ const BaseModal = ({ isOpen, onClose, children }) => {
                         {ButtonConsts.Cancel}
                     </button>
 
-                    <button className="primary-button btn--m">
+                    <button className="primary-button btn--m" onClick={confirmModal}>
                         {ButtonConsts.Update}
                     </button>
                 </div>
@@ -48,6 +53,7 @@ BaseModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     children: PropTypes.node,
+    buttonConfirm: PropTypes.func.isRequired,
 };
 
 export default BaseModal;

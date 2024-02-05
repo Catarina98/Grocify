@@ -34,6 +34,7 @@
 .contentList {
     display: flex;
     flex-direction: column;
+    gap: 4px;
 
     .listRow {
         border-bottom: 1px solid $color--n300;

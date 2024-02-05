@@ -24,6 +24,7 @@ function Settings(props) {
     const token = localStorage.getItem('token');
     const [searchInput, setSearchInput] = useState('');
     const [shoppingListData, setShoppingListData] = useState(null);
+    const [defaultShoppingList, setDefaultShoppingList] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();    
 
@@ -70,6 +71,7 @@ function Settings(props) {
             if (response.ok) {
                 const fetchedData = await response.json();
                 setShoppingListData(fetchedData);
+                setDefaultShoppingList(fetchedData.find(item => item.defaultList));
             } else {
                 const errorData = await response.json();
                 console.log(errorData.errors[0]);
@@ -78,32 +80,31 @@ function Settings(props) {
             console.log(GenericConsts.Error);
         }
     };
+    
+    const updateDefaultShoppingList = async () => {
+        try {
+            if (token == undefined) {
+                return;
+            }
 
-    //create endpoint to change the default list
-    //const updateDefaultShoppingList = async (shoppingList) => {
-    //    try {
-    //        if (token == undefined) {
-    //            return;
-    //        }
+            const response = await fetch(ApiEndpoints.DefaultShoppingList_Endpoint(defaultShoppingList.id), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
 
-    //        const response = await fetch(ApiEndpoints.ShoppingList_Endpoint, {
-    //            method: 'PUT',
-    //            headers: {
-    //                'Content-Type': 'application/json',
-    //                'Authorization': `Bearer ${token}`,
-    //            },
-    //        });
-
-    //        if (response.ok) {
-    //            console.log("updated");
-    //        } else {
-    //            const errorData = await response.json();
-    //            console.log(errorData.errors[0]);
-    //        }
-    //    } catch (error) {
-    //        console.log(GenericConsts.Error);
-    //    }
-    //};
+            if (response.ok) {
+                console.log("updated");
+            } else {
+                const errorData = await response.json();
+                console.log(errorData.errors[0]);
+            }
+        } catch (error) {
+            console.log(GenericConsts.Error);
+        }
+    };
 
     const sendDataToParent = () => {                
         updateUserDarkMode();
@@ -139,7 +140,7 @@ function Settings(props) {
                         <span className="slider"></span>
                     </label>
                 ) : (
-                    <div className="icon--w16 cursor-pointer">
+                    <div className="icon cursor-pointer">
                         <ReactSVG className={"react-svg " + settingItem.color} src={settingItem.icon == null ? ChevronIcon : settingItem.icon} />
                     </div>
                 )}
@@ -202,11 +203,12 @@ function Settings(props) {
                     </div>
                 </div>
 
-                <BaseModal isOpen={isModalOpen} onClose={closeModal}>
+                <BaseModal isOpen={isModalOpen} onClose={closeModal} buttonConfirm={updateDefaultShoppingList}>
                     <div className={styles.contentList}>
                         {shoppingListData != null && shoppingListData.length > 0 ? (
                             shoppingListData.map((shoppingList) => (
-                                <div key={shoppingList.id} className={`${styles.listRow} ${shoppingList.defaultList ? styles.default : ''}`}>{shoppingList.name}</div>
+                                <div key={shoppingList.id} onClick={() => setDefaultShoppingList(shoppingList)}
+                                    className={`cursor-pointer + ${styles.listRow} ${shoppingList.id == defaultShoppingList.id ? styles.default : ''}`}>{shoppingList.name}</div>
                             ))
                         ) : (
                             <div>No shopping list data available</div> //todo later (empty state)
