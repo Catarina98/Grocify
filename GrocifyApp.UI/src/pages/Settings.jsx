@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 //Internal components
 import Layout from '../components/Layout/Layout';
 import CustomInput from '../components/CustomInput';
+import BaseModal from '../components/BaseModal';
 
 //Assets & Css
 import SearchIcon from '../assets/search-ic.svg';
@@ -19,49 +20,10 @@ import { PlaceholderConsts, SettingsConsts, GenericConsts } from '../consts/ENCo
 import AppRoutes from '../consts/AppRoutes';
 import ApiEndpoints from '../consts/ApiEndpoints';
 
-function Settings(props) {
-    const settingsItems = [
-        {
-            tableName: SettingsConsts.Products,
-            items: [
-                { title: SettingsConsts.Products },
-                { title: SettingsConsts.ProductSections },
-                { title: SettingsConsts.ProductMeasures },
-            ]
-        },
-        {
-            tableName: SettingsConsts.DefaultLists,
-            items: [
-                { title: SettingsConsts.Inventory },
-                { title: SettingsConsts.ShoppingList },
-            ]
-        },
-        {
-            tableName: SettingsConsts.MealPlan,
-            items: [
-                { title: SettingsConsts.MealPlan },
-                { title: SettingsConsts.Meals },
-            ]
-        },
-        {
-            tableName: SettingsConsts.Appearance,
-            items: [
-                {
-                    title: SettingsConsts.DarkMode
-                }
-            ]
-        },
-        {
-            tableName: SettingsConsts.Account,
-            items: [
-                { title: SettingsConsts.Logout, icon: LogoutIcon, link: AppRoutes.Logout },
-                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'color-r300' },
-            ]
-        }
-    ];
-
+function Settings(props) {  
     const token = localStorage.getItem('token');
     const [searchInput, setSearchInput] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();    
 
     const updateUserDarkMode = async () => {
@@ -96,6 +58,14 @@ function Settings(props) {
     };
 
     let isDarkMode = props.isDarkMode;
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
         
     const renderTableRowContent = (tableTitle, settingItem, darkMode) => {
         const handleLinkClick = (link) => {
@@ -123,6 +93,46 @@ function Settings(props) {
         );
     }
 
+    const settingsItems = [
+        {
+            tableName: SettingsConsts.Products,
+            items: [
+                { title: SettingsConsts.Products },
+                { title: SettingsConsts.ProductSections },
+                { title: SettingsConsts.ProductMeasures },
+            ]
+        },
+        {
+            tableName: SettingsConsts.DefaultLists,
+            items: [
+                { title: SettingsConsts.Inventory },
+                { title: SettingsConsts.ShoppingList, link: openModal },
+            ]
+        },
+        {
+            tableName: SettingsConsts.MealPlan,
+            items: [
+                { title: SettingsConsts.MealPlan },
+                { title: SettingsConsts.Meals },
+            ]
+        },
+        {
+            tableName: SettingsConsts.Appearance,
+            items: [
+                {
+                    title: SettingsConsts.DarkMode
+                }
+            ]
+        },
+        {
+            tableName: SettingsConsts.Account,
+            items: [
+                { title: SettingsConsts.Logout, icon: LogoutIcon, link: AppRoutes.Logout },
+                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'color-r300' },
+            ]
+        }
+    ];
+
     return (
         <Layout>
             <div className="container-settings">
@@ -137,6 +147,8 @@ function Settings(props) {
                             onChange={(e) => setSearchInput(e.target.value)} />
                     </div>
                 </div>
+
+                <BaseModal isOpen={isModalOpen} onClose={closeModal} />
 
                 <div className={styles.containerCards}>
                     {settingsItems.map(settingTable => (

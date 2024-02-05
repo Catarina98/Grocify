@@ -29,3 +29,28 @@
         fill: $color--n300;
     }
 }
+
+.icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        fill: $color--n500;
+    }
+
+    .react-svg.color-r300 svg {
+        fill: $color--r300;
+    }
+
+    .react-svg.color-n300 svg {
+        fill: $color--n300;
+    }
+
+    &--w32 {
+        width: 32px;
+        height: 32px;
+    }
+}
