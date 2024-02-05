@@ -32,8 +32,10 @@ const NavbarConsts = {
 
 const ButtonConsts = {
     Proceed: "Proceed",
-    Back: "Back"
-}
+    Back: "Back",
+    Cancel: "Cancel",
+    Update: "Update"
+};
 
 const AuthConsts = {
     SignIn: "Sign in",
@@ -57,7 +59,11 @@ const PassRulesConsts = {
     PassUpperLower: "Must contain both uppercase and lowercase letters",
     PassSpecialCharacters: "Must contain at least one number or special character",
     PasswordMatch: "Passwords must match",
-}
+};
+
+const ModalConsts = {
+    DefaultShoppingList: "Change default shopping list",
+};
 
 export {
     GenericConsts,
@@ -66,5 +72,6 @@ export {
     NavbarConsts,   
     ButtonConsts,
     AuthConsts,
-    PassRulesConsts
+    PassRulesConsts,
+    ModalConsts
 };

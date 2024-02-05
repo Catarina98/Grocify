@@ -23,6 +23,7 @@ import ApiEndpoints from '../consts/ApiEndpoints';
 function Settings(props) {  
     const token = localStorage.getItem('token');
     const [searchInput, setSearchInput] = useState('');
+    const [shoppingListData, setShoppingListData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();    
 
@@ -52,6 +53,58 @@ function Settings(props) {
         }
     };
 
+    const getShoppingList = async () => {
+        try {
+            if (token == undefined) {
+                return;
+            }
+
+            const response = await fetch(ApiEndpoints.ShoppingList_Endpoint, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const fetchedData = await response.json();
+                setShoppingListData(fetchedData);
+            } else {
+                const errorData = await response.json();
+                console.log(errorData.errors[0]);
+            }
+        } catch (error) {
+            console.log(GenericConsts.Error);
+        }
+    };
+
+    //create endpoint to change the default list
+    //const updateDefaultShoppingList = async (shoppingList) => {
+    //    try {
+    //        if (token == undefined) {
+    //            return;
+    //        }
+
+    //        const response = await fetch(ApiEndpoints.ShoppingList_Endpoint, {
+    //            method: 'PUT',
+    //            headers: {
+    //                'Content-Type': 'application/json',
+    //                'Authorization': `Bearer ${token}`,
+    //            },
+    //        });
+
+    //        if (response.ok) {
+    //            console.log("updated");
+    //        } else {
+    //            const errorData = await response.json();
+    //            console.log(errorData.errors[0]);
+    //        }
+    //    } catch (error) {
+    //        console.log(GenericConsts.Error);
+    //    }
+    //};
+
     const sendDataToParent = () => {                
         updateUserDarkMode();
         props.onDarkModeChange(!props.isDarkMode);
@@ -61,6 +114,7 @@ function Settings(props) {
 
     const openModal = () => {
         setIsModalOpen(true);
+        getShoppingList();
     };
 
     const closeModal = () => {
@@ -148,7 +202,17 @@ function Settings(props) {
                     </div>
                 </div>
 
-                <BaseModal isOpen={isModalOpen} onClose={closeModal} />
+                <BaseModal isOpen={isModalOpen} onClose={closeModal}>
+                    <div className={styles.contentList}>
+                        {shoppingListData != null && shoppingListData.length > 0 ? (
+                            shoppingListData.map((shoppingList) => (
+                                <div key={shoppingList.id} className={`${styles.listRow} ${shoppingList.defaultList ? styles.default : ''}`}>{shoppingList.name}</div>
+                            ))
+                        ) : (
+                            <div>No shopping list data available</div> //todo later (empty state)
+                        )}
+                    </div>
+                </BaseModal>
 
                 <div className={styles.containerCards}>
                     {settingsItems.map(settingTable => (
