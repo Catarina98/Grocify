@@ -97,7 +97,6 @@ using (var scope = app.Services.CreateScope())
 {
     var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<GrocifyAppContext>>();
     using var context = factory.CreateDbContext();
-    //context.Database.EnsureCreated();
 
     if (context.Database.IsSqlServer())
     {
