@@ -49,7 +49,7 @@ namespace GrocifyApp.API.Controllers
         /// </summary>
         /// <response code="201">Default shoppingList changed successfully.</response>
         /// <response code="400">Unable to changed default shoppingList due to validation error.</response>
-        [HttpPut("{id}/default")]
+        [HttpPut("{id}/setdefault")]
         public async Task<ActionResult> ChangeDefaultShoppingList(Guid id)
         {
             var getShoppingList = await _shoppingListService.Get(id);
@@ -61,19 +61,7 @@ namespace GrocifyApp.API.Controllers
 
             var getDefaultShoppingList = await _shoppingListService.GetDefaultShoppingList();
 
-            if (getDefaultShoppingList == null)
-            {
-                return NotFound(new { error = GenericConsts.Exceptions.EntityDoesNotExist });
-            }
-
-            getShoppingList.DefaultList = true;
-
-            getDefaultShoppingList.DefaultList = false;
-
-            //updateMultiple?
-            await _shoppingListService.Update(getDefaultShoppingList);
-
-            await _shoppingListService.Update(getShoppingList);
+            await _shoppingListService.ChangeDefaultShoppingList(getDefaultShoppingList!, getDefaultShoppingList!);
 
             return Ok();
         }

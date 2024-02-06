@@ -6,5 +6,6 @@ namespace GrocifyApp.BLL.Interfaces
     {
         Task AddProductsToShoppingList(Guid id, Dictionary<Guid, ShoppingListProduct> shoppingListProducts, CancellationTokenSource? token = null);
         Task<ShoppingList?> GetDefaultShoppingList();
+        Task ChangeDefaultShoppingList(ShoppingList newDefault, ShoppingList actualDefault);
     }
 }
