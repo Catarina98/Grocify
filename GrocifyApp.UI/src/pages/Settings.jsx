@@ -55,7 +55,7 @@ function Settings(props) {
             tableName: SettingsConsts.Account,
             items: [
                 { title: SettingsConsts.Logout, icon: LogoutIcon, link: AppRoutes.Logout },
-                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'color-r300' },
+                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'icon-color--r300' },
             ]
         }
     ];

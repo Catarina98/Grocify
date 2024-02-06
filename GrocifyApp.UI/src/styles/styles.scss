@@ -19,23 +19,3 @@ body {
     background-color: $color--n100;
     min-height: 100vh;
 }
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.react-svg.icon-color--p100 svg { //move to icons
-    fill: $color--p100;
-}
-
-.react-svg.icon-color--n600 svg { //move to icons
-    fill: $color--n600;
-}
-
-.react-svg.icon-color--n100 svg { //move to icons
-    fill: $color--n100;
-}
-
-.rotate-180 { //move to icons
-    transform: rotate(180deg);
-}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
+import { useNavigate } from 'react-router-dom';
 
 //Internal components
 import CustomInput from '../../components/CustomInput';
@@ -22,6 +23,7 @@ function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
     const token = localStorage.getItem('token');
+    const history = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -51,7 +53,7 @@ function ProductSections() {
     return (
         <Layout>
             <div className={styles.searchbarContainer + " searchbar-container"}> {/*missing border*/}
-                <div className="icon--w16 cursor-pointer rotate-180">
+                <div className="icon--w16 cursor-pointer rotate-180" onClick={() => history(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
 
@@ -71,7 +73,7 @@ function ProductSections() {
                     <div className={styles.sectionRow} key={section.id}>
                         <div className={styles.sectionInfo}>
                             <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon]} />
+                                <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon] ?? null} />
                             </div>
 
                             <div className="text">{section.name}</div>
