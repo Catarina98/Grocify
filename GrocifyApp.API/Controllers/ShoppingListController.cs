@@ -61,7 +61,7 @@ namespace GrocifyApp.API.Controllers
 
             var getDefaultShoppingList = await _shoppingListService.GetDefaultShoppingList();
 
-            await _shoppingListService.ChangeDefaultShoppingList(getDefaultShoppingList!, getDefaultShoppingList!);
+            await _shoppingListService.ChangeDefaultShoppingList(getShoppingList, getDefaultShoppingList!);
 
             return Ok();
         }

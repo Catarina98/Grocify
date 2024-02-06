@@ -19,10 +19,6 @@
     //card
     .card, .card-body-row {
         border-color: $color--n500 !important;
-
-        .icon--w16 > :not(.color-r300) svg {
-            fill: $color--n300;
-        }
     }
 
     //navbar
@@ -40,6 +36,38 @@
                     stroke: $color--n300;
                 }
             }
+        }
+    }
+
+    //modal
+    .modal-mobile, .modal-footer {
+        background-color: $color--n600;
+    }
+
+    .modal-footer {
+        border-color: $color--n500;
+    }
+
+    .modal-header {
+        border-color: $color--n500;
+    }
+
+    .list-row {
+        border-color: $color--n500;
+
+        &.default {
+            background-color: $color--n500;
+        }
+    }
+
+    //icons
+    .icon {
+        svg {
+            fill: $color--n300;
+        }
+
+        &.icon-color--r300 svg {
+            fill: $color--r300;
         }
     }
 }

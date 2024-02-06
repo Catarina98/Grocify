@@ -31,10 +31,6 @@ function Settings(props) {
     const updateUserDarkMode = async () => {
         
         try {
-            if (token == undefined) {
-                return;
-            }
-
             const response = await fetch(ApiEndpoints.UserDarkMode_Endpoint, {
                 method: 'PUT',
                 headers: {
@@ -56,10 +52,6 @@ function Settings(props) {
 
     const getShoppingList = async () => {
         try {
-            if (token == undefined) {
-                return;
-            }
-
             const response = await fetch(ApiEndpoints.ShoppingList_Endpoint, {
                 method: 'GET',
                 headers: {
@@ -140,8 +132,8 @@ function Settings(props) {
                         <span className="slider"></span>
                     </label>
                 ) : (
-                    <div className="icon cursor-pointer">
-                        <ReactSVG className={"react-svg " + settingItem.color} src={settingItem.icon == null ? ChevronIcon : settingItem.icon} />
+                        <div className={settingItem.color + " icon cursor-pointer"}>
+                        <ReactSVG className="react-svg" src={settingItem.icon == null ? ChevronIcon : settingItem.icon} />
                     </div>
                 )}
             </div>
@@ -183,7 +175,7 @@ function Settings(props) {
             tableName: SettingsConsts.Account,
             items: [
                 { title: SettingsConsts.Logout, icon: LogoutIcon, link: AppRoutes.Logout },
-                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'color-r300' },
+                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'icon-color--r300' },
             ]
         }
     ];
@@ -208,7 +200,7 @@ function Settings(props) {
                         {shoppingListData != null && shoppingListData.length > 0 ? (
                             shoppingListData.map((shoppingList) => (
                                 <div key={shoppingList.id} onClick={() => setDefaultShoppingList(shoppingList)}
-                                    className={`cursor-pointer + ${styles.listRow} ${shoppingList.id == defaultShoppingList.id ? styles.default : ''}`}>{shoppingList.name}</div>
+                                    className={`cursor-pointer text list-row + ${styles.listRow} ${shoppingList.id == defaultShoppingList.id ? styles.default + " default" : ''}`}>{shoppingList.name}</div>
                             ))
                         ) : (
                             <div>No shopping list data available</div> //todo later (empty state)

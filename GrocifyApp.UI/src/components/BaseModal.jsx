@@ -24,8 +24,8 @@ const BaseModal = ({ isOpen, onClose, children, buttonConfirm }) => {
                 <div className={styles.modalBackdrop} onClick={toggleModal}>
                 </div>
             )}
-            <div className={`${styles.modalMobile} ${isOpen ? styles.open : ''}`}>
-                <div className={styles.modalHeader}>
+            <div className={`${styles.modalMobile + " modal-mobile"} ${isOpen ? styles.open : ''}`}>
+                <div className={styles.modalHeader + " modal-header"}>
                     <div className="title title--s weight--m">{ModalConsts.DefaultShoppingList}</div>
 
                     <div className="icon icon--w32 cursor-pointer" onClick={toggleModal}>
@@ -35,7 +35,7 @@ const BaseModal = ({ isOpen, onClose, children, buttonConfirm }) => {
                 
                 <div className={styles.modalContent}>{children}</div>
 
-                <div className={styles.modalFooter}>
+                <div className={styles.modalFooter + " modal-footer"}>
                     <button className="secondary-button btn--m" onClick={toggleModal}>
                         {ButtonConsts.Cancel}
                     </button>
