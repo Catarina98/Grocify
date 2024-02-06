@@ -342,7 +342,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "home.svg",
+                            Icon = "Home",
                             Name = "Home"
                         },
                         new
@@ -351,7 +351,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "fishmonger.svg",
+                            Icon = "Fishmonger",
                             Name = "Fishmonger"
                         },
                         new
@@ -360,7 +360,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "meat.svg",
+                            Icon = "Meat",
                             Name = "Meat"
                         },
                         new
@@ -369,7 +369,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "sweet.svg",
+                            Icon = "Sweetgrocery",
                             Name = "Sweet Grocery"
                         },
                         new
@@ -378,7 +378,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "salty.svg",
+                            Icon = "Saltygrocery",
                             Name = "Salty Grocery"
                         },
                         new
@@ -387,7 +387,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "frozenfood.svg",
+                            Icon = "FrozenFood",
                             Name = "Frozen food"
                         },
                         new
@@ -396,7 +396,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "personalcare.svg",
+                            Icon = "PersonalCare",
                             Name = "Personal Care & Health"
                         },
                         new
@@ -405,7 +405,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "bakery.svg",
+                            Icon = "Bakery",
                             Name = "Bakery"
                         },
                         new
@@ -414,7 +414,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "dairy.svg",
+                            Icon = "Dairy",
                             Name = "Dairy"
                         },
                         new
@@ -423,7 +423,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "fruits.svg",
+                            Icon = "FruitsVegetables",
                             Name = "Fruits and Vegetables"
                         },
                         new
@@ -432,7 +432,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "drinks.svg",
+                            Icon = "Drinks",
                             Name = "Drinks"
                         },
                         new
@@ -441,7 +441,7 @@ namespace GrocifyApp.DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Icon = "takeaway.svg",
+                            Icon = "Takeaway",
                             Name = "Takeaway"
                         });
                 });
