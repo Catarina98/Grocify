@@ -52,7 +52,7 @@ function ProductSections() {
 
     return (
         <Layout>
-            <div className={styles.searchbarContainer + " searchbar-container"}> {/*missing border*/}
+            <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}> {/*missing border*/}
                 <div className="icon--w16 cursor-pointer rotate-180" onClick={() => navigate(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
