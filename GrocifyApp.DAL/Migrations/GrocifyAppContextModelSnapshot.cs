@@ -64,7 +64,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Directions", (string)null);
+                    b.ToTable("Directions");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.House", b =>
@@ -76,7 +76,7 @@ namespace GrocifyApp.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.ToTable("Houses", (string)null);
+                    b.ToTable("Houses");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Inventory", b =>
@@ -96,7 +96,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Inventories", (string)null);
+                    b.ToTable("Inventories");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.InventoryProduct", b =>
@@ -116,7 +116,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("InventoryProducts", (string)null);
+                    b.ToTable("InventoryProducts");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Meal", b =>
@@ -136,7 +136,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Meals", (string)null);
+                    b.ToTable("Meals");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Plan", b =>
@@ -155,7 +155,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Plans", (string)null);
+                    b.ToTable("Plans");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.PlanMealRecipe", b =>
@@ -180,7 +180,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("PlanMealRecipes", (string)null);
+                    b.ToTable("PlanMealRecipes");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Product", b =>
@@ -211,7 +211,49 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bd50a227-79db-4a7e-899c-1b0581c5931a"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Apple",
+                            ProductMeasureId = new Guid("d4c7a8c3-729e-4b3d-9247-562a3d8c1e25"),
+                            ProductSectionId = new Guid("a2f1755b-28b0-4b4a-86a1-9fb8c10b4880")
+                        },
+                        new
+                        {
+                            Id = new Guid("452349cd-7cf8-4e52-916f-3fda94eab413"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Sugar",
+                            ProductMeasureId = new Guid("a58e4f12-3f85-4b1f-9b41-6f5967b3d4b1"),
+                            ProductSectionId = new Guid("e0d9c3c1-0d4b-4e08-9dd5-3f2a8059b865")
+                        },
+                        new
+                        {
+                            Id = new Guid("37bf06c3-d670-4ea7-9d54-815157f653f7"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Milk",
+                            ProductMeasureId = new Guid("c9b2a381-23f1-4d9a-9e2a-8a0bca31c3a2"),
+                            ProductSectionId = new Guid("18b5b01e-3a0f-4c69-96bf-2ea6c453c865")
+                        },
+                        new
+                        {
+                            Id = new Guid("9fca6f9a-ae7b-4cb4-bba0-2d2b4f16e5c2"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Egg",
+                            ProductMeasureId = new Guid("c9b2a381-23f1-4d9a-9e2a-8a0bca31c3a2"),
+                            ProductSectionId = new Guid("18b5b01e-3a0f-4c69-96bf-2ea6c453c865")
+                        });
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ProductMeasure", b =>
@@ -232,7 +274,41 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("ProductMeasures", (string)null);
+                    b.ToTable("ProductMeasures");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a58e4f12-3f85-4b1f-9b41-6f5967b3d4b1"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "g"
+                        },
+                        new
+                        {
+                            Id = new Guid("c9b2a381-23f1-4d9a-9e2a-8a0bca31c3a2"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "ml"
+                        },
+                        new
+                        {
+                            Id = new Guid("d4c7a8c3-729e-4b3d-9247-562a3d8c1e25"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "unit"
+                        },
+                        new
+                        {
+                            Id = new Guid("f0e88aa9-6d2f-4c88-a3fc-7543647d7ae1"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "tbsp"
+                        });
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ProductSection", b =>
@@ -257,7 +333,117 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("ProductSections", (string)null);
+                    b.ToTable("ProductSections");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("5dcbf088-2b6e-4d03-845d-8564f2d6b19c"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "home.svg",
+                            Name = "Home"
+                        },
+                        new
+                        {
+                            Id = new Guid("38f03e29-8b04-4df3-a58b-7a8b5e912a95"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "fishmonger.svg",
+                            Name = "Fishmonger"
+                        },
+                        new
+                        {
+                            Id = new Guid("72c6b5e5-9c7a-4345-9eb5-6f3a402ef4fd"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "meat.svg",
+                            Name = "Meat"
+                        },
+                        new
+                        {
+                            Id = new Guid("e0d9c3c1-0d4b-4e08-9dd5-3f2a8059b865"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "sweet.svg",
+                            Name = "Sweet Grocery"
+                        },
+                        new
+                        {
+                            Id = new Guid("9a7cf8d1-8b57-4a37-90d5-06e5b4a33a1f"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "salty.svg",
+                            Name = "Salty Grocery"
+                        },
+                        new
+                        {
+                            Id = new Guid("ef3705e2-38e6-4ec8-8a06-8e3802d10ec5"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "frozenfood.svg",
+                            Name = "Frozen food"
+                        },
+                        new
+                        {
+                            Id = new Guid("76a0cbe1-6d25-40c9-9cf5-430cd7e69d6d"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "personalcare.svg",
+                            Name = "Personal Care & Health"
+                        },
+                        new
+                        {
+                            Id = new Guid("c44b52e7-19a2-4e4a-8dcb-bbe9cc5bb2e5"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "bakery.svg",
+                            Name = "Bakery"
+                        },
+                        new
+                        {
+                            Id = new Guid("18b5b01e-3a0f-4c69-96bf-2ea6c453c865"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "dairy.svg",
+                            Name = "Dairy"
+                        },
+                        new
+                        {
+                            Id = new Guid("a2f1755b-28b0-4b4a-86a1-9fb8c10b4880"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "fruits.svg",
+                            Name = "Fruits and Vegetables"
+                        },
+                        new
+                        {
+                            Id = new Guid("8f3a95f1-6b96-43b7-9f62-d3f3db4f0bf1"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "drinks.svg",
+                            Name = "Drinks"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1e9b4cb-946e-4ec5-927d-576c92b5b8f9"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Icon = "takeaway.svg",
+                            Name = "Takeaway"
+                        });
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Recipe", b =>
@@ -286,7 +472,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.RecipeProduct", b =>
@@ -313,7 +499,7 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeProducts", (string)null);
+                    b.ToTable("RecipeProducts");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ShoppingList", b =>
@@ -341,7 +527,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("ShoppingLists", (string)null);
+                    b.ToTable("ShoppingLists");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.ShoppingListProduct", b =>
@@ -363,7 +549,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[ShoppingListId] IS NOT NULL AND [ProductId] IS NOT NULL");
 
-                    b.ToTable("ShoppingListProducts", (string)null);
+                    b.ToTable("ShoppingListProducts");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.User", b =>
@@ -397,7 +583,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.UserHouse", b =>
@@ -423,7 +609,7 @@ namespace GrocifyApp.DAL.Migrations
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL AND [HouseId] IS NOT NULL");
 
-                    b.ToTable("UserHouses", (string)null);
+                    b.ToTable("UserHouses");
                 });
 
             modelBuilder.Entity("GrocifyApp.DAL.Models.Direction", b =>
