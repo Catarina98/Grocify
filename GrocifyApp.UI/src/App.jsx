@@ -8,6 +8,7 @@ import RegisterForm from './components/Register';
 import WeatherForecast from './pages/WeatherForecast';
 import Settings from './pages/Settings';
 import Logout from './components/Logout';
+import ProductSections from './pages/Products/ProductSections';
 
 //Assets & Css
 import './styles/styles.scss';
@@ -44,10 +45,13 @@ function App() {
 
                     {/* Define the private routes */}
                     <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
+
                     <Route path={AppRoutes.Settings} element={
                         <PrivateRoute>
                             <Settings onDarkModeChange={handleDarkModeChange} isDarkMode={isDarkMode} />
                         </PrivateRoute>} />
+
+                    <Route path={AppRoutes.ProductSections} element={<PrivateRoute><ProductSections /></PrivateRoute>} />
                 </Routes>
             </Router>
         </div>

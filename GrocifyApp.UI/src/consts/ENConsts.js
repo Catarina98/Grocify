@@ -2,6 +2,14 @@ const GenericConsts = {
     Error: "Something went wrong"
 };
 
+const ButtonConsts = {
+    NewSection: "New section",
+    Proceed: "Proceed",
+    Back: "Back",
+    Cancel: "Cancel",
+    Update: "Update"
+};
+
 const SettingsConsts = {
     Products: "Products",
     ProductSections: "Product sections",
@@ -19,7 +27,8 @@ const SettingsConsts = {
 };
 
 const PlaceholderConsts = {
-    Search: "Search..."
+    Search: "Search...",
+    SearchSections: "Search for product sections..."
 };
 
 const NavbarConsts = {
@@ -28,13 +37,6 @@ const NavbarConsts = {
     Recipes: "Recipes",
     Plan: "Plan",
     Settings: "Settings"
-};
-
-const ButtonConsts = {
-    Proceed: "Proceed",
-    Back: "Back",
-    Cancel: "Cancel",
-    Update: "Update"
 };
 
 const AuthConsts = {

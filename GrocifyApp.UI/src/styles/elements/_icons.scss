@@ -16,17 +16,31 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.react-svg {
     svg {
         fill: $color--n500;
     }
 
-    .react-svg.color-r300 svg {
-        fill: $color--r300;
+    &.icon-color--p100 svg {
+        fill: $color--p100;
     }
 
-    .react-svg.color-n300 svg {
-        fill: $color--n300;
+    &.icon-color--n600 svg {
+        fill: $color--n600;
+    }
+
+    &.icon-color--n100 svg {
+        fill: $color--n100;
+    }
+
+    &.icon-color--r300 svg {
+        fill: $color--r300;
     }
 }
 
@@ -36,18 +50,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    svg {
-        fill: $color--n500;
-    }
-
-    .react-svg.color-r300 svg {
-        fill: $color--r300;
-    }
-
-    .react-svg.color-n300 svg {
-        fill: $color--n300;
-    }
 
     &--w32 {
         width: 32px;

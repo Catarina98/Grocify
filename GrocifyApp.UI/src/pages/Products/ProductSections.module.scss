@@ -1,0 +1,40 @@
+@import "../../styles/core/variables/_colors-var.scss";
+
+.searchbarContainer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 24px;
+
+    .searchbarHolder {
+        width: 100%;
+    }
+}
+
+.containerSections {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 72px;
+
+    .sectionRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .sectionInfo {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            .iconW24 {
+                padding: 4px;
+
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+    }
+}
