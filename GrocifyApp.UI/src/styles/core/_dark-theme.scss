@@ -2,7 +2,6 @@
 
 .container-page.dark {
     background-color: $color--n600;
-
     //text
     .text, .title {
         color: $color--n200;
@@ -15,16 +14,10 @@
             color: $color--n300;
         }
     }
-
     //card
     .card, .card-body-row {
         border-color: $color--n500 !important;
-
-        .icon--w16 > :not(.color-r300) svg {
-            fill: $color--n300;
-        }
     }
-
     //navbar
     .bottom-navbar {
         background-color: $color--n700;
@@ -41,5 +34,48 @@
                 }
             }
         }
+    }
+    //modal
+    .modal-mobile {
+        background-color: $color--n600;
+    }
+
+    .modal-footer {
+        background-color: $color--n700;
+        border-color: $color--n700;
+    }
+
+    .modal-header {
+        border-color: $color--n500;
+    }
+
+    .list-row {
+        border-color: $color--n500;
+
+        &.default {
+            background-color: $color--n500;
+        }
+    }
+
+    //icons
+    .icon {
+        svg {
+            fill: $color--n300;
+        }
+
+        .icon-color--r300 svg {
+            fill: $color--r300;
+        }
+    }
+
+    //buttons
+    .primary-button:disabled {
+        background-color: $color--n600;
+        color: $color--n500;
+    }
+
+    //searchbar
+    .searchbar-border {
+        background-color: $color--n600;
     }
 }

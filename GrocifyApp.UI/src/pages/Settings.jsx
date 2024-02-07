@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 //Internal components
 import Layout from '../components/Layout/Layout';
 import CustomInput from '../components/CustomInput';
+import DefaultList from '../components/DefaultList';
 
 //Assets & Css
 import SearchIcon from '../assets/search-ic.svg';
@@ -19,7 +20,12 @@ import { PlaceholderConsts, SettingsConsts, GenericConsts } from '../consts/ENCo
 import AppRoutes from '../consts/AppRoutes';
 import ApiEndpoints from '../consts/ApiEndpoints';
 
-function Settings(props) {
+function Settings(props) {  
+    const token = localStorage.getItem('token');
+    const [searchInput, setSearchInput] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();   
+
     const settingsItems = [
         {
             tableName: SettingsConsts.Products,
@@ -33,7 +39,7 @@ function Settings(props) {
             tableName: SettingsConsts.DefaultLists,
             items: [
                 { title: SettingsConsts.Inventory },
-                { title: SettingsConsts.ShoppingList },
+                { title: SettingsConsts.ShoppingList, link: () => openModal() },
             ]
         },
         {
@@ -60,16 +66,9 @@ function Settings(props) {
         }
     ];
 
-    const token = localStorage.getItem('token');
-    const [searchInput, setSearchInput] = useState('');
-    const navigate = useNavigate();  
-
-    const updateUserDarkMode = async () => {        
+    const updateUserDarkMode = async () => {
+        
         try {
-            if (token == undefined) {
-                return;
-            }
-
             const response = await fetch(ApiEndpoints.UserDarkMode_Endpoint, {
                 method: 'PUT',
                 headers: {
@@ -94,6 +93,14 @@ function Settings(props) {
         props.onDarkModeChange(!props.isDarkMode);
     };
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     let isDarkMode = props.isDarkMode;
         
     const renderTableRowContent = (tableTitle, settingItem, darkMode) => {
@@ -114,8 +121,8 @@ function Settings(props) {
                         <span className="slider"></span>
                     </label>
                 ) : (
-                    <div className="icon--w16 cursor-pointer">
-                        <ReactSVG className={"react-svg " + settingItem.color} src={settingItem.icon == null ? ChevronIcon : settingItem.icon} />
+                        <div className="icon cursor-pointer">
+                            <ReactSVG className={"react-svg " + settingItem.color} src={settingItem.icon == null ? ChevronIcon : settingItem.icon} />
                     </div>
                 )}
             </div>
@@ -137,6 +144,8 @@ function Settings(props) {
                     </div>
                 </div>
 
+                {isModalOpen && <DefaultList isOpen={isModalOpen} onClose={closeModal} />}
+               
                 <div className={styles.containerCards}>
                     {settingsItems.map(settingTable => (
                         <div className={styles.card + " card"} key={settingTable.tableName}>
