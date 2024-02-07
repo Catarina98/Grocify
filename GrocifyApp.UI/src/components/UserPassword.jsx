@@ -63,28 +63,28 @@ const UserPasswordForm = (props) => {
 
             <div id="errorslist" className={`${isValidInitial ? '' : 'invalid-initial'} errors-list`}>
                 <div id="length" className={`${styles.errorRow} ${validationResults.length ? styles.valid : ""}`}>
-                    <div className={styles.iconMT4 + " icon--w16"}>
+                    <div className={styles.iconMT4 + " icon"}>
                         <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
                     <span className="text text-left">{PassRulesConsts.PasswordLong}</span>
                 </div>
 
                 <div id="lowerupper" className={`${styles.errorRow} ${validationResults.lowerUpper ? styles.valid : ""}`}>
-                    <div className={styles.iconMT4 + " icon--w16"}>
+                    <div className={styles.iconMT4 + " icon"}>
                         <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
                     <span className="text text-left">{PassRulesConsts.PassUpperLower}</span>
                 </div>
 
                 <div id="numbercharacter" className={`${styles.errorRow} ${validationResults.numberCharacter ? styles.valid : ""}`}>
-                    <div className={styles.iconMT4 + " icon--w16"}>
+                    <div className={styles.iconMT4 + " icon"}>
                         <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
                     <span className="text text-left">{PassRulesConsts.PassSpecialCharacters}</span>
                 </div>
 
                 <div id="passwordmatch" className={`${styles.errorRow} ${validationResults.passwordMatch ? styles.valid : ""}`}>
-                    <div className={styles.iconMT4 + " icon--w16"}>
+                    <div className={styles.iconMT4 + " icon"}>
                         <ReactSVG className="react-svg" src={CheckmarkIcon} />
                     </div>
                     <span className="text text-left">{PassRulesConsts.PasswordMatch}</span>

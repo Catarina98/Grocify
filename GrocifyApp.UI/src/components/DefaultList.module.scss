@@ -1,0 +1,18 @@
+@import "../styles/core/variables/_colors-var.scss";
+
+.contentList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .listRow {
+        border-bottom: 1px solid $color--n300;
+        padding: 8px 6px;
+
+        &.default {
+            background-color: $color--n300;
+            border-radius: 4px;
+            border: none;
+        }
+    }
+}

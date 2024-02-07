@@ -4,7 +4,6 @@ using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Data.Consts.ENConsts;
-using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +40,19 @@ namespace GrocifyApp.API.Controllers
             }
 
             await _shoppingListService.AddProductsToShoppingList(id, shoppingListProducts);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Change default shoppingList
+        /// </summary>
+        /// <response code="201">Default shoppingList changed successfully.</response>
+        /// <response code="400">Unable to changed default shoppingList due to validation error.</response>
+        [HttpPut("{id}/setdefault")]
+        public async Task<ActionResult> ChangeDefaultShoppingList(Guid id)
+        {
+            await _shoppingListService.ChangeDefaultShoppingList(id);
 
             return Ok();
         }

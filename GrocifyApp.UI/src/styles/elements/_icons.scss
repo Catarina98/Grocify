@@ -10,14 +10,6 @@
     }
 }
 
-.icon--w16 {
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .cursor-pointer {
     cursor: pointer;
 }
@@ -42,9 +34,18 @@
     &.icon-color--r300 svg {
         fill: $color--r300;
     }
+}
 
-    &.color-n300 svg {
-        fill: $color--n300;
+.icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--w32 {
+        width: 32px;
+        height: 32px;
     }
 }
 
