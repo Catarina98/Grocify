@@ -70,4 +70,10 @@
             fill: $color--r300;
         }
     }
+
+    //buttons
+    .primary-button:disabled {
+        background-color: $color--n700;
+        color: $color--n600;
+    }
 }

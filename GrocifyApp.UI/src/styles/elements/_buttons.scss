@@ -342,6 +342,7 @@ button:focus {
 
   &--m {
     @include FontSize($text-size--s);
+    height: 36px;
   }
 
   &--l {

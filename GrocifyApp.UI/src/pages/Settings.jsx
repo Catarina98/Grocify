@@ -57,7 +57,6 @@ function Settings(props) {
 
     const openModal = () => {
         setIsModalOpen(true);
-        //getShoppingList();
     };
 
     const closeModal = () => {
@@ -145,8 +144,8 @@ function Settings(props) {
                     </div>
                 </div>
 
-                <DefaultList isOpen={isModalOpen} onClose={closeModal}/>
-
+                {isModalOpen && <DefaultList isOpen={isModalOpen} onClose={closeModal} />}
+               
                 <div className={styles.containerCards}>
                     {settingsItems.map(settingTable => (
                         <div className={styles.card + " card"} key={settingTable.tableName}>
