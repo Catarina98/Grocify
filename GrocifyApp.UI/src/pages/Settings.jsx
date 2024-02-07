@@ -24,15 +24,7 @@ function Settings(props) {
     const token = localStorage.getItem('token');
     const [searchInput, setSearchInput] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate();    
-
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const navigate = useNavigate();   
 
     const settingsItems = [
         {
@@ -47,7 +39,7 @@ function Settings(props) {
             tableName: SettingsConsts.DefaultLists,
             items: [
                 { title: SettingsConsts.Inventory },
-                { title: SettingsConsts.ShoppingList, link: openModal },
+                { title: SettingsConsts.ShoppingList, link: () => openModal() },
             ]
         },
         {
@@ -99,6 +91,14 @@ function Settings(props) {
     const sendDataToParent = () => {                
         updateUserDarkMode();
         props.onDarkModeChange(!props.isDarkMode);
+    };
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     let isDarkMode = props.isDarkMode;

@@ -46,7 +46,7 @@ const DefaultList = ({ isOpen, onClose }) => {
                         setOldDefaultShoppingList(defaultList);
                     }
 
-                    setButtonDisabled(defaultList.id != oldDefaultShoppingList?.id);
+                    setButtonDisabled(oldDefaultShoppingList ? true : defaultList.id != oldDefaultShoppingList?.id);
                 } else {
                     const errorData = await response.json();
                     console.log(errorData.errors[0]);
@@ -57,7 +57,7 @@ const DefaultList = ({ isOpen, onClose }) => {
         };
 
         fetchData();
-    }, []);
+    }, [oldDefaultShoppingList, token]);
 
     const updateDefaultShoppingList = async () => {
         try {
@@ -101,8 +101,7 @@ const DefaultList = ({ isOpen, onClose }) => {
 
 DefaultList.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    modalBody: PropTypes.node,
+    onClose: PropTypes.func.isRequired
 };
 
 export default DefaultList;
