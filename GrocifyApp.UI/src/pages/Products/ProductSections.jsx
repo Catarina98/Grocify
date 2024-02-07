@@ -48,7 +48,7 @@ function ProductSections() {
         };
 
         fetchData();
-    });
+    }, []);
 
     return (
         <Layout>
