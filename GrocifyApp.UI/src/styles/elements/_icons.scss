@@ -10,14 +10,6 @@
     }
 }
 
-.icon--w16 {
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .cursor-pointer {
     cursor: pointer;
 }
@@ -55,4 +47,8 @@
         width: 32px;
         height: 32px;
     }
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
 }
