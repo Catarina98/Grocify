@@ -25,7 +25,7 @@ function Settings(props) {
             tableName: SettingsConsts.Products,
             items: [
                 { title: SettingsConsts.Products },
-                { title: SettingsConsts.ProductSections },
+                { title: SettingsConsts.ProductSections, link: AppRoutes.ProductSections },
                 { title: SettingsConsts.ProductMeasures },
             ]
         },
@@ -55,17 +55,16 @@ function Settings(props) {
             tableName: SettingsConsts.Account,
             items: [
                 { title: SettingsConsts.Logout, icon: LogoutIcon, link: AppRoutes.Logout },
-                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'color-r300' },
+                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'icon-color--r300' },
             ]
         }
     ];
 
     const token = localStorage.getItem('token');
     const [searchInput, setSearchInput] = useState('');
-    const navigate = useNavigate();    
+    const navigate = useNavigate();  
 
-    const updateUserDarkMode = async () => {
-        
+    const updateUserDarkMode = async () => {        
         try {
             if (token == undefined) {
                 return;
@@ -107,7 +106,7 @@ function Settings(props) {
         };
 
         return (
-            <div className={styles.cardBodyRow + " card-body-row"} key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
+            <div className={styles.cardBodyRow + " card-body-row cursor-pointer"} key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
                 <div className="text">{settingItem.title}</div>
                 {tableTitle === SettingsConsts.Appearance ? (
                     <label className="toggle cursor-pointer">
@@ -148,8 +147,6 @@ function Settings(props) {
                                     renderTableRowContent(settingTable.tableName, settingItem, isDarkMode)
                                 ))}
                             </div>
-
-
                         </div>
                     ))}
                 </div>

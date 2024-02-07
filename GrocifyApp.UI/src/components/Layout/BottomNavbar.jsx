@@ -46,14 +46,17 @@ const BottomNavbar = () => {
     const location = useLocation();
 
     useEffect(() => {
-        const currentNavItem = menuItems.find(item => item.route === location.pathname);
+        const reversedMenuItems = menuItems.slice().reverse();
+
+        const currentNavItem = reversedMenuItems.find(item => item.route && location.pathname && location.pathname.includes(item.route));
+
         if (currentNavItem) {
             setActiveNavItem(currentNavItem.text);
         }
     }, [location.pathname]);
 
     const handleNavItemClick = (route) => {
-        setActiveNavItem(menuItems.find(item => item.route === route).text);
+        setActiveNavItem(menuItems.find(item => item.route === route)?.text || NavbarConsts.Lists);
         navigate(route);
     };
 

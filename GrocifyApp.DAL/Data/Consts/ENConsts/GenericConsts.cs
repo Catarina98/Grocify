@@ -34,18 +34,18 @@
 
         public class ProductSections
         {
-            public ProductSectionModel Home = new(new Guid("5dcbf088-2b6e-4d03-845d-8564f2d6b19c"), ProductSectionNames.Home, IconsConsts.ProductSectionIcons.Home);
-            public ProductSectionModel Fishmonger = new(new Guid("38f03e29-8b04-4df3-a58b-7a8b5e912a95"), ProductSectionNames.Fishmonger, IconsConsts.ProductSectionIcons.Fishmonger);
-            public ProductSectionModel Meat = new(new Guid("72c6b5e5-9c7a-4345-9eb5-6f3a402ef4fd"), ProductSectionNames.Meat, IconsConsts.ProductSectionIcons.Meat);
-            public ProductSectionModel Sweetgrocery = new(new Guid("e0d9c3c1-0d4b-4e08-9dd5-3f2a8059b865"), ProductSectionNames.Sweetgrocery, IconsConsts.ProductSectionIcons.Sweetgrocery);
-            public ProductSectionModel Saltygrocery = new(new Guid("9a7cf8d1-8b57-4a37-90d5-06e5b4a33a1f"), ProductSectionNames.Saltygrocery, IconsConsts.ProductSectionIcons.Saltygrocery);
-            public ProductSectionModel FrozenFood = new(new Guid("ef3705e2-38e6-4ec8-8a06-8e3802d10ec5"), ProductSectionNames.FrozenFood, IconsConsts.ProductSectionIcons.FrozenFood);
-            public ProductSectionModel PersonalCare = new(new Guid("76a0cbe1-6d25-40c9-9cf5-430cd7e69d6d"), ProductSectionNames.PersonalCare, IconsConsts.ProductSectionIcons.PersonalCare);
-            public ProductSectionModel Bakery = new(new Guid("c44b52e7-19a2-4e4a-8dcb-bbe9cc5bb2e5"), ProductSectionNames.Bakery, IconsConsts.ProductSectionIcons.Bakery);
-            public ProductSectionModel Dairy = new(new Guid("18b5b01e-3a0f-4c69-96bf-2ea6c453c865"), ProductSectionNames.Dairy, IconsConsts.ProductSectionIcons.Dairy);
-            public ProductSectionModel FruitsVegetables = new(new Guid("a2f1755b-28b0-4b4a-86a1-9fb8c10b4880"), ProductSectionNames.FruitsVegetables, IconsConsts.ProductSectionIcons.FruitsVegetables);
-            public ProductSectionModel Drinks = new(new Guid("8f3a95f1-6b96-43b7-9f62-d3f3db4f0bf1"), ProductSectionNames.Drinks, IconsConsts.ProductSectionIcons.Drinks);
-            public ProductSectionModel Takeaway = new(new Guid("a1e9b4cb-946e-4ec5-927d-576c92b5b8f9"), ProductSectionNames.Takeaway, IconsConsts.ProductSectionIcons.Takeaway);
+            public ProductSectionModel Home = new(new Guid("5dcbf088-2b6e-4d03-845d-8564f2d6b19c"), ProductSectionNames.Home, nameof(ProductSectionNames.Home));
+            public ProductSectionModel Fishmonger = new(new Guid("38f03e29-8b04-4df3-a58b-7a8b5e912a95"), ProductSectionNames.Fishmonger, nameof(ProductSectionNames.Fishmonger));
+            public ProductSectionModel Meat = new(new Guid("72c6b5e5-9c7a-4345-9eb5-6f3a402ef4fd"), ProductSectionNames.Meat, nameof(ProductSectionNames.Meat));
+            public ProductSectionModel Sweetgrocery = new(new Guid("e0d9c3c1-0d4b-4e08-9dd5-3f2a8059b865"), ProductSectionNames.Sweetgrocery, nameof(ProductSectionNames.Sweetgrocery));
+            public ProductSectionModel Saltygrocery = new(new Guid("9a7cf8d1-8b57-4a37-90d5-06e5b4a33a1f"), ProductSectionNames.Saltygrocery, nameof(ProductSectionNames.Saltygrocery));
+            public ProductSectionModel FrozenFood = new(new Guid("ef3705e2-38e6-4ec8-8a06-8e3802d10ec5"), ProductSectionNames.FrozenFood, nameof(ProductSectionNames.FrozenFood));
+            public ProductSectionModel PersonalCare = new(new Guid("76a0cbe1-6d25-40c9-9cf5-430cd7e69d6d"), ProductSectionNames.PersonalCare, nameof(ProductSectionNames.PersonalCare));
+            public ProductSectionModel Bakery = new(new Guid("c44b52e7-19a2-4e4a-8dcb-bbe9cc5bb2e5"), ProductSectionNames.Bakery, nameof(ProductSectionNames.Bakery));
+            public ProductSectionModel Dairy = new(new Guid("18b5b01e-3a0f-4c69-96bf-2ea6c453c865"), ProductSectionNames.Dairy, nameof(ProductSectionNames.Dairy));
+            public ProductSectionModel FruitsVegetables = new(new Guid("a2f1755b-28b0-4b4a-86a1-9fb8c10b4880"), ProductSectionNames.FruitsVegetables, nameof(ProductSectionNames.FruitsVegetables));
+            public ProductSectionModel Drinks = new(new Guid("8f3a95f1-6b96-43b7-9f62-d3f3db4f0bf1"), ProductSectionNames.Drinks, nameof(ProductSectionNames.Drinks));
+            public ProductSectionModel Takeaway = new(new Guid("a1e9b4cb-946e-4ec5-927d-576c92b5b8f9"), ProductSectionNames.Takeaway, nameof(ProductSectionNames.Takeaway));
         }
 
         public class ProductMeasureNames

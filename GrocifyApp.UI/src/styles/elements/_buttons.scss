@@ -15,6 +15,10 @@ button:focus {
     box-shadow: none!important;
 }
 
+button .react-svg svg {
+    margin-right: 8px;
+}
+
 .tab-buttons {
     display: flex;
     flex-direction: row;
@@ -108,7 +112,6 @@ button:focus {
         @include ErrorButton();
     }
 }
-
 
 .primary-button {
     @include Button($text-size--xs, $font-weight--500);
@@ -470,4 +473,11 @@ button:focus {
 
 .dropdown-button > svg {
     width: 16px;
+}
+
+.btn-float {
+    position: absolute !important;
+    bottom: 72px;
+    left: 50%;
+    transform: translateX(-50%);
 }

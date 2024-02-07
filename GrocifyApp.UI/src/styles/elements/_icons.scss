@@ -16,16 +16,38 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.react-svg {
     svg {
         fill: $color--n500;
     }
 
-    .react-svg.color-r300 svg {
+    &.icon-color--p100 svg {
+        fill: $color--p100;
+    }
+
+    &.icon-color--n600 svg {
+        fill: $color--n600;
+    }
+
+    &.icon-color--n100 svg {
+        fill: $color--n100;
+    }
+
+    &.icon-color--r300 svg {
         fill: $color--r300;
     }
 
-    .react-svg.color-n300 svg {
+    &.color-n300 svg {
         fill: $color--n300;
     }
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
 }

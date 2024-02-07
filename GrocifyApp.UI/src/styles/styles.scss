@@ -1,4 +1,5 @@
 @import "core/variables/_geral-var.scss";
+@import "core/_dark-theme.scss";
 @import "elements/_buttons.scss";
 @import "elements/_inputs.scss";
 @import "elements/_texts.scss";
@@ -7,7 +8,6 @@
 @import "elements/_controls.scss";
 @import "components/_searchbar.scss";
 @import "components/_navbar.scss";
-@import "core/_dark-theme.scss";
 
 body {
     font-family: $text-font-family;
@@ -18,8 +18,4 @@ body {
     padding: $body-padding $body-padding 0;
     background-color: $color--n100;
     min-height: 100vh;
-}
-
-.cursor-pointer {
-    cursor: pointer;
 }
