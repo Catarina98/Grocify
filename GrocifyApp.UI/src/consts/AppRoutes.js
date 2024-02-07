@@ -3,8 +3,8 @@ const AppRoutes = {
     Logout: '/logout',
     Register: '/register',
     Settings: '/settings',
-    ProductSections: '/product-sections',
-    ProductMeaures: '/product-measures',
+    ProductSections: '/settings/product-sections'
+    ProductMeaures: '/settings/product-measures',
 };
 
 export default AppRoutes;

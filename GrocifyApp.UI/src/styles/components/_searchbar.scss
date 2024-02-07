@@ -24,6 +24,17 @@
     }
 }
 
+.searchbar-border {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 32px);
+    background-color: $color--n100;
+    padding: 16px;
+    border-bottom: 1px solid $color--n300;
+    margin-bottom: 0;
+}
+
 .items-list {
     padding: 8px 8px 0;
     display: flex;

@@ -55,7 +55,7 @@ function Settings(props) {
             tableName: SettingsConsts.Account,
             items: [
                 { title: SettingsConsts.Logout, icon: LogoutIcon, link: AppRoutes.Logout },
-                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'color-r300' },
+                { title: SettingsConsts.ClearData, icon: TrashIcon, color: 'icon-color--r300' },
             ]
         }
     ];
@@ -106,7 +106,7 @@ function Settings(props) {
         };
 
         return (
-            <div className={styles.cardBodyRow + " card-body-row"} key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
+            <div className={styles.cardBodyRow + " card-body-row cursor-pointer"} key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
                 <div className="text">{settingItem.title}</div>
                 {tableTitle === SettingsConsts.Appearance ? (
                     <label className="toggle cursor-pointer">
