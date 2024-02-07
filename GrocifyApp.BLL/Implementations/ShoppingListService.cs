@@ -1,5 +1,7 @@
 ﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
+using DALConsts = GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.BLL.Interfaces;
+using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
@@ -66,15 +68,20 @@ namespace GrocifyApp.BLL.Implementations
             return await repository.GetSingleWhere(b => b.DefaultList == true);
         }
 
-        public async Task ChangeDefaultShoppingList(ShoppingList newDefault, ShoppingList actualDefault)
+        public async Task ChangeDefaultShoppingList(Guid newDefaultId)
         {
-            newDefault.DefaultList = true;
+            var getShoppingList = await repository.Get(newDefaultId);
 
-            actualDefault.DefaultList = false;
+            if (getShoppingList == null)
+            {
+                throw new NotFoundException(DALConsts.GenericConsts.Exceptions.NotFoundException);
+            }
 
-            await repository.Update(actualDefault);
+            getShoppingList.DefaultList = true;
 
-            await repository.Update(newDefault);
+            await repository.UpdateMultipleLeafType(x => x.HouseId == HouseId && x.DefaultList == true, x => x.SetProperty(y => y.DefaultList, false));
+
+            await repository.Update(getShoppingList);
         }
     }
 }

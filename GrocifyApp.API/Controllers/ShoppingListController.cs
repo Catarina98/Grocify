@@ -52,16 +52,7 @@ namespace GrocifyApp.API.Controllers
         [HttpPut("{id}/setdefault")]
         public async Task<ActionResult> ChangeDefaultShoppingList(Guid id)
         {
-            var getShoppingList = await _shoppingListService.Get(id);
-
-            if (getShoppingList == null)
-            {
-                return NotFound(new { error = GenericConsts.Exceptions.EntityDoesNotExist });
-            }
-
-            var getDefaultShoppingList = await _shoppingListService.GetDefaultShoppingList();
-
-            await _shoppingListService.ChangeDefaultShoppingList(getShoppingList, getDefaultShoppingList!);
+            await _shoppingListService.ChangeDefaultShoppingList(id);
 
             return Ok();
         }
