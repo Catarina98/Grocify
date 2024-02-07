@@ -11,7 +11,7 @@ import styles from './DefaultList.module.scss';
 import { GenericConsts } from '../consts/ENConsts';
 import ApiEndpoints from '../consts/ApiEndpoints';
 
-const DefaultList = ({ isOpen, onClose }) => {
+const DefaultList = ({ isOpen, onClose, child }) => {
     const token = localStorage.getItem('token');
     const [shoppingListData, setShoppingListData] = useState(null);
     const [defaultShoppingList, setDefaultShoppingList] = useState(null);
@@ -85,7 +85,7 @@ const DefaultList = ({ isOpen, onClose }) => {
     };
 
     return (
-        <BaseModal isOpen={isOpen} onClose={onClose} buttonConfirm={updateDefaultShoppingList} buttonDisabled={isButtonDisabled}>
+        <BaseModal isOpen={isOpen} onClose={onClose} buttonConfirm={updateDefaultShoppingList} buttonDisabled={isButtonDisabled} modalBody={
             <div className={styles.contentList}>
                 {shoppingListData != null && shoppingListData.length > 0 ? (
                     shoppingListData.map((shoppingList) => (
@@ -95,15 +95,14 @@ const DefaultList = ({ isOpen, onClose }) => {
                 ) : (
                     <div>No shopping list data available</div> //todo later (empty state)
                 )}
-            </div>
-        </BaseModal>
+            </div> } />
     );
 };
 
 DefaultList.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    children: PropTypes.node,
+    modalBody: PropTypes.node,
 };
 
 export default DefaultList;

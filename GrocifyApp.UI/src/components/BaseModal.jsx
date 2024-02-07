@@ -8,7 +8,7 @@ import styles from './BaseModal.module.scss';
 //Consts
 import { ButtonConsts, ModalConsts } from '../consts/ENConsts';
 
-const BaseModal = ({ isOpen, onClose, children, buttonConfirm, buttonDisabled }) => {
+const BaseModal = ({ isOpen, onClose, modalBody, buttonConfirm, buttonDisabled }) => {
     const toggleModal = () => {
         onClose(!isOpen);
     };
@@ -33,7 +33,7 @@ const BaseModal = ({ isOpen, onClose, children, buttonConfirm, buttonDisabled })
                     </div>
                 </div>
                 
-                <div className={styles.modalContent}>{children}</div>
+                <div className={styles.modalContent}>{modalBody}</div>
 
                 <div className={styles.modalFooter + " modal-footer"}>
                     <button className="secondary-button btn--m" onClick={toggleModal}>
@@ -52,7 +52,7 @@ const BaseModal = ({ isOpen, onClose, children, buttonConfirm, buttonDisabled })
 BaseModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    children: PropTypes.node,
+    modalBody: PropTypes.node,
     buttonConfirm: PropTypes.func.isRequired,
     buttonDisabled: PropTypes.bool,
 };
