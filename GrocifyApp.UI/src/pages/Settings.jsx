@@ -26,35 +26,6 @@ function Settings(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();    
 
-    const updateUserDarkMode = async () => {
-        
-        try {
-            const response = await fetch(ApiEndpoints.UserDarkMode_Endpoint, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            
-            if (response.ok) {
-                console.log("updated");
-            } else {
-                const errorData = await response.json();
-                console.log(errorData.errors[0]);
-            }
-        } catch (error) {
-            console.log(GenericConsts.Error);
-        }
-    };
-
-    const sendDataToParent = () => {                
-        updateUserDarkMode();
-        props.onDarkModeChange(!props.isDarkMode);
-    };
-
-    let isDarkMode = props.isDarkMode;
-
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -62,32 +33,6 @@ function Settings(props) {
     const closeModal = () => {
         setIsModalOpen(false);
     };
-        
-    const renderTableRowContent = (tableTitle, settingItem, darkMode) => {
-        const handleLinkClick = (link) => {
-            if (typeof link === 'function') {
-                link(); // Execute the function
-            } else if (typeof link === 'string') {
-                navigate(link);
-            }
-        };
-
-        return (
-            <div className={styles.cardBodyRow + " card-body-row"} key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
-                <div className="text">{settingItem.title}</div>
-                {tableTitle === SettingsConsts.Appearance ? (
-                    <label className="toggle cursor-pointer">
-                        <input type="checkbox" checked={darkMode} onChange={() => sendDataToParent()} />
-                        <span className="slider"></span>
-                    </label>
-                ) : (
-                    <div className={settingItem.color + " icon cursor-pointer"}>
-                        <ReactSVG className="react-svg" src={settingItem.icon == null ? ChevronIcon : settingItem.icon} />
-                    </div>
-                )}
-            </div>
-        );
-    }
 
     const settingsItems = [
         {
@@ -128,6 +73,61 @@ function Settings(props) {
             ]
         }
     ];
+
+    const updateUserDarkMode = async () => {
+        
+        try {
+            const response = await fetch(ApiEndpoints.UserDarkMode_Endpoint, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            
+            if (response.ok) {
+                console.log("updated");
+            } else {
+                const errorData = await response.json();
+                console.log(errorData.errors[0]);
+            }
+        } catch (error) {
+            console.log(GenericConsts.Error);
+        }
+    };
+
+    const sendDataToParent = () => {                
+        updateUserDarkMode();
+        props.onDarkModeChange(!props.isDarkMode);
+    };
+
+    let isDarkMode = props.isDarkMode;
+        
+    const renderTableRowContent = (tableTitle, settingItem, darkMode) => {
+        const handleLinkClick = (link) => {
+            if (typeof link === 'function') {
+                link(); // Execute the function
+            } else if (typeof link === 'string') {
+                navigate(link);
+            }
+        };
+
+        return (
+            <div className={styles.cardBodyRow + " card-body-row"} key={settingItem.title} onClick={settingItem.link ? () => handleLinkClick(settingItem.link) : undefined}>
+                <div className="text">{settingItem.title}</div>
+                {tableTitle === SettingsConsts.Appearance ? (
+                    <label className="toggle cursor-pointer">
+                        <input type="checkbox" checked={darkMode} onChange={() => sendDataToParent()} />
+                        <span className="slider"></span>
+                    </label>
+                ) : (
+                    <div className={settingItem.color + " icon cursor-pointer"}>
+                        <ReactSVG className="react-svg" src={settingItem.icon == null ? ChevronIcon : settingItem.icon} />
+                    </div>
+                )}
+            </div>
+        );
+    }
 
     return (
         <Layout>
