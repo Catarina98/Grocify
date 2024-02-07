@@ -81,7 +81,7 @@ function Settings(props) {
                         <span className="slider"></span>
                     </label>
                 ) : (
-                        <div className={settingItem.color + " icon cursor-pointer"}>
+                    <div className={settingItem.color + " icon cursor-pointer"}>
                         <ReactSVG className="react-svg" src={settingItem.icon == null ? ChevronIcon : settingItem.icon} />
                     </div>
                 )}

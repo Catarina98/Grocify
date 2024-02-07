@@ -63,11 +63,6 @@ namespace GrocifyApp.BLL.Implementations
             await _shoppingListProductRepository.SaveChangesAsync(token);
         }
 
-        public async Task<ShoppingList?> GetDefaultShoppingList()
-        {
-            return await repository.GetSingleWhere(b => b.DefaultList == true);
-        }
-
         public async Task ChangeDefaultShoppingList(Guid newDefaultId)
         {
             var getShoppingList = await repository.Get(newDefaultId);

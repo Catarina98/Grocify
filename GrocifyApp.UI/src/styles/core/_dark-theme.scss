@@ -2,7 +2,6 @@
 
 .container-page.dark {
     background-color: $color--n600;
-
     //text
     .text, .title {
         color: $color--n200;
@@ -15,12 +14,10 @@
             color: $color--n300;
         }
     }
-
     //card
     .card, .card-body-row {
         border-color: $color--n500 !important;
     }
-
     //navbar
     .bottom-navbar {
         background-color: $color--n700;
@@ -38,14 +35,14 @@
             }
         }
     }
-
     //modal
-    .modal-mobile, .modal-footer {
+    .modal-mobile {
         background-color: $color--n600;
     }
 
     .modal-footer {
-        border-color: $color--n500;
+        background-color: $color--n700;
+        border-color: $color--n700;
     }
 
     .modal-header {
@@ -59,7 +56,6 @@
             background-color: $color--n500;
         }
     }
-
     //icons
     .icon {
         svg {
@@ -70,10 +66,9 @@
             fill: $color--r300;
         }
     }
-
     //buttons
     .primary-button:disabled {
-        background-color: $color--n700;
-        color: $color--n600;
+        background-color: $color--n600;
+        color: $color--n500;
     }
 }
