@@ -6,7 +6,7 @@
     background-color: $color--n200;
     padding: 12px;
     border-radius: 4px;
-    width: 100%;
+    /*width: 100%;*/
 
     .input-box {
         margin: 0;
@@ -33,6 +33,10 @@
     padding: 16px;
     border-bottom: 1px solid $color--n300;
     margin-bottom: 0;
+
+    .searchbar-holder {
+        width: 100%;
+    }
 }
 
 .items-list {

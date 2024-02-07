@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 //Internal components
 import Searchbar from '../../components/Searchbar';
@@ -10,29 +10,26 @@ import Layout from '../../components/Layout/Layout';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
-//import './ProductSections.jsx.scss';
+import styles from './ProductSections.module.scss';
 
 //Consts
-import { PlaceholderConsts } from '../../consts/ENConsts';
-import { ButtonConsts } from '../../consts/ENConsts';
-//import { ApiEndpoints } from '../../consts/ApiEndpoints';
+import { PlaceholderConsts, ButtonConsts } from '../../consts/ENConsts';
+import ApiEndpoints from '../../consts/ApiEndpoints';
 
 function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
-    const [sections, setSections] = useState([]);
-    //const [loading, setLoading] = useState(true);
-    //const [error, setError] = useState(null);
-    //const [houseId, setHouseId] = useState('');
-    //const navigate = useNavigate();
-    const houseId = "70835d8c-dcc0-4d36-8172-08dc12c93d56";
+    const [measures, setMeasures] = useState([]);
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`api/ProductMeasure/${houseId}/products`, {
+                const response = await fetch(ApiEndpoints.ProductMeasures_Endpoint, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
                     },
                 });
 
@@ -40,39 +37,36 @@ function ProductMeasures() {
                     throw new Error(`Failed to fetch data: ${response.statusText}`);
                 }
 
-                // Parse the response body as JSON
                 const data = await response.json();
-                setSections(data);
+                setMeasures(data);
             } catch (error) {
-                /*setError(error);*/
-            } finally {
-                //setLoading(false);
+                console.log('');
             }
         };
 
         fetchData();
-    }, []); // The empty dependency array means this effect runs once, similar to componentDidMount
+    }, [token]);
 
     return (
         <Layout>
-            <div className="searchbar-container"> {/*missing border*/}
-                <div className="icon--w16 cursor-pointer rotate-180">
+            <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
+                <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
 
                 <Searchbar placeholder={PlaceholderConsts.SearchMeasures}
-                    label={PlaceholderConsts.SearchMeasures}
+                    label={PlaceholderConsts.Search}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
-            <div className="container-sections">
-                {sections.map(section => (
-                    <div className="section-row" key={section.id}>
+            <div className={styles.containerSections}>
+                {measures.map(section => (
+                    <div className={styles.sectionRow} key={section.id}>
                         <div className="text">{section.name}</div>
 
                         {section.houseId != null && (
-                            <div className="icon--w16 cursor-pointer">
+                            <div className="icon cursor-pointer">
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}
@@ -80,7 +74,7 @@ function ProductMeasures() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l">
+            <button className="primary-button btn--l btn-float">
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewMeasure}

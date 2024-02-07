@@ -74,7 +74,7 @@ function ProductSections() {
                         </div>
 
                         {section.houseId != null && (
-                            <div className="icon--w16 cursor-pointer">
+                            <div className="icon cursor-pointer">
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}
