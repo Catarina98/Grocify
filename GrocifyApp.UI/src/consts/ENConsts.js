@@ -7,7 +7,8 @@ const ButtonConsts = {
     Proceed: "Proceed",
     Back: "Back",
     Cancel: "Cancel",
-    Update: "Update"
+    Update: "Update",
+    NewMeasure: "New measure"
 };
 
 const SettingsConsts = {
@@ -28,7 +29,8 @@ const SettingsConsts = {
 
 const PlaceholderConsts = {
     Search: "Search...",
-    SearchSections: "Search for product sections..."
+    SearchSections: "Search for product sections...",
+    SearchMeasures: "Search for product measures..."
 };
 
 const NavbarConsts = {

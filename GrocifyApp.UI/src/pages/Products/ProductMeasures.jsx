@@ -10,24 +10,22 @@ import Layout from '../../components/Layout/Layout';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
+import styles from './ProductMeasures.module.scss';
 
 //Consts
-import { PlaceholderConsts } from '../../consts/ENConsts';
-import { ButtonConsts } from '../../consts/ENConsts';
-import IconsConsts from "../../consts/IconsConsts";
+import { PlaceholderConsts, ButtonConsts } from '../../consts/ENConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
-import styles from './ProductSections.module.scss';
 
-function ProductSections() {
+function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
-    const [sections, setSections] = useState([]);
+    const [measures, setMeasures] = useState([]);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(ApiEndpoints.ProductSections_Endpoint, {
+                const response = await fetch(ApiEndpoints.ProductMeasures_Endpoint, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -38,9 +36,9 @@ function ProductSections() {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch data: ${response.statusText}`);
                 }
-                                
+
                 const data = await response.json();
-                setSections(data);
+                setMeasures(data);
             } catch (error) {
                 console.log('');
             }
@@ -56,22 +54,16 @@ function ProductSections() {
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
 
-                <Searchbar placeholder={PlaceholderConsts.SearchSections}
+                <Searchbar placeholder={PlaceholderConsts.SearchMeasures}
                     label={PlaceholderConsts.Search}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
-            
-            <div className={styles.containerSections}>
-                {sections.map(section => (
-                    <div className={styles.sectionRow} key={section.id}>
-                        <div className={styles.sectionInfo}>
-                            <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon] ?? null} />
-                            </div>
 
-                            <div className="text">{section.name}</div>
-                        </div>
+            <div className={styles.containerSections}>
+                {measures.map(section => (
+                    <div className={styles.sectionRow} key={section.id}>
+                        <div className="text">{section.name}</div>
 
                         {section.houseId != null && (
                             <div className="icon cursor-pointer">
@@ -85,10 +77,10 @@ function ProductSections() {
             <button className="primary-button btn--l btn-float">
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
-                {ButtonConsts.NewSection}
+                {ButtonConsts.NewMeasure}
             </button>
         </Layout>
     );
 }
 
-export default ProductSections;
+export default ProductMeasures;
