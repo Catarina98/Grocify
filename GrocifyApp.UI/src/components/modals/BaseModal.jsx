@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import { ReactSVG } from 'react-svg';
 
 //Assets & Css
-import CrossIcon from '../assets/cross-ic.svg';
+import CrossIcon from '../../assets/cross-ic.svg';
 import styles from './BaseModal.module.scss';
 
 //Consts
-import { ButtonConsts, ModalConsts } from '../consts/ENConsts';
+import { ButtonConsts, ModalConsts } from '../../consts/ENConsts';
 
 const BaseModal = ({ isOpen, onClose, modalBody, onConfirm, isButtonDisabled }) => {
     const toggleModal = () => {

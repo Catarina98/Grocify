@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 //Internal components
-import BaseModal from '../components/BaseModal';
+import BaseModal from './BaseModal';
 
 //Assets & Css
 import styles from './DefaultList.module.scss';
 
 //Consts
-import { GenericConsts } from '../consts/ENConsts';
-import ApiEndpoints from '../consts/ApiEndpoints';
+import { GenericConsts } from '../../consts/ENConsts';
+import ApiEndpoints from '../../consts/ApiEndpoints';
 
 const DefaultList = ({ isOpen, onClose }) => {
     const token = localStorage.getItem('token');

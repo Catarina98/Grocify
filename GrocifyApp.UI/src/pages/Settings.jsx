@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 //Internal components
 import Layout from '../components/Layout/Layout';
 import CustomInput from '../components/CustomInput';
-import DefaultList from '../components/DefaultList';
+import DefaultList from '../components/modals/DefaultList';
 
 //Assets & Css
 import SearchIcon from '../assets/search-ic.svg';
