@@ -5,10 +5,6 @@
     align-items: center;
     gap: 4px;
     margin-bottom: 24px;
-
-    .searchbarHolder {
-        width: 100%;
-    }
 }
 
 .containerSections {
@@ -21,20 +17,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-
-        .sectionInfo {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-
-            .iconW24 {
-                padding: 4px;
-
-                svg {
-                    width: 24px;
-                    height: 24px;
-                }
-            }
-        }
+        padding: 6px 0;
+        border-bottom: 1px solid $color--n300;
     }
 }

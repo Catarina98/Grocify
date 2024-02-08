@@ -10,7 +10,7 @@ import Layout from '../../components/Layout/Layout';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
-import styles from './ProductSections.module.scss';
+import styles from './ProductMeasures.module.scss';
 
 //Consts
 import { PlaceholderConsts, ButtonConsts } from '../../consts/ENConsts';
