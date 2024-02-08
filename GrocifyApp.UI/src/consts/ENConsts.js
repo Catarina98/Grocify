@@ -7,7 +7,9 @@ const ButtonConsts = {
     Proceed: "Proceed",
     Back: "Back",
     Cancel: "Cancel",
-    Update: "Update"
+    Update: "Update",
+    Create: "Create",
+    Confirm: "Confirm"
 };
 
 const SettingsConsts = {
@@ -28,7 +30,13 @@ const SettingsConsts = {
 
 const PlaceholderConsts = {
     Search: "Search...",
-    SearchSections: "Search for product sections..."
+    SearchSections: "Search for product sections...",
+    AddSectionName: "Add section name",
+};
+
+const LabelConsts = {
+    ProductSectionName: "Product section name",
+    ProductSectionIcon: "Section icon",
 };
 
 const NavbarConsts = {
@@ -65,12 +73,14 @@ const PassRulesConsts = {
 
 const ModalConsts = {
     DefaultShoppingList: "Change default shopping list",
+    NewProductSection: "New product section",
 };
 
 export {
     GenericConsts,
     SettingsConsts,
     PlaceholderConsts,
+    LabelConsts,
     NavbarConsts,   
     ButtonConsts,
     AuthConsts,

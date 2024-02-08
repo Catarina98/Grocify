@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //Internal components
 import CustomInput from '../../components/CustomInput';
 import Layout from '../../components/Layout/Layout';
+import ProductSectionModal from '../../components/modals/ProductSectionModal';
 
 //Assets & Css
 import SearchIcon from '../../assets/search-ic.svg';
@@ -22,6 +23,7 @@ import styles from './ProductSections.module.scss';
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
@@ -50,6 +52,14 @@ function ProductSections() {
         fetchData();
     }, [token]);
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <Layout>
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
@@ -67,6 +77,8 @@ function ProductSections() {
                         onChange={(e) => setSearchInput(e.target.value)} />
                 </div>
             </div>
+
+            {isModalOpen && <ProductSectionModal isOpen={isModalOpen} onClose={closeModal} />}
 
             <div className={styles.containerSections}>
                 {sections.map(section => (
@@ -88,7 +100,7 @@ function ProductSections() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float">
+            <button className="primary-button btn--l btn-float" onClick={() => openModal() }>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewSection}

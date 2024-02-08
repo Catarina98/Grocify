@@ -8,7 +8,7 @@ import BaseModal from './BaseModal';
 import styles from './DefaultList.module.scss';
 
 //Consts
-import { GenericConsts } from '../../consts/ENConsts';
+import { GenericConsts, ButtonConsts, ModalConsts } from '../../consts/ENConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
 const DefaultList = ({ isOpen, onClose }) => {
@@ -85,7 +85,8 @@ const DefaultList = ({ isOpen, onClose }) => {
     };
 
     return (
-        <BaseModal isOpen={isOpen} onClose={onClose} onConfirm={updateDefaultShoppingList} isButtonDisabled={isButtonDisabled} modalBody={
+        <BaseModal isOpen={isOpen} onClose={onClose} onConfirm={updateDefaultShoppingList} isButtonDisabled={isButtonDisabled}
+            buttonText={ButtonConsts.Update} titleModal={ModalConsts.DefaultShoppingList} modalBody={
             <div className={styles.contentList}>
                 {shoppingListData != null && shoppingListData.length > 0 ? (
                     shoppingListData.map((shoppingList) => (

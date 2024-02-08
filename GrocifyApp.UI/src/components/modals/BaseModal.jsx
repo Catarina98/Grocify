@@ -6,9 +6,9 @@ import CrossIcon from '../../assets/cross-ic.svg';
 import styles from './BaseModal.module.scss';
 
 //Consts
-import { ButtonConsts, ModalConsts } from '../../consts/ENConsts';
+import { ButtonConsts } from '../../consts/ENConsts';
 
-const BaseModal = ({ isOpen, onClose, modalBody, onConfirm, isButtonDisabled }) => {
+const BaseModal = ({ isOpen, onClose, modalBody, onConfirm, isButtonDisabled, buttonText, titleModal, noFooter }) => {
     const toggleModal = () => {
         onClose(!isOpen);
     };
@@ -24,9 +24,9 @@ const BaseModal = ({ isOpen, onClose, modalBody, onConfirm, isButtonDisabled }) 
                 <div className={styles.modalBackdrop} onClick={toggleModal}>
                 </div>
             )}
-            <div className={`${styles.modalMobile + " modal-mobile"} ${isOpen ? styles.open : ''}`}>
+            <div className={`${styles.modalMobile + " modal-mobile"} ${isOpen ? styles.open : ''} ${noFooter ? styles.noFooter : ''}`}>
                 <div className={styles.modalHeader + " modal-header"}>
-                    <div className="title title--s weight--m">{ModalConsts.DefaultShoppingList}</div>
+                    <div className="title title--s weight--m">{titleModal}</div>
 
                     <div className="icon icon--w32 cursor-pointer" onClick={toggleModal}>
                         <ReactSVG className="react-svg" src={CrossIcon} />
@@ -35,15 +35,15 @@ const BaseModal = ({ isOpen, onClose, modalBody, onConfirm, isButtonDisabled }) 
                 
                 <div className={styles.modalContent}>{modalBody}</div>
 
-                <div className={styles.modalFooter + " modal-footer"}>
+                {!noFooter && <div className={styles.modalFooter + " modal-footer"}>
                     <button className="secondary-button btn--m" onClick={toggleModal}>
                         {ButtonConsts.Cancel}
                     </button>
 
                     <button className="primary-button btn--m" onClick={confirmModal} disabled={isButtonDisabled}>
-                        {ButtonConsts.Update}
+                        {buttonText != null && buttonText != "" ? buttonText : ButtonConsts.Confirm}
                     </button>
-                </div>
+                </div> }                
             </div>
         </div>
     );
@@ -55,6 +55,9 @@ BaseModal.propTypes = {
     modalBody: PropTypes.node,
     onConfirm: PropTypes.func.isRequired,
     isButtonDisabled: PropTypes.bool,
+    buttonText: PropTypes.string,
+    titleModal: PropTypes.string.isRequired,
+    noFooter: PropTypes.bool,
 };
 
 export default BaseModal;
