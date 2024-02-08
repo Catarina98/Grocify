@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //Internal components
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
+import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -19,33 +20,19 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
     const [measures, setMeasures] = useState([]);
-    const token = localStorage.getItem('token');
     const navigate = useNavigate();
+    const { makeRequest } = useApiRequest();
 
     useEffect(() => {
-        const fetchData = async () => {
+        (async () => {
             try {
-                const response = await fetch(ApiEndpoints.ProductMeasures_Endpoint, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch data: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                setMeasures(data);
+                const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
+                setMeasures(responseData);
             } catch (error) {
-                console.log('');
+                console.log(error);
             }
-        };
-
-        fetchData();
-    }, [token]);
+        })();
+    }, []);
 
     return (
         <Layout>

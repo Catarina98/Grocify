@@ -3,20 +3,20 @@ import PropTypes from 'prop-types';
 
 //Internal components
 import BaseModal from '../components/BaseModal';
+import useApiRequest from '../hooks/useApiRequests';
 
 //Assets & Css
 import styles from './DefaultList.module.scss';
 
 //Consts
-import { GenericConsts } from '../consts/ENConsts';
 import ApiEndpoints from '../consts/ApiEndpoints';
 
 const DefaultList = ({ isOpen, onClose }) => {
-    const token = localStorage.getItem('token');
     const [shoppingListData, setShoppingListData] = useState(null);
     const [defaultShoppingList, setDefaultShoppingList] = useState(null);
     const [oldDefaultShoppingList, setOldDefaultShoppingList] = useState(null);
     const [isButtonDisabled, setButtonDisabled] = useState(true);
+    const { makeRequest } = useApiRequest();
 
     const handleSetDefaultList = (shoppingList) => {
         setDefaultShoppingList(shoppingList);
@@ -26,61 +26,32 @@ const DefaultList = ({ isOpen, onClose }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(ApiEndpoints.ShoppingList_Endpoint, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
+                const responseData = await makeRequest(ApiEndpoints.ShoppingList_Endpoint, 'GET');
 
-                if (response.ok) {
-                    const fetchedData = await response.json();
-                    setShoppingListData(fetchedData);
+                setShoppingListData(responseData);
 
-                    const defaultList = fetchedData.find(item => item.defaultList);
+                const defaultList = responseData.find(item => item.defaultList);
 
-                    setDefaultShoppingList(defaultList);
+                setDefaultShoppingList(defaultList);
 
-                    if (oldDefaultShoppingList == null) {
-                        setOldDefaultShoppingList(defaultList);
-                    }
-
-                    setButtonDisabled(oldDefaultShoppingList ? true : defaultList.id != oldDefaultShoppingList?.id);
-                } else {
-                    const errorData = await response.json();
-                    console.log(errorData.errors[0]);
+                if (oldDefaultShoppingList == null) {
+                    setOldDefaultShoppingList(defaultList);
                 }
+
+                setButtonDisabled(oldDefaultShoppingList ? true : defaultList.id != oldDefaultShoppingList?.id);
             } catch (error) {
-                console.log(GenericConsts.Error);
+                console.log(error);
             }
         };
 
         fetchData();
-    }, [oldDefaultShoppingList, token]);
+    }, []);
 
     const updateDefaultShoppingList = async () => {
         try {
-            if (defaultShoppingList == null) {
-                return;
-            }
-
-            const response = await fetch(ApiEndpoints.DefaultShoppingList_Endpoint(defaultShoppingList.id), {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                console.log("updated");
-            } else {
-                const errorData = await response.json();
-                console.log(errorData.errors[0]);
-            }
+            await makeRequest(ApiEndpoints.DefaultShoppingList_Endpoint(defaultShoppingList.id), 'PUT');
         } catch (error) {
-            console.log(GenericConsts.Error);
+            console.log(error);
         }
     };
 

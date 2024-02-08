@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import Layout from '../components/Layout/Layout';
 import CustomInput from '../components/CustomInput';
 import DefaultList from '../components/DefaultList';
+import useApiRequest from '../hooks/useApiRequests';
 
 //Assets & Css
 import SearchIcon from '../assets/search-ic.svg';
@@ -16,15 +17,15 @@ import TrashIcon from '../assets/trash-ic.svg';
 import styles from './Settings.module.scss';
 
 //Consts
-import { PlaceholderConsts, SettingsConsts, GenericConsts } from '../consts/ENConsts';
+import { PlaceholderConsts, SettingsConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
 import ApiEndpoints from '../consts/ApiEndpoints';
 
 function Settings(props) {  
-    const token = localStorage.getItem('token');
     const [searchInput, setSearchInput] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const navigate = useNavigate();   
+    const navigate = useNavigate();
+    const { makeRequest } = useApiRequest();
 
     const settingsItems = [
         {
@@ -67,24 +68,10 @@ function Settings(props) {
     ];
 
     const updateUserDarkMode = async () => {
-        
         try {
-            const response = await fetch(ApiEndpoints.UserDarkMode_Endpoint, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            
-            if (response.ok) {
-                console.log("updated");
-            } else {
-                const errorData = await response.json();
-                console.log(errorData.errors[0]);
-            }
+            await makeRequest(ApiEndpoints.UserDarkMode_Endpoint, 'PUT');
         } catch (error) {
-            console.log(GenericConsts.Error);
+            console.log(error);
         }
     };
 

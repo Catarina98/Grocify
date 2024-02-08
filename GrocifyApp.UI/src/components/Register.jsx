@@ -5,6 +5,7 @@ import { ReactSVG } from 'react-svg';
 //Internal components
 import CustomInput from './CustomInput';
 import UserPassword from './UserPassword';
+import useApiRequest from '../hooks/useApiRequests';
 
 //Assets & Css
 import ReactLogo from '../assets/logo_with_text.svg';
@@ -14,7 +15,7 @@ import stylesAuth from './Auth.module.scss';
 import styles from './Register.module.scss';
 
 //Consts
-import { GenericConsts, AuthConsts, ButtonConsts } from '../consts/ENConsts';
+import { AuthConsts, ButtonConsts } from '../consts/ENConsts';
 import AppRoutes from '../consts/AppRoutes';
 import { useEffect } from 'react';
 
@@ -28,6 +29,7 @@ const RegisterForm = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isButtonDisabled, setButtonDisabled] = useState(true);
     const [firstTime, setFirstTime] = useState(true);
+    const { makeRequest, isLoading } = useApiRequest();
 
     useEffect(() => {
         if (firstTime) {
@@ -58,41 +60,19 @@ const RegisterForm = () => {
         setConfirmPassword(confirmPassword);
     };
 
-    const handleRegister = async (event) => {
+    const handleRegister = async () => {
         const data = { name, email, password, confirmPassword };
 
-        const registerButton = event.target;
-
-        registerButton.classList.add("loading");
-
         try {
-            const response = await fetch(ApiEndpoints.Register_Endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+            const parsedT = await makeRequest(ApiEndpoints.Register_Endpoint, 'POST', data);
 
-            if (response.ok) {
-                const t = await response.text();
-                const parsedT = JSON.parse(t);
-                localStorage.setItem('token', parsedT.token);
+            localStorage.setItem('token', parsedT.token);
 
-                console.log('Register successful');
-                navigate('/');
-            } else {
-                const errorData = await response.json();
-                console.error('Register failed', errorData.errors[0]);
+            console.log('Register successful');
 
-                setErrorMessage(errorData.errors[0]);
-            }
+            navigate('/');
         } catch (error) {
-            console.error('Error during register', error);
-
-            setErrorMessage(GenericConsts.Error);
-        } finally {
-            registerButton.classList.remove("loading");
+            setErrorMessage(error.message);
         }
     };
 
@@ -134,7 +114,7 @@ const RegisterForm = () => {
                             <span>{ButtonConsts.Back}</span>
                         </button>
 
-                        <button type="button" disabled={isButtonDisabled} className={stylesAuth.btn + " primary-button btn--xl"} onClick={handleRegister}>
+                        <button type="button" disabled={isButtonDisabled} className={`${stylesAuth.btn} primary-button btn--xl ${isLoading ? 'loading' : ''}`} onClick={handleRegister}>
                             <span>{AuthConsts.SignUp}</span>
                             <div className="loading-button white"></div>
                         </button>
