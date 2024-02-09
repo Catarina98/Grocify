@@ -8,9 +8,11 @@ import CustomInputApp from '../../components/CustomInputApp';
 
 //Assets & Css
 import ChevronIcon from '../../assets/chevron-ic.svg';
+import styles from './SelectorDropdown.module.scss';
 
 //Consts
 import IconsConsts from "../../consts/IconsConsts";
+import { BgColorSections, ColorSections } from "../../consts/ColorsConsts";
 
 const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, title, contentClass, isIcon, label }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -37,30 +39,18 @@ const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, ti
                     value={selectedValue}
                     onChange={selectedValueChanged}
                     icon={ChevronIcon} />
-
-                {/*{!isIcon && selectedValue ? selectedValue : placeholder}*/}
             </div>
-            <BaseModal isOpen={isOpen} onClose={handleCloseModal} titleModal={title} noFooter={true} modalBody={
+
+            {isOpen && <BaseModal isOpen={isOpen} onClose={handleCloseModal} titleModal={title} noFooter={true} modalBody={
                 <div className="grid-columns-6">
-                    {/*<select value={selectedValue} onChange={handleOptionChange}>*/}
-                    {/*    <option value="">{placeholder}</option>*/}
-
-                    {/*    {Object.keys(IconsConsts).map(section => (*/}
-                    {/*        <option key={section} value={IconsConsts[section]}>*/}
-                    {/*            <ReactSVG className="react-svg icon-color--n600" src={IconsConsts[section]} />*/}
-                    {/*            {section}*/}
-                    {/*        </option>*/}
-                    {/*    ))}*/}
-                    {/*</select>*/}
-
                     {Object.keys(IconsConsts).map(section => (
-                        <div key={section} value={IconsConsts[section]}>
-                            <ReactSVG className="react-svg icon-w32-24 icon-color--n600" src={IconsConsts[section]} />
+                        <div key={section} value={section} className={`${IconsConsts[section] === selectedValue ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
+                            <ReactSVG className={"react-svg icon-w32-24 " + ColorSections[section]} src={IconsConsts[section]} />
                             {/*{section}*/}
                         </div>
                     ))}
                 </div>
-            } />
+            } />}
         </div>
     );
 };
