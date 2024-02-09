@@ -5,50 +5,34 @@ import { useNavigate } from 'react-router-dom';
 //Internal components
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
-import ProductSectionModal from '../../components/modals/ProductSectionModal';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
+import styles from './ProductMeasures.module.scss';
 
 //Consts
-import { PlaceholderConsts } from '../../consts/ENConsts';
-import { ButtonConsts } from '../../consts/ENConsts';
-import IconsConsts from "../../consts/IconsConsts";
+import { PlaceholderConsts, ButtonConsts } from '../../consts/ENConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
-import styles from './ProductSections.module.scss';
 
-function ProductSections() {
+function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
-    const [sections, setSections] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const token = localStorage.getItem('token');
+    const [measures, setMeasures] = useState([]);
     const navigate = useNavigate();
-
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
-        const fetchData = async () => {
+        (async () => {
             try {
-                const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-                setSections(responseData);
+                const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
+                setMeasures(responseData);
             } catch (error) {
                 console.log(error);
             }
-        };
-
-        fetchData();
+        })();
     }, []);
-
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
 
     return (
         <Layout>
@@ -57,24 +41,16 @@ function ProductSections() {
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
 
-                <Searchbar placeholder={PlaceholderConsts.SearchSections}
+                <Searchbar placeholder={PlaceholderConsts.SearchMeasures}
                     label={PlaceholderConsts.Search}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
-            {isModalOpen && <ProductSectionModal isOpen={isModalOpen} onClose={closeModal} />}
-
             <div className={styles.containerSections}>
-                {sections.map(section => (
+                {measures.map(section => (
                     <div className={styles.sectionRow} key={section.id}>
-                        <div className={styles.sectionInfo}>
-                            <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon] ?? null} />
-                            </div>
-
-                            <div className="text">{section.name}</div>
-                        </div>
+                        <div className="text">{section.name}</div>
 
                         {section.houseId != null && (
                             <div className="icon cursor-pointer">
@@ -85,13 +61,13 @@ function ProductSections() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal() }>
+            <button className="primary-button btn--l btn-float">
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
-                {ButtonConsts.NewSection}
+                {ButtonConsts.NewMeasure}
             </button>
         </Layout>
     );
 }
 
-export default ProductSections;
+export default ProductMeasures;

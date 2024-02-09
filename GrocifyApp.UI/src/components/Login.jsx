@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 //Internal components
 import CustomInput from './CustomInput';
+import useApiRequest from '../hooks/useApiRequests';
 
 //Assets & Css
 import ReactLogo from '../assets/logo_with_text.svg';
@@ -21,47 +22,25 @@ const LoginForm = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const { makeRequest, isLoading } = useApiRequest();
 
-    const handleLogin = async (event) => {
+    const handleLogin = async () => {
         const data = { email, password };
 
-        const loginButton = event.target;
-
-        loginButton.classList.add("loading");
-
         try {
-            const response = await fetch(ApiEndpoints.Login_Endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+            const userLogged = await makeRequest(ApiEndpoints.Login_Endpoint, 'POST', data);
 
-            if (response.ok) {
-                const userLogged = await response.json();
+            localStorage.setItem('token', userLogged.token);
+            localStorage.setItem('userId', userLogged.userId);
+            localStorage.setItem('isDarkMode', userLogged.isDarkMode);
 
-                localStorage.setItem('token', userLogged.token);
-                localStorage.setItem('userId', userLogged.userId);
-                localStorage.setItem('isDarkMode', userLogged.isDarkMode);
+            console.log('Login successful');
 
-                console.log('Login successful');
+            props.onDarkModeChange(userLogged.isDarkMode);
 
-                props.onDarkModeChange(userLogged.isDarkMode);
-
-                navigate('/');
-            } else {
-                const errorData = await response.json();
-                console.error('Login failed', errorData.errors[0]);
-
-                setErrorMessage(errorData.errors[0]);
-            }
+            navigate('/');
         } catch (error) {
-            console.error('Error during login', error);
-
             setErrorMessage(GenericConsts.Error);
-        } finally {
-            loginButton.classList.remove("loading");
         }
     };
 
@@ -88,7 +67,7 @@ const LoginForm = (props) => {
                     label={AuthConsts.Password}
                     onChange={(e) => setPassword(e.target.value)} />
 
-                <button type="button" className={styles.btn + " primary-button btn--xl"} onClick={handleLogin}>
+                <button type="button" className={`${styles.btn} primary-button btn--xl ${isLoading ? 'loading' : ''}`} onClick={handleLogin}>
                     <span>{AuthConsts.SignIn}</span>
                     <div className="loading-button white"></div>
                 </button>

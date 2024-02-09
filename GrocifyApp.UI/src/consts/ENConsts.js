@@ -9,7 +9,8 @@ const ButtonConsts = {
     Cancel: "Cancel",
     Update: "Update",
     Create: "Create",
-    Confirm: "Confirm"
+    Confirm: "Confirm",
+    NewMeasure: "New measure"
 };
 
 const SettingsConsts = {
@@ -31,6 +32,7 @@ const SettingsConsts = {
 const PlaceholderConsts = {
     Search: "Search...",
     SearchSections: "Search for product sections...",
+    SearchMeasures: "Search for product measures...",
     AddSectionName: "Add section name",
 };
 

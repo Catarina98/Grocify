@@ -65,7 +65,7 @@ namespace GrocifyApp.API.Controllers
                     Token = token
                 };
 
-                return responseModel;
+                return Ok(responseModel);
             }
         }
 
