@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 //Internal components
-import useApiRequest from '../hooks/useApiRequests';
+import useApiRequest from '../../hooks/useApiRequests';
 import BaseModal from './BaseModal';
 
 //Assets & Css
 import styles from './DefaultList.module.scss';
 
 //Consts
-import { GenericConsts, ButtonConsts, ModalConsts } from '../../consts/ENConsts';
+import { ButtonConsts, ModalConsts } from '../../consts/ENConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
 const DefaultList = ({ isOpen, onClose }) => {

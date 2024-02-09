@@ -24,7 +24,7 @@ function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const token = localStorage.getItem('token');
+    //const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
