@@ -63,7 +63,7 @@ const DefaultList = ({ isOpen, onClose }) => {
                         selectedValue={productSectionIcon}
                         placeholder={"Placeholder"}
                         selectedValueChanged={(e) => setProductSectionName(e.target.value)}
-                        title={"Title"}
+                        title={ModalConsts.IconSection}
                         contentClass={"Class"}
                         isIcon={true}
                         label={LabelConsts.ProductSectionIcon} />

@@ -14,7 +14,7 @@ import styles from './SelectorDropdown.module.scss';
 import IconsConsts from "../../consts/IconsConsts";
 import { BgColorSections, ColorSections } from "../../consts/ColorsConsts";
 
-const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, title, contentClass, isIcon, label }) => {
+const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, title, contentClass, label }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpenModal = () => {
@@ -26,7 +26,7 @@ const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, ti
     };
 
     const handleOptionChange = (e) => {
-        selectedValueChanged(e.target.value);
+        selectedValueChanged(e);
     };
 
     return (
@@ -44,9 +44,8 @@ const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, ti
             {isOpen && <BaseModal isOpen={isOpen} onClose={handleCloseModal} titleModal={title} noFooter={true} modalBody={
                 <div className="grid-columns-6">
                     {Object.keys(IconsConsts).map(section => (
-                        <div key={section} value={section} className={`${IconsConsts[section] === selectedValue ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
+                        <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${IconsConsts[section] === selectedValue ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
                             <ReactSVG className={"react-svg icon-w32-24 " + ColorSections[section]} src={IconsConsts[section]} />
-                            {/*{section}*/}
                         </div>
                     ))}
                 </div>
@@ -61,7 +60,6 @@ SelectorDropdown.propTypes = {
     selectedValueChanged: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     contentClass: PropTypes.string.isRequired,
-    isIcon: PropTypes.bool,
     label: PropTypes.string
 };
 

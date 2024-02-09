@@ -76,6 +76,7 @@ const PassRulesConsts = {
 const ModalConsts = {
     DefaultShoppingList: "Change default shopping list",
     NewProductSection: "New product section",
+    IconSection: "Icon of section",
 };
 
 export {
