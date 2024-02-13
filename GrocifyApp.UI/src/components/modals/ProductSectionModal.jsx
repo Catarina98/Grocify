@@ -1,51 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ReactSVG } from 'react-svg';
 
 //Internal components
 import BaseModal from './BaseModal';
 import CustomInputApp from '../CustomInputApp';
 import SelectorDropdown from '../Dropdown/SelectorDropdown';
+import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
 import styles from './ProductSectionModal.module.scss';
 
 //Consts
-import { GenericConsts, PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../consts/ENConsts';
+import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../consts/ENConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
-import IconsConsts from '../../consts/IconsConsts';
 
 const DefaultList = ({ isOpen, onClose }) => {
-    const token = localStorage.getItem('token');
-    const [productSectionData, setProductSectionData] = useState([]);
     const [isButtonDisabled, setButtonDisabled] = useState(true);
     const [productSectionName, setProductSectionName] = useState("");
-    const [productSectionIcon, setProductSectionIcon] = useState(IconsConsts['Home']);
-    
-    //const handleSetDefaultList = (shoppingList) => {
-    //    setDefaultShoppingList(shoppingList);
-    //    setButtonDisabled(shoppingList.id === oldDefaultShoppingList?.id);
-    //}
+    const [productSectionIcon, setProductSectionIcon] = useState('Home');
+    const { makeRequest } = useApiRequest();
+
+    useEffect(() => {
+        if (productSectionName !== "" && productSectionIcon !== "") {
+            setButtonDisabled(false);
+        } else {
+            setButtonDisabled(true);
+        }
+    }, [productSectionIcon, productSectionName]);
+
+    const setIcon = (icon) =>
+    {
+        setProductSectionIcon(icon);
+    };
     
     const createProductSection = async () => {
-        try {
-            const response = await fetch(ApiEndpoints.DefaultShoppingList_Endpoint(defaultShoppingList.id), {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
 
-            if (response.ok) {
-                console.log("updated");
-            } else {
-                const errorData = await response.json();
-                console.log(errorData.errors[0]);
-            }
-        } catch (error) {
-            console.log(GenericConsts.Error);
-        }
+        const data = { name: productSectionName, icon: productSectionIcon };
+
+        await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'POST', data);
     };
 
     return (
@@ -62,7 +54,7 @@ const DefaultList = ({ isOpen, onClose }) => {
                     <SelectorDropdown
                         selectedValue={productSectionIcon}
                         placeholder={"Placeholder"}
-                        selectedValueChanged={(e) => setProductSectionName(e.target.value)}
+                        selectedValueChanged={(e) => setIcon(e)}
                         title={ModalConsts.IconSection}
                         contentClass={"Class"}
                         isIcon={true}
@@ -77,7 +69,3 @@ DefaultList.propTypes = {
 };
 
 export default DefaultList;
-
-                    //<DropdownButton text={GenericConsts.Button.Archive} icon={IconsShared.TopicPage.Archive} onClick={() => ConfirmModal!.ArchiveRestore(true)} />
-
-                    //        <DropdownButton customClass={CssConst.DeleteBtn} text={GenericConsts.Delete} icon={IconsConst.Generic.Trash} onClick={ConfirmModal!.Delete} />

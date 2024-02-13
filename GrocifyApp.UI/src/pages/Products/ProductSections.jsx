@@ -30,16 +30,16 @@ function ProductSections() {
 
     const { makeRequest } = useApiRequest();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-                setSections(responseData);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+    const fetchData = async () => {
+        try {
+            const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
+            setSections(responseData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -47,8 +47,10 @@ function ProductSections() {
         setIsModalOpen(true);
     };
 
-    const closeModal = () => {
+    const closeModal = async() => {
         setIsModalOpen(false);
+
+        await fetchData();
     };
 
     return (

@@ -27,6 +27,8 @@ const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, ti
 
     const handleOptionChange = (e) => {
         selectedValueChanged(e);
+
+        handleCloseModal();
     };
 
     return (
@@ -36,7 +38,7 @@ const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, ti
                     type="icon"
                     placeholder={placeholder}
                     label={label}
-                    value={selectedValue}
+                    value={IconsConsts[selectedValue]}
                     onChange={selectedValueChanged}
                     icon={ChevronIcon} />
             </div>
@@ -44,7 +46,7 @@ const SelectorDropdown = ({ selectedValue, placeholder, selectedValueChanged, ti
             {isOpen && <BaseModal isOpen={isOpen} onClose={handleCloseModal} titleModal={title} noFooter={true} modalBody={
                 <div className="grid-columns-6">
                     {Object.keys(IconsConsts).map(section => (
-                        <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${IconsConsts[section] === selectedValue ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
+                        <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${section === selectedValue ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
                             <ReactSVG className={"react-svg icon-w32-24 " + ColorSections[section]} src={IconsConsts[section]} />
                         </div>
                     ))}

@@ -53,7 +53,7 @@ BaseModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     modalBody: PropTypes.node,
-    onConfirm: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func,
     isButtonDisabled: PropTypes.bool,
     buttonText: PropTypes.string,
     titleModal: PropTypes.string.isRequired,
