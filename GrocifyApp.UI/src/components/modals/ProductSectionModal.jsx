@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 //Internal components
 import BaseModal from './BaseModal';
 import CustomInputApp from '../CustomInputApp';
-import SelectorDropdown from '../Dropdown/SelectorDropdown';
+import ProductSectionSelector from '../Products/ProductSectionsSelector';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -12,9 +12,10 @@ import styles from './ProductSectionModal.module.scss';
 
 //Consts
 import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../consts/ENConsts';
+import InputType from '../../consts/InputType';
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
-const DefaultList = ({ isOpen, onClose }) => {
+const ProductSectionModal = ({ onClose, onConfirm }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
     const [productSectionName, setProductSectionName] = useState("");
     const [productSectionIcon, setProductSectionIcon] = useState('Home');
@@ -38,34 +39,32 @@ const DefaultList = ({ isOpen, onClose }) => {
         const data = { name: productSectionName, icon: productSectionIcon };
 
         await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'POST', data);
+
+        onConfirm();
     };
 
     return (
-        <BaseModal isOpen={isOpen} onClose={onClose} onConfirm={createProductSection} isButtonDisabled={isButtonDisabled}
+        <BaseModal isOpen={true} onClose={onClose} onConfirm={createProductSection} isButtonDisabled={isButtonDisabled}
             buttonText={ButtonConsts.Create} titleModal={ModalConsts.NewProductSection} modalBody={
             <div className={styles.inputRow}>
-                <CustomInputApp className="app-form mb-0"
-                    type="input"
-                    placeholder={PlaceholderConsts.AddSectionName}
-                    label={LabelConsts.ProductSectionName}
-                    value={productSectionName}
-                        onChange={(e) => setProductSectionName(e.target.value)} />
+                    <CustomInputApp className="app-form mb-0"
+                        type={InputType.Input}
+                        placeholder={PlaceholderConsts.AddSectionName}
+                        label={LabelConsts.ProductSectionName}
+                        value={productSectionName}
+                        onChange={(e) => setProductSectionName(e.target.value)}
+                        isRequired={true} />
 
-                    <SelectorDropdown
+                    <ProductSectionSelector
                         selectedValue={productSectionIcon}
-                        placeholder={"Placeholder"}
-                        selectedValueChanged={(e) => setIcon(e)}
-                        title={ModalConsts.IconSection}
-                        contentClass={"Class"}
-                        isIcon={true}
-                        label={LabelConsts.ProductSectionIcon} />
+                        selectedValueChanged={(e) => setIcon(e)} />
             </div>} />
     );
 };
 
-DefaultList.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+ProductSectionModal.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func
 };
 
-export default DefaultList;
+export default ProductSectionModal;

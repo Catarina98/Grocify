@@ -25,7 +25,6 @@ function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    //const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
@@ -47,9 +46,11 @@ function ProductSections() {
         setIsModalOpen(true);
     };
 
-    const closeModal = async() => {
+    const closeModal = () => {
         setIsModalOpen(false);
+    };
 
+    const onConfirmCreateSection = async() => {
         await fetchData();
     };
 
@@ -66,7 +67,7 @@ function ProductSections() {
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
-            {isModalOpen && <ProductSectionModal isOpen={isModalOpen} onClose={closeModal} />}
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
 
             <div className={styles.containerSections}>
                 {sections.map(section => (

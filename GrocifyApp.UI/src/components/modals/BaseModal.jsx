@@ -21,30 +21,33 @@ const BaseModal = ({ isOpen, onClose, titleModal, modalBody, onConfirm, isButton
     return (
         <div>
             {isOpen && (
-                <div className={styles.modalBackdrop} onClick={toggleModal}>
-                </div>
-            )}
-            <div className={`${styles.modalMobile + " modal-mobile"} ${isOpen ? styles.open : ''} ${noFooter ? styles.noFooter : ''}`}>
-                <div className={styles.modalHeader + " modal-header"}>
-                    <div className="title title--s weight--m">{titleModal}</div>
+                <>
+                    <div className={styles.modalBackdrop} onClick={toggleModal}></div>
+            
+                    <div className={`${styles.modalMobile + " modal-mobile"} ${isOpen ? styles.open : ''} ${noFooter ? styles.noFooter : ''}`}>
+                        <div className={styles.modalHeader + " modal-header"}>
+                            <div className="title title--s weight--m">{titleModal}</div>
 
-                    <div className="icon icon--w32 cursor-pointer" onClick={toggleModal}>
-                        <ReactSVG className="react-svg" src={CrossIcon} />
-                    </div>
-                </div>
+                            <div className="icon icon--w32 cursor-pointer" onClick={toggleModal}>
+                                <ReactSVG className="react-svg" src={CrossIcon} />
+                            </div>
+                        </div>
                 
-                <div className={styles.modalContent}>{modalBody}</div>
+                        <div className={styles.modalContent}>{modalBody}</div>
 
-                {!noFooter && <div className={styles.modalFooter + " modal-footer"}>
-                    <button className="secondary-button btn--m" onClick={toggleModal}>
-                        {ButtonConsts.Cancel}
-                    </button>
+                        {!noFooter && <div className={styles.modalFooter + " modal-footer"}>
+                            <button className="secondary-button btn--m" onClick={toggleModal}>
+                                {ButtonConsts.Cancel}
+                            </button>
 
-                    <button className="primary-button btn--m" onClick={confirmModal} disabled={isButtonDisabled}>
-                        {buttonText != null && buttonText != "" ? buttonText : ButtonConsts.Confirm}
-                    </button>
-                </div> }                
-            </div>
+                            <button className="primary-button btn--m" onClick={confirmModal} disabled={isButtonDisabled}>
+                                {buttonText != null && buttonText != "" ? buttonText : ButtonConsts.Confirm}
+                            </button>
+                        </div> }                
+                    </div>
+                </>
+            )
+            }
         </div>
     );
 };
