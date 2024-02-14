@@ -28,11 +28,6 @@ const ProductSectionModal = ({ onClose, onConfirm }) => {
             setButtonDisabled(true);
         }
     }, [productSectionIcon, productSectionName]);
-
-    const setIcon = (icon) =>
-    {
-        setProductSectionIcon(icon);
-    };
     
     const createProductSection = async () => {
 
@@ -57,7 +52,7 @@ const ProductSectionModal = ({ onClose, onConfirm }) => {
 
                     <ProductSectionSelector
                         selectedValue={productSectionIcon}
-                        selectedValueChanged={(e) => setIcon(e)} />
+                        selectedValueChanged={(e) => setProductSectionIcon(e)} />
             </div>} />
     );
 };
