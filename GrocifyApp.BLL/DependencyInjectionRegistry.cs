@@ -8,8 +8,8 @@ namespace GrocifyApp.BLL
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped(typeof(IEntitiesService<>), typeof(EntitiesService<>));
-            services.AddScoped(typeof(IEntitiesServiceWithHouse<>), typeof(EntitiesServiceWithHouse<>));
+            services.AddScoped(typeof(IEntitiesService<,>), typeof(EntitiesService<,>));
+            services.AddScoped(typeof(IEntitiesServiceWithHouse<,>), typeof(EntitiesServiceWithHouse<,>));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IHouseService, HouseService>();
             services.AddScoped<IShoppingListService, ShoppingListService>();
