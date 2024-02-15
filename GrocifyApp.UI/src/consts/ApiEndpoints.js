@@ -7,6 +7,7 @@ const ApiEndpoints = {
     DefaultShoppingList_Endpoint: (shoppingListId) => `api/ShoppingList/${shoppingListId}/setdefault`,
     ProductMeasures_Endpoint: '/api/ProductMeasure',
     Products_Endpoint: '/api/Product',
+    Filtered: '/filtered'
 };
 
 export default ApiEndpoints;

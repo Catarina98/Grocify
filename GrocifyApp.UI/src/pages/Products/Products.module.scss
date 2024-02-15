@@ -1,0 +1,67 @@
+@import "../../styles/core/variables/_colors-var.scss";
+
+.searchbarContainer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 24px;
+}
+
+.containerSections {
+    display: flex;
+    margin-top: 72px;
+    gap: 8px;
+    overflow-x: scroll;
+
+    .iconW24 {
+        padding: 4px;
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    .sectionInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+.containerProducts {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+
+    .sectionRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+        background: $color--p50;
+
+        &:hover {
+            background: $color--p50--hover;
+        }
+
+        .sectionInfo {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            .iconW24 {
+                padding: 4px;
+
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+    }
+}

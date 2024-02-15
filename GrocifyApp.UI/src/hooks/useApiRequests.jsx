@@ -1,21 +1,32 @@
 import { useState } from 'react';
 
+//Consts
+import ApiEndpoints from '../consts/ApiEndpoints';
+
 const useApiRequest = () => {
     const [isLoading, setIsLoading] = useState(false);
     const token = localStorage.getItem('token');
 
-    const makeRequest = async (endpoint, method, body) => {
+    const makeRequest = async (endpoint, method, body, query = {}) => {
         setIsLoading(true);
         let errorMessage = '';
 
         try {
-            const response = await fetch(endpoint, {
+            const queryString = Object.keys(query)
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`)
+                .join('&');
+
+            const url = queryString ? `${endpoint}${ApiEndpoints.Filtered}?${queryString}` : endpoint;
+
+            const bodyJson = body != null ? JSON.stringify(body) : null;
+
+            const response = await fetch(url, {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(body),
+                body: bodyJson,
             });
 
             if (!response.ok) {

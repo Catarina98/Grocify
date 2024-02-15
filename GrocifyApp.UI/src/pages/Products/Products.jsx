@@ -17,15 +17,26 @@ import { PlaceholderConsts } from '../../consts/ENConsts';
 import { ButtonConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
-import styles from './ProductSections.module.scss';
+import styles from './Products.module.scss';
 
 function Products() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
+    const [selectedSection, setSelectedSection] = useState([]);
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
+
+    const getProducts = async (sectionId) => {
+        setSelectedSection(sectionId);
+
+        const filteredEntities = { ProductSectionId: sectionId };
+
+        const productsResponse = await makeRequest(ApiEndpoints.Products_Endpoint, 'GET', null, filteredEntities);
+
+        setProducts(productsResponse);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,10 +45,7 @@ function Products() {
                 const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
                 setSections(sectionsResponse);
 
-                const filteredEntities = { ProductSectionId: sections[0].id };
-
-                const productsResponse = await makeRequest(ApiEndpoints.Products_Endpoint, 'GET', filteredEntities);
-                setProducts(productsResponse);
+                await getProducts(sectionsResponse[0].id);
             } catch (error) {
                 console.log(error);
             }
@@ -61,16 +69,24 @@ function Products() {
 
             <div className={styles.containerSections}>
                 {sections.map(section => (
-                    <div className={styles.sectionRow} key={section.id}>
-                        <div className={styles.sectionInfo}>
-                            <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon] ?? null} />
-                            </div>
-
-                            <div className="text">{section.name}</div>
+                    <div key={section.id} className={styles.sectionInfo} onClick={() => getProducts(section.id)}>
+                        <div className={styles.iconW24 + " cursor-pointer"}>
+                            <ReactSVG className={`react-svg ${section.id === selectedSection ? 'icon-color--p100' : 'icon-color--n500'}`} src={IconsConsts[section.icon] ?? null} />
                         </div>
 
-                        {section.houseId != null && (
+                        <div className={`text text-ellipsis ${section.id === selectedSection ? 'color-p100' : ''}`}>{section.name}</div>
+                    </div>
+                ))}
+            </div>
+
+            <div className={styles.containerProducts}>
+                {products.map(product => (
+                    <div className={styles.sectionRow} key={product.id}>
+                        <div className={styles.sectionInfo}>
+                            <div className="text text-ellipsis">{product.name}</div>
+                        </div>
+
+                        {product.houseId != null && (
                             <div className="icon cursor-pointer">
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
