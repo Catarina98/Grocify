@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import useApiRequest from '../../hooks/useApiRequests';
+import BaseModal from '../../components/BaseModal';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -22,6 +23,8 @@ import styles from './ProductSections.module.scss';
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
+    const [selectedSection, setSelectedSection] = useState([]);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
@@ -39,8 +42,30 @@ function ProductSections() {
         fetchData();
     }, []);
 
+    const deleteSection = async () => {
+        const body = { Id: selectedSection.id };
+
+        await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'DELETE', body);
+    };
+
+    const closeModal = async () => {
+        setIsModalDeleteOpen(true);
+
+        setSelectedSection(null);
+    };
+
+    const openDeleteModal = (section) => {
+        setSelectedSection(section);
+
+        setIsModalDeleteOpen(true);
+    };
+
     return (
         <Layout>
+
+            <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeModal()} onConfirm={() => deleteSection()}
+                title={"Are you sure you want to delete \"" + selectedSection.name + "\" section?"} />
+
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
@@ -64,7 +89,7 @@ function ProductSections() {
                         </div>
 
                         {section.houseId != null && (
-                            <div className="icon cursor-pointer">
+                            <div className="icon cursor-pointer" onClick={() => openDeleteModal(section)}>
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}

@@ -8,6 +8,7 @@ const ButtonConsts = {
     Back: "Back",
     Cancel: "Cancel",
     Update: "Update",
+    Delete: "Delete",
     NewMeasure: "New measure"
 };
 
