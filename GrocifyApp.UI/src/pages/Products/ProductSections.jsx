@@ -42,10 +42,17 @@ function ProductSections() {
         fetchData();
     }, []);
 
-    const deleteSection = async () => {
-        const body = { Id: selectedSection.id };
 
-        await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'DELETE', body);
+    const deleteSection = async () => {
+        try {
+            await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(selectedSection.id), 'DELETE');
+
+            setSections(prevSections => prevSections.filter(section => section.id !== selectedSection.id));
+
+            setSelectedSection(null);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const closeModal = async () => {
@@ -63,8 +70,9 @@ function ProductSections() {
     return (
         <Layout>
 
-            <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeModal()} onConfirm={() => deleteSection()}
-                title={"Are you sure you want to delete \"" + selectedSection.name + "\" section?"} />
+            {selectedSection != null && isModalDeleteOpen && (
+                <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeModal()} onConfirm={deleteSection}
+                    title={"Are you sure you want to delete \"" + selectedSection.name + "\" section?"} />)}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
