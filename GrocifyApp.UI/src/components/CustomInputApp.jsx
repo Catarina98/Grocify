@@ -34,10 +34,8 @@ const CustomInputApp = ({ type, placeholder, value, onChange, label, className, 
                     </div>
                 }
 
-                {type == InputType.Icon &&
-                    <div className="icon">
-                        <ReactSVG className="react-svg" src={value} />
-                    </div>
+                {type == InputType.Custom &&
+                    value
                 }
 
                 {type == InputType.Input &&
@@ -71,10 +69,10 @@ const CustomInputApp = ({ type, placeholder, value, onChange, label, className, 
 
 CustomInputApp.propTypes = {
     type: PropTypes.string.isRequired,
-    placeholder: PropTypes.string,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.node.isRequired,
     onChange: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     className: PropTypes.string,
     icon: PropTypes.string,
     isRequired: PropTypes.bool

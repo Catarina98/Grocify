@@ -25,21 +25,20 @@ function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    //const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-                setSections(responseData);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+    const fetchData = async () => {
+        try {
+            const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
+            setSections(responseData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -49,6 +48,10 @@ function ProductSections() {
 
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+
+    const onConfirmCreateSection = async() => {
+        await fetchData();
     };
 
     return (
@@ -64,7 +67,7 @@ function ProductSections() {
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
-            {isModalOpen && <ProductSectionModal isOpen={isModalOpen} onClose={closeModal} />}
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
 
             <div className={styles.containerSections}>
                 {sections.map(section => (

@@ -2,7 +2,7 @@ const InputType = {
     Input: 'input',
     TextArea: 'textarea',
     Password: 'password',
-    Icon: 'icon'
+    Custom: 'custom'
 };
 
 export default InputType;

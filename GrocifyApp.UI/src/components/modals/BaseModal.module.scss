@@ -25,14 +25,9 @@
     border-radius: 6px 6px 0 0;
     display: flex;
     flex-direction: column;
-
-    &.noFooter {
-        min-height: 30vh !important;
-    }
 }
 
 .modalMobile.open {
-    min-height: 40vh;
     height: auto;
 }
 
