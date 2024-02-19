@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //Internal components
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
+import ProductMeasureModal from '../../components/modals/ProductMeasureModal';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -20,19 +21,35 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
     const [measures, setMeasures] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
+
     const { makeRequest } = useApiRequest();
+    
+    const fetchData = async () => {
+        try {
+            const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
+            setMeasures(responseData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
-        (async () => {
-            try {
-                const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
-                setMeasures(responseData);
-            } catch (error) {
-                console.log(error);
-            }
-        })();
+        fetchData();
     }, []);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const onConfirmCreateMeasure = async () => {
+        await fetchData();
+    };
 
     return (
         <Layout>
@@ -47,13 +64,15 @@ function ProductMeasures() {
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
-            <div className={styles.containerSections}>
-                {measures.map(section => (
-                    <div className={styles.sectionRow} key={section.id}>
-                        <div className="text">{section.name}</div>
+            {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmCreateMeasure} />}
 
-                        {section.houseId != null && (
-                            <div className="icon cursor-pointer">
+            <div className={styles.containerMeasures}>
+                {measures.map(measure => (
+                    <div className={styles.measureRow} key={measure.id}>
+                        <div className="text">{measure.name}</div>
+
+                        {measure.houseId != null && (
+                            <div className="icon icon-options cursor-pointer">
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}
@@ -61,7 +80,7 @@ function ProductMeasures() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float">
+            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewMeasure}
