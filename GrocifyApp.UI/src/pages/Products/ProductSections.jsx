@@ -7,6 +7,7 @@ import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import ProductSectionModal from '../../components/modals/ProductSectionModal';
 import useApiRequest from '../../hooks/useApiRequests';
+import EmptyState from '../../components/EmptyState';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -56,7 +57,7 @@ function ProductSections() {
 
     return (
         <Layout>
-            <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
+            {sections.length > 0 && <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
@@ -65,7 +66,7 @@ function ProductSections() {
                     label={PlaceholderConsts.Search}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
-            </div>
+            </div>}
 
             {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
 
@@ -89,11 +90,13 @@ function ProductSections() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal() }>
+            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewSection}
             </button>
+
+            {sections.length === 0 && <EmptyState />}
         </Layout>
     );
 }

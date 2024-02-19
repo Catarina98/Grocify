@@ -79,6 +79,11 @@ const ModalConsts = {
     IconSection: "Icon of section",
 };
 
+const EmptyStateConsts = {
+    Title: (entity) => `There's no ${entity}`,
+    Description: (entity) => `Click the button below to create a ${entity}`,
+};
+
 export {
     GenericConsts,
     SettingsConsts,
@@ -88,5 +93,6 @@ export {
     ButtonConsts,
     AuthConsts,
     PassRulesConsts,
-    ModalConsts
+    ModalConsts,
+    EmptyStateConsts
 };
