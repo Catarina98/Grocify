@@ -477,7 +477,7 @@ button .react-svg svg {
 }
 
 .btn-float {
-    position: absolute !important;
+    position: fixed !important;
     bottom: 72px;
     left: 50%;
     transform: translateX(-50%);

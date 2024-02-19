@@ -1,4 +1,4 @@
-@import "../styles/core/variables/_colors-var.scss";
+@import "../../styles/core/variables/_colors-var.scss";
 
 .modalBackdrop {
     position: fixed;
@@ -28,7 +28,6 @@
 }
 
 .modalMobile.open {
-    min-height: 40vh;
     height: auto;
 }
 

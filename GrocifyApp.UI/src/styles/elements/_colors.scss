@@ -37,12 +37,28 @@
 .icon-color {
     fill: $color--n700;
 
+    &--r200 {
+        fill: $color--r200;
+    }
+
     &--r300 {
         fill: $color--r300;
     }
 
+    &--r500 {
+        fill: $color--r500;
+    }
+
+    &--b200 {
+        fill: $color--b200;
+    }
+
+    &--b300 {
+        fill: $color--b300;
+    }
+
     &--b400 {
-        fill: $primary-color--hover;
+        fill: $color--b400;
     }
 
     &--n100 {
@@ -59,5 +75,79 @@
 
     &--n600 {
         fill: $color--n600;
+    }
+
+    &--p100 {
+        fill: $color--p100;
+    }
+
+    &--p300 {
+        fill: $color--p300;
+    }
+
+    &--y300 {
+        fill: $color--y300;
+    }
+
+    &--y400 {
+        fill: $color--y400;
+    }
+
+    &--o300 {
+        fill: $color--o300;
+    }
+
+    &--g300 {
+        fill: $color--g300;
+    }
+}
+
+.bg-color {
+    &--p100 {
+        background-color: $color--p100;
+    }
+
+    &--p300 {
+        background-color: $color--p300;
+    }
+
+    &--b200 {
+        background-color: $color--b200;
+    }
+
+    &--b300 {
+        background-color: $color--b300;
+    }
+
+    &--b400 {
+        background-color: $color--b400;
+    }
+
+    &--r200 {
+        background-color: $color--r200;
+    }
+
+    &--r300 {
+        background-color: $color--r300;
+    }
+
+    &--r500 {
+        background-color: $color--r500;
+    }
+
+    &--y300 {
+        background-color: $color--y300;
+    }
+
+    &--y400 {
+        background-color: $color--y400;
+    }
+
+    &--o300 {
+        background-color: $color--o300;
+    }
+
+    &--g300 {
+        background-color: $color--g300;
     }
 }

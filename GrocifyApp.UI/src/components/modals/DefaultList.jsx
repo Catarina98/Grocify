@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 //Internal components
-import BaseModal from '../components/BaseModal';
-import useApiRequest from '../hooks/useApiRequests';
+import useApiRequest from '../../hooks/useApiRequests';
+import BaseModal from './BaseModal';
 
 //Assets & Css
 import styles from './DefaultList.module.scss';
 
 //Consts
-import ApiEndpoints from '../consts/ApiEndpoints';
+import { ButtonConsts, ModalConsts } from '../../consts/ENConsts';
+import ApiEndpoints from '../../consts/ApiEndpoints';
 
 const DefaultList = ({ isOpen, onClose }) => {
     const [shoppingListData, setShoppingListData] = useState(null);
@@ -56,7 +57,8 @@ const DefaultList = ({ isOpen, onClose }) => {
     };
 
     return (
-        <BaseModal isOpen={isOpen} onClose={onClose} onConfirm={updateDefaultShoppingList} isButtonDisabled={isButtonDisabled} modalBody={
+        <BaseModal isOpen={isOpen} onClose={onClose} onConfirm={updateDefaultShoppingList} isButtonDisabled={isButtonDisabled}
+            buttonText={ButtonConsts.Update} titleModal={ModalConsts.DefaultShoppingList} modalBody={
             <div className={styles.contentList}>
                 {shoppingListData != null && shoppingListData.length > 0 ? (
                     shoppingListData.map((shoppingList) => (
