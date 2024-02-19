@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //Internal components
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
+import ProductSectionModal from '../../components/modals/ProductSectionModal';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -18,26 +19,40 @@ import { ButtonConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
 import styles from './ProductSections.module.scss';
+import { ColorSections } from '../../consts/ColorsConsts';
 
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-                setSections(responseData);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+    const fetchData = async () => {
+        try {
+            const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
+            setSections(responseData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+    useEffect(() => {
         fetchData();
     }, []);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const onConfirmCreateSection = async() => {
+        await fetchData();
+    };
 
     return (
         <Layout>
@@ -51,13 +66,15 @@ function ProductSections() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
-            
+
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
+
             <div className={styles.containerSections}>
                 {sections.map(section => (
                     <div className={styles.sectionRow} key={section.id}>
                         <div className={styles.sectionInfo}>
                             <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className="react-svg icon-color--p100" src={IconsConsts[section.icon] ?? null} />
+                                <ReactSVG className={"react-svg " + ColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
                             </div>
 
                             <div className="text">{section.name}</div>
@@ -72,7 +89,7 @@ function ProductSections() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float">
+            <button className="primary-button btn--l btn-float" onClick={() => openModal() }>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewSection}

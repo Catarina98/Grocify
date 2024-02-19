@@ -8,6 +8,8 @@ const ButtonConsts = {
     Back: "Back",
     Cancel: "Cancel",
     Update: "Update",
+    Create: "Create",
+    Confirm: "Confirm",
     NewMeasure: "New measure",
     NewProduct: "New product"
 };
@@ -32,7 +34,13 @@ const PlaceholderConsts = {
     Search: "Search...",
     SearchSections: "Search for product sections...",
     SearchMeasures: "Search for product measures...",
-    SearchProducts: "Search for products..."
+    SearchProducts: "Search for products...",
+    AddSectionName: "Add section name",
+};
+
+const LabelConsts = {
+    ProductSectionName: "Product section name",
+    ProductSectionIcon: "Section icon",
 };
 
 const NavbarConsts = {
@@ -69,12 +77,15 @@ const PassRulesConsts = {
 
 const ModalConsts = {
     DefaultShoppingList: "Change default shopping list",
+    NewProductSection: "New product section",
+    IconSection: "Icon of section",
 };
 
 export {
     GenericConsts,
     SettingsConsts,
     PlaceholderConsts,
+    LabelConsts,
     NavbarConsts,   
     ButtonConsts,
     AuthConsts,

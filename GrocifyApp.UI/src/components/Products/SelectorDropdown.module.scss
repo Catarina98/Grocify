@@ -1,0 +1,14 @@
+@import "../../styles/core/variables/_colors-var.scss";
+
+.sectionSelected {
+    border-radius: 6px;
+
+    svg {
+        fill: $color--n100 !important;
+    }
+}
+
+.reactSvg svg {
+    min-width: 24px;
+    min-height: 24px;
+}
