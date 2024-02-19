@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import ProductSectionModal from '../../components/modals/ProductSectionModal';
+import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -14,7 +15,7 @@ import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 
 //Consts
-import { PlaceholderConsts } from '../../consts/ENConsts';
+import { PlaceholderConsts, ModalConsts } from '../../consts/ENConsts';
 import { ButtonConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
@@ -25,6 +26,7 @@ function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isMoreOptionsOpen, setIsMoreOptionsOpen] = useState(false);
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
@@ -50,7 +52,15 @@ function ProductSections() {
         setIsModalOpen(false);
     };
 
-    const onConfirmCreateSection = async() => {
+    const openMoreOptionsModal = () => {
+        setIsMoreOptionsOpen(true);
+    };
+
+    const closeMoreOptionsModal = () => {
+        setIsMoreOptionsOpen(false);
+    };
+
+    const onConfirmSection = async() => {
         await fetchData();
     };
 
@@ -67,7 +77,9 @@ function ProductSections() {
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} />}
+
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} />}
 
             <div className={styles.containerSections}>
                 {sections.map(section => (
@@ -81,7 +93,7 @@ function ProductSections() {
                         </div>
 
                         {section.houseId != null && (
-                            <div className="icon cursor-pointer">
+                            <div className="icon cursor-pointer" onClick={() => setIsMoreOptionsOpen(true)}>
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}
