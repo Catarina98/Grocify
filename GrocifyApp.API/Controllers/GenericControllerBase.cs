@@ -68,7 +68,7 @@ namespace GrocifyApp.API.Controllers
         /// <response code="200">Success.</response>
         /// <response code="404">No results found.</response>
         [HttpGet("filtered")]
-        public async Task<IActionResult> GetAll([FromQuery] TFilter filter)
+        public async Task<IActionResult> GetAllFiltered([FromQuery] TFilter filter)
         {
             var entities = await _genericBusiness.GetBySearchModel(filter);
             
