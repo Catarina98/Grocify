@@ -33,7 +33,7 @@ function ProductSections() {
     const fetchData = async () => {
         try {
             const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-            //setSections(responseData);
+            setSections(responseData);
         } catch (error) {
             console.log(error);
         }
@@ -67,10 +67,10 @@ function ProductSections() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
+                        
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
 
-            {sections.length > 0 &&
-                isModalOpen && (<> <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />
-                
+            {sections.length > 0 && (<>
                 <div className={styles.containerSections}>
                     {sections.map(section => (
                         <div className={styles.sectionRow} key={section.id}>
@@ -99,7 +99,7 @@ function ProductSections() {
 
             )}
 
-            {sections.length === 0 && <EmptyState />}
+            {sections.length === 0 && <EmptyState onCreate={() => openModal()} buttonText={ButtonConsts.NewSection} />}
         </Layout>
     );
 }

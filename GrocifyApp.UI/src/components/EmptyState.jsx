@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
 
@@ -6,33 +5,13 @@ import PropTypes from 'prop-types';
 
 //Assets & Css
 import BoxIcon from '../assets/box-ic.svg';
+import PlusCircleIcon from '../assets/plus-circle-ic.svg';
 import styles from './EmptyState.module.scss';
 
 //Consts
 import { EmptyStateConsts } from '../consts/ENConsts';
 
-const EmptyState = ({ onClose, onConfirm }) => {
-    //const [isButtonDisabled, setButtonDisabled] = useState(true);
-    //const [productSectionName, setProductSectionName] = useState("");
-    //const [productSectionIcon, setProductSectionIcon] = useState('Home');
-
-    //useEffect(() => {
-    //    if (productSectionName !== "" && productSectionIcon !== "") {
-    //        setButtonDisabled(false);
-    //    } else {
-    //        setButtonDisabled(true);
-    //    }
-    //}, [productSectionIcon, productSectionName]);
-
-    //const createProductSection = async () => {
-
-    //    const data = { name: productSectionName, icon: productSectionIcon };
-
-    //    await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'POST', data);
-
-    //    onConfirm();
-    //};
-
+const EmptyState = ({ onCreate, buttonText }) => {
     return (
         <div className={styles.emptyStateContainer}>
             <div className="icon">
@@ -49,13 +28,18 @@ const EmptyState = ({ onClose, onConfirm }) => {
                 </div>
             </div>
 
+            <button className="primary-button btn--l" onClick={onCreate}>
+                <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+
+                {buttonText}
+            </button>
         </div>
     );
 };
 
 EmptyState.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func
+    onCreate: PropTypes.func,
+    buttonText: PropTypes.string
 };
 
 export default EmptyState;
