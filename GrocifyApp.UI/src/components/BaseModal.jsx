@@ -6,7 +6,7 @@ import CrossIcon from '../assets/cross-ic.svg';
 import styles from './BaseModal.module.scss';
 
 //Consts
-import { ButtonConsts, ModalConsts } from '../consts/ENConsts';
+import { ButtonConsts } from '../consts/ENConsts';
 
 const BaseModal = ({ title, isOpen, onClose, modalBody, onConfirm, isButtonDisabled, isConfirmModal }) => {
     const toggleModal = () => {
