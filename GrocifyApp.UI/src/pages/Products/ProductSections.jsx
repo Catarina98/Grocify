@@ -24,7 +24,7 @@ import { ColorSections } from '../../consts/ColorsConsts';
 
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
-    const [sections, setSections] = useState([]);
+    const [sections, setSections] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ function ProductSections() {
                         
             {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
 
-            {sections.length > 0 && (<>
+            {sections != null && sections.length > 0 && (<>
                 <div className={styles.containerSections}>
                     {sections.map(section => (
                         <div className={styles.sectionRow} key={section.id}>
@@ -99,7 +99,12 @@ function ProductSections() {
 
             )}
 
-            {sections.length === 0 && <EmptyState onCreate={() => openModal()} buttonText={ButtonConsts.NewSection} />}
+            {sections != null && sections.length === 0 && <EmptyState onCreate={() => openModal()} buttonText={ButtonConsts.NewSection} />}
+
+            {sections === null &&
+                <div className="loading bigger">
+                    <div className="loading-button bigger"></div>
+                </div>}
         </Layout>
     );
 }
