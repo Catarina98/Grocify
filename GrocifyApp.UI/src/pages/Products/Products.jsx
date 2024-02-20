@@ -16,6 +16,7 @@ import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 import { PlaceholderConsts } from '../../consts/ENConsts';
 import { ButtonConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
+import { ColorSections, IconColorSections } from "../../consts/ColorsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
 import styles from './Products.module.scss';
 
@@ -71,10 +72,10 @@ function Products() {
                 {sections.map(section => (
                     <div key={section.id} className={styles.sectionInfo} onClick={() => getProducts(section.id)}>
                         <div className={styles.iconW24 + " cursor-pointer"}>
-                            <ReactSVG className={`react-svg ${section.id === selectedSection ? 'icon-color--p100' : 'icon-color--n500'}`} src={IconsConsts[section.icon] ?? null} />
+                            <ReactSVG className={`react-svg ${section.id === selectedSection ? IconColorSections[section.icon] : 'icon-color--n500'}`} src={IconsConsts[section.icon] ?? null} />
                         </div>
 
-                        <div className={`text text-ellipsis ${section.id === selectedSection ? 'color-p100' : ''}`}>{section.name}</div>
+                        <div className={`text ${section.id === selectedSection ? ColorSections[section.icon] : ''}`}>{section.name}</div>
                     </div>
                 ))}
             </div>
