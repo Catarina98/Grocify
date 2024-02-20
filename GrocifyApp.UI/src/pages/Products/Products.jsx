@@ -62,7 +62,7 @@ function Products() {
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
 
-                <Searchbar placeholder={PlaceholderConsts.SearchSections}
+                <Searchbar placeholder={PlaceholderConsts.SearchProducts}
                     label={PlaceholderConsts.Search}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
@@ -75,7 +75,7 @@ function Products() {
                             <ReactSVG className={`react-svg ${section.id === selectedSection ? IconColorSections[section.icon] : 'icon-color--n500'}`} src={IconsConsts[section.icon] ?? null} />
                         </div>
 
-                        <div className={`text ${section.id === selectedSection ? ColorSections[section.icon] : ''}`}>{section.name}</div>
+                        <div className={styles.textSection + ` text text--xxs color--n500 ${section.id === selectedSection ? ColorSections[section.icon] : ''}`}>{section.name}</div>
                     </div>
                 ))}
             </div>
