@@ -56,7 +56,7 @@ function ProductSections() {
     };
 
     const closeModal = async () => {
-        setIsModalDeleteOpen(true);
+        setIsModalDeleteOpen(false);
 
         setSelectedSection(null);
     };

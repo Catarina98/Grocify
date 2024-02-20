@@ -50,11 +50,11 @@ const BaseModal = ({ title, isOpen, onClose, modalBody, onConfirm, isButtonDisab
 };
 
 BaseModal.propTypes = {
-    title: PropTypes.string,
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    modalBody: PropTypes.node,
     onConfirm: PropTypes.func.isRequired,
+    title: PropTypes.string,
+    modalBody: PropTypes.node,
     isButtonDisabled: PropTypes.bool,
     isConfirmModal: PropTypes.bool,
 };
