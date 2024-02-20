@@ -33,7 +33,7 @@ function ProductSections() {
     const fetchData = async () => {
         try {
             const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-            setSections(responseData);
+            //setSections(responseData);
         } catch (error) {
             console.log(error);
         }
@@ -57,7 +57,7 @@ function ProductSections() {
 
     return (
         <Layout>
-            {sections.length > 0 && <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
+            <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
                 </div>
@@ -66,35 +66,38 @@ function ProductSections() {
                     label={PlaceholderConsts.Search}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
-            </div>}
-
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
-
-            <div className={styles.containerSections}>
-                {sections.map(section => (
-                    <div className={styles.sectionRow} key={section.id}>
-                        <div className={styles.sectionInfo}>
-                            <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className={"react-svg " + ColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
-                            </div>
-
-                            <div className="text">{section.name}</div>
-                        </div>
-
-                        {section.houseId != null && (
-                            <div className="icon cursor-pointer">
-                                <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                            </div>
-                        )}
-                    </div>
-                ))}
             </div>
+
+            {sections.length > 0 &&
+                isModalOpen && (<> <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />
+                
+                <div className={styles.containerSections}>
+                    {sections.map(section => (
+                        <div className={styles.sectionRow} key={section.id}>
+                            <div className={styles.sectionInfo}>
+                                <div className={styles.iconW24 + " cursor-pointer"}>
+                                    <ReactSVG className={"react-svg " + ColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
+                                </div>
+
+                                <div className="text">{section.name}</div>
+                            </div>
+
+                            {section.houseId != null && (
+                                <div className="icon cursor-pointer">
+                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
 
             <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewSection}
-            </button>
+            </button> </>
+
+            )}
 
             {sections.length === 0 && <EmptyState />}
         </Layout>
