@@ -15,7 +15,7 @@ import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 
 //Consts
 import { PlaceholderConsts } from '../../consts/ENConsts';
-import { ButtonConsts } from '../../consts/ENConsts';
+import { ButtonConsts, ModalConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
 import styles from './ProductSections.module.scss';
@@ -72,7 +72,7 @@ function ProductSections() {
 
             {selectedSection != null && isModalDeleteOpen && (
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeModal()} onConfirm={deleteSection}
-                    title={"Are you sure you want to delete \"" + selectedSection.name + "\" section?"} />)}
+                    title={ModalConsts.DeleteSection(selectedSection.name)} />)}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
