@@ -36,11 +36,13 @@ const PlaceholderConsts = {
     SearchMeasures: "Search for product measures...",
     SearchProducts: "Search for products...",
     AddSectionName: "Add section name",
+    AddMeasureName: "Add measure name",
 };
 
 const LabelConsts = {
     ProductSectionName: "Product section name",
     ProductSectionIcon: "Section icon",
+    ProductMeasureName: "Product measure name",
 };
 
 const NavbarConsts = {
@@ -79,6 +81,7 @@ const ModalConsts = {
     DefaultShoppingList: "Change default shopping list",
     NewProductSection: "New product section",
     IconSection: "Icon of section",
+    NewProductMeasure: "New product measure",
 };
 
 export {

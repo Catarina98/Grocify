@@ -12,13 +12,13 @@ import useApiRequest from '../../hooks/useApiRequests';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
+import styles from './ProductSections.module.scss';
 
 //Consts
 import { PlaceholderConsts } from '../../consts/ENConsts';
 import { ButtonConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
-import styles from './ProductSections.module.scss';
 import { IconColorSections } from '../../consts/ColorsConsts';
 
 function ProductSections() {
@@ -81,7 +81,7 @@ function ProductSections() {
                         </div>
 
                         {section.houseId != null && (
-                            <div className="icon cursor-pointer">
+                            <div className="icon icon-options cursor-pointer">
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}
