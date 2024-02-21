@@ -12,12 +12,12 @@ namespace GrocifyApp.API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
-    public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter>(IEntitiesService<TEntity> genericBusiness, IMapper mapper, ICurrentUserService currentUserService)
-    : GenericControllerBase<TEntity, TRequestModel, TResponseModel, TFilter, IEntitiesService<TEntity>>(genericBusiness, mapper, currentUserService)
+    public class GenericController<TEntity, TRequestModel, TResponseModel, TFilter>(IEntitiesService<TEntity, TFilter> genericBusiness, IMapper mapper, ICurrentUserService currentUserService)
+    : GenericControllerBase<TEntity, TRequestModel, TResponseModel, TFilter, IEntitiesService<TEntity, TFilter>>(genericBusiness, mapper, currentUserService)
     where TEntity : BaseEntity
     where TRequestModel : class
     where TResponseModel : class
-    where TFilter : BaseSearchModel
+    where TFilter : BaseSearchModel<TEntity>
     {
     }
 

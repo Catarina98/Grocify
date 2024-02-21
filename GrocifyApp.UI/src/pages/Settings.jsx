@@ -30,7 +30,7 @@ function Settings(props) {
         {
             tableName: SettingsConsts.Products,
             items: [
-                { title: SettingsConsts.Products },
+                { title: SettingsConsts.Products, link: AppRoutes.Products },
                 { title: SettingsConsts.ProductSections, link: AppRoutes.ProductSections },
                 { title: SettingsConsts.ProductMeasures, link: AppRoutes.ProductMeaures },
             ]

@@ -4,10 +4,11 @@ using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
+using GrocifyApp.DAL.Filters;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class ShoppingListService : EntitiesServiceWithHouse<ShoppingList>, IShoppingListService
+    public class ShoppingListService : EntitiesServiceWithHouse<ShoppingList, BaseSearchModelWithHouse<ShoppingList>>, IShoppingListService
     {
         private readonly IRepository<ShoppingListProduct> _shoppingListProductRepository;
         protected override string entityName { get; set; } = GenericConsts.Entities.ShoppingList;
