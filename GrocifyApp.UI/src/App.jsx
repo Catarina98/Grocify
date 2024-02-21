@@ -10,6 +10,7 @@ import Settings from './pages/Settings';
 import Logout from './components/Logout';
 import ProductSections from './pages/Products/ProductSections';
 import ProductMeasures from './pages/Products/ProductMeasures';
+import ShoppingLists from './pages/ShoppingLists/ShoppingLists';
 
 //Assets & Css
 import './styles/styles.scss';
@@ -55,6 +56,8 @@ function App() {
 
                     <Route path={AppRoutes.ProductSections} element={<PrivateRoute><ProductSections /></PrivateRoute>} />
                     <Route path={AppRoutes.ProductMeaures} element={<PrivateRoute><ProductMeasures /></PrivateRoute>} />
+
+                    <Route path={AppRoutes.ShoppingLists} element={<PrivateRoute><ShoppingLists /></PrivateRoute>} />
                     <Route path={AppRoutes.Products} element={<PrivateRoute><Products /></PrivateRoute>} />
                 </Routes>
             </Router>
