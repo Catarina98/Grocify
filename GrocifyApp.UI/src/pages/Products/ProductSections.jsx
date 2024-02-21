@@ -13,14 +13,14 @@ import useApiRequest from '../../hooks/useApiRequests';
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
+import styles from './ProductSections.module.scss';
 
 //Consts
 import { PlaceholderConsts, ModalConsts } from '../../consts/ENConsts';
 import { ButtonConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
-import styles from './ProductSections.module.scss';
-import { ColorSections } from '../../consts/ColorsConsts';
+import { IconColorSections } from '../../consts/ColorsConsts';
 
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
@@ -86,14 +86,14 @@ function ProductSections() {
                     <div className={styles.sectionRow} key={section.id}>
                         <div className={styles.sectionInfo}>
                             <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className={"react-svg " + ColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
+                                <ReactSVG className={"react-svg " + IconColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
                             </div>
 
                             <div className="text">{section.name}</div>
                         </div>
 
                         {section.houseId != null && (
-                            <div className="icon cursor-pointer" onClick={() => setIsMoreOptionsOpen(true)}>
+                            <div className="icon icon-options cursor-pointer" onClick={() => setIsMoreOptionsOpen(true)}>
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}

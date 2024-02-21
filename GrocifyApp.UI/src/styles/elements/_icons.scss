@@ -82,6 +82,10 @@
     &.icon-color--g300 svg {
         fill: $color--g300;
     }
+
+    &.icon-color--n500 svg {
+        fill: $color--n500;
+    }
 }
 
 .icon {
@@ -95,6 +99,10 @@
         width: 32px;
         height: 32px;
     }
+}
+
+.icon-options {
+    padding: 8px;
 }
 
 .rotate-180 {
