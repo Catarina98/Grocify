@@ -94,8 +94,9 @@ function ProductSections() {
         await fetchData();
     };
 
-    const editSection = (prodSection) => {
-        setSection(prodSection);
+    const editSection = () => {
+        //setSection(selectedSection);
+        closeMoreOptionsModal();
         setIsModalOpen(true);
     };
 
@@ -120,7 +121,8 @@ function ProductSections() {
             {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} section={selectedSection} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
-                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)} />
+                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)}
+                    onClick={() => editSection()} />
 
                 <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
                     classColor="color-r300" onClick={() => openDeleteModal()} />
@@ -141,10 +143,6 @@ function ProductSections() {
                             <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(section)}>
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
-
-                            <div className="icon cursor-pointer" onClick={() => editSection(section)}> {/*remove*/}
-                                <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
-                            </div></>
                         )}
                     </div>
                 ))}

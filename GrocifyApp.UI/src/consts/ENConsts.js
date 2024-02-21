@@ -91,7 +91,7 @@ const ModalConsts = {
     EditEntity: (entity) => `Edit ${entity}`,
     DeleteEntity: (entity) => `Delete ${entity}`,
     DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
-    EditProductSection: "Edit product section",
+    EditProductSection: (sectionName) => `Edit ${sectionName} section`,
 };
 
 export {
