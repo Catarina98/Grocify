@@ -126,7 +126,7 @@ namespace GrocifyApp.API.Controllers
 
             await _genericBusiness.Update(u);
 
-            return Ok();
+            return NoContent();
         }
 
         //DELETE BY ID
@@ -140,7 +140,7 @@ namespace GrocifyApp.API.Controllers
         {
             await _genericBusiness.DeleteById(id);
 
-            return Ok();
+            return NoContent();
         }
 
         protected virtual async Task InsertAction(TEntity entity)

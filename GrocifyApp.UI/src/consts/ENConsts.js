@@ -10,6 +10,7 @@ const ButtonConsts = {
     Update: "Update",
     Create: "Create",
     Confirm: "Confirm",
+    Delete: "Delete",
     NewMeasure: "New measure",
     NewProduct: "New product"
 };
@@ -36,11 +37,13 @@ const PlaceholderConsts = {
     SearchMeasures: "Search for product measures...",
     SearchProducts: "Search for products...",
     AddSectionName: "Add section name",
+    AddMeasureName: "Add measure name",
 };
 
 const LabelConsts = {
     ProductSectionName: "Product section name",
     ProductSectionIcon: "Section icon",
+    ProductMeasureName: "Product measure name",
 };
 
 const NavbarConsts = {
@@ -79,6 +82,8 @@ const ModalConsts = {
     DefaultShoppingList: "Change default shopping list",
     NewProductSection: "New product section",
     IconSection: "Icon of section",
+    NewProductMeasure: "New product measure",
+    DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
     EditProductSection: "Edit product section",
 };
 
