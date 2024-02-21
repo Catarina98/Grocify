@@ -7,7 +7,7 @@ using GrocifyApp.DAL.Repositories.Interfaces;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class EntitiesService<T> : IEntitiesService<T> where T : BaseEntity
+    public class EntitiesService<T, TFilter> : IEntitiesService<T, TFilter> where T : BaseEntity where TFilter : BaseSearchModel<T>
     {
         protected readonly IRepository<T> repository;
 
@@ -60,7 +60,7 @@ namespace GrocifyApp.BLL.Implementations
             return await repository.GetAll(token);
         }
 
-        public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel
+        public virtual async Task<IEnumerable<T>> GetBySearchModel(TFilter filter, CancellationTokenSource? token = null)
         {
             return await repository.GetBySearchModel(filter, token);
         }

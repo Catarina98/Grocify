@@ -81,7 +81,7 @@ const RegisterForm = () => {
             <ReactSVG className="react-svg" src={ReactLogo} />
             <form className={stylesAuth.inputForm + " input-form"}>
                 <div className="title title--xl">{AuthConsts.SignUp}</div>
-                <p className={stylesAuth.authDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
+                <p className={stylesAuth.authDesc + " text color--n500"}>{AuthConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
 
                 {showPart1 ? (
@@ -124,7 +124,7 @@ const RegisterForm = () => {
 
             {showPart1 && (
                 <div className={stylesAuth.formFooter}>
-                    <div className="text color-n500">{AuthConsts.AlreadyHaveAccount}</div>
+                    <div className="text color--n500">{AuthConsts.AlreadyHaveAccount}</div>
                     <a className="subtle-button" href={AppRoutes.Login}>
                         <span className="btn-text btn--m">{AuthConsts.SignIn}</span>
                         <div className="btn-icon">

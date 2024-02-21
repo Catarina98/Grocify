@@ -13,13 +13,13 @@ namespace GrocifyApp.API.Controllers
     [Route("api/[controller]")]
     [Authorize]
     public class GenericControllerWithHouse<TEntity, TRequestModel, TResponseModel, TFilter>
-    : GenericControllerBase<TEntity, TRequestModel, TResponseModel, TFilter, IEntitiesServiceWithHouse<TEntity>>
+    : GenericControllerBase<TEntity, TRequestModel, TResponseModel, TFilter, IEntitiesServiceWithHouse<TEntity, TFilter>>
     where TEntity : BaseEntityWithHouse
     where TRequestModel : class
     where TResponseModel : class
-    where TFilter : BaseSearchModel
+    where TFilter : BaseSearchModelWithHouse<TEntity>
     {
-        public GenericControllerWithHouse(IEntitiesServiceWithHouse<TEntity> genericBusiness, IMapper mapper, ICurrentUserService currentUserService)
+        public GenericControllerWithHouse(IEntitiesServiceWithHouse<TEntity, TFilter> genericBusiness, IMapper mapper, ICurrentUserService currentUserService)
             : base(genericBusiness, mapper, currentUserService)
         {
             genericBusiness.HouseId = currentUserService.CurrentUser?.AuthenticatedHouseId;

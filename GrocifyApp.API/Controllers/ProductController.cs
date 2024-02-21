@@ -8,9 +8,9 @@ using GrocifyApp.DAL.Models;
 
 namespace GrocifyApp.API.Controllers
 {
-    public class ProductController : GenericControllerWithHouse<Product, ProductRequestModel, ProductResponseModel, BaseSearchModel>
+    public class ProductController : GenericControllerWithHouse<Product, ProductRequestModel, ProductResponseModel, ProductFilter>
     {
-        public ProductController(IEntitiesServiceWithHouse<Product> productService, IMapper mapper, ICurrentUserService currentUserService)
+        public ProductController(IEntitiesServiceWithHouse<Product, ProductFilter> productService, IMapper mapper, ICurrentUserService currentUserService)
             : base(productService, mapper, currentUserService)
         {
         }
