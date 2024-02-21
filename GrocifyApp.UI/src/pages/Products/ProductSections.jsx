@@ -7,16 +7,20 @@ import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import ProductSectionModal from '../../components/modals/ProductSectionModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
+import MoreOptionsButton from '../../components/modals/MoreOptionsButton';
+import BaseModal from '../../components/modals/BaseModal';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
+import EditIcon from '../../assets/edit-ic.svg';
+import TrashIcon from '../../assets/trash-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 import styles from './ProductSections.module.scss';
 
 //Consts
-import { PlaceholderConsts, ModalConsts, ButtonConsts } from '../../consts/ENConsts';
+import { PlaceholderConsts, ModalConsts, ButtonConsts, EntityConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
 import { IconColorSections } from '../../consts/ColorsConsts';
@@ -60,13 +64,11 @@ function ProductSections() {
 
     const closeDeleteModal = async () => {
         setIsModalDeleteOpen(false);
-
         setSelectedSection(null);
     };
 
-    const openDeleteModal = (section) => {
-        setSelectedSection(section);
-
+    const openDeleteModal = () => {
+        closeMoreOptionsModal();
         setIsModalDeleteOpen(true);
     };
     //---------End of delete sections---------
@@ -79,7 +81,8 @@ function ProductSections() {
         setIsModalOpen(false);
     };
 
-    const openMoreOptionsModal = () => {
+    const openMoreOptionsModal = (section) => {
+        setSelectedSection(section);
         setIsMoreOptionsOpen(true);
     };
 
@@ -111,7 +114,12 @@ function ProductSections() {
 
             {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} />}
 
-            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} />}
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
+                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)} />
+
+                <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
+                    classColor="color-r300" onClick={() => openDeleteModal()} />
+                </>} />}
 
             <div className={styles.containerSections}>
                 {sections.map(section => (
@@ -125,8 +133,7 @@ function ProductSections() {
                         </div>
 
                         {section.houseId != null && (
-                            //<div className="icon icon-options cursor-pointer" onClick={() => openDeleteModal(section)}>
-                            <div className="icon icon-options cursor-pointer" onClick={() => setIsMoreOptionsOpen(true)}>
+                            <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(section)}>
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}
