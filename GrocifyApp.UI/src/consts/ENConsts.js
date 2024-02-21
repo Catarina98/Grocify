@@ -14,6 +14,7 @@ const ButtonConsts = {
     Update: "Update",
     Create: "Create",
     Confirm: "Confirm",
+    Delete: "Delete",
     NewMeasure: "New measure",
     NewProduct: "New product"
 };
@@ -89,6 +90,7 @@ const ModalConsts = {
     MoreOptions: "More options",
     EditEntity: (entity) => `Edit ${entity}`,
     DeleteEntity: (entity) => `Delete ${entity}`,
+    DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
 };
 
 export {
