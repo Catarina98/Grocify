@@ -75,7 +75,7 @@ function Products() {
                             <ReactSVG className={`react-svg ${section.id === selectedSection ? IconColorSections[section.icon] : 'icon-color--n500'}`} src={IconsConsts[section.icon] ?? null} />
                         </div>
 
-                        <div className={styles.textSection + ` text text--xxs ${section.id === selectedSection ? ColorSections[section.icon] : 'color--n500'}`}>{section.name}</div>
+                        <div className={`text-ellipsis--line2 text text--xxs ${section.id === selectedSection ? ColorSections[section.icon] : 'color--n500'}`}>{section.name}</div>
                     </div>
                 ))}
             </div>
