@@ -24,6 +24,7 @@ import { IconColorSections } from '../../consts/ColorsConsts';
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
+    const [section, setSection] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -50,8 +51,13 @@ function ProductSections() {
         setIsModalOpen(false);
     };
 
-    const onConfirmCreateSection = async() => {
+    const onConfirmSection = async() => {
         await fetchData();
+    };
+
+    const editSection = (prodSection) => {
+        setSection(prodSection);
+        setIsModalOpen(true);
     };
 
     return (
@@ -67,7 +73,7 @@ function ProductSections() {
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmCreateSection} />}
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} section={section} />}
 
             <div className={styles.containerSections}>
                 {sections.map(section => (
@@ -80,16 +86,20 @@ function ProductSections() {
                             <div className="text">{section.name}</div>
                         </div>
 
-                        {section.houseId != null && (
+                        {section.houseId != null && (<>
                             <div className="icon cursor-pointer">
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
+
+                            <div className="icon cursor-pointer" onClick={() => editSection(section)}> {/*remove*/}
+                                <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
+                            </div></>
                         )}
                     </div>
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal() }>
+            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewSection}
