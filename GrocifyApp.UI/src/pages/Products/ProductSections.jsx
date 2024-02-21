@@ -72,7 +72,7 @@ function ProductSections() {
 
             {selectedSection != null && isModalDeleteOpen && (
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeModal()} onConfirm={deleteSection}
-                    title={ModalConsts.DeleteSection(selectedSection.name)} />)}
+                    title={ModalConsts.DeleteTitle(`"${selectedSection.name}" section`)} />)}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>

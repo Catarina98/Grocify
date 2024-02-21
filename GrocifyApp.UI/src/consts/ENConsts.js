@@ -68,7 +68,7 @@ const PassRulesConsts = {
 
 const ModalConsts = {
     DefaultShoppingList: "Change default shopping list",
-    DeleteSection: (section) => `Are you sure you want to delete "${section}" section?`,
+    DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
 };
 
 export {
