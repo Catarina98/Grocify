@@ -2,6 +2,10 @@ const GenericConsts = {
     Error: "Something went wrong"
 };
 
+const EntityConsts = {
+    ProductSection: "product section"
+};
+
 const ButtonConsts = {
     NewSection: "New section",
     Proceed: "Proceed",
@@ -83,12 +87,16 @@ const ModalConsts = {
     NewProductSection: "New product section",
     IconSection: "Icon of section",
     NewProductMeasure: "New product measure",
+    MoreOptions: "More options",
+    EditEntity: (entity) => `Edit ${entity}`,
+    DeleteEntity: (entity) => `Delete ${entity}`,
     DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
     EditProductSection: "Edit product section",
 };
 
 export {
     GenericConsts,
+    EntityConsts,
     SettingsConsts,
     PlaceholderConsts,
     LabelConsts,
