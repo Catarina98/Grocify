@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import ProductSectionModal from '../../components/modals/ProductSectionModal';
+import BaseModal from '../../components/modals/BaseModal';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -16,7 +17,7 @@ import styles from './ProductSections.module.scss';
 
 //Consts
 import { PlaceholderConsts } from '../../consts/ENConsts';
-import { ButtonConsts } from '../../consts/ENConsts';
+import { ButtonConsts, ModalConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
 import { IconColorSections } from '../../consts/ColorsConsts';
@@ -24,6 +25,8 @@ import { IconColorSections } from '../../consts/ColorsConsts';
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState([]);
+    const [selectedSection, setSelectedSection] = useState([]);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -42,6 +45,32 @@ function ProductSections() {
         fetchData();
     }, []);
 
+    //---------Delete sections---------
+    const deleteSection = async () => {
+        try {
+            await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(selectedSection.id), 'DELETE');
+
+            setSections(prevSections => prevSections.filter(section => section.id !== selectedSection.id));
+
+            setSelectedSection(null);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const closeDeleteModal = async () => {
+        setIsModalDeleteOpen(false);
+
+        setSelectedSection(null);
+    };
+
+    const openDeleteModal = (section) => {
+        setSelectedSection(section);
+
+        setIsModalDeleteOpen(true);
+    };
+    //---------End of delete sections---------
+
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -56,6 +85,11 @@ function ProductSections() {
 
     return (
         <Layout>
+
+            {selectedSection != null && isModalDeleteOpen && (
+                <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteSection}
+                    titleModal={ModalConsts.DeleteTitle(`"${selectedSection.name}" section`)} />)}
+
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
@@ -81,7 +115,7 @@ function ProductSections() {
                         </div>
 
                         {section.houseId != null && (
-                            <div className="icon icon-options cursor-pointer">
+                            <div className="icon icon-options cursor-pointer" onClick={() => openDeleteModal(section)}>
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}

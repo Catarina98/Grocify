@@ -35,6 +35,10 @@ const useApiRequest = () => {
                 throw new Error(errorMessage);
             }
 
+            if (response.status === 204) {
+                return null;
+            }
+
             return await response.json();
         } catch (error) {
             console.error('Error occurred:', error.message);

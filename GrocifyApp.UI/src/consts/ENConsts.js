@@ -10,6 +10,7 @@ const ButtonConsts = {
     Update: "Update",
     Create: "Create",
     Confirm: "Confirm",
+    Delete: "Delete",
     NewMeasure: "New measure",
     NewProduct: "New product"
 };
@@ -82,6 +83,7 @@ const ModalConsts = {
     NewProductSection: "New product section",
     IconSection: "Icon of section",
     NewProductMeasure: "New product measure",
+    DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
 };
 
 export {
