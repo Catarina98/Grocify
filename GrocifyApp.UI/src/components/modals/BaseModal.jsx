@@ -29,11 +29,11 @@ const BaseModal = ({ isOpen, onClose, titleModal, modalBody, onConfirm, isButton
                             <div className="title title--s weight--m">{titleModal}</div>
 
                             <div className="icon icon--w32 cursor-pointer" onClick={toggleModal}>
-                                <ReactSVG className="react-svg" src={CrossIcon} />
+                                <ReactSVG className="react-svg icon-color--n600" src={CrossIcon} />
                             </div>
                         </div>
                 
-                        <div className={styles.modalContent}>{modalBody}</div>
+                        <div className={`${styles.modalContent} ${noFooter ? styles.noFooter : ''}`}>{modalBody}</div>
 
                         {!noFooter && <div className={styles.modalFooter + " modal-footer"}>
                             <button className="secondary-button btn--m" onClick={toggleModal}>

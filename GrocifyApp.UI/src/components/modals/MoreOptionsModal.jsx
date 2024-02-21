@@ -39,7 +39,7 @@ const MoreOptionsModal = ({ onClose }) => {
     //};
 
     return (
-        <BaseModal isOpen={true} onClose={onClose} titleModal={ModalConsts.MoreOptions} modalBody={
+        <BaseModal isOpen={true} onClose={onClose} titleModal={ModalConsts.MoreOptions} noFooter={true} modalBody={
             <div className="more-options-content">
                 <div className="more-options-row cursor-pointer">
                     <div className="icon">

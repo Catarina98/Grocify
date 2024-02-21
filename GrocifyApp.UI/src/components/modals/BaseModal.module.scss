@@ -42,6 +42,11 @@
 .modalContent {
     flex: 1;
     padding: 24px 16px;
+
+    &.noFooter {
+        padding-top: 8px;
+        padding-bottom: 16px;
+    }
 }
 
 .modalFooter {
