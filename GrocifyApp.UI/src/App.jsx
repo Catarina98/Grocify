@@ -16,6 +16,7 @@ import './styles/styles.scss';
 
 //Consts
 import AppRoutes from './consts/AppRoutes';
+import Products from './pages/Products/Products';
 
 function PrivateRoute({ children }) {
     const isAuthenticated = !!localStorage.getItem('token');
@@ -54,6 +55,7 @@ function App() {
 
                     <Route path={AppRoutes.ProductSections} element={<PrivateRoute><ProductSections /></PrivateRoute>} />
                     <Route path={AppRoutes.ProductMeaures} element={<PrivateRoute><ProductMeasures /></PrivateRoute>} />
+                    <Route path={AppRoutes.Products} element={<PrivateRoute><Products /></PrivateRoute>} />
                 </Routes>
             </Router>
         </div>

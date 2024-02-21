@@ -49,7 +49,7 @@ const LoginForm = (props) => {
             <ReactSVG className="react-svg" src={ReactLogo} />
             <form className={styles.inputForm + " input-form"}>
                 <div className="title title--xl">{AuthConsts.SignIn}</div>
-                <p className={styles.authDesc + " text color-n500"}>{AuthConsts.EnterDetails}</p>
+                <p className={styles.authDesc + " text color--n500"}>{AuthConsts.EnterDetails}</p>
                 <p id="error" className="text error">{errorMessage}</p>
 
 
@@ -74,7 +74,7 @@ const LoginForm = (props) => {
             </form>
 
             <div className={styles.formFooter}>
-                <div className="text color-n500">{AuthConsts.HaveAccount}</div>
+                <div className="text color--n500">{AuthConsts.HaveAccount}</div>
                 <a className="subtle-button" href={AppRoutes.Register}>
                     <span className="btn-text btn--m">{AuthConsts.SignUp}</span>
                     <div className="btn-icon">

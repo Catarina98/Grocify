@@ -11,7 +11,7 @@ using APIConsts = GrocifyApp.API.Data.Consts.ENConsts;
 
 namespace GrocifyApp.API.Controllers
 {
-    public class HouseController : GenericController<House, HouseRequestModel, HouseResponseModel, BaseSearchModel>
+    public class HouseController : GenericController<House, HouseRequestModel, HouseResponseModel, BaseSearchModel<House>>
     {
         private readonly IHouseService _houseService;
 

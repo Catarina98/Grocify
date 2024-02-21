@@ -5,12 +5,11 @@ import PropTypes from 'prop-types';
 
 //Internal components
 import Layout from '../components/Layout/Layout';
-import CustomInput from '../components/CustomInput';
-import DefaultList from '../components/DefaultList';
+import Searchbar from '../components/Searchbar';
+import DefaultList from '../components/modals/DefaultList';
 import useApiRequest from '../hooks/useApiRequests';
 
 //Assets & Css
-import SearchIcon from '../assets/search-ic.svg';
 import ChevronIcon from '../assets/chevron-ic.svg';
 import LogoutIcon from '../assets/logout-ic.svg';
 import TrashIcon from '../assets/trash-ic.svg';
@@ -31,7 +30,7 @@ function Settings(props) {
         {
             tableName: SettingsConsts.Products,
             items: [
-                { title: SettingsConsts.Products },
+                { title: SettingsConsts.Products, link: AppRoutes.Products },
                 { title: SettingsConsts.ProductSections, link: AppRoutes.ProductSections },
                 { title: SettingsConsts.ProductMeasures, link: AppRoutes.ProductMeaures },
             ]
@@ -120,15 +119,10 @@ function Settings(props) {
         <Layout>
             <div className="container-settings">
                 <div className={styles.searchbarContainer}>
-                    <div className="searchbar-holder">
-                        <CustomInput className="app-form mb-0"
-                            type="text"
-                            placeholder={PlaceholderConsts.Search}
-                            label={PlaceholderConsts.Search}
-                            value={searchInput}
-                            icon={SearchIcon}
-                            onChange={(e) => setSearchInput(e.target.value)} />
-                    </div>
+                    <Searchbar placeholder={PlaceholderConsts.Search}
+                        label={PlaceholderConsts.Search}
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)} />
                 </div>
 
                 {isModalOpen && <DefaultList isOpen={isModalOpen} onClose={closeModal} />}

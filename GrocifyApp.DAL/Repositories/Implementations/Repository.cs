@@ -113,14 +113,14 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             }
         }
 
-        public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel
+        public async Task<IEnumerable<T>> GetBySearchModel<TFilter>(TFilter filter, CancellationTokenSource? token = null) where TFilter : BaseSearchModel<T>
         {
             if (filter == null)
             {
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            Expression<Func<T, bool>> expressions = ToExpression(filter);
+            Expression<Func<T, bool>> expressions = filter.BuildExpression();
 
             var s = entities.Where(expressions)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
@@ -169,16 +169,6 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             {
                 await SaveChangesAsync(token);
             }
-        }
-
-        public virtual Expression<Func<T, bool>> ToExpression<TFilter>(TFilter filter, CancellationTokenSource? token = null)
-        {
-            var expressions = new List<Expression<Func<T, bool>>>();
-
-            var result = ExpressionsExtension<T>
-                .MergeAndExpressions(expressions);
-
-            return result;
         }
 
         public async Task<int> UpdateMultipleLeafType(Expression<Func<T, bool>> expression,

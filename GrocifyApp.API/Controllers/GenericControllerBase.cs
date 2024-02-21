@@ -19,10 +19,10 @@ namespace GrocifyApp.API.Controllers
         where TEntity : BaseEntity
         where TRequestModel : class
         where TResponseModel : class
-        where TFilter : BaseSearchModel
-        where TService : IEntitiesService<TEntity>
+        where TFilter : BaseSearchModel<TEntity>
+        where TService : IEntitiesService<TEntity, TFilter>
     {
-        public IEntitiesService<TEntity> _genericBusiness { get; set; } = genericBusiness;
+        public IEntitiesService<TEntity, TFilter> _genericBusiness { get; set; } = genericBusiness;
         public IMapper _mapper { get; set; } = mapper;
         public ICurrentUserService CurrentUserService { get; } = currentUserService;
 
@@ -57,6 +57,20 @@ namespace GrocifyApp.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var entities = await _genericBusiness.GetAll();
+            
+            return Ok(entities);
+        }
+
+        //GET ALL ENTITIES
+        /// <summary>
+        /// Gets entities filtered.
+        /// </summary>
+        /// <response code="200">Success.</response>
+        /// <response code="404">No results found.</response>
+        [HttpGet("filtered")]
+        public async Task<IActionResult> GetAllFiltered([FromQuery] TFilter filter)
+        {
+            var entities = await _genericBusiness.GetBySearchModel(filter);
             
             return Ok(entities);
         }
