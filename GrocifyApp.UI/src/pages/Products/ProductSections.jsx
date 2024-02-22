@@ -78,6 +78,7 @@ function ProductSections() {
     };
 
     const closeModal = () => {
+        setSelectedSection(null);
         setIsModalOpen(false);
     };
 
@@ -90,7 +91,7 @@ function ProductSections() {
         setIsMoreOptionsOpen(false);
     };
 
-    const onConfirmSection = async() => {
+    const onConfirmSection = async () => {
         await fetchData();
     };
 
