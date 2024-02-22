@@ -22,10 +22,19 @@ const ProductSectionModal = ({ onClose, onConfirm, section }) => {
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
-        if (productSectionName !== "" && productSectionIcon !== "") {
-            setButtonDisabled(false);
-        } else {
-            setButtonDisabled(true);
+        if (section) {
+            if (productSectionName !== section.name || productSectionIcon !== section.icon) {
+                setButtonDisabled(false);
+            } else {
+                setButtonDisabled(true);
+            }
+        }
+        else {
+            if (productSectionName !== "" && productSectionIcon !== "") {
+                setButtonDisabled(false);
+            } else {
+                setButtonDisabled(true);
+            }
         }
     }, [productSectionIcon, productSectionName]);
     
