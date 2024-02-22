@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { ReactSVG } from 'react-svg';
-import { useNavigate } from 'react-router-dom';
 
 //Internal components
 import Searchbar from '../../components/Searchbar';
@@ -9,7 +8,6 @@ import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
-import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 
 //Consts
@@ -19,29 +17,18 @@ import styles from './ShoppingLists.module.scss';
 
 function ShoppingLists() {
     const [searchInput, setSearchInput] = useState('');
-    //const [sections, setSections] = useState([]);
-    //const [selectedSection, setSelectedSection] = useState([]);
     const [lists, setLists] = useState([]);
-    const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
 
     const getShoppingLists = async () => {
-        //setSelectedSection(sectionId);
-
-        //const filteredEntities = { ProductSectionId: sectionId };
-
         const listsResponse = await makeRequest(ApiEndpoints.ShoppingList_Endpoint, 'GET', null);
-
         setLists(listsResponse);
     };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                //const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-                //setSections(sectionsResponse);
-
                 await getShoppingLists();
             } catch (error) {
                 console.log(error);
@@ -65,7 +52,7 @@ function ShoppingLists() {
                             <div className="title weight--m text-ellipsis">{list.name}</div>
                         </div>
 
-                        <div className="icon icon--w32 cursor-pointer">
+                        <div className="icon icon-options cursor-pointer">
                             <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                         </div>
                     </div>
