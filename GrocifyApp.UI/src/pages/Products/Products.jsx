@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import useApiRequest from '../../hooks/useApiRequests';
+import ProductModal from '../../components/modals/ProductModal';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -25,27 +26,23 @@ function Products() {
     const [sections, setSections] = useState([]);
     const [selectedSection, setSelectedSection] = useState([]);
     const [products, setProducts] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
 
     const getProducts = async (sectionId) => {
         setSelectedSection(sectionId);
-
         const filteredEntities = { ProductSectionId: sectionId };
-
         const productsResponse = await makeRequest(ApiEndpoints.Products_Endpoint, 'GET', null, filteredEntities);
-
         setProducts(productsResponse);
     };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-
                 const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
                 setSections(sectionsResponse);
-
                 await getProducts(sectionsResponse[0].id);
             } catch (error) {
                 console.log(error);
@@ -55,8 +52,22 @@ function Products() {
         fetchData();
     }, []);
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const onConfirmProduct = async () => {
+        await getProducts();
+    };
+
     return (
         <Layout>
+            {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} />}
+
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
@@ -96,7 +107,7 @@ function Products() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float">
+            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewProduct}

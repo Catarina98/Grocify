@@ -141,7 +141,7 @@ function ProductSections() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal() }>
+            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewSection}
