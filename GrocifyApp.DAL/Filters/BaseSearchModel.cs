@@ -4,6 +4,11 @@ using System.Reflection;
 
 namespace GrocifyApp.DAL.Filters
 {
+    [System.AttributeUsage(System.AttributeTargets.Property)]
+    public class ContainsSearchAttribute : System.Attribute
+    {
+    }
+
     public class BaseSearchModel<T> where T : BaseEntity
     {
         public int PageNumber { get; set; } = 1;
@@ -13,6 +18,7 @@ namespace GrocifyApp.DAL.Filters
         {
             ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
             Expression? expression = null;
+            MethodInfo containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) })!;
 
             foreach (PropertyInfo propInfo in GetType().GetProperties())
             {
@@ -23,15 +29,27 @@ namespace GrocifyApp.DAL.Filters
                 {
                     Expression property = Expression.Property(parameter, prop);
                     Expression constant = Expression.Constant(value, prop.PropertyType);
-                    Expression equal = Expression.Equal(property, constant);
 
-                    if (expression == null)
+                    Expression? temp;// = Expression.Equal(property, constant);
+
+                    if (propInfo.GetCustomAttribute<ContainsSearchAttribute>() != null && prop.PropertyType == typeof(string))
                     {
-                        expression = equal;
+                        // Use Contains method for string properties
+                        temp = Expression.Call(property, containsMethod, constant);
                     }
                     else
                     {
-                        expression = Expression.AndAlso(expression, equal);
+                        // Use Equal method
+                        temp = Expression.Equal(property, constant);
+                    }
+
+                    if (expression == null)
+                    {
+                        expression = temp;
+                    }
+                    else
+                    {
+                        expression = Expression.AndAlso(expression, temp);
                     }
                 }
             }
