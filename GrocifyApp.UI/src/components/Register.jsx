@@ -70,7 +70,7 @@ const RegisterForm = () => {
 
             console.log('Register successful');
 
-            navigate('/');
+            navigate(AppRoutes.ShoppingLists);
         } catch (error) {
             setErrorMessage(error.message);
         }

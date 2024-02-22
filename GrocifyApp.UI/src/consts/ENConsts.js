@@ -16,7 +16,8 @@ const ButtonConsts = {
     Confirm: "Confirm",
     Delete: "Delete",
     NewMeasure: "New measure",
-    NewProduct: "New product"
+    NewProduct: "New product",
+    NewList: "New shopping list",
 };
 
 const SettingsConsts = {
@@ -40,6 +41,7 @@ const PlaceholderConsts = {
     SearchSections: "Search for product sections...",
     SearchMeasures: "Search for product measures...",
     SearchProducts: "Search for products...",
+    SearchLists: "Search for shopping lists...",
     AddSectionName: "Add section name",
     AddMeasureName: "Add measure name",
 };
