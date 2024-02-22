@@ -56,12 +56,10 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, isViewLi
                 modalBody=
                 {
                     isViewList ? (
-                        <div className="">
+                        <div className={styles.containerSections}>
                                 {Object.keys(IconsConsts).map(section => (
-                                    <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${section === selectedValue ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
-                                        <div className="">
-                                            <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section]} src={IconsConsts[section]} />
-                                        </div>
+                                    <div key={section} value={section} onClick={() => handleOptionChange(section)} className={styles.sectionRow + ` ${section === selectedValue ? styles.selected : ''}`}>
+                                        <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section]} src={IconsConsts[section]} />
 
                                         <div className="text">
                                             {section}

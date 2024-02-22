@@ -1,5 +1,23 @@
 @import "../../styles/core/variables/_colors-var.scss";
 
+.containerSections {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .sectionRow {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+
+        &.selected {
+            background-color: $color--n300;
+            border-radius: 6px;
+        }
+    }
+}
+
 .sectionSelected {
     border-radius: 6px;
 

@@ -50,6 +50,8 @@ const LabelConsts = {
     ProductSectionIcon: "Section icon",
     ProductMeasureName: "Product measure name",
     ProductName: "Product name",
+    ProductSection: "Product section",
+    ProductMeasure: "Product measure",
 };
 
 const NavbarConsts = {

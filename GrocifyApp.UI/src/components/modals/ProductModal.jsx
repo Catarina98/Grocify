@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import BaseModal from './BaseModal';
 import CustomInputApp from '../CustomInputApp';
 import ProductSectionSelector from '../Products/ProductSectionsSelector';
+import ProductMeasureSelector from '../Products/ProductMeasuresSelector';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -18,8 +19,10 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 const ProductModal = ({ onClose, onConfirm }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
     const [productName, setProductName] = useState("");
-    const [productSection, setProductSection] = useState('Home');
-    const [productMeasure, setProductMeasure] = useState('g');
+    const [productSection, setProductSection] = useState(null);
+    const [productMeasure, setProductMeasure] = useState(null);
+    const [measures, setMeasures] = useState([]);
+    const [sections, setSections] = useState([]);
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
@@ -29,6 +32,42 @@ const ProductModal = ({ onClose, onConfirm }) => {
             setButtonDisabled(true);
         }
     }, [productName]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const pMeasures = await getProductMeasures();
+            await getProductSections();
+
+            if (pMeasures) {
+                setProductMeasure(pMeasures[0]);
+            }
+
+            if (sections) {
+                setProductSection(sections[0]);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const getProductMeasures = async () => {
+        try {
+            const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
+            setMeasures(responseData);
+            return responseData;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getProductSections = async () => {
+        try {
+            const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
+            setSections(responseData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const createProduct = async () => {
 
@@ -55,6 +94,10 @@ const ProductModal = ({ onClose, onConfirm }) => {
                         selectedValue={productSection}
                         selectedValueChanged={(e) => setProductSection(e)}
                         isViewList={true} />
+
+                    <ProductMeasureSelector
+                        selectedValue={productMeasure}
+                        selectedValueChanged={(e) => setProductMeasure(e)} />
                 </div>} />
     );
 };
