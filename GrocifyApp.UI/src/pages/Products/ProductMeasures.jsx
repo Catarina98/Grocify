@@ -18,7 +18,7 @@ import styles from './ProductMeasures.module.scss';
 import { PlaceholderConsts, ButtonConsts } from '../../consts/ENConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
-function ProductMeasures() {
+function ProductMeasures() { //todo
     const [searchInput, setSearchInput] = useState('');
     const [measures, setMeasures] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
