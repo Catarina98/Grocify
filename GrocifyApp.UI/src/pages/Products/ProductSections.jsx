@@ -20,7 +20,7 @@ import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 import styles from './ProductSections.module.scss';
 
 //Consts
-import { PlaceholderConsts, ModalConsts, ButtonConsts, EntityConsts } from '../../consts/ENConsts';
+import { PlaceholderConsts, ModalConsts, ButtonConsts, EntityConsts, GenericConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
 import { IconColorSections } from '../../consts/ColorsConsts';
@@ -53,9 +53,7 @@ function ProductSections() {
     const deleteSection = async () => {
         try {
             await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(selectedSection.id), 'DELETE');
-
             setSections(prevSections => prevSections.filter(section => section.id !== selectedSection.id));
-
             setSelectedSection(null);
         } catch (error) {
             console.log(error);
@@ -105,7 +103,17 @@ function ProductSections() {
 
             {selectedSection != null && isModalDeleteOpen && (
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteSection}
-                    titleModal={ModalConsts.DeleteTitle(`<span class="color--primary">${selectedSection.name}</span> section`)} />)}
+                    titleModal={ModalConsts.DeleteTitle(`<span class="color--primary">${selectedSection.name}</span> ` + GenericConsts.Section)} />)}
+
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} section={selectedSection} />}
+
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
+                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)}
+                    onClick={() => editSection()} />
+
+                <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
+                    classColor="color-r300" onClick={() => openDeleteModal()} />
+            </>} />}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
@@ -117,16 +125,6 @@ function ProductSections() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
-
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} section={selectedSection} />}
-
-            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
-                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)}
-                    onClick={() => editSection()} />
-
-                <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
-                    classColor="color-r300" onClick={() => openDeleteModal()} />
-                </>} />}
 
             <div className={styles.containerSections}>
                 {sections.map(section => (
