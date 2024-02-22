@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 //Internal components
 import Layout from '../components/Layout/Layout';
 import Searchbar from '../components/Searchbar';
-import DefaultList from '../components/modals/DefaultList';
+import DefaultList from '../components/modals/Settings/DefaultList';
 import useApiRequest from '../hooks/useApiRequests';
 
 //Assets & Css

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //Internal components
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
-import ProductSectionModal from '../../components/modals/ProductSectionModal';
+import ProductSectionModal from '../../components/modals/Products/ProductSectionModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 import MoreOptionsButton from '../../components/modals/MoreOptionsButton';
 import BaseModal from '../../components/modals/BaseModal';
