@@ -47,7 +47,7 @@ function App() {
                     <Route path={AppRoutes.Register} element={<RegisterForm />} />
 
                     {/* Define the private routes */}
-                    <Route index element={<PrivateRoute><WeatherForecast /></PrivateRoute>} />
+                    <Route index element={<PrivateRoute><ShoppingLists /></PrivateRoute>} />
 
                     <Route path={AppRoutes.Settings} element={
                         <PrivateRoute>
