@@ -4,7 +4,7 @@ namespace GrocifyApp.DAL.Filters
 {
     public class ProductFilter : BaseSearchModelWithHouse<Product>
     {
-        [ContainsSearch] // Mark property with custom attribute
+        [ContainsSearch]
         public string? Name { get; set; }
         public Guid? ProductSectionId { get; set; }
     }

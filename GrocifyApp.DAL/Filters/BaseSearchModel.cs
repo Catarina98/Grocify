@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace GrocifyApp.DAL.Filters
 {
-    [System.AttributeUsage(System.AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class ContainsSearchAttribute : System.Attribute
     {
     }
@@ -18,7 +18,7 @@ namespace GrocifyApp.DAL.Filters
         {
             ParameterExpression parameter = Expression.Parameter(typeof(T), "x");
             Expression? expression = null;
-            MethodInfo containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) })!;
+            MethodInfo containsMethod = typeof(string).GetMethod("Contains", [typeof(string)])!;
 
             foreach (PropertyInfo propInfo in GetType().GetProperties())
             {
@@ -30,16 +30,14 @@ namespace GrocifyApp.DAL.Filters
                     Expression property = Expression.Property(parameter, prop);
                     Expression constant = Expression.Constant(value, prop.PropertyType);
 
-                    Expression? temp;// = Expression.Equal(property, constant);
+                    Expression? temp;
 
                     if (propInfo.GetCustomAttribute<ContainsSearchAttribute>() != null && prop.PropertyType == typeof(string))
                     {
-                        // Use Contains method for string properties
                         temp = Expression.Call(property, containsMethod, constant);
                     }
                     else
                     {
-                        // Use Equal method
                         temp = Expression.Equal(property, constant);
                     }
 
