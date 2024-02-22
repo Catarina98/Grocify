@@ -97,7 +97,6 @@ function ProductSections() {
 
     return (
         <Layout>
-
             {selectedSection != null && isModalDeleteOpen && (
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteSection}
                     titleModal={ModalConsts.DeleteTitle(`"${selectedSection.name}" section`)} />)}
@@ -120,33 +119,34 @@ function ProductSections() {
 
                 <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
                     classColor="color-r300" onClick={() => openDeleteModal()} />
-                </>} />}
+            </>} />}
 
-            <div className={styles.containerSections}>
-                {sections.map(section => (
-                    <div className={styles.sectionRow} key={section.id}>
-                        <div className={styles.sectionInfo}>
-                            <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className={"react-svg " + IconColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
-                            </div>
+            {sections != null && sections.length > 0 && (<>
+                <div className={styles.containerSections}>
+                    {sections.map(section => (
+                        <div className={styles.sectionRow} key={section.id}>
+                            <div className={styles.sectionInfo}>
+                                <div className={styles.iconW24 + " cursor-pointer"}>
+                                    <ReactSVG className={"react-svg " + IconColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
+                                </div>
 
-                                <div className="text">{section.name}</div>
-                            </div>
+                                    <div className="text">{section.name}</div>
+                                </div>
 
-                        {section.houseId != null && (
-                            <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(section)}>
-                                <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
+                            {section.houseId != null && (
+                                <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(section)}>
+                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
-                <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+                <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
+                    <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
-                {ButtonConsts.NewSection}
-            </button> </>
+                    {ButtonConsts.NewSection}
+                </button> </>
 
             )}
 
