@@ -42,7 +42,7 @@ const ProductSectionModal = ({ onClose, onConfirm, section }) => {
 
         const data = { name: productSectionName, icon: productSectionIcon };
 
-        await makeRequest(ApiEndpoints.ProductSection_Endpoint(section.id), 'PUT', data);
+        await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(section.id), 'PUT', data);
 
         onConfirm();
     };
@@ -50,7 +50,7 @@ const ProductSectionModal = ({ onClose, onConfirm, section }) => {
     return (
         <BaseModal isOpen={true} onClose={onClose} onConfirm={section ? editProductSection : createProductSection} isButtonDisabled={isButtonDisabled}
             buttonText={section ? ButtonConsts.Update : ButtonConsts.Create}
-            titleModal={section ? ModalConsts.EditProductSection(section.Name) : ModalConsts.NewProductSection} modalBody={
+            titleModal={section ? ModalConsts.EditProductSection(section.name) : ModalConsts.NewProductSection} modalBody={
             <div className={styles.inputRow}>
                     <CustomInputApp className="app-form mb-0"
                         type={InputType.Input}

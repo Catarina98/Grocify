@@ -95,7 +95,6 @@ function ProductSections() {
     };
 
     const editSection = () => {
-        //setSection(selectedSection);
         closeMoreOptionsModal();
         setIsModalOpen(true);
     };
@@ -105,7 +104,7 @@ function ProductSections() {
 
             {selectedSection != null && isModalDeleteOpen && (
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteSection}
-                    titleModal={ModalConsts.DeleteTitle(`"${selectedSection.name}" section`)} />)}
+                    titleModal={ModalConsts.DeleteTitle(`<span class="color--primary">${selectedSection.name}</span> section`)} />)}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>

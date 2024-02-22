@@ -90,8 +90,8 @@ const ModalConsts = {
     MoreOptions: "More options",
     EditEntity: (entity) => `Edit ${entity}`,
     DeleteEntity: (entity) => `Delete ${entity}`,
-    DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
-    EditProductSection: (sectionName) => `Edit ${sectionName} section`,
+    DeleteTitle: (itemToDelete) => `Are you sure you want to delete Edit ${itemToDelete}?`,
+    EditProductSection: (sectionName) => `Edit <span class="color--primary">${sectionName}</span> section`,
 };
 
 export {

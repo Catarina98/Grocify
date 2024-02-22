@@ -26,7 +26,7 @@ const BaseModal = ({ isOpen, onClose, titleModal, modalBody, onConfirm, isButton
             
                     <div className={`${styles.modalMobile + " modal-mobile"} ${isOpen ? styles.open : ''} ${noFooter ? styles.noFooter : ''}`}>
                         <div className={styles.modalHeader + " modal-header"}>
-                            <div className={"title title--s weight--m " + styles.title}>{titleModal}</div>
+                            <div className={"title title--s weight--m " + styles.title} dangerouslySetInnerHTML={{ __html: titleModal }}/>
 
                             <div className={"icon icon--w32 cursor-pointer " + styles.toggleModal} onClick={toggleModal}>
                                 <ReactSVG className="react-svg icon-color--n600" src={CrossIcon} />
