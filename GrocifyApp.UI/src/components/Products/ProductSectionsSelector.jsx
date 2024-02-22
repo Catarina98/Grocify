@@ -13,7 +13,7 @@ import styles from './SelectorDropdown.module.scss';
 //Consts
 import { LabelConsts, ModalConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
-import { BgColorSections, ColorSections } from "../../consts/ColorsConsts";
+import { BgColorSections, IconColorSections } from "../../consts/ColorsConsts";
 import InputType from '../../consts/InputType';
 
 const ProductSectionsSelector = ({ selectedValue, selectedValueChanged }) => {
@@ -41,7 +41,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged }) => {
                     label={LabelConsts.ProductSectionIcon}
                     value={
                         <div className="icon">
-                            <ReactSVG className={`react-svg ${ColorSections[selectedValue]} ${styles.reactSvg}`} src={IconsConsts[selectedValue]} />
+                            <ReactSVG className={`react-svg ${IconColorSections[selectedValue]} ${styles.reactSvg}`} src={IconsConsts[selectedValue]} />
                         </div>
                     }
                     onChange={selectedValueChanged}
@@ -54,7 +54,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged }) => {
                     <div className="grid-columns-6">
                         {Object.keys(IconsConsts).map(section => (
                             <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${section === selectedValue ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
-                                <ReactSVG className={"react-svg icon-w32-24 " + ColorSections[section]} src={IconsConsts[section]} />
+                                <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section]} src={IconsConsts[section]} />
                             </div>
                         ))}
                     </div>

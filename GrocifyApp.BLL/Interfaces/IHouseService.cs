@@ -1,8 +1,9 @@
-﻿using GrocifyApp.DAL.Models;
+﻿using GrocifyApp.DAL.Filters;
+using GrocifyApp.DAL.Models;
 
 namespace GrocifyApp.BLL.Interfaces
 {
-    public interface IHouseService : IEntitiesService<House>
+    public interface IHouseService : IEntitiesService<House, BaseSearchModel<House>>
     {
         Task<List<User>> GetUsersFromHouse(Guid houseId);
         Task InsertWithUser(House house, Guid userId, CancellationTokenSource? token = null);

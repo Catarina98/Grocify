@@ -1,12 +1,14 @@
 ﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
+using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class EntitiesServiceWithHouse<T> : EntitiesService<T>, IEntitiesServiceWithHouse<T> where T : BaseEntityWithHouse
+    public class EntitiesServiceWithHouse<T, TFilter> : EntitiesService<T, TFilter>, IEntitiesServiceWithHouse<T, TFilter>
+        where T : BaseEntityWithHouse where TFilter : BaseSearchModelWithHouse<T>
     {
         public EntitiesServiceWithHouse(IRepository<T> repository) : base(repository)
         {
@@ -29,6 +31,13 @@ namespace GrocifyApp.BLL.Implementations
             }
 
             return list;
+        }
+
+        public override Task<IEnumerable<T>> GetBySearchModel(TFilter filter, CancellationTokenSource? token = null)
+        {
+            filter.HouseIdFilter = HouseId;
+
+            return base.GetBySearchModel(filter, token);
         }
 
         protected override Task<bool> Validate(T entity)

@@ -1,12 +1,13 @@
 ﻿using GrocifyApp.BLL.Data.Consts.ENConsts;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Exceptions;
+using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using GrocifyApp.DAL.Repositories.Interfaces;
 
 namespace GrocifyApp.BLL.Implementations
 {
-    public class UserService : EntitiesService<User>, IUserService
+    public class UserService : EntitiesService<User, BaseSearchModel<User>>, IUserService
     {
         private readonly IRepository<UserHouse> _userHouseRepository;
         private readonly IHouseService _houseService;
