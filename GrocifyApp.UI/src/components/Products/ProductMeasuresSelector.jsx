@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 //Internal components
 import BaseModal from '../modals/BaseModal';
 import CustomInputApp from '../CustomInputApp';
-import useApiRequest from '../../hooks/useApiRequests';
+//import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
 import ChevronIcon from '../../assets/chevron-filled-ic.svg';
@@ -12,27 +12,26 @@ import styles from './SelectorDropdown.module.scss';
 
 //Consts
 import { LabelConsts } from '../../consts/ENConsts';
-import ApiEndpoints from "../../consts/ApiEndpoints";
-//import { BgColorSections, IconColorSections } from "../../consts/ColorsConsts";
+//import ApiEndpoints from "../../consts/ApiEndpoints";
 import InputType from '../../consts/InputType';
 
-const ProductMeasuresSelector = ({ selectedValue, selectedValueChanged }) => {
+const ProductMeasuresSelector = ({ selectedValue, selectedValueChanged, productMeasures }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [measures, setMeasures] = useState([]);
-    const { makeRequest } = useApiRequest();
+    //const [measures, setMeasures] = useState([]);
+    //const { makeRequest } = useApiRequest();
 
-    const fetchData = async () => {
-        try {
-            const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
-            setMeasures(responseData);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //const fetchData = async () => {
+    //    try {
+    //        const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
+    //        setMeasures(responseData);
+    //    } catch (error) {
+    //        console.log(error);
+    //    }
+    //};
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    //useEffect(() => {
+    //    fetchData();
+    //}, []);
 
     const handleOpenModal = () => {
         setIsOpen(true);
@@ -53,7 +52,7 @@ const ProductMeasuresSelector = ({ selectedValue, selectedValueChanged }) => {
                 <CustomInputApp className="app-form mb-0"
                     type={InputType.Custom}
                     label={LabelConsts.ProductMeasure}
-                    value={selectedValue}
+                    value={selectedValue.name}
                     onChange={selectedValueChanged}
                     icon={ChevronIcon}
                 />
@@ -61,7 +60,7 @@ const ProductMeasuresSelector = ({ selectedValue, selectedValueChanged }) => {
 
             <BaseModal isOpen={isOpen} onClose={handleCloseModal} titleModal={LabelConsts.ProductMeasure} noFooter={true} modalBody={
                     <div className={styles.containerSections}>
-                        {measures.map((measure) => (
+                        {productMeasures.map((measure) => (
                             <div key={measure.id} value={measure.name} onClick={() => handleOptionChange(measure)}
                                 className={`${styles.sectionRow} text ${measure === selectedValue ? styles.selected : ''}`}>
                                 {measure.name}
@@ -76,8 +75,8 @@ const ProductMeasuresSelector = ({ selectedValue, selectedValueChanged }) => {
 
 ProductMeasuresSelector.propTypes = {
     selectedValueChanged: PropTypes.func.isRequired,
-    selectedValue: PropTypes.string,
-    isViewList: PropTypes.bool,
+    selectedValue: PropTypes.object,
+    productMeasures: PropTypes.node
 };
 
 export default ProductMeasuresSelector;

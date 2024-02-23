@@ -19,8 +19,8 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 const ProductModal = ({ onClose, onConfirm }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
     const [productName, setProductName] = useState("");
-    const [productSection, setProductSection] = useState(null);
-    const [productMeasure, setProductMeasure] = useState(null);
+    const [productSection, setProductSection] = useState([]);
+    const [productMeasure, setProductMeasure] = useState([]);
     const [measures, setMeasures] = useState([]);
     const [sections, setSections] = useState([]);
     const { makeRequest } = useApiRequest();
@@ -36,14 +36,14 @@ const ProductModal = ({ onClose, onConfirm }) => {
     useEffect(() => {
         const fetchData = async () => {
             const pMeasures = await getProductMeasures();
-            await getProductSections();
+            const pSections = await getProductSections();
 
             if (pMeasures) {
                 setProductMeasure(pMeasures[0]);
             }
 
-            if (sections) {
-                setProductSection(sections[0]);
+            if (pSections) {
+                setProductSection(pSections[0]);
             }
         };
 
@@ -64,6 +64,7 @@ const ProductModal = ({ onClose, onConfirm }) => {
         try {
             const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
             setSections(responseData);
+            return responseData;
         } catch (error) {
             console.log(error);
         }
@@ -91,13 +92,15 @@ const ProductModal = ({ onClose, onConfirm }) => {
                         isRequired={true} />
 
                     <ProductSectionSelector
-                        selectedValue={productSection}
+                        selectedValue={{ id: productSection.id, name: productSection.name, icon: productSection.icon }}
                         selectedValueChanged={(e) => setProductSection(e)}
+                        productSections={sections}
                         isViewList={true} />
 
                     <ProductMeasureSelector
-                        selectedValue={productMeasure}
-                        selectedValueChanged={(e) => setProductMeasure(e)} />
+                        selectedValue={{ id: productMeasure.id, name: productMeasure.name }}
+                        selectedValueChanged={(e) => setProductMeasure(e)}
+                        productMeasures={measures} />
                 </div>} />
     );
 };

@@ -16,7 +16,7 @@ import IconsConsts from "../../consts/IconsConsts";
 import { BgColorSections, IconColorSections } from "../../consts/ColorsConsts";
 import InputType from '../../consts/InputType';
 
-const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, isViewList }) => {
+const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productSections, isViewList }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpenModal = () => {
@@ -41,11 +41,11 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, isViewLi
                     label={LabelConsts.ProductSectionIcon}
                     value={ isViewList ? (
                         <div className="text">
-                            {selectedValue}
+                            {selectedValue.name}
                         </div>
                     ) : (
                         <div className="icon">
-                            <ReactSVG className={`react-svg ${IconColorSections[selectedValue]} ${styles.reactSvg}`} src={IconsConsts[selectedValue]} />
+                            <ReactSVG className={`react-svg ${IconColorSections[selectedValue.icon]} ${styles.reactSvg}`} src={IconsConsts[selectedValue.icon]} />
                         </div>)
                     }
                     onChange={selectedValueChanged}
@@ -57,7 +57,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, isViewLi
                 {
                     isViewList ? (
                         <div className={styles.containerSections}>
-                                {Object.keys(IconsConsts).map(section => (
+                                {productSections.map((section) => (
                                     <div key={section} value={section} onClick={() => handleOptionChange(section)} className={styles.sectionRow + ` ${section === selectedValue ? styles.selected : ''}`}>
                                         <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section]} src={IconsConsts[section]} />
 
@@ -70,7 +70,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, isViewLi
                     ) : (
                             <div className="grid-columns-6">
                                 {Object.keys(IconsConsts).map(section => (
-                                    <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${section === selectedValue ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
+                                    <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${section === selectedValue.icon ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
                                         <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section]} src={IconsConsts[section]} />
                                     </div>
                                 ))}
@@ -85,7 +85,8 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, isViewLi
 
 ProductSectionsSelector.propTypes = {
     selectedValueChanged: PropTypes.func.isRequired,
-    selectedValue: PropTypes.string,
+    selectedValue: PropTypes.object,
+    productSections: PropTypes.node,
     isViewList: PropTypes.bool
 };
 
