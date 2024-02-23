@@ -51,7 +51,7 @@ const ProductSectionModal = ({ onClose, onConfirm }) => {
                         isRequired={true} />
 
                     <ProductSectionSelector
-                        selectedValue={productSectionIcon}
+                        selectedValue={{ icon: productSectionIcon }}
                         selectedValueChanged={(e) => setProductSectionIcon(e)} />
             </div>} />
     );
