@@ -74,9 +74,9 @@ const ProductModal = ({ onClose, onConfirm }) => {
 
         const data = { name: productName, productSectionId: productSection.id, productMeasureId: productMeasure.id };
 
-        await makeRequest(ApiEndpoints.Product_Endpoint, 'POST', data);
+        await makeRequest(ApiEndpoints.Products_Endpoint, 'POST', data);
 
-        onConfirm();
+        onConfirm(data.productSectionId);
     };
 
     return (

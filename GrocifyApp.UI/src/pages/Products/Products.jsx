@@ -60,8 +60,8 @@ function Products() {
         setIsModalOpen(false);
     };
 
-    const onConfirmProduct = async () => {
-        await getProducts();
+    const onConfirmProduct = async (sectionId) => {
+        await getProducts(sectionId);
     };
 
     return (

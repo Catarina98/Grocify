@@ -58,11 +58,11 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productS
                     isViewList ? (
                         <div className={styles.containerSections}>
                                 {productSections.map((section) => (
-                                    <div key={section} value={section} onClick={() => handleOptionChange(section)} className={styles.sectionRow + ` ${section === selectedValue ? styles.selected : ''}`}>
-                                        <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section]} src={IconsConsts[section]} />
+                                    <div key={section.id} value={section.name} onClick={() => handleOptionChange(section)} className={styles.sectionRow + ` ${section.id === selectedValue.id ? styles.selected : ''}`}>
+                                        <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section.icon]} src={IconsConsts[section.icon]} />
 
                                         <div className="text">
-                                            {section}
+                                            {section.name}
                                         </div>
                                     </div>
                                 ))}
