@@ -29,10 +29,24 @@ function Products() {
 
     const { makeRequest } = useApiRequest();
 
-    const getProducts = async (sectionId) => {
+    const filterProductsBySection = async (sectionId) => {
+        if (selectedSection === sectionId) { sectionId = null; }
+
         setSelectedSection(sectionId);
 
-        const filteredEntities = { ProductSectionId: sectionId };
+        await getProducts(sectionId, searchInput);
+    };
+
+    const filterProductsByName = async (productName) => {
+        setSearchInput(productName);
+
+        setSelectedSection(null);
+
+        await getProducts(null, productName);
+    };
+
+    const getProducts = async (sectionId, productName) => {
+        const filteredEntities = { ProductSectionId: sectionId, Name: productName };
 
         const productsResponse = await makeRequest(ApiEndpoints.Products_Endpoint, 'GET', null, filteredEntities);
 
@@ -46,7 +60,7 @@ function Products() {
                 const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
                 setSections(sectionsResponse);
 
-                await getProducts(sectionsResponse[0].id);
+                await filterProductsBySection(sectionsResponse[0].id);
             } catch (error) {
                 console.log(error);
             }
@@ -65,12 +79,12 @@ function Products() {
                 <Searchbar placeholder={PlaceholderConsts.SearchProducts}
                     label={PlaceholderConsts.Search}
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)} />
+                    onChange={(e) => filterProductsByName(e.target.value)} />
             </div>
 
             <div className={styles.containerSections}>
                 {sections.map(section => (
-                    <div key={section.id} className={styles.sectionInfo} onClick={() => getProducts(section.id)}>
+                    <div key={section.id} className={styles.sectionInfo} onClick={() => filterProductsBySection(section.id)}>
                         <div className={styles.iconW24 + " cursor-pointer"}>
                             <ReactSVG className={`react-svg ${section.id === selectedSection ? IconColorSections[section.icon] : 'icon-color--n500'}`} src={IconsConsts[section.icon] ?? null} />
                         </div>
