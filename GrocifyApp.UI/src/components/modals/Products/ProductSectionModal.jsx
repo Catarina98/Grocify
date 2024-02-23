@@ -23,7 +23,7 @@ const ProductSectionModal = ({ onClose, onConfirm, section }) => {
 
     useEffect(() => {
         if (section) {
-            if (productSectionName !== section.name || productSectionIcon !== section.icon) {
+            if ((productSectionName !== section.name || productSectionIcon !== section.icon) && productSectionName !== "" && productSectionIcon !== "") {
                 setButtonDisabled(false);
             } else {
                 setButtonDisabled(true);
