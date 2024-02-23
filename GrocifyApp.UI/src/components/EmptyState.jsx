@@ -11,7 +11,7 @@ import styles from './EmptyState.module.scss';
 //Consts
 import { EmptyStateConsts } from '../consts/ENConsts';
 
-const EmptyState = ({ onCreate, buttonText }) => {
+const EmptyState = ({ entity, onCreate, buttonText }) => {
     return (
         <div className={styles.emptyStateContainer}>
             <div className="icon">
@@ -20,11 +20,11 @@ const EmptyState = ({ onCreate, buttonText }) => {
 
             <div className={styles.emptyStateText}>
                 <div className="text--l">
-                    {EmptyStateConsts.Title("product section")} {/*use entity const*/}
+                    {EmptyStateConsts.Title(entity)}
                 </div>
 
                 <div className="text--xs">
-                    {EmptyStateConsts.Description("product section")}
+                    {EmptyStateConsts.Description(entity)}
                 </div>
             </div>
 
@@ -38,6 +38,7 @@ const EmptyState = ({ onCreate, buttonText }) => {
 };
 
 EmptyState.propTypes = {
+    entity: PropTypes.string.isRequired,
     onCreate: PropTypes.func,
     buttonText: PropTypes.string
 };

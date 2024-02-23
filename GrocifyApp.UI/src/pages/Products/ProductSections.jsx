@@ -150,7 +150,8 @@ function ProductSections() {
 
             )}
 
-            {sections != null && sections.length === 0 && <EmptyState onCreate={() => openModal()} buttonText={ButtonConsts.NewSection} />}
+            {sections != null && sections.length === 0 &&
+                <EmptyState entity={EntityConsts.ProductSection} onCreate={() => openModal()} buttonText={ButtonConsts.NewSection} />}
 
             {sections === null &&
                 <div className="loading bigger">
