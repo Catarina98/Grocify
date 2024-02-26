@@ -38,7 +38,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productS
             <div onClick={handleOpenModal}>
                 <CustomInputApp className="app-form mb-0"
                     type={InputType.Custom}
-                    label={LabelConsts.ProductSectionIcon}
+                    label={LabelConsts.Section}
                     value={ isViewList ? (
                         <div className="text">
                             {selectedValue.name}
@@ -52,7 +52,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productS
                     icon={ChevronIcon} />
             </div>
 
-            <BaseModal isOpen={isOpen} onClose={handleCloseModal} titleModal={ModalConsts.IconSection} noFooter={true}
+            <BaseModal isOpen={isOpen} onClose={handleCloseModal} titleModal={LabelConsts.Section} noFooter={true}
                 modalBody=
                 {
                     isViewList ? (

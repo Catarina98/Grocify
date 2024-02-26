@@ -71,8 +71,10 @@ const ProductModal = ({ onClose, onConfirm }) => {
     };
 
     const createProduct = async () => {
+        const section = sections.find(s => s.id === productSection.id);
+        const measure = measures.find(s => s.id === productMeasure.id);
 
-        const data = { name: productName, productSectionId: productSection.id, productMeasureId: productMeasure.id };
+        const data = { name: productName, productSectionId: section.id, productSection: section, productMeasureId: measure.id, productMeasure: measure };
 
         await makeRequest(ApiEndpoints.Products_Endpoint, 'POST', data);
 
