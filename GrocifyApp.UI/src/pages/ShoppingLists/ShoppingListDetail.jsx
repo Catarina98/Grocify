@@ -3,12 +3,9 @@ import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
 
 //Internal components
-import Searchbar from '../../components/Searchbar';
-import Layout from '../../components/Layout/Layout';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
-import DotsIcon from '../../assets/3-dots-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 
 //Consts
