@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 using GrocifyApp.DAL.Filters;
-using GrocifyApp.DAL.Helpers;
+using GrocifyApp.DAL.Exceptions;
 
 namespace GrocifyApp.DAL.Repositories.Implementations
 {
@@ -27,7 +27,7 @@ namespace GrocifyApp.DAL.Repositories.Implementations
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new NotFoundException();
             }
 
             entities.Remove(entity);
