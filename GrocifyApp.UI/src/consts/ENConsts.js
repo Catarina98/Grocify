@@ -95,6 +95,11 @@ const ModalConsts = {
     DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
 };
 
+const EmptyStateConsts = {
+    Title: (entity) => `There's no ${entity}`,
+    Description: (entity) => `Click the button below to create a ${entity}`,
+};
+
 export {
     GenericConsts,
     EntityConsts,
@@ -105,5 +110,6 @@ export {
     ButtonConsts,
     AuthConsts,
     PassRulesConsts,
-    ModalConsts
+    ModalConsts,
+    EmptyStateConsts
 };

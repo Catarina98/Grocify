@@ -10,6 +10,7 @@ import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 import MoreOptionsButton from '../../components/modals/MoreOptionsButton';
 import BaseModal from '../../components/modals/BaseModal';
 import useApiRequest from '../../hooks/useApiRequests';
+import EmptyState from '../../components/EmptyState';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -27,7 +28,7 @@ import { IconColorSections } from '../../consts/ColorsConsts';
 
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
-    const [sections, setSections] = useState([]);
+    const [sections, setSections] = useState(null);
     const [selectedSection, setSelectedSection] = useState([]);
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,7 +97,6 @@ function ProductSections() {
 
     return (
         <Layout>
-
             {selectedSection != null && isModalDeleteOpen && (
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteSection}
                     titleModal={ModalConsts.DeleteTitle(`"${selectedSection.name}" section`)} />)}
@@ -119,33 +119,44 @@ function ProductSections() {
 
                 <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
                     classColor="color-r300" onClick={() => openDeleteModal()} />
-                </>} />}
+            </>} />}
 
-            <div className={styles.containerSections}>
-                {sections.map(section => (
-                    <div className={styles.sectionRow} key={section.id}>
-                        <div className={styles.sectionInfo}>
-                            <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className={"react-svg " + IconColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
-                            </div>
+            {sections != null && sections.length > 0 && (<>
+                <div className={styles.containerSections}>
+                    {sections.map(section => (
+                        <div className={styles.sectionRow} key={section.id}>
+                            <div className={styles.sectionInfo}>
+                                <div className={styles.iconW24 + " cursor-pointer"}>
+                                    <ReactSVG className={"react-svg " + IconColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
+                                </div>
 
-                            <div className="text">{section.name}</div>
+                                    <div className="text">{section.name}</div>
+                                </div>
+
+                            {section.houseId != null && (
+                                <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(section)}>
+                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                </div>
+                            )}
                         </div>
+                    ))}
+                </div>
 
-                        {section.houseId != null && (
-                            <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(section)}>
-                                <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
+                <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
+                    <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal() }>
-                <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+                    {ButtonConsts.NewSection}
+                </button> </>
 
-                {ButtonConsts.NewSection}
-            </button>
+            )}
+
+            {sections != null && sections.length === 0 &&
+                <EmptyState entity={EntityConsts.ProductSection} onCreate={() => openModal()} buttonText={ButtonConsts.NewSection} />}
+
+            {sections === null &&
+                <div className="loading bigger">
+                    <div className="loading-button bigger"></div>
+                </div>}
         </Layout>
     );
 }
