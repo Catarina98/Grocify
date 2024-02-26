@@ -60,8 +60,8 @@ function ShoppingLists() {
                             </div>
                         </div>
 
-                        {listDetailId === list.id &&
-                            <ShoppingListDetail />}
+                        {listDetailId !== '' && listDetailId === list.id &&
+                            <ShoppingListDetail shoppingList={list} />}
                     </div>
                 ))}
             </div>

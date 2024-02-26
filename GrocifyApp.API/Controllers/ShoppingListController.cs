@@ -2,6 +2,7 @@
 using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.API.Services;
+using GrocifyApp.BLL.Implementations;
 using GrocifyApp.BLL.Interfaces;
 using GrocifyApp.DAL.Data.Consts.ENConsts;
 using GrocifyApp.DAL.Filters;
@@ -18,6 +19,20 @@ namespace GrocifyApp.API.Controllers
             : base(shoppingListService, mapper, currentUserService)
         {
             _shoppingListService = shoppingListService;
+        }
+
+        /// <summary>
+        /// Get products from shoppingList
+        /// </summary>
+        /// <response code="200">Success.</response>
+        /// <response code="404">ShoppingLits or products not found!</response>
+        /// <response code="400">Unable to get products due to validation error.</response>
+        [HttpGet("{id}/products")]
+        public async Task<ActionResult<List<Product>>> GetProductsFromShoppingList(Guid id)
+        {
+            var products = await _shoppingListService.GetProductsFromShoppingList(id);
+
+            return Ok(products);
         }
 
         /// <summary>

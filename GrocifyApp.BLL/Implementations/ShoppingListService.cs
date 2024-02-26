@@ -32,6 +32,19 @@ namespace GrocifyApp.BLL.Implementations
 
             return true;
         }
+        
+        public async Task<List<Product>> GetProductsFromShoppingList(Guid shoppingListId)
+        {
+            var products = await _shoppingListProductRepository.GetWhere<Product>(productList => 
+                productList.ShoppingListId == shoppingListId, productList => productList.Product!);
+
+            if (products == null || products.Count == 0)
+            {
+                throw new NotFoundException(GenericConsts.Exceptions.NoProductsFoundInList);
+            }
+
+            return products;
+        }
 
         /// <summary>
         /// Update the quantity of the products in the shopping list.
