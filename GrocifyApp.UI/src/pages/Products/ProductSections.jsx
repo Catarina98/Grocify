@@ -105,7 +105,7 @@ function ProductSections() {
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteSection}
                     titleModal={ModalConsts.DeleteTitle(`<span class="color--primary">${selectedSection.name}</span> ` + GenericConsts.Section)} />)}
 
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} section={selectedSection} />}
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} sectionToUpdate={selectedSection} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
                 <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)}

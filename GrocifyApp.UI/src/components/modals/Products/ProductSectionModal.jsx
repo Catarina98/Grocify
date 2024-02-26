@@ -15,27 +15,17 @@ import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../..
 import InputType from '../../../consts/InputType';
 import ApiEndpoints from '../../../consts/ApiEndpoints';
 
-const ProductSectionModal = ({ onClose, onConfirm, section }) => {
+const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
-    const [productSectionName, setProductSectionName] = useState(section != null ? section.name : '');
-    const [productSectionIcon, setProductSectionIcon] = useState(section != null ? section.icon : 'Home');
+    const [productSectionName, setProductSectionName] = useState(sectionToUpdate != null ? sectionToUpdate.name : '');
+    const [productSectionIcon, setProductSectionIcon] = useState(sectionToUpdate != null ? sectionToUpdate.icon : 'Home');
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
-        if (section) {
-            if ((productSectionName !== section.name || productSectionIcon !== section.icon) && productSectionName !== "" && productSectionIcon !== "") {
-                setButtonDisabled(false);
-            } else {
-                setButtonDisabled(true);
-            }
-        }
-        else {
-            if (productSectionName !== "" && productSectionIcon !== "") {
-                setButtonDisabled(false);
-            } else {
-                setButtonDisabled(true);
-            }
-        }
+        const isSectionEdited = sectionToUpdate && (productSectionName !== sectionToUpdate.name || productSectionIcon !== sectionToUpdate.icon);
+        const areInputsValid = productSectionName !== "" && productSectionIcon !== "";
+
+        setButtonDisabled(!areInputsValid || (sectionToUpdate && !isSectionEdited));
     }, [productSectionIcon, productSectionName]);
     
     const createProductSection = async () => {
@@ -51,15 +41,15 @@ const ProductSectionModal = ({ onClose, onConfirm, section }) => {
 
         const data = { name: productSectionName, icon: productSectionIcon };
 
-        await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(section.id), 'PUT', data);
+        await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(sectionToUpdate.id), 'PUT', data);
 
         onConfirm();
     };
 
     return (
-        <BaseModal isOpen={true} onClose={onClose} onConfirm={section ? editProductSection : createProductSection} isButtonDisabled={isButtonDisabled}
-            buttonText={section ? ButtonConsts.Update : ButtonConsts.Create}
-            titleModal={section ? ModalConsts.EditProductSection(section.name) : ModalConsts.NewProductSection} modalBody={
+        <BaseModal isOpen={true} onClose={onClose} onConfirm={sectionToUpdate ? editProductSection : createProductSection} isButtonDisabled={isButtonDisabled}
+            buttonText={sectionToUpdate ? ButtonConsts.Update : ButtonConsts.Create}
+            titleModal={sectionToUpdate ? ModalConsts.EditProductSection(sectionToUpdate.name) : ModalConsts.NewProductSection} modalBody={
             <div className={styles.inputRow}>
                     <CustomInputApp className="app-form mb-0"
                         type={InputType.Input}
@@ -79,7 +69,7 @@ const ProductSectionModal = ({ onClose, onConfirm, section }) => {
 ProductSectionModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     onConfirm: PropTypes.func,
-    section: PropTypes.object
+    sectionToUpdate: PropTypes.object
 };
 
 export default ProductSectionModal;
