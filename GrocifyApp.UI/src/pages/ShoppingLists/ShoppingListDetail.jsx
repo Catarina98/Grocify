@@ -12,7 +12,8 @@ import DotsIcon from '../../assets/3-dots-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 
 //Consts
-import { PlaceholderConsts, ButtonConsts } from '../../consts/ENConsts';
+import IconsConsts from '../../consts/IconsConsts';
+import { IconColorSections } from '../../consts/ColorsConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
 import styles from './ShoppingListDetail.module.scss';
 
@@ -60,7 +61,7 @@ function ShoppingListDetail({ shoppingList }) {
             {Object.entries(groupedProducts).map(([sectionId, sectionProducts]) => (
                 <div key={sectionId} className={styles.containerList}>
                     <div className="icon icon-options cursor-pointer">
-                        <ReactSVG className="react-svg icon-color--n600" src={sections[sectionId]} />
+                        <ReactSVG className={`react-svg ${IconColorSections[sections.find(s => s.id === sectionId).icon]}`} src={IconsConsts[sections.find(s => s.id === sectionId).icon]} />
                     </div>
                     {sectionProducts.map(product => (
                         <div key={product.id} className={styles.product}>
