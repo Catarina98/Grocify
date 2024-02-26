@@ -86,6 +86,10 @@
     &.icon-color--n500 svg {
         fill: $color--n500;
     }
+
+    &.icon-color--primary svg {
+        fill: $primary-color;
+    }
 }
 
 .icon {
@@ -98,6 +102,11 @@
     &--w32 {
         width: 32px;
         height: 32px;
+
+        svg{
+            width: 24px;
+            height: 24px;
+        }
     }
 }
 

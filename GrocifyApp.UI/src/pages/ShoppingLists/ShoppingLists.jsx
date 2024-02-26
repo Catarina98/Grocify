@@ -50,18 +50,18 @@ function ShoppingLists() {
             <div className={styles.containerLists}>
                 {lists.map(list => (
                     <div key={list.id}>
-                        <div className={styles.listRow} onClick={() => setListDetailId(listDetailId === list.id ? '' : list.id)}>
-                            <div className={styles.listInfo}>
+                        <div className={styles.listRow}>
+                            <div className={styles.listInfo} onClick={() => setListDetailId(listDetailId === list.id ? '' : list.id)}>
                                 <div className="title weight--m text-ellipsis">{list.name}</div>
-                            </div>
 
-                            <div className="icon icon-options cursor-pointer">
-                                <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                            </div>
+                                <div className="icon icon-options cursor-pointer">
+                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                </div>
+                            </div>  
+
+                            {listDetailId !== '' && listDetailId === list.id &&
+                                <ShoppingListDetail shoppingList={list} />}
                         </div>
-
-                        {listDetailId !== '' && listDetailId === list.id &&
-                            <ShoppingListDetail shoppingList={list} />}
                     </div>
                 ))}
             </div>
