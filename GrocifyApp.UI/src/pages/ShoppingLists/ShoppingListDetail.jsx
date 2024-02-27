@@ -16,27 +16,39 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 import styles from './ShoppingListDetail.module.scss';
 
 function ShoppingListDetail({ shoppingList }) {
-    //const [searchInput, setSearchInput] = useState('');
     const [products, setProducts] = useState([]);
     const [sections, setSections] = useState({});
 
     const { makeRequest } = useApiRequest();
 
-    const getProductSections = async () => {
-        const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET', null);
-        setSections(sectionsResponse);
-    };
+    //const getProductSections = async () => {
+    //    const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET', null);
+    //    setSections(sectionsResponse);
+    //};
 
     const getShoppingListProducts = async () => {
         const productsResponse = await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'GET', null);
         const sortedProducts = productsResponse.sort((a, b) => a.productSectionId - b.productSectionId);
+        const uniqueSections = new Set();
+        
+        sortedProducts.forEach(product => uniqueSections.add(product.productSection));
+        
+        const sections = Array.from(uniqueSections);
+        
+        setSections(sections);
         setProducts(sortedProducts);
+    };
+
+    const addProductsToShoppingList = async () => {
+        //await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'PUT', null);
+        //await getShoppingListProducts();
+        //TODO
     };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await getProductSections();
+                //await getProductSections();
                 await getShoppingListProducts();
             } catch (error) {
                 console.log(error);
@@ -56,7 +68,7 @@ function ShoppingListDetail({ shoppingList }) {
 
     return (
         <div className={styles.containerList}>
-            <button className="subtle-button btn--m">
+            <button className="subtle-button btn--m" onClick={() => addProductsToShoppingList()}>
                 <ReactSVG className={"react-svg icon-color--primary " + styles.subtleButton} src={PlusCircleIcon} />
 
                 {ButtonConsts.AddProduct}
@@ -92,9 +104,7 @@ function ShoppingListDetail({ shoppingList }) {
 }
 
 ShoppingListDetail.propTypes = {
-    shoppingList: PropTypes.shape({
-        shoppingListId: PropTypes.string.isRequired,
-    }).isRequired,
+    shoppingList: PropTypes.object.isRequired
 };
 
 export default ShoppingListDetail;
