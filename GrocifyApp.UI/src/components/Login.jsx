@@ -38,7 +38,7 @@ const LoginForm = (props) => {
 
             props.onDarkModeChange(userLogged.isDarkMode);
 
-            navigate('/');
+            navigate(AppRoutes.ShoppingLists);
         } catch (error) {
             setErrorMessage(GenericConsts.Error);
         }
