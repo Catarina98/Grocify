@@ -96,7 +96,7 @@ function ProductSections() {
 
     const editSection = () => {
         closeMoreOptionsModal();
-        setIsModalOpen(true);
+        openModal();
     };
 
     return (
@@ -124,16 +124,7 @@ function ProductSections() {
                     label={PlaceholderConsts.Search}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
-            </div>
-
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} />}
-
-            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
-                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)} />
-
-                <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
-                    classColor="color-r300" onClick={() => openDeleteModal()} />
-            </>} />}
+            </div>            
 
             {sections != null && sections.length > 0 && (<>
                 <div className={styles.containerSections}>
