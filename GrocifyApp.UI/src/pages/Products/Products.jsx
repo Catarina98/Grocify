@@ -23,10 +23,14 @@ import styles from './Products.module.scss';
 
 function Products() {
     const [searchInput, setSearchInput] = useState('');
+
     const [sections, setSections] = useState([]);
-    const [selectedSection, setSelectedSection] = useState([]);
     const [products, setProducts] = useState([]);
+
+    const [selectedSection, setSelectedSection] = useState([]);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
@@ -83,7 +87,7 @@ function Products() {
 
     return (
         <Layout>
-            {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} />}
+            {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} productSections={sections} />}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>

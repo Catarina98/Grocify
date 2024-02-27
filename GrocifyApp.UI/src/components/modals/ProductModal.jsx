@@ -16,13 +16,16 @@ import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../..
 import InputType from '../../consts/InputType';
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
-const ProductModal = ({ onClose, onConfirm }) => {
+const ProductModal = ({ onClose, onConfirm, productSections }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
+
     const [productName, setProductName] = useState("");
-    const [productSection, setProductSection] = useState([]);
+    const [productSection, setProductSection] = useState(productSections[0]);
     const [productMeasure, setProductMeasure] = useState([]);
+
     const [measures, setMeasures] = useState([]);
-    const [sections, setSections] = useState([]);
+    //const [sections, setSections] = useState([]);
+
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
@@ -36,15 +39,15 @@ const ProductModal = ({ onClose, onConfirm }) => {
     useEffect(() => {
         const fetchData = async () => {
             const pMeasures = await getProductMeasures();
-            const pSections = await getProductSections();
+            //const pSections = await getProductSections();
 
             if (pMeasures) {
                 setProductMeasure(pMeasures[0]);
             }
 
-            if (pSections) {
-                setProductSection(pSections[0]);
-            }
+            //if (pSections) {
+            //    setProductSection(pSections[0]);
+            //}
         };
 
         fetchData();
@@ -60,18 +63,18 @@ const ProductModal = ({ onClose, onConfirm }) => {
         }
     };
 
-    const getProductSections = async () => {
-        try {
-            const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-            setSections(responseData);
-            return responseData;
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    //const getProductSections = async () => {
+    //    try {
+    //        const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
+    //        setSections(responseData);
+    //        return responseData;
+    //    } catch (error) {
+    //        console.log(error);
+    //    }
+    //};
 
     const createProduct = async () => {
-        const section = sections.find(s => s.id === productSection.id);
+        const section = productSections.find(s => s.id === productSection.id);
         const measure = measures.find(s => s.id === productMeasure.id);
 
         const data = { name: productName, productSectionId: section.id, productSection: section, productMeasureId: measure.id, productMeasure: measure };
@@ -96,7 +99,7 @@ const ProductModal = ({ onClose, onConfirm }) => {
                     <ProductSectionSelector
                         selectedValue={{ id: productSection.id, name: productSection.name, icon: productSection.icon }}
                         selectedValueChanged={(e) => setProductSection(e)}
-                        productSections={sections}
+                        productSections={productSections}
                         isViewList={true} />
 
                     <ProductMeasureSelector
@@ -109,6 +112,7 @@ const ProductModal = ({ onClose, onConfirm }) => {
 
 ProductModal.propTypes = {
     onClose: PropTypes.func.isRequired,
+    productSections: PropTypes.node.isRequired,
     onConfirm: PropTypes.func
 };
 

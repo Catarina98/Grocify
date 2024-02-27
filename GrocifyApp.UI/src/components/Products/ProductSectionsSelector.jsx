@@ -11,7 +11,7 @@ import ChevronIcon from '../../assets/chevron-filled-ic.svg';
 import styles from './SelectorDropdown.module.scss';
 
 //Consts
-import { LabelConsts, ModalConsts } from '../../consts/ENConsts';
+import { LabelConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import { BgColorSections, IconColorSections } from "../../consts/ColorsConsts";
 import InputType from '../../consts/InputType';
@@ -45,7 +45,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productS
                         </div>
                     ) : (
                         <div className="icon">
-                            <ReactSVG className={`react-svg ${IconColorSections[selectedValue.icon]} ${styles.reactSvg}`} src={IconsConsts[selectedValue.icon]} />
+                            <ReactSVG className={`react-svg ${IconColorSections[selectedValue]} ${styles.reactSvg}`} src={IconsConsts[selectedValue]} />
                         </div>)
                     }
                     onChange={selectedValueChanged}
