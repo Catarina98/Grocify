@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 //Internal components
-import BaseModal from './BaseModal';
-import CustomInputApp from '../CustomInputApp';
-import ProductSectionSelector from '../Products/ProductSectionsSelector';
-import useApiRequest from '../../hooks/useApiRequests';
+import BaseModal from '../BaseModal';
+import CustomInputApp from '../../CustomInputApp';
+import useApiRequest from '../../../hooks/useApiRequests';
 
 //Assets & Css
 import styles from './ProductSectionModal.module.scss';
 
 //Consts
-import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../consts/ENConsts';
-import InputType from '../../consts/InputType';
-import ApiEndpoints from '../../consts/ApiEndpoints';
+import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../../consts/ENConsts';
+import InputType from '../../../consts/InputType';
+import ApiEndpoints from '../../../consts/ApiEndpoints';
 
 const ProductMeasureModal = ({ onClose, onConfirm }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);

@@ -13,6 +13,7 @@ const useApiRequest = () => {
 
         try {
             const queryString = Object.keys(query)
+                .filter(key => query[key] !== null && query[key] !== "")
                 .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`)
                 .join('&');
 
