@@ -22,7 +22,7 @@ import styles from './ProductMeasures.module.scss';
 import { PlaceholderConsts, ButtonConsts, ModalConsts, EntityConsts } from '../../consts/ENConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
-function ProductMeasures() { //todo
+function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
     const [measures, setMeasures] = useState([]);
 
