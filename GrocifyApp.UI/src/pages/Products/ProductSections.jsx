@@ -29,10 +29,13 @@ import { IconColorSections } from '../../consts/ColorsConsts';
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
     const [sections, setSections] = useState(null);
+
     const [selectedSection, setSelectedSection] = useState([]);
-    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isMoreOptionsOpen, setIsMoreOptionsOpen] = useState(false);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
