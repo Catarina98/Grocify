@@ -1,5 +1,6 @@
 const GenericConsts = {
-    Error: "Something went wrong"
+    Error: "Something went wrong",
+    Section: "section"
 };
 
 const EntityConsts = {
@@ -93,6 +94,7 @@ const ModalConsts = {
     EditEntity: (entity) => `Edit ${entity}`,
     DeleteEntity: (entity) => `Delete ${entity}`,
     DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
+    EditProductSection: (sectionName) => `Edit <span class="color--primary">${sectionName}</span> section`,
 };
 
 const EmptyStateConsts = {
