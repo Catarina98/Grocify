@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //Internal components
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
-import ProductMeasureModal from '../../components/modals/ProductMeasureModal';
+import ProductMeasureModal from '../../components/modals/Products/ProductMeasureModal';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css

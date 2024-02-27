@@ -396,19 +396,31 @@ button .react-svg svg {
         opacity: 0;
     }
 
+    &.bigger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50%;
+    }
+
     .loading-button {
         width: 24px;
         height: 24px;
         border-radius: 50%;
         display: inline-block;
         position: absolute;
-        background: conic-gradient(from 180deg at 50% 50%, $color--n700 0deg, rgba(255, 255, 255, 0) 360deg);
+        background: conic-gradient(from 180deg at 50% 50%, $primary-color 0deg, rgba(255, 255, 255, 0) 360deg);
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
         opacity: 1;
 
         &.white {
             background: conic-gradient(from 180deg at 50% 50%, $color--n100 0deg, rgba(255, 255, 255, 0) 360deg);
+        }
+
+        &.bigger {
+            width: 40px;
+            height: 40px;
         }
     }
 
@@ -427,6 +439,11 @@ button .react-svg svg {
 
     .loading-button.white::after {
         background: $primary-color;
+    }
+
+    .loading-button.bigger::after {
+        width: 32px;
+        height: 32px;
     }
 }
 

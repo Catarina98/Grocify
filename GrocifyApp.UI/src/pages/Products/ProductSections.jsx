@@ -5,11 +5,12 @@ import { useNavigate } from 'react-router-dom';
 //Internal components
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
-import ProductSectionModal from '../../components/modals/ProductSectionModal';
+import ProductSectionModal from '../../components/modals/Products/ProductSectionModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 import MoreOptionsButton from '../../components/modals/MoreOptionsButton';
 import BaseModal from '../../components/modals/BaseModal';
 import useApiRequest from '../../hooks/useApiRequests';
+import EmptyState from '../../components/EmptyState';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -20,14 +21,14 @@ import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 import styles from './ProductSections.module.scss';
 
 //Consts
-import { PlaceholderConsts, ModalConsts, ButtonConsts, EntityConsts } from '../../consts/ENConsts';
+import { PlaceholderConsts, ModalConsts, ButtonConsts, EntityConsts, GenericConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
 import { IconColorSections } from '../../consts/ColorsConsts';
 
 function ProductSections() {
     const [searchInput, setSearchInput] = useState('');
-    const [sections, setSections] = useState([]);
+    const [sections, setSections] = useState(null);
     const [selectedSection, setSelectedSection] = useState([]);
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,9 +54,7 @@ function ProductSections() {
     const deleteSection = async () => {
         try {
             await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(selectedSection.id), 'DELETE');
-
             setSections(prevSections => prevSections.filter(section => section.id !== selectedSection.id));
-
             setSelectedSection(null);
         } catch (error) {
             console.log(error);
@@ -78,6 +77,7 @@ function ProductSections() {
     };
 
     const closeModal = () => {
+        setSelectedSection(null);
         setIsModalOpen(false);
     };
 
@@ -90,16 +90,30 @@ function ProductSections() {
         setIsMoreOptionsOpen(false);
     };
 
-    const onConfirmSection = async() => {
+    const onConfirmSection = async () => {
         await fetchData();
+    };
+
+    const editSection = () => {
+        closeMoreOptionsModal();
+        openModal();
     };
 
     return (
         <Layout>
-
             {selectedSection != null && isModalDeleteOpen && (
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteSection}
-                    titleModal={ModalConsts.DeleteTitle(`"${selectedSection.name}" section`)} />)}
+                    titleModal={ModalConsts.DeleteTitle(`<span class="color--primary">${selectedSection.name}</span> ` + GenericConsts.Section)} />)}
+
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} sectionToUpdate={selectedSection} />}
+
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
+                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)}
+                    onClick={() => editSection()} />
+
+                <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
+                    classColor="color-r300" onClick={() => openDeleteModal()} />
+            </>} />}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
@@ -110,42 +124,44 @@ function ProductSections() {
                     label={PlaceholderConsts.Search}
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
-            </div>
+            </div>            
 
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} />}
+            {sections != null && sections.length > 0 && (<>
+                <div className={styles.containerSections}>
+                    {sections.map(section => (
+                        <div className={styles.sectionRow} key={section.id}>
+                            <div className={styles.sectionInfo}>
+                                <div className={styles.iconW24 + " cursor-pointer"}>
+                                    <ReactSVG className={"react-svg " + IconColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
+                                </div>
 
-            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
-                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)} />
+                                    <div className="text">{section.name}</div>
+                                </div>
 
-                <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
-                    classColor="color-r300" onClick={() => openDeleteModal()} />
-                </>} />}
-
-            <div className={styles.containerSections}>
-                {sections.map(section => (
-                    <div className={styles.sectionRow} key={section.id}>
-                        <div className={styles.sectionInfo}>
-                            <div className={styles.iconW24 + " cursor-pointer"}>
-                                <ReactSVG className={"react-svg " + IconColorSections[section.icon]} src={IconsConsts[section.icon] ?? null} />
-                            </div>
-
-                            <div className="text">{section.name}</div>
+                            {section.houseId != null && (
+                                <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(section)}>
+                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                </div>
+                            )}
                         </div>
+                    ))}
+                </div>
 
-                        {section.houseId != null && (
-                            <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(section)}>
-                                <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
+                <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
+                    <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
-                <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+                    {ButtonConsts.NewSection}
+                </button> </>
 
-                {ButtonConsts.NewSection}
-            </button>
+            )}
+
+            {sections != null && sections.length === 0 &&
+                <EmptyState entity={EntityConsts.ProductSection} onCreate={() => openModal()} buttonText={ButtonConsts.NewSection} />}
+
+            {sections === null &&
+                <div className="loading bigger">
+                    <div className="loading-button bigger"></div>
+                </div>}
         </Layout>
     );
 }
