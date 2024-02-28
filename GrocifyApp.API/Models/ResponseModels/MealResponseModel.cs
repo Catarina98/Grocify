@@ -8,6 +8,9 @@
         /// <example>Meal Name</example>
         public required string Name { get; set; }
 
+        /// <example>Meal Color</example>
+        public required string Color { get; set; }
+
         /// <example>1</example>
         public required int OrderIndex { get; set; }
 

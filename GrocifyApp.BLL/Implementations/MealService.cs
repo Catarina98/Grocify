@@ -16,10 +16,13 @@ namespace GrocifyApp.BLL.Implementations
 
         public override async Task Insert(Meal entity, CancellationTokenSource? token = null)
         {
-            var meals = await base.GetAll();
+            var meals = await repository.GetAll();
 
-            entity.OrderIndex = meals.Count() + 1;
-
+            if(meals != null && meals.Any())
+            {
+                entity.OrderIndex = meals.Count() + 1;
+            }
+            
             await base.Insert(entity, token);
         }
     }
