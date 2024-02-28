@@ -23,6 +23,8 @@ namespace GrocifyApp.API.Models.Mapper
             CreateMap<ShoppingListRequestModel, ShoppingList>().ReverseMap();
             CreateMap<ShoppingListProductResponseModel, ShoppingListProduct>().ReverseMap();
             CreateMap<ShoppingListProductRequestModel, ShoppingListProduct>().ReverseMap();
+            CreateMap<MealRequestModel, Meal>().ReverseMap();
+            CreateMap<MealResponseModel, Meal>().ReverseMap();
         }
     }
 }
