@@ -2,19 +2,16 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 //Internal components
-import BaseModal from './BaseModal';
-import CustomInputApp from '../CustomInputApp';
-import ProductSectionSelector from '../Products/ProductSectionsSelector';
-import ProductMeasureSelector from '../Products/ProductMeasuresSelector';
-import useApiRequest from '../../hooks/useApiRequests';
-
-//Assets & Css
-import styles from './ProductModal.module.scss';
+import BaseModal from '../BaseModal';
+import CustomInputApp from '../../CustomInputApp';
+import ProductSectionSelector from '../../Products/ProductSectionsSelector';
+import ProductMeasureSelector from '../../Products/ProductMeasuresSelector';
+import useApiRequest from '../../../hooks/useApiRequests';
 
 //Consts
-import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../consts/ENConsts';
-import InputType from '../../consts/InputType';
-import ApiEndpoints from '../../consts/ApiEndpoints';
+import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../../consts/ENConsts';
+import InputType from '../../../consts/InputType';
+import ApiEndpoints from '../../../consts/ApiEndpoints';
 
 const ProductModal = ({ onClose, onConfirm, productSections }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
@@ -24,7 +21,6 @@ const ProductModal = ({ onClose, onConfirm, productSections }) => {
     const [productMeasure, setProductMeasure] = useState([]);
 
     const [measures, setMeasures] = useState([]);
-    //const [sections, setSections] = useState([]);
 
     const { makeRequest } = useApiRequest();
 
@@ -39,47 +35,33 @@ const ProductModal = ({ onClose, onConfirm, productSections }) => {
     useEffect(() => {
         const fetchData = async () => {
             const pMeasures = await getProductMeasures();
-            //const pSections = await getProductSections();
 
             if (pMeasures) {
                 setProductMeasure(pMeasures[0]);
             }
-
-            //if (pSections) {
-            //    setProductSection(pSections[0]);
-            //}
         };
 
         fetchData();
     }, []);
 
     const getProductMeasures = async () => {
-        try {
-            const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
-            setMeasures(responseData);
-            return responseData;
-        } catch (error) {
-            console.log(error);
-        }
-    };
+        const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
+        setMeasures(responseData);
 
-    //const getProductSections = async () => {
-    //    try {
-    //        const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-    //        setSections(responseData);
-    //        return responseData;
-    //    } catch (error) {
-    //        console.log(error);
-    //    }
-    //};
+        return responseData;
+    };
 
     const createProduct = async () => {
         const section = productSections.find(s => s.id === productSection.id);
         const measure = measures.find(s => s.id === productMeasure.id);
 
         const data = { name: productName, productSectionId: section.id, productSection: section, productMeasureId: measure.id, productMeasure: measure };
-
-        await makeRequest(ApiEndpoints.Products_Endpoint, 'POST', data);
+                
+        try {
+            await makeRequest(ApiEndpoints.Products_Endpoint, 'POST', data);
+        } catch (error) {
+            console.log(error); //todo: add error message for user
+        }
 
         onConfirm(data.productSectionId);
     };
@@ -87,7 +69,7 @@ const ProductModal = ({ onClose, onConfirm, productSections }) => {
     return (
         <BaseModal isOpen={true} onClose={onClose} onConfirm={createProduct} isButtonDisabled={isButtonDisabled}
             buttonText={ButtonConsts.Create} titleModal={ModalConsts.NewProduct} modalBody={
-                <div className={styles.inputRow}>
+                <>
                     <CustomInputApp className="app-form mb-0"
                         type={InputType.Input}
                         placeholder={PlaceholderConsts.AddProductName}
@@ -102,17 +84,17 @@ const ProductModal = ({ onClose, onConfirm, productSections }) => {
                         productSections={productSections}
                         isViewList={true} />
 
-                    <ProductMeasureSelector
+                    {productMeasure.name && (<ProductMeasureSelector
                         selectedValue={{ id: productMeasure.id, name: productMeasure.name }}
                         selectedValueChanged={(e) => setProductMeasure(e)}
-                        productMeasures={measures} />
-                </div>} />
+                        productMeasures={measures} />)}
+                </>} />
     );
 };
 
 ProductModal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    productSections: PropTypes.node.isRequired,
+    productSections: PropTypes.array.isRequired,
     onConfirm: PropTypes.func
 };
 

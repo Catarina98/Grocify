@@ -45,7 +45,7 @@ const ProductMeasuresSelector = ({ selectedValue, selectedValueChanged, productM
                     <div className={styles.containerMeasures}>
                         {productMeasures.map((measure) => (
                             <div key={measure.id} value={measure.name} onClick={() => handleOptionChange(measure)}
-                                className={`${styles.measureRow} text ${measure === selectedValue ? styles.selected : ''}`}>
+                                className={`${styles.measureRow} text ${measure.name === selectedValue.name ? styles.selected : ''}`}>
                                 {measure.name}
                             </div>
                         ))}
@@ -59,7 +59,7 @@ const ProductMeasuresSelector = ({ selectedValue, selectedValueChanged, productM
 ProductMeasuresSelector.propTypes = {
     selectedValueChanged: PropTypes.func.isRequired,
     selectedValue: PropTypes.object,
-    productMeasures: PropTypes.node
+    productMeasures: PropTypes.array
 };
 
 export default ProductMeasuresSelector;

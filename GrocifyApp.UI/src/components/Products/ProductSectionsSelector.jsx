@@ -86,7 +86,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productS
 ProductSectionsSelector.propTypes = {
     selectedValueChanged: PropTypes.func.isRequired,
     selectedValue: PropTypes.object,
-    productSections: PropTypes.node,
+    productSections: PropTypes.array,
     isViewList: PropTypes.bool
 };
 

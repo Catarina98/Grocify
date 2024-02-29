@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import useApiRequest from '../../hooks/useApiRequests';
-import ProductModal from '../../components/modals/ProductModal';
+import ProductModal from '../../components/modals/Products/ProductModal';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -82,7 +82,8 @@ function Products() {
     };
 
     const onConfirmProduct = async (sectionId) => {
-        await getProducts(sectionId);
+        setSelectedSection(sectionId);
+        await filterProductsBySection(sectionId);        
     };
 
     return (
