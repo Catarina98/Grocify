@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GrocifyApp.API.Models.RequestModels
+﻿namespace GrocifyApp.API.Models.RequestModels
 {
     public class ProductMeasureRequestModel
     {
