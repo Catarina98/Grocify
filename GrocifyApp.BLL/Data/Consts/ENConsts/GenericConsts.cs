@@ -8,6 +8,7 @@
             public const string ProductMeasure = "Product measure";
             public const string Product = "Product";
             public const string ShoppingList = "Shopping list";
+            public const string Inventory = "Inventory";
             public const string Entity = "Entity";
         }
 
