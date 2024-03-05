@@ -1,5 +1,6 @@
 const GenericConsts = {
-    Error: "Something went wrong"
+    Error: "Something went wrong",
+    Section: "section"
 };
 
 const EntityConsts = {
@@ -45,12 +46,18 @@ const PlaceholderConsts = {
     SearchLists: "Search for shopping lists...",
     AddSectionName: "Add section name",
     AddMeasureName: "Add measure name",
+    AddProductName: "Add product name",
 };
 
 const LabelConsts = {
     ProductSectionName: "Product section name",
     ProductSectionIcon: "Section icon",
     ProductMeasureName: "Product measure name",
+    ProductName: "Product name",
+    ProductSection: "Product section",
+    ProductMeasure: "Product measure",
+    Measure: "Measure",
+    Section: "Section",
 };
 
 const NavbarConsts = {
@@ -88,12 +95,19 @@ const PassRulesConsts = {
 const ModalConsts = {
     DefaultShoppingList: "Change default shopping list",
     NewProductSection: "New product section",
+    NewProduct: "New product",
     IconSection: "Icon of section",
     NewProductMeasure: "New product measure",
     MoreOptions: "More options",
     EditEntity: (entity) => `Edit ${entity}`,
     DeleteEntity: (entity) => `Delete ${entity}`,
     DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
+    EditProductSection: (sectionName) => `Edit <span class="color--primary">${sectionName}</span> section`,
+};
+
+const EmptyStateConsts = {
+    Title: (entity) => `There's no ${entity}`,
+    Description: (entity) => `Click the button below to create a ${entity}`,
 };
 
 export {
@@ -106,5 +120,6 @@ export {
     ButtonConsts,
     AuthConsts,
     PassRulesConsts,
-    ModalConsts
+    ModalConsts,
+    EmptyStateConsts
 };

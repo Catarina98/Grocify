@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import useApiRequest from '../../hooks/useApiRequests';
+import ProductModal from '../../components/modals/Products/ProductModal';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -22,9 +23,14 @@ import styles from './Products.module.scss';
 
 function Products() {
     const [searchInput, setSearchInput] = useState('');
+
     const [sections, setSections] = useState([]);
-    const [selectedSection, setSelectedSection] = useState([]);
     const [products, setProducts] = useState([]);
+
+    const [selectedSection, setSelectedSection] = useState([]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
@@ -49,14 +55,12 @@ function Products() {
         const filteredEntities = { ProductSectionId: sectionId, Name: productName };
 
         const productsResponse = await makeRequest(ApiEndpoints.Products_Endpoint, 'GET', null, filteredEntities);
-
         setProducts(productsResponse);
     };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-
                 const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
                 setSections(sectionsResponse);
 
@@ -69,8 +73,23 @@ function Products() {
         fetchData();
     }, []);
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const onConfirmProduct = async (sectionId) => {
+        setSelectedSection(sectionId);
+        await filterProductsBySection(sectionId);        
+    };
+
     return (
         <Layout>
+            {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} productSections={sections} />}
+
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
                     <ReactSVG className="react-svg icon-color--n600" src={ChevronIcon} />
@@ -110,7 +129,7 @@ function Products() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float">
+            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewProduct}
