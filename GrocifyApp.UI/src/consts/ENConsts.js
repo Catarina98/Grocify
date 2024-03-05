@@ -19,6 +19,7 @@ const ButtonConsts = {
     NewMeasure: "New measure",
     NewProduct: "New product",
     NewList: "New shopping list",
+    AddProduct: "Add product",
 };
 
 const SettingsConsts = {

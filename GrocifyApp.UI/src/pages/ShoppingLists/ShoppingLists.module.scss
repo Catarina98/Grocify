@@ -9,14 +9,19 @@
 
     .listRow {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 54px;
+        flex-direction: column;
+        min-height: 54px;
         padding: 0 16px;
         border-bottom: 1px solid $color--n300;
 
         &:active, &:hover {
             border-color: $color--n500;
+        }
+
+        .listInfo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     }
 }
