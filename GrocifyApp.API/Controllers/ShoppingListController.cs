@@ -3,6 +3,7 @@ using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
+using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +27,20 @@ namespace GrocifyApp.API.Controllers
         /// <response code="404">ShoppingLits or products not found!</response>
         /// <response code="400">Unable to get products due to validation error.</response>
         [HttpGet("{id}/products")]
-        public async Task<ActionResult<List<Product>>> GetProductsFromShoppingList(Guid id)
+        public async Task<ActionResult<IEnumerable<KeyValuePair<Product, int>>>> GetProductsFromShoppingList(Guid id)
         {
-            var products = await _shoppingListService.GetProductsFromShoppingList(id);
+            try
+            {
+                var productsWithQuantities = await _shoppingListService.GetProductsFromShoppingList(id);
 
-            return Ok(products);
+                var productList = productsWithQuantities.Select(kv => new KeyValuePair<Product, int>(kv.Key, kv.Value)).ToList();
+
+                return Ok(productList);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         /// <summary>

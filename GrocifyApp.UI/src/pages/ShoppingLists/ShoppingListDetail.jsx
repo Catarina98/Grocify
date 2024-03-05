@@ -7,6 +7,8 @@ import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
+import PlusIcon from '../../assets/plus-ic.svg';
+import MinusIcon from '../../assets/minus-ic.svg';
 
 //Consts
 import IconsConsts from '../../consts/IconsConsts';
@@ -18,24 +20,33 @@ import styles from './ShoppingListDetail.module.scss';
 function ShoppingListDetail({ shoppingList }) {
     const [products, setProducts] = useState([]);
     const [sections, setSections] = useState({});
+    const [measures, setMeasures] = useState({});
+    const [quantityClick, setquantityClick] = useState(false);
 
     const { makeRequest } = useApiRequest();
 
-    //const getProductSections = async () => {
-    //    const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET', null);
-    //    setSections(sectionsResponse);
-    //};
+    const getProductSections = async () => {
+        return await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET', null);
+    };
+
+    const getProductMeasures = async () => {
+        const getMeasures = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET', null);
+        setMeasures(getMeasures);
+    };
 
     const getShoppingListProducts = async () => {
-        const productsResponse = await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'GET', null);
-        const sortedProducts = productsResponse.sort((a, b) => a.productSectionId - b.productSectionId);
-        const uniqueSections = new Set();
+        const productsQuantityResponse = await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'GET', null);
+
+        const getProducts = productsQuantityResponse.map(kv => kv.key);
+        const sortedProducts = getProducts.sort((a, b) => a.productSectionId - b.productSectionId);
+        const uniqueSectionsId = new Set();
         
-        sortedProducts.forEach(product => uniqueSections.add(product.productSection));
+        sortedProducts.forEach(product => uniqueSectionsId.add(product.productSectionId));
+        const sections = await getProductSections();
         
-        const sections = Array.from(uniqueSections);
+        const uniqueSections = sections.filter(section => uniqueSectionsId.has(section.id));
         
-        setSections(sections);
+        setSections(uniqueSections);
         setProducts(sortedProducts);
     };
 
@@ -48,8 +59,8 @@ function ShoppingListDetail({ shoppingList }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                //await getProductSections();
                 await getShoppingListProducts();
+                await getProductMeasures();
             } catch (error) {
                 console.log(error);
             }
@@ -68,7 +79,7 @@ function ShoppingListDetail({ shoppingList }) {
 
     return (
         <div className={styles.containerList}>
-            <button className="subtle-button btn--m" onClick={() => addProductsToShoppingList()}>
+            <button className={"subtle-button btn--m " + styles.subtleButton} onClick={() => addProductsToShoppingList()}>
                 <ReactSVG className={"react-svg icon-color--primary " + styles.subtleButton} src={PlusCircleIcon} />
 
                 {ButtonConsts.AddProduct}
@@ -88,13 +99,23 @@ function ShoppingListDetail({ shoppingList }) {
                         <div key={product.id} className={styles.product}>
                             <div className={styles.checkBox}>
                                 <label className="checkbox-container">
-                                    <input type="radio" />
+                                    <input type="checkbox" />
                                 </label>
 
                                 <div className="text text-ellipsis">{product.name}</div>
                             </div>
-                            
-                            <div className="text text-ellipsis">{product.quantity}</div>
+
+                            <div onClick={() => setquantityClick(!quantityClick) }>
+                                <div className={"icon cursor-pointer " + quantityClick ? '' : styles.displayNone}>
+                                    <ReactSVG className="react-svg" src={PlusIcon} />
+                                </div>
+
+                                <div className="text text-ellipsis">{product.quantity}</div>
+
+                                <div className={"icon cursor-pointer " + quantityClick ? '' : styles.displayNone}>
+                                    <ReactSVG className="react-svg" src={MinusIcon} />
+                                </div>
+                            </div>                            
                         </div>
                     ))}
                 </div>

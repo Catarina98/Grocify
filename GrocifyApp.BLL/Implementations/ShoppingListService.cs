@@ -33,7 +33,7 @@ namespace GrocifyApp.BLL.Implementations
             return true;
         }
         
-        public async Task<List<Product>> GetProductsFromShoppingList(Guid shoppingListId)
+        public async Task<Dictionary<Product, int>> GetProductsFromShoppingList(Guid shoppingListId)
         {
             var products = await _shoppingListProductRepository.GetWhere<Product>(productList => 
                 productList.ShoppingListId == shoppingListId, productList => productList.Product!);
@@ -43,7 +43,21 @@ namespace GrocifyApp.BLL.Implementations
                 throw new NotFoundException(GenericConsts.Exceptions.NoProductsFoundInList);
             }
 
-            return products;
+            var productQuantities = new Dictionary<Product, int>();
+
+            foreach (var product in products)
+            {
+                if (productQuantities.ContainsKey(product))
+                {
+                    productQuantities[product]++;
+                }
+                else
+                {
+                    productQuantities.Add(product, 1);
+                }
+            }
+
+            return productQuantities;
         }
 
         /// <summary>

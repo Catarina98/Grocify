@@ -91,7 +91,7 @@ input[type="checkbox"] {
     appearance: none;
     width: 12px;
     height: 12px;
-    border: 1px solid $color--n500;
+    border: 1px solid $color--n400;
     display: grid;
     place-content: center;
     border-radius: 2px;
@@ -107,7 +107,7 @@ input[type="checkbox"] {
     }
 
     &:checked {
-        background-color: $color--b300;
+        background-color: $primary-color;
         border: none;
 
         &::before {
@@ -115,11 +115,11 @@ input[type="checkbox"] {
         }
 
         &:hover {
-            background-color: $color--b400;
+            background-color: $primary-color--hover;
         }
 
         &:active {
-            background-color: $color--b500;
+            background-color: $primary-color--pressed;
         }
 
         &:disabled {
@@ -158,25 +158,25 @@ input[type="radio"] {
 
     &:checked {
         background-color: $color--n100;
-        border-color: $color--b300;
+        border-color: $primary-color;
 
         &::before {
             transform: scale(1);
         }
 
         &:hover {
-            border-color: $color--b400;
+            border-color: $primary-color--hover;
 
             &::before {
-                background-color: $color--b400;
+                background-color: $primary-color--hover;
             }
         }
 
         &:active {
-            border-color: $color--b500;
+            border-color: $primary-color--pressed;
 
             &::before {
-                background-color: $color--b500;
+                background-color: $primary-color--pressed;
             }
         }
 

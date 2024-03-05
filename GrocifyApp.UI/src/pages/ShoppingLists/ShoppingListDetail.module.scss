@@ -1,4 +1,6 @@
 @import "../../styles/core/variables/_colors-var.scss";
+@import "../../styles/core/_mixins.scss";
+@import "../../styles/core/variables/_texts-var.scss";
 
 .containerList {
     display: flex;
@@ -10,6 +12,8 @@
 .subtleButton {
     width: fit-content;
     margin-left: auto;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .productsList {
@@ -28,7 +32,7 @@
 
     .checkBox {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         gap: 8px;
     }
 
@@ -36,4 +40,8 @@
         display: flex;
         justify-content: space-between;
     }
+}
+
+.displayNone {
+    display: none;
 }
