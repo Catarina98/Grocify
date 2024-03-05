@@ -29,18 +29,11 @@ namespace GrocifyApp.API.Controllers
         [HttpGet("{id}/products")]
         public async Task<ActionResult<IEnumerable<KeyValuePair<Product, int>>>> GetProductsFromShoppingList(Guid id)
         {
-            try
-            {
-                var productsWithQuantities = await _shoppingListService.GetProductsFromShoppingList(id);
+            var productsWithQuantities = await _shoppingListService.GetProductsFromShoppingList(id);
 
-                var productList = productsWithQuantities.Select(kv => new KeyValuePair<Product, int>(kv.Key, kv.Value)).ToList();
+            var productList = productsWithQuantities.Select(kv => new KeyValuePair<Product, int>(kv.Key, kv.Value)).ToList();
 
-                return Ok(productList);
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            return Ok(productList);
         }
 
         /// <summary>
