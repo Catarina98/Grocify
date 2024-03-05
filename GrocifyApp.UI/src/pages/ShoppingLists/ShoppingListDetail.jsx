@@ -20,8 +20,10 @@ import styles from './ShoppingListDetail.module.scss';
 function ShoppingListDetail({ shoppingList }) {
     const [products, setProducts] = useState([]);
     const [sections, setSections] = useState({});
-    const [measures, setMeasures] = useState({});
-    const [quantityClick, setquantityClick] = useState(false);
+    const [measures, setMeasures] = useState([]);
+    
+    const [selectedProduct, setSelectedProduct] = useState('');
+    const [checkedProducts, setCheckedProducts] = useState([]);
 
     const { makeRequest } = useApiRequest();
 
@@ -36,24 +38,40 @@ function ShoppingListDetail({ shoppingList }) {
 
     const getShoppingListProducts = async () => {
         const productsQuantityResponse = await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'GET', null);
+        
+        const sortedProducts = productsQuantityResponse.sort((a, b) => a.key.productSectionId - b.key.productSectionId);
 
-        const getProducts = productsQuantityResponse.map(kv => kv.key);
-        const sortedProducts = getProducts.sort((a, b) => a.productSectionId - b.productSectionId);
         const uniqueSectionsId = new Set();
-        
-        sortedProducts.forEach(product => uniqueSectionsId.add(product.productSectionId));
+
+        sortedProducts.forEach(pair => uniqueSectionsId.add(pair.key.productSectionId));
         const sections = await getProductSections();
-        
+
         const uniqueSections = sections.filter(section => uniqueSectionsId.has(section.id));
-        
+
         setSections(uniqueSections);
         setProducts(sortedProducts);
+
     };
 
     const addProductsToShoppingList = async () => {
         //await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'PUT', null);
         //await getShoppingListProducts();
         //TODO
+    };
+
+    const handleCheckboxChange = (productId) => {
+        if (checkedProducts.includes(productId)) {
+            setCheckedProducts(checkedProducts.filter(id => id !== productId));
+        } else {
+            setCheckedProducts([...checkedProducts, productId]);
+            setSelectedProduct(null);
+        }
+    };
+
+    const handleSelectedProduct = (productId) => {
+        if (!checkedProducts.includes(productId)) {
+            setSelectedProduct(productId)
+        }
     };
 
     useEffect(() => {
@@ -70,11 +88,15 @@ function ShoppingListDetail({ shoppingList }) {
     }, []);
 
     const groupedProducts = {};
-    products.forEach(product => {
-        if (!groupedProducts[product.productSectionId]) {
-            groupedProducts[product.productSectionId] = [];
+    products.forEach(pair => {
+        const product = pair.key;
+        const quantity = pair.value;
+        const sectionId = product.productSectionId;
+
+        if (!groupedProducts[sectionId]) {
+            groupedProducts[sectionId] = [];
         }
-        groupedProducts[product.productSectionId].push(product);
+        groupedProducts[sectionId].push({ product, quantity });
     });
 
     return (
@@ -95,27 +117,34 @@ function ShoppingListDetail({ shoppingList }) {
                         <div className="text-ellipsis--line2 text">{sections.find(s => s.id === sectionId).name}</div>
                     </div>
                     
-                    {sectionProducts.map(product => (
-                        <div key={product.id} className={styles.product}>
+                    {sectionProducts.map(pair => (
+                        <div key={pair.product.id} className={styles.product}>
                             <div className={styles.checkBox}>
                                 <label className="checkbox-container">
-                                    <input type="checkbox" />
+                                    <input type="checkbox" onChange={() => handleCheckboxChange(pair.product.id)}
+                                        checked={checkedProducts.includes(pair.product.id)} />
                                 </label>
 
-                                <div className="text text-ellipsis">{product.name}</div>
+                                <div className={"text text-ellipsis " + (pair.product.id === selectedProduct ? "weight--m"
+                                    : checkedProducts.includes(pair.product.id) ? "color--n400" : '')}>{pair.product.name}</div>
                             </div>
 
-                            <div onClick={() => setquantityClick(!quantityClick) }>
-                                <div className={"icon cursor-pointer " + quantityClick ? '' : styles.displayNone}>
-                                    <ReactSVG className="react-svg" src={PlusIcon} />
-                                </div>
+                            {measures !== null && measures.length > 0 && (
+                                <div className={styles.quantitySection} onClick={() => handleSelectedProduct(pair.product.id)} onBlur={() => setSelectedProduct(null)}>
+                                    <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}>
+                                        <ReactSVG className="react-svg" src={MinusIcon} />
+                                    </div>
 
-                                <div className="text text-ellipsis">{product.quantity}</div>
+                                    <div className={"text text-ellipsis " + (pair.product.id === selectedProduct ? "weight--m" 
+                                        : checkedProducts.includes(pair.product.id) ? "color--n400" : '')}>
+                                        {pair.quantity + " " + measures.find(m => m.id === pair.product.productMeasureId).name}
+                                    </div>
 
-                                <div className={"icon cursor-pointer " + quantityClick ? '' : styles.displayNone}>
-                                    <ReactSVG className="react-svg" src={MinusIcon} />
+                                    <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}>
+                                        <ReactSVG className="react-svg" src={PlusIcon} />
+                                    </div>
                                 </div>
-                            </div>                            
+                            )}                            
                         </div>
                     ))}
                 </div>

@@ -43,5 +43,11 @@
 }
 
 .displayNone {
-    display: none;
+    display: none !important;
+}
+
+.quantitySection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
