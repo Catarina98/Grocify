@@ -24,8 +24,8 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 
 function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
-    const [measures, setMeasures] = useState([]);
 
+    const [measures, setMeasures] = useState([]);
     const [selectedMeasure, setSelectedMeasure] = useState([]);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
