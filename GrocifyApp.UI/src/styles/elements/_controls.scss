@@ -80,3 +80,121 @@
         }
     }
 }
+
+.checkbox-container {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border: 1px solid $color--n400;
+    display: grid;
+    place-content: center;
+    border-radius: 2px;
+
+    &::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        background-color: $color--n100;
+        clip-path: polygon(22.45% 43.52%, 40% 63.71%, 78.92% 29.86%, 86% 38%, 40% 78%, 15% 50%);
+    }
+
+    &:checked {
+        background-color: $primary-color;
+        border: none;
+
+        &::before {
+            transform: scale(1);
+        }
+
+        &:hover {
+            background-color: $primary-color--hover;
+        }
+
+        &:active {
+            background-color: $primary-color--pressed;
+        }
+
+        &:disabled {
+            background-color: $color--n400;
+        }
+    }
+
+    &:hover {
+        border-color: $color--n700;
+    }
+
+    &:disabled {
+        border-color: $color--n400;
+        cursor: not-allowed;
+    }
+}
+
+input[type="radio"] {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid $color--n500;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+
+    &::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        background-color: $color--b300;
+    }
+
+    &:checked {
+        background-color: $color--n100;
+        border-color: $primary-color;
+
+        &::before {
+            transform: scale(1);
+        }
+
+        &:hover {
+            border-color: $primary-color--hover;
+
+            &::before {
+                background-color: $primary-color--hover;
+            }
+        }
+
+        &:active {
+            border-color: $primary-color--pressed;
+
+            &::before {
+                background-color: $primary-color--pressed;
+            }
+        }
+
+        &:disabled {
+            border-color: $color--n400;
+
+            &::before {
+                background-color: $color--n400;
+            }
+        }
+    }
+
+    &:hover {
+        border-color: $color--n700;
+    }
+
+    &:disabled {
+        border-color: $color--n400;
+        cursor: not-allowed;
+    }
+}

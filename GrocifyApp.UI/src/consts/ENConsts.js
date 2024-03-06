@@ -20,6 +20,7 @@ const ButtonConsts = {
     NewMeasure: "New measure",
     NewProduct: "New product",
     NewList: "New shopping list",
+    AddProduct: "Add product",
 };
 
 const SettingsConsts = {
@@ -46,12 +47,18 @@ const PlaceholderConsts = {
     SearchLists: "Search for shopping lists...",
     AddSectionName: "Add section name",
     AddMeasureName: "Add measure name",
+    AddProductName: "Add product name",
 };
 
 const LabelConsts = {
     ProductSectionName: "Product section name",
     ProductSectionIcon: "Section icon",
     ProductMeasureName: "Product measure name",
+    ProductName: "Product name",
+    ProductSection: "Product section",
+    ProductMeasure: "Product measure",
+    Measure: "Measure",
+    Section: "Section",
 };
 
 const NavbarConsts = {
@@ -89,6 +96,7 @@ const PassRulesConsts = {
 const ModalConsts = {
     DefaultShoppingList: "Change default shopping list",
     NewProductSection: "New product section",
+    NewProduct: "New product",
     IconSection: "Icon of section",
     NewProductMeasure: "New product measure",
     MoreOptions: "More options",

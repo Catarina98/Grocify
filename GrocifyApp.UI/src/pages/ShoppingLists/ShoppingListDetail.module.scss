@@ -1,0 +1,53 @@
+@import "../../styles/core/variables/_colors-var.scss";
+@import "../../styles/core/_mixins.scss";
+@import "../../styles/core/variables/_texts-var.scss";
+
+.containerList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.subtleButton {
+    width: fit-content;
+    margin-left: auto;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.productsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .sectionInfo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid $color--n300;
+        height: 40px;
+    }
+
+    .checkBox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .product {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.displayNone {
+    display: none !important;
+}
+
+.quantitySection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
