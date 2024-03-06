@@ -18,8 +18,11 @@ import styles from './ShoppingLists.module.scss';
 
 function ShoppingLists() {
     const [searchInput, setSearchInput] = useState('');
+
     const [lists, setLists] = useState([]);
     const [listDetailId, setListDetailId] = useState('');
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { makeRequest } = useApiRequest();
 
@@ -40,8 +43,19 @@ function ShoppingLists() {
         fetchData();
     }, []);
 
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        //setSelectedSection(null);
+        setIsModalOpen(false);
+    };
+
     return (
         <Layout>
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} sectionToUpdate={selectedSection} />}
+
             <Searchbar placeholder={PlaceholderConsts.SearchLists}
                 label={PlaceholderConsts.SearchLists}
                 value={searchInput}
@@ -66,7 +80,7 @@ function ShoppingLists() {
                 ))}
             </div>
 
-            <button className="primary-button btn--l btn-float">
+            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
                 <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
                 {ButtonConsts.NewList}
