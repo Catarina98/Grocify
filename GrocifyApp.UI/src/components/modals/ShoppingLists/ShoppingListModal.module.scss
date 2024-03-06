@@ -1,0 +1,14 @@
+@import "../../../styles/core/variables/_colors-var.scss";
+
+.inputRow {
+    display: flex;
+    gap: 8px;
+
+    & > div:first-child {
+        flex-grow: 1;
+    }
+
+    & > div:last-child {
+        width: 25%;
+    }
+}

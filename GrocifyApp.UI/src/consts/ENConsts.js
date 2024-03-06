@@ -48,6 +48,7 @@ const PlaceholderConsts = {
     AddSectionName: "Add section name",
     AddMeasureName: "Add measure name",
     AddProductName: "Add product name",
+    AddListName: "Add shopping list name",
 };
 
 const LabelConsts = {
@@ -59,6 +60,7 @@ const LabelConsts = {
     ProductMeasure: "Product measure",
     Measure: "Measure",
     Section: "Section",
+    ShoppingList: "Shopping list",
 };
 
 const NavbarConsts = {
