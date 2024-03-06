@@ -4,7 +4,8 @@ const GenericConsts = {
 };
 
 const EntityConsts = {
-    ProductSection: "product section"
+    ProductSection: "product section",
+    ProductMeasure: "product measure",
 };
 
 const ButtonConsts = {
