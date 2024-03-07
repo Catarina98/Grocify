@@ -6,6 +6,7 @@ const GenericConsts = {
 const EntityConsts = {
     ProductSection: "product section",
     ProductMeasure: "product measure",
+    Product: "product",
 };
 
 const ButtonConsts = {

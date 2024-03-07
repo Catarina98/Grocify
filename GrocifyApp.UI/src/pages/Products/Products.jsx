@@ -7,6 +7,8 @@ import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import useApiRequest from '../../hooks/useApiRequests';
 import ProductModal from '../../components/modals/Products/ProductModal';
+import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
+import MoreOptionsButton from '../../components/modals/MoreOptionsButton';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -14,8 +16,7 @@ import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 
 //Consts
-import { PlaceholderConsts } from '../../consts/ENConsts';
-import { ButtonConsts } from '../../consts/ENConsts';
+import { PlaceholderConsts, ButtonConsts, ModalConsts, EntityConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import { ColorSections, IconColorSections } from "../../consts/ColorsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
@@ -28,8 +29,11 @@ function Products() {
     const [products, setProducts] = useState([]);
 
     const [selectedSection, setSelectedSection] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isMoreOptionsOpen, setIsMoreOptionsOpen] = useState(false);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -73,22 +77,63 @@ function Products() {
         fetchData();
     }, []);
 
+    //---------Delete products---------
+    const deleteProduct = async () => {
+        //try {
+        //    await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(selectedSection.id), 'DELETE');
+        //    setSections(prevSections => prevSections.filter(section => section.id !== selectedSection.id));
+        //    setSelectedSection(null);
+        //} catch (error) {
+        //    console.log(error);
+        //}
+    };
+
+    const closeDeleteModal = async () => {
+        setIsModalDeleteOpen(false);
+        setSelectedProduct(null);
+    };
+
+    const openDeleteModal = () => {
+        closeMoreOptionsModal();
+        setIsModalDeleteOpen(true);
+    };
+    //---------End of delete products---------
+
     const openModal = () => {
         setIsModalOpen(true);
     };
 
     const closeModal = () => {
+        setSelectedProduct(null);
         setIsModalOpen(false);
     };
 
+    const openMoreOptionsModal = (product) => {
+        setSelectedProduct(product);
+        setIsMoreOptionsOpen(true);
+    };
+
+    const closeMoreOptionsModal = () => {
+        setIsMoreOptionsOpen(false);
+    };
+        
     const onConfirmProduct = async (sectionId) => {
         setSelectedSection(sectionId);
         await filterProductsBySection(sectionId);        
     };
 
+    const editProduct = () => {
+        //closeMoreOptionsModal();
+        //openModal();
+    };
+
     return (
         <Layout>
             {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} productSections={sections} />}
+
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
+                onEdit={{text: ModalConsts.EditEntity(EntityConsts.Product), method: () => editProduct()}}
+                onDelete={{text: ModalConsts.DeleteEntity(EntityConsts.Product), method: () => openDeleteModal()}} />}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
@@ -121,7 +166,7 @@ function Products() {
                         </div>
 
                         {product.houseId != null && (
-                            <div className="icon cursor-pointer">
+                            <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(product)}>
                                 <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
                             </div>
                         )}
