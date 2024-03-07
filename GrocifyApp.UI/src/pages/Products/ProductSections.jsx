@@ -90,6 +90,7 @@ function ProductSections() {
     };
 
     const closeMoreOptionsModal = () => {
+        setSelectedSection(null);
         setIsMoreOptionsOpen(false);
     };
 

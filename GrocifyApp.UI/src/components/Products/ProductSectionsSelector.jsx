@@ -39,13 +39,13 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productS
                 <CustomInputApp className="app-form mb-0"
                     type={InputType.Custom}
                     label={LabelConsts.Section}
-                    value={ isViewList ? (
+                    value={isViewList ? (
                         <div className="text">
                             {selectedValue.name}
                         </div>
                     ) : (
                         <div className="icon">
-                            <ReactSVG className={`react-svg ${IconColorSections[selectedValue]} ${styles.reactSvg}`} src={IconsConsts[selectedValue]} />
+                            <ReactSVG className={`react-svg ${IconColorSections[selectedValue.icon]} ${styles.reactSvg}`} src={IconsConsts[selectedValue.icon]} />
                         </div>)
                     }
                     onChange={selectedValueChanged}
@@ -57,26 +57,26 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productS
                 {
                     isViewList ? (
                         <div className={styles.containerSections}>
-                                {productSections.map((section) => (
-                                    <div key={section.id} value={section.name} onClick={() => handleOptionChange(section)} className={styles.sectionRow + ` ${section.id === selectedValue.id ? styles.selected : ''}`}>
-                                        <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section.icon]} src={IconsConsts[section.icon]} />
+                            {productSections.map((section) => (
+                                <div key={section.id} value={section.name} onClick={() => handleOptionChange(section)} className={styles.sectionRow + ` ${section.id === selectedValue.id ? styles.selected : ''}`}>
+                                    <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section.icon]} src={IconsConsts[section.icon]} />
 
-                                        <div className="text">
-                                            {section.name}
-                                        </div>
+                                    <div className="text">
+                                        {section.name}
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
+                        </div>
                     ) : (
-                            <div className="grid-columns-6">
-                                {Object.keys(IconsConsts).map(section => (
-                                    <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${section === selectedValue.icon ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
-                                        <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section]} src={IconsConsts[section]} />
-                                    </div>
-                                ))}
-                            </div>
+                        <div className="grid-columns-6">
+                            {Object.keys(IconsConsts).map(section => (
+                                <div key={section} value={section} onClick={() => handleOptionChange(section)} className={`${section === selectedValue.icon ? BgColorSections[section] + ' ' + styles.sectionSelected : ''}`}>
+                                    <ReactSVG className={"react-svg icon-w32-24 " + IconColorSections[section]} src={IconsConsts[section]} />
+                                </div>
+                            ))}
+                        </div>
                     )
-                    
+
                 }
             />
         </div>
@@ -85,7 +85,7 @@ const ProductSectionsSelector = ({ selectedValue, selectedValueChanged, productS
 
 ProductSectionsSelector.propTypes = {
     selectedValueChanged: PropTypes.func.isRequired,
-    selectedValue: PropTypes.string,
+    selectedValue: PropTypes.object,
     productSections: PropTypes.array,
     isViewList: PropTypes.bool
 };
