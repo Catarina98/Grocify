@@ -4,6 +4,7 @@ using GrocifyApp.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrocifyApp.DAL.Migrations
 {
     [DbContext(typeof(GrocifyAppContext))]
-    partial class GrocifyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240228111629_MealUniqueOrderIndex")]
+    partial class MealUniqueOrderIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,14 +99,6 @@ namespace GrocifyApp.DAL.Migrations
 
                     b.HasIndex("HouseId");
 
-                    b.HasIndex("DefaultInventory", "HouseId")
-                        .IsUnique()
-                        .HasFilter("DefaultInventory = 1");
-
-                    b.HasIndex("Name", "HouseId")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL AND [HouseId] IS NOT NULL");
-
                     b.ToTable("Inventories");
                 });
 
@@ -120,11 +115,9 @@ namespace GrocifyApp.DAL.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("InventoryId");
 
-                    b.HasIndex("InventoryId", "ProductId")
-                        .IsUnique()
-                        .HasFilter("[InventoryId] IS NOT NULL AND [ProductId] IS NOT NULL");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("InventoryProducts");
                 });
@@ -132,10 +125,6 @@ namespace GrocifyApp.DAL.Migrations
             modelBuilder.Entity("GrocifyApp.DAL.Models.Meal", b =>
                 {
                     b.HasBaseType("GrocifyApp.DAL.Models.BaseEntity");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid?>("HouseId")
                         .HasColumnType("uniqueidentifier");
@@ -149,10 +138,6 @@ namespace GrocifyApp.DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasIndex("HouseId");
-
-                    b.HasIndex("Color", "HouseId")
-                        .IsUnique()
-                        .HasFilter("[Color] IS NOT NULL AND [HouseId] IS NOT NULL");
 
                     b.HasIndex("Name", "HouseId")
                         .IsUnique()

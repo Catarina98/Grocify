@@ -9,6 +9,7 @@
             public const string Product = "Product";
             public const string ShoppingList = "Shopping list";
             public const string Inventory = "Inventory";
+            public const string Meal = "Meal";
             public const string Entity = "Entity";
         }
 
