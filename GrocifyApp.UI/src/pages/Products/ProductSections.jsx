@@ -110,13 +110,9 @@ function ProductSections() {
 
             {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} sectionToUpdate={selectedSection} />}
 
-            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
-                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductSection)}
-                    onClick={() => editSection()} />
-
-                <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductSection)}
-                    classColor="color-r300" onClick={() => openDeleteModal()} />
-            </>} />}
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
+                onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductSection), method: () => editSection() }}
+                onDelete={{ text: ModalConsts.DeleteEntity(EntityConsts.ProductSection), method: () => openDeleteModal() }} />}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
