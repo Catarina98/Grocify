@@ -86,6 +86,7 @@ function ProductMeasures() {
     };
 
     const closeMoreOptionsModal = () => {
+        setSelectedMeasure(null);
         setIsMoreOptionsOpen(false);
     };
 
@@ -102,13 +103,9 @@ function ProductMeasures() {
         <Layout>
             {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} measureToUpdate={selectedMeasure} />}
 
-            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
-                <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductMeasure)}
-                    onClick={() => editMeasure()} />
-
-                <MoreOptionsButton icon={TrashIcon} text={ModalConsts.DeleteEntity(EntityConsts.ProductMeasure)}
-                    classColor="color-r300" onClick={() => openDeleteModal()} />
-            </>} />}
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
+                onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductMeasure), method: () => editMeasure() }}
+                onDelete={{ text: ModalConsts.DeleteEntity(EntityConsts.ProductMeasure), method: () => openDeleteModal() }} />}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>

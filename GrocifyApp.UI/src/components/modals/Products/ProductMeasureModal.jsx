@@ -6,9 +6,6 @@ import BaseModal from '../BaseModal';
 import CustomInputApp from '../../CustomInputApp';
 import useApiRequest from '../../../hooks/useApiRequests';
 
-//Assets & Css
-import styles from '../ContentModal.module.scss';
-
 //Consts
 import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../../consts/ENConsts';
 import InputType from '../../../consts/InputType';
@@ -50,15 +47,14 @@ const ProductMeasureModal = ({ onClose, onConfirm, measureToUpdate }) => {
         <BaseModal isOpen={true} onClose={onClose} onConfirm={measureToUpdate ? editMeasureSection : createProductMeasure} isButtonDisabled={isButtonDisabled}
             buttonText={measureToUpdate ? ButtonConsts.Update : ButtonConsts.Create}
             titleModal={measureToUpdate ? ModalConsts.EditProductMeasure(measureToUpdate.name) : ModalConsts.NewProductMeasure} modalBody={
-                <div className={styles.inputRow}>
-                    <CustomInputApp className="app-form mb-0"
-                        type={InputType.Input}
-                        placeholder={PlaceholderConsts.AddMeasureName}
-                        label={LabelConsts.ProductMeasureName}
-                        value={productMeasureName}
-                        onChange={(e) => setProductMeasureName(e.target.value)}
-                        isRequired={true} />
-                </div>} />
+                <CustomInputApp className="app-form mb-0"
+                    type={InputType.Input}
+                    placeholder={PlaceholderConsts.AddMeasureName}
+                    label={LabelConsts.ProductMeasureName}
+                    value={productMeasureName}
+                    onChange={(e) => setProductMeasureName(e.target.value)}
+                    isRequired={true} />
+            } />
     );
 };
 

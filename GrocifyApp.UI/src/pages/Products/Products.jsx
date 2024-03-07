@@ -114,6 +114,7 @@ function Products() {
     };
 
     const closeMoreOptionsModal = () => {
+        setSelectedProduct(null);
         setIsMoreOptionsOpen(false);
     };
         
