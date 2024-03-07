@@ -106,6 +106,7 @@ const ModalConsts = {
     DeleteEntity: (entity) => `Delete ${entity}`,
     DeleteTitle: (itemToDelete) => `Are you sure you want to delete ${itemToDelete}?`,
     EditProductSection: (sectionName) => `Edit <span class="color--primary">${sectionName}</span> section`,
+    EditProductMeasure: (measureName) => `Edit <span class="color--primary">${measureName}</span> measure`,
 };
 
 const EmptyStateConsts = {

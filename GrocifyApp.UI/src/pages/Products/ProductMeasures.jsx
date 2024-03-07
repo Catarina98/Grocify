@@ -76,11 +76,12 @@ function ProductMeasures() {
     };
 
     const closeModal = () => {
+        setSelectedMeasure(null);
         setIsModalOpen(false);
     };
 
-    const openMoreOptionsModal = (section) => {
-        setSelectedMeasure(section);
+    const openMoreOptionsModal = (measure) => {
+        setSelectedMeasure(measure);
         setIsMoreOptionsOpen(true);
     };
 
@@ -93,13 +94,13 @@ function ProductMeasures() {
     };
 
     const editMeasure = () => {
-        //closeMoreOptionsModal();
-        //openModal();
+        closeMoreOptionsModal();
+        openModal();
     };
 
     return (
         <Layout>
-            {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} />}
+            {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} measureToUpdate={selectedMeasure} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal} content={<>
                 <MoreOptionsButton icon={EditIcon} text={ModalConsts.EditEntity(EntityConsts.ProductMeasure)}

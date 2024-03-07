@@ -7,24 +7,25 @@ import CustomInputApp from '../../CustomInputApp';
 import useApiRequest from '../../../hooks/useApiRequests';
 
 //Assets & Css
-import styles from './ProductSectionModal.module.scss';
+import styles from '../ContentModal.module.scss';
 
 //Consts
 import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../../consts/ENConsts';
 import InputType from '../../../consts/InputType';
 import ApiEndpoints from '../../../consts/ApiEndpoints';
 
-const ProductMeasureModal = ({ onClose, onConfirm }) => {
+const ProductMeasureModal = ({ onClose, onConfirm, measureToUpdate }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
-    const [productMeasureName, setProductMeasureName] = useState("");
+
+    const [productMeasureName, setProductMeasureName] = useState(measureToUpdate != null ? measureToUpdate.name : '');
+
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
-        if (productMeasureName !== "") {
-            setButtonDisabled(false);
-        } else {
-            setButtonDisabled(true);
-        }
+        const isMeasureEdited = measureToUpdate && productMeasureName !== measureToUpdate.name;
+        const areInputsValid = productMeasureName !== "";
+
+        setButtonDisabled(!areInputsValid || (measureToUpdate && !isMeasureEdited));
     }, [productMeasureName]);
 
     const createProductMeasure = async () => {
@@ -36,13 +37,23 @@ const ProductMeasureModal = ({ onClose, onConfirm }) => {
         onConfirm();
     };
 
+    const editMeasureSection = async () => {
+
+        const data = { name: productMeasureName };
+
+        await makeRequest(ApiEndpoints.ProductMeasuresId_Endpoint(measureToUpdate.id), 'PUT', data);
+
+        onConfirm();
+    };
+
     return (
-        <BaseModal isOpen={true} onClose={onClose} onConfirm={createProductMeasure} isButtonDisabled={isButtonDisabled}
-            buttonText={ButtonConsts.Create} titleModal={ModalConsts.NewProductMeasure} modalBody={
+        <BaseModal isOpen={true} onClose={onClose} onConfirm={measureToUpdate ? editMeasureSection : createProductMeasure} isButtonDisabled={isButtonDisabled}
+            buttonText={measureToUpdate ? ButtonConsts.Update : ButtonConsts.Create}
+            titleModal={measureToUpdate ? ModalConsts.EditProductMeasure(measureToUpdate.name) : ModalConsts.NewProductMeasure} modalBody={
                 <div className={styles.inputRow}>
                     <CustomInputApp className="app-form mb-0"
                         type={InputType.Input}
-                        placeholder={PlaceholderConsts.AddSectionName}
+                        placeholder={PlaceholderConsts.AddMeasureName}
                         label={LabelConsts.ProductMeasureName}
                         value={productMeasureName}
                         onChange={(e) => setProductMeasureName(e.target.value)}
@@ -53,7 +64,8 @@ const ProductMeasureModal = ({ onClose, onConfirm }) => {
 
 ProductMeasureModal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    onConfirm: PropTypes.func
+    onConfirm: PropTypes.func,
+    measureToUpdate: PropTypes.object
 };
 
 export default ProductMeasureModal;

@@ -8,6 +8,7 @@ const ApiEndpoints = {
     ProductSections_Endpoint: '/api/ProductSection',
     ProductSectionsId_Endpoint: (productSectionId) => `/api/ProductSection/${productSectionId}`,
     ProductMeasures_Endpoint: '/api/ProductMeasure',
+    ProductMeasuresId_Endpoint: (productMeasureId) => `/api/ProductMeasure/${productMeasureId}`,
     Products_Endpoint: '/api/Product',
 
     ShoppingList_Endpoint: 'api/ShoppingList', 

@@ -8,7 +8,7 @@ import ProductSectionSelector from '../../Products/ProductSectionsSelector';
 import useApiRequest from '../../../hooks/useApiRequests';
 
 //Assets & Css
-import styles from './ProductSectionModal.module.scss';
+import styles from '../ContentModal.module.scss';
 
 //Consts
 import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../../consts/ENConsts';
@@ -17,8 +17,10 @@ import ApiEndpoints from '../../../consts/ApiEndpoints';
 
 const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
+
     const [productSectionName, setProductSectionName] = useState(sectionToUpdate != null ? sectionToUpdate.name : '');
     const [productSectionIcon, setProductSectionIcon] = useState(sectionToUpdate != null ? sectionToUpdate.icon : 'Home');
+
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
@@ -69,7 +71,7 @@ const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate }) => {
 ProductSectionModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     onConfirm: PropTypes.func,
-    sectionToUpdate: PropTypes.object,
+    sectionToUpdate: PropTypes.object
 };
 
 export default ProductSectionModal;
