@@ -13,7 +13,7 @@ const useApiRequest = () => {
 
         try {
             const queryString = Object.keys(query)
-                .filter(key => query[key] !== null && query[key] !== "")
+                .filter(key => query[key] !== null && query[key] !== "" && query[key] !== undefined)
                 .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`)
                 .join('&');
 
@@ -32,7 +32,7 @@ const useApiRequest = () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                errorMessage = errorData.errors[0];
+                errorMessage = errorData.error;
                 throw new Error(errorMessage);
             }
 

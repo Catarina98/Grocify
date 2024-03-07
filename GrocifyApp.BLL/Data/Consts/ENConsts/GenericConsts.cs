@@ -8,6 +8,7 @@
             public const string ProductMeasure = "Product measure";
             public const string Product = "Product";
             public const string ShoppingList = "Shopping list";
+            public const string Inventory = "Inventory";
             public const string Meal = "Meal";
             public const string Entity = "Entity";
         }
@@ -18,6 +19,7 @@
             public const string DuplicateHouseName = "House name";
             public const string InsertDuplicateProductInList = "This product already exists in this shopping list";
             public const string NoUsersFoundInHouse = "No users found in house";
+            public const string NoProductsFoundInList = "No products found in shopping list";
             public const string NoHouseFoundForUser = "User has no houses";
             public const string NoProductsFoundInHouse = "No products found in house";
             public const string NoSectionsFoundInHouse = "No sections found in house";

@@ -13,6 +13,7 @@ namespace GrocifyApp.BLL
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IHouseService, HouseService>();
             services.AddScoped<IShoppingListService, ShoppingListService>();
+            services.AddScoped<IInventoryService, InventoryService>();
             services.AddScoped<IMealService, MealService>();
         }
     }

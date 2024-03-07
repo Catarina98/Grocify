@@ -69,7 +69,7 @@ const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate }) => {
 ProductSectionModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     onConfirm: PropTypes.func,
-    sectionToUpdate: PropTypes.object
+    sectionToUpdate: PropTypes.object,
 };
 
 export default ProductSectionModal;

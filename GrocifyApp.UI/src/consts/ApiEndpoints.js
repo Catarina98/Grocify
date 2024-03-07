@@ -10,7 +10,8 @@ const ApiEndpoints = {
     ProductMeasures_Endpoint: '/api/ProductMeasure',
     Products_Endpoint: '/api/Product',
 
-    ShoppingList_Endpoint: 'api/ShoppingList',    
+    ShoppingList_Endpoint: 'api/ShoppingList', 
+    ShoppingListProducts_Endpoint: (shoppingListId) => `api/ShoppingList/${shoppingListId}/products`,
     
     Filtered: '/filtered'
 };
