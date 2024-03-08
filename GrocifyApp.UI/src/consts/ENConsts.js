@@ -1,6 +1,7 @@
 const GenericConsts = {
     Error: "Something went wrong",
-    Section: "section"
+    Section: "section",
+    Measure: "measure"
 };
 
 const EntityConsts = {
