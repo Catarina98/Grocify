@@ -7,7 +7,6 @@ import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import ProductSectionModal from '../../components/modals/Products/ProductSectionModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
-import MoreOptionsButton from '../../components/modals/MoreOptionsButton';
 import BaseModal from '../../components/modals/BaseModal';
 import useApiRequest from '../../hooks/useApiRequests';
 import EmptyState from '../../components/EmptyState';
@@ -15,8 +14,6 @@ import EmptyState from '../../components/EmptyState';
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
-import EditIcon from '../../assets/edit-ic.svg';
-import TrashIcon from '../../assets/trash-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 import styles from './ProductSections.module.scss';
 
@@ -89,8 +86,11 @@ function ProductSections() {
         setIsMoreOptionsOpen(true);
     };
 
-    const closeMoreOptionsModal = () => {
-        setSelectedSection(null);
+    const closeMoreOptionsModal = (removeSelected) => {
+        if (removeSelected) {
+            setSelectedSection(null);
+        }
+
         setIsMoreOptionsOpen(false);
     };
 
@@ -104,16 +104,16 @@ function ProductSections() {
     };
 
     return (
-        <Layout>
+        <Layout>            
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} sectionToUpdate={selectedSection} />}
+
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={() => closeMoreOptionsModal(true)}
+                onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductSection), method: () => editSection() }}
+                onDelete={{ text: ModalConsts.DeleteEntity(EntityConsts.ProductSection), method: () => openDeleteModal() }} />}
+
             {selectedSection != null && isModalDeleteOpen && (
                 <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteSection}
                     titleModal={ModalConsts.DeleteTitle(`<span class="color--primary">${selectedSection.name}</span> ` + GenericConsts.Section)} />)}
-
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} sectionToUpdate={selectedSection} />}
-
-            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
-                onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductSection), method: () => editSection() }}
-                onDelete={{ text: ModalConsts.DeleteEntity(EntityConsts.ProductSection), method: () => openDeleteModal() }} />}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>

@@ -7,19 +7,17 @@ import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import ProductMeasureModal from '../../components/modals/Products/ProductMeasureModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
-import MoreOptionsButton from '../../components/modals/MoreOptionsButton';
+import BaseModal from '../../components/modals/BaseModal';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
-import EditIcon from '../../assets/edit-ic.svg';
-import TrashIcon from '../../assets/trash-ic.svg';
 import styles from './ProductMeasures.module.scss';
 
 //Consts
-import { PlaceholderConsts, ButtonConsts, ModalConsts, EntityConsts } from '../../consts/ENConsts';
+import { PlaceholderConsts, ButtonConsts, ModalConsts, EntityConsts, GenericConsts } from '../../consts/ENConsts';
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
 function ProductMeasures() {
@@ -52,9 +50,9 @@ function ProductMeasures() {
     //---------Delete measures---------
     const deleteMeasure = async () => {
         try {
-            //await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(selectedSection.id), 'DELETE');
-            //setSections(prevSections => prevSections.filter(section => section.id !== selectedSection.id));
-            //setSelectedSection(null);
+            await makeRequest(ApiEndpoints.ProductMeasuresId_Endpoint(selectedMeasure.id), 'DELETE');
+            setMeasures(prevMeasures => prevMeasures.filter(measure => measure.id !== selectedMeasure.id));
+            setSelectedMeasure(null);
         } catch (error) {
             console.log(error);
         }
@@ -85,8 +83,11 @@ function ProductMeasures() {
         setIsMoreOptionsOpen(true);
     };
 
-    const closeMoreOptionsModal = () => {
-        setSelectedMeasure(null);
+    const closeMoreOptionsModal = (removeSelected) => {
+        if (removeSelected) {
+            setSelectedMeasure(null);
+        }
+        
         setIsMoreOptionsOpen(false);
     };
 
@@ -103,9 +104,13 @@ function ProductMeasures() {
         <Layout>
             {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} measureToUpdate={selectedMeasure} />}
 
-            {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
+            {isMoreOptionsOpen && <MoreOptionsModal onClose={() => closeMoreOptionsModal(true)}
                 onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductMeasure), method: () => editMeasure() }}
                 onDelete={{ text: ModalConsts.DeleteEntity(EntityConsts.ProductMeasure), method: () => openDeleteModal() }} />}
+
+            {selectedMeasure != null && isModalDeleteOpen && (
+                <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteMeasure}
+                    titleModal={ModalConsts.DeleteTitle(`<span class="color--primary">${selectedMeasure.name}</span> ` + GenericConsts.Measure)} />)}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
