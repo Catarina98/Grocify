@@ -8,7 +8,6 @@ import Layout from '../../components/Layout/Layout';
 import useApiRequest from '../../hooks/useApiRequests';
 import ProductModal from '../../components/modals/Products/ProductModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
-import MoreOptionsButton from '../../components/modals/MoreOptionsButton';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -113,8 +112,11 @@ function Products() {
         setIsMoreOptionsOpen(true);
     };
 
-    const closeMoreOptionsModal = () => {
-        setSelectedProduct(null);
+    const closeMoreOptionsModal = (removeSelected) => {
+        if (removeSelected) {
+            setSelectedProduct(null);
+        }
+
         setIsMoreOptionsOpen(false);
     };
         
@@ -124,13 +126,13 @@ function Products() {
     };
 
     const editProduct = () => {
-        //closeMoreOptionsModal();
-        //openModal();
+        closeMoreOptionsModal();
+        openModal();
     };
 
     return (
         <Layout>
-            {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} productSections={sections} />}
+            {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} productSections={sections} productToUpdate={selectedProduct} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
                 onEdit={{text: ModalConsts.EditEntity(EntityConsts.Product), method: () => editProduct()}}
