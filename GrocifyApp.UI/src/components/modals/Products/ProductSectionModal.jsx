@@ -15,7 +15,7 @@ import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../..
 import InputType from '../../../consts/InputType';
 import ApiEndpoints from '../../../consts/ApiEndpoints';
 
-const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate }) => {
+const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate, onError }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
 
     const [productSectionName, setProductSectionName] = useState(sectionToUpdate != null ? sectionToUpdate.name : '');
@@ -34,7 +34,12 @@ const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate }) => {
 
         const data = { name: productSectionName, icon: productSectionIcon };
 
-        await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'POST', data);
+        try {
+            await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'POST', data);
+        }
+        catch (error) {
+            onError(error.message);
+        }
 
         onConfirm();
     };
@@ -71,7 +76,8 @@ const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate }) => {
 ProductSectionModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     onConfirm: PropTypes.func,
-    sectionToUpdate: PropTypes.object
+    sectionToUpdate: PropTypes.object,
+    onError: PropTypes.func
 };
 
 export default ProductSectionModal;
