@@ -10,11 +10,14 @@ import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 import BaseModal from '../../components/modals/BaseModal';
 import useApiRequest from '../../hooks/useApiRequests';
 import EmptyState from '../../components/EmptyState';
+import Alert from '../../components/Alert';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
+import CrossIcon from '../../assets/cross-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
+import AlertCircleIcon from '../../assets/alert-circle.svg';
 import styles from './ProductSections.module.scss';
 
 //Consts
@@ -24,6 +27,8 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 import { IconColorSections } from '../../consts/ColorsConsts';
 
 function ProductSections() {
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const [searchInput, setSearchInput] = useState('');
 
     const [sections, setSections] = useState(null);
@@ -103,9 +108,16 @@ function ProductSections() {
         openModal();
     };
 
+    const cleanErrorMessage = () => {
+        setErrorMessage(null);
+    }
+
     return (
-        <Layout>            
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} sectionToUpdate={selectedSection} />}
+        <Layout>   
+            {errorMessage && <Alert message={errorMessage} onClose={cleanErrorMessage} />}
+
+            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection}
+                sectionToUpdate={selectedSection} onError={(error) => setErrorMessage(error)} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={() => closeMoreOptionsModal(true)}
                 onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductSection), method: () => editSection() }}
