@@ -8,6 +8,7 @@ import Layout from '../../components/Layout/Layout';
 import ProductMeasureModal from '../../components/modals/Products/ProductMeasureModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 import BaseModal from '../../components/modals/BaseModal';
+import EmptyState from '../../components/EmptyState';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -23,8 +24,8 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 function ProductMeasures() {
     const [searchInput, setSearchInput] = useState('');
 
-    const [measures, setMeasures] = useState([]);
-    const [selectedMeasure, setSelectedMeasure] = useState([]);
+    const [measures, setMeasures] = useState(null);
+    const [selectedMeasure, setSelectedMeasure] = useState(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isMoreOptionsOpen, setIsMoreOptionsOpen] = useState(false);
@@ -33,11 +34,11 @@ function ProductMeasures() {
     const navigate = useNavigate();
 
     const { makeRequest } = useApiRequest();
-    
+
     const fetchData = async () => {
         try {
             const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
-            setMeasures(responseData);
+            setMeasures([responseData]);
         } catch (error) {
             console.log(error);
         }
@@ -87,7 +88,7 @@ function ProductMeasures() {
         if (removeSelected) {
             setSelectedMeasure(null);
         }
-        
+
         setIsMoreOptionsOpen(false);
     };
 
@@ -122,26 +123,36 @@ function ProductMeasures() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
-                        
-            <div className={styles.containerMeasures}>
-                {measures.map(measure => (
-                    <div className={styles.measureRow} key={measure.id}>
-                        <div className="text">{measure.name}</div>
 
-                        {measure.houseId != null && (
-                            <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(measure)}>
-                                <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
+            {measures != null && measures.length > 0 && (<>
+                <div className={styles.containerMeasures}>
+                    {measures.map(measure => (
+                        <div className={styles.measureRow} key={measure.id}>
+                            <div className="text">{measure.name}</div>
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
-                <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+                            {measure.houseId != null && (
+                                <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(measure)}>
+                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
 
-                {ButtonConsts.NewMeasure}
-            </button>
+                <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
+                    <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+
+                    {ButtonConsts.NewMeasure}
+                </button> </>
+            )}
+
+            {measures != null && measures.length === 0 &&
+                <EmptyState entity={EntityConsts.ProductMeasure} onCreate={() => openModal()} buttonText={ButtonConsts.NewMeasure} />}
+
+            {measures === null &&
+                <div className="loading bigger">
+                    <div className="loading-button bigger"></div>
+                </div>}
         </Layout>
     );
 }
