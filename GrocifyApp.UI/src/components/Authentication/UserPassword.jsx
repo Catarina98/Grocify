@@ -3,14 +3,14 @@ import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
 
 //Internal components
-import CustomInput from './CustomInput';
+import CustomInput from '../CustomInput';
 
 //Assets & Css
-import CheckmarkIcon from '../assets/checkmark.svg';
+import CheckmarkIcon from '../../assets/checkmark.svg';
 import styles from './UserPassword.module.scss';
 
 //Consts
-import { AuthConsts, PassRulesConsts } from '../consts/ENConsts';
+import { AuthConsts, PassRulesConsts } from '../../consts/ENConsts';
 
 const UserPasswordForm = (props) => {
     const [password, setPassword] = useState('');

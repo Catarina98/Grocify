@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 //Internal components
-import LoginForm from './components/Login';
-import RegisterForm from './components/Register';
-import WeatherForecast from './pages/WeatherForecast';
+import LoginForm from './components/Authentication/Login';
+import RegisterForm from './components/Authentication/Register';
+import Logout from './components/Authentication/Logout';
 import Settings from './pages/Settings';
-import Logout from './components/Logout';
 import ProductSections from './pages/Products/ProductSections';
 import ProductMeasures from './pages/Products/ProductMeasures';
 import ShoppingLists from './pages/ShoppingLists/ShoppingLists';
