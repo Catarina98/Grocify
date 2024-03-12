@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
 import useApiRequest from '../../hooks/useApiRequests';
+import BaseModal from '../../components/modals/BaseModal';
 import ProductModal from '../../components/modals/Products/ProductModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 
@@ -15,7 +16,7 @@ import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
 
 //Consts
-import { PlaceholderConsts, ButtonConsts, ModalConsts, EntityConsts } from '../../consts/ENConsts';
+import { PlaceholderConsts, ButtonConsts, ModalConsts, EntityConsts, GenericConsts } from '../../consts/ENConsts';
 import IconsConsts from "../../consts/IconsConsts";
 import { ColorSections, IconColorSections } from "../../consts/ColorsConsts";
 import ApiEndpoints from '../../consts/ApiEndpoints';
@@ -78,13 +79,12 @@ function Products() {
 
     //---------Delete products---------
     const deleteProduct = async () => {
-        //try {
-        //    await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(selectedSection.id), 'DELETE');
-        //    setSections(prevSections => prevSections.filter(section => section.id !== selectedSection.id));
-        //    setSelectedSection(null);
-        //} catch (error) {
-        //    console.log(error);
-        //}
+        try {
+            await makeRequest(ApiEndpoints.ProductId_Endpoint(selectedProduct.id), 'DELETE');
+            setSelectedProduct(null);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const closeDeleteModal = async () => {
@@ -136,7 +136,11 @@ function Products() {
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
                 onEdit={{text: ModalConsts.EditEntity(EntityConsts.Product), method: () => editProduct()}}
-                onDelete={{text: ModalConsts.DeleteEntity(EntityConsts.Product), method: () => openDeleteModal()}} />}
+                onDelete={{ text: ModalConsts.DeleteEntity(EntityConsts.Product), method: () => openDeleteModal() }} />}
+
+            {selectedProduct != null && isModalDeleteOpen && (
+                <BaseModal isConfirmModal={true} isOpen={isModalDeleteOpen} onClose={() => closeDeleteModal()} onConfirm={deleteProduct}
+                    titleModal={ModalConsts.DeleteTitle(`<span class="color--primary">${selectedProduct.name}</span> ` + GenericConsts.Product)} />)}
 
             <div className={styles.searchbarContainer + " searchbar-container searchbar-border"}>
                 <div className="icon cursor-pointer rotate-180" onClick={() => navigate(-1)}>
