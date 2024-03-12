@@ -4,18 +4,18 @@ import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
 
 //Internal components
-import CustomInput from './CustomInput';
-import useApiRequest from '../hooks/useApiRequests';
+import CustomInput from '../CustomInput';
+import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
-import ReactLogo from '../assets/logo_with_text.svg';
-import ArrowIcon from '../assets/arrow-ic.svg';
-import ApiEndpoints from '../consts/ApiEndpoints';
+import ReactLogo from '../../assets/logo_with_text.svg';
+import ArrowIcon from '../../assets/arrow-ic.svg';
+import ApiEndpoints from '../../consts/ApiEndpoints';
 import styles from './Auth.module.scss';
 
 //Consts
-import { GenericConsts, AuthConsts } from '../consts/ENConsts';
-import AppRoutes from '../consts/AppRoutes';
+import { GenericConsts, AuthConsts } from '../../consts/ENConsts';
+import AppRoutes from '../../consts/AppRoutes';
 
 const LoginForm = (props) => {
     const navigate = useNavigate();

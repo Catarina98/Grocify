@@ -3,20 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { ReactSVG } from 'react-svg';
 
 //Internal components
-import CustomInput from './CustomInput';
+import CustomInput from '../CustomInput';
 import UserPassword from './UserPassword';
-import useApiRequest from '../hooks/useApiRequests';
+import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
-import ReactLogo from '../assets/logo_with_text.svg';
-import ArrowIcon from '../assets/arrow-ic.svg';
-import ApiEndpoints from '../consts/ApiEndpoints';
+import ReactLogo from '../../assets/logo_with_text.svg';
+import ArrowIcon from '../../assets/arrow-ic.svg';
+import ApiEndpoints from '../../consts/ApiEndpoints';
 import stylesAuth from './Auth.module.scss';
 import styles from './Register.module.scss';
 
 //Consts
-import { AuthConsts, ButtonConsts } from '../consts/ENConsts';
-import AppRoutes from '../consts/AppRoutes';
+import { AuthConsts, ButtonConsts } from '../../consts/ENConsts';
+import AppRoutes from '../../consts/AppRoutes';
 import { useEffect } from 'react';
 
 const RegisterForm = () => {

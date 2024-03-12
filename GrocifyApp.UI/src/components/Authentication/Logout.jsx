@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import AppRoutes from '../consts/AppRoutes';
+
+//Consts
+import AppRoutes from '../../consts/AppRoutes';
 
 const Logout = (props) => {
     const navigate = useNavigate();
