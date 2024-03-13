@@ -27,13 +27,11 @@ namespace GrocifyApp.API.Controllers
         /// <response code="404">ShoppingLits or products not found!</response>
         /// <response code="400">Unable to get products due to validation error.</response>
         [HttpGet("{id}/products")]
-        public async Task<ActionResult<IEnumerable<KeyValuePair<Product, int>>>> GetProductsFromShoppingList(Guid id)
+        public async Task<ActionResult<IEnumerable<ShoppingListProduct>>> GetProductsFromShoppingList(Guid id)
         {
-            var productsWithQuantities = await _shoppingListService.GetProductsFromShoppingList(id);
+            var shoppingListProducts = await _shoppingListService.GetProductsFromShoppingList(id);
 
-            var productList = productsWithQuantities.Select(kv => new KeyValuePair<Product, int>(kv.Key, kv.Value)).ToList();
-
-            return Ok(productList);
+            return Ok(shoppingListProducts);
         }
 
         /// <summary>

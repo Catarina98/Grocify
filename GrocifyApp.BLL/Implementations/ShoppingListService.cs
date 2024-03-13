@@ -33,31 +33,17 @@ namespace GrocifyApp.BLL.Implementations
             return true;
         }
         
-        public async Task<Dictionary<Product, int>> GetProductsFromShoppingList(Guid shoppingListId)
+        public async Task<List<ShoppingListProduct>> GetProductsFromShoppingList(Guid shoppingListId)
         {
-            var products = await _shoppingListProductRepository.GetWhere<Product>(productList => 
+            var shoppingListProducts = await _shoppingListProductRepository.GetWhereInclude<Product>(productList =>
                 productList.ShoppingListId == shoppingListId, productList => productList.Product!);
 
-            if (products == null || products.Count == 0)
+            if (shoppingListProducts == null || shoppingListProducts.Count == 0)
             {
                 throw new NotFoundException(GenericConsts.Exceptions.NoProductsFoundInList);
             }
 
-            var productQuantities = new Dictionary<Product, int>();
-
-            foreach (var product in products)
-            {
-                if (productQuantities.ContainsKey(product))
-                {
-                    productQuantities[product]++;
-                }
-                else
-                {
-                    productQuantities.Add(product, 1);
-                }
-            }
-
-            return productQuantities;
+            return shoppingListProducts;
         }
 
         /// <summary>
