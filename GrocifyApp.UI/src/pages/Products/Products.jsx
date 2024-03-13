@@ -60,7 +60,7 @@ function Products() {
         const filteredEntities = { ProductSectionId: sectionId, Name: productName };
 
         const productsResponse = await makeRequest(ApiEndpoints.Products_Endpoint, 'GET', null, filteredEntities);
-        setProducts([productsResponse]);
+        setProducts(productsResponse);
     };
 
     useEffect(() => {
@@ -169,8 +169,8 @@ function Products() {
             {products != null && products.length > 0 && (
                 <>
                     <div className={styles.containerProducts}>
-                        {products.map((product, index) => (
-                            <div className={styles.sectionRow} key={product.id ?? index}>
+                        {products.map(product => (
+                            <div className={styles.sectionRow} key={product.id}>
                                 <div className={styles.sectionInfo}>
                                     <div className="text text-ellipsis">{product.name}</div>
                                 </div>
