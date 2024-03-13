@@ -113,7 +113,7 @@ function ProductMeasures() {
             {errorMessage && <Alert message={errorMessage} onClose={cleanErrorMessage} />}
 
             {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} measureToUpdate={selectedMeasure}
-                onError={(error) => setErrorMessage(error)}/>}
+                onError={(error) => setErrorMessage(error)} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={() => closeMoreOptionsModal(true)}
                 onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductMeasure), method: () => editMeasure() }}
@@ -134,26 +134,28 @@ function ProductMeasures() {
                     onChange={(e) => setSearchInput(e.target.value)} />
             </div>
 
-            {measures != null && measures.length > 0 && (<>
-                <div className={styles.containerMeasures}>
-                    {measures.map(measure => (
-                        <div className={styles.measureRow} key={measure.id}>
-                            <div className="text">{measure.name}</div>
+            {measures != null && measures.length > 0 && (
+                <>
+                    <div className={styles.containerMeasures}>
+                        {measures.map(measure => (
+                            <div className={styles.measureRow} key={measure.id}>
+                                <div className="text">{measure.name}</div>
 
-                            {measure.houseId != null && (
-                                <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(measure)}>
-                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
+                                {measure.houseId != null && (
+                                    <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(measure)}>
+                                        <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
 
-                <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
-                    <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+                    <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
+                        <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
-                    {ButtonConsts.NewMeasure}
-                </button> </>
+                        {ButtonConsts.NewMeasure}
+                    </button>
+                </>
             )}
 
             {measures != null && measures.length === 0 &&
