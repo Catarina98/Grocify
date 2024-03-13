@@ -9,6 +9,7 @@ import ProductMeasureModal from '../../components/modals/Products/ProductMeasure
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 import BaseModal from '../../components/modals/BaseModal';
 import EmptyState from '../../components/EmptyState';
+import Alert from '../../components/Alert';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -22,6 +23,8 @@ import { PlaceholderConsts, ButtonConsts, ModalConsts, EntityConsts, GenericCons
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
 function ProductMeasures() {
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const [searchInput, setSearchInput] = useState('');
 
     const [measures, setMeasures] = useState(null);
@@ -38,7 +41,7 @@ function ProductMeasures() {
     const fetchData = async () => {
         try {
             const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
-            setMeasures([responseData]);
+            setMeasures(responseData);
         } catch (error) {
             console.log(error);
         }
@@ -101,9 +104,16 @@ function ProductMeasures() {
         openModal();
     };
 
+    const cleanErrorMessage = () => {
+        setErrorMessage(null);
+    }
+
     return (
         <Layout>
-            {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} measureToUpdate={selectedMeasure} />}
+            {errorMessage && <Alert message={errorMessage} onClose={cleanErrorMessage} />}
+
+            {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} measureToUpdate={selectedMeasure}
+                onError={(error) => setErrorMessage(error)}/>}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={() => closeMoreOptionsModal(true)}
                 onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductMeasure), method: () => editMeasure() }}
