@@ -37,26 +37,32 @@ function ShoppingListDetail({ shoppingList }) {
     };
 
     const getShoppingListProducts = async () => {
-        const productsQuantityResponse = await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'GET', null);
+        const listProductsResponse = await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'GET', null);
         
-        const sortedProducts = productsQuantityResponse.sort((a, b) => a.key.productSectionId - b.key.productSectionId);
-
-        const uniqueSectionsId = new Set();
-
-        sortedProducts.forEach(pair => uniqueSectionsId.add(pair.key.productSectionId));
+        const sortedProducts = listProductsResponse.sort((a, b) => a.product.productSectionId - b.product.productSectionId);
+        
+        const uniqueSectionsId = new Set(sortedProducts.map(product => product.product.productSectionId));
+        
         const sections = await getProductSections();
-
+        
         const uniqueSections = sections.filter(section => uniqueSectionsId.has(section.id));
-
+        
         setSections(uniqueSections);
         setProducts(sortedProducts);
-
     };
 
-    const addProductsToShoppingList = async () => {
-        //await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'PUT', null);
-        //await getShoppingListProducts();
-        //TODO
+    const addProductsToShoppingList = async (product, isToIncrement) => {
+        const q = 1;
+        const data = { quantity: q, productId: product.id };
+
+        try {
+            await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'PUT', data);
+        }
+        catch (error) {
+            const e = error.message;
+        }
+
+        await getShoppingListProducts();
     };
 
     const handleCheckboxChange = (productId) => {
@@ -89,8 +95,8 @@ function ShoppingListDetail({ shoppingList }) {
 
     const groupedProducts = {};
     products.forEach(pair => {
-        const product = pair.key;
-        const quantity = pair.value;
+        const product = pair.product;
+        const quantity = pair.quantity;
         const sectionId = product.productSectionId;
 
         if (!groupedProducts[sectionId]) {
@@ -131,7 +137,8 @@ function ShoppingListDetail({ shoppingList }) {
 
                             {measures !== null && measures.length > 0 && (
                                 <div className={styles.quantitySection} onClick={() => handleSelectedProduct(pair.product.id)} onBlur={() => setSelectedProduct(null)}>
-                                    <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}>
+                                    <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}
+                                        onClick={() => addProductsToShoppingList(pair.product, false)}>
                                         <ReactSVG className="react-svg" src={MinusIcon} />
                                     </div>
 
@@ -140,7 +147,8 @@ function ShoppingListDetail({ shoppingList }) {
                                         {pair.quantity + " " + measures.find(m => m.id === pair.product.productMeasureId).name}
                                     </div>
 
-                                    <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}>
+                                    <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}
+                                        onClick={() => addProductsToShoppingList(pair.product, true)}>
                                         <ReactSVG className="react-svg" src={PlusIcon} />
                                     </div>
                                 </div>
