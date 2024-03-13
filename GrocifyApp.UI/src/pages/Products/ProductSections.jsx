@@ -14,10 +14,8 @@ import Alert from '../../components/Alert';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
-import CrossIcon from '../../assets/cross-ic.svg';
 import ChevronIcon from '../../assets/chevron-ic.svg';
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
-import AlertCircleIcon from '../../assets/alert-circle.svg';
 import styles from './ProductSections.module.scss';
 
 //Consts
@@ -34,9 +32,9 @@ function ProductSections() {
     const [sections, setSections] = useState(null);
     const [selectedSection, setSelectedSection] = useState(null);
 
-    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isMoreOptionsOpen, setIsMoreOptionsOpen] = useState(false);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -176,7 +174,6 @@ function ProductSections() {
 
                     {ButtonConsts.NewSection}
                 </button> </>
-
             )}
 
             {sections != null && sections.length === 0 &&
