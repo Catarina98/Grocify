@@ -42,10 +42,22 @@ function ProductSections() {
 
     const { makeRequest } = useApiRequest();
 
+    const filterProductSectionsByName = async (sectionName) => {
+        setSearchInput(sectionName);
+
+        await getProductSections(sectionName);
+    };
+
+    const getProductSections = async (sectionName) => {
+        const filteredEntities = { Name: sectionName };
+
+        const sectionsResponse = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET', null, filteredEntities);
+        setSections(sectionsResponse);
+    };
+
     const fetchData = async () => {
         try {
-            const responseData = await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET');
-            setSections(responseData);
+            await getProductSections(searchInput);
         } catch (error) {
             console.log(error);
         }
@@ -135,7 +147,7 @@ function ProductSections() {
                 <Searchbar placeholder={PlaceholderConsts.SearchSections}
                     label={PlaceholderConsts.Search}
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)} />
+                    onChange={(e) => filterProductSectionsByName(e.target.value)} />
             </div>            
 
             {sections != null && sections.length > 0 && (<>
