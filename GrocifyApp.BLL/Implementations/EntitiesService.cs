@@ -86,7 +86,14 @@ namespace GrocifyApp.BLL.Implementations
         {
             if (await Validate(entity))
             {
-                await repository.Update(entity, saveChanges, token);
+                try
+                {
+                    await repository.Update(entity, saveChanges, token);
+                }
+                catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                {
+                    throw new SQLException(ex, entityName);
+                }
             }
         }
 

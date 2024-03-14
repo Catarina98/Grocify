@@ -11,7 +11,7 @@ import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../..
 import InputType from '../../../consts/InputType';
 import ApiEndpoints from '../../../consts/ApiEndpoints';
 
-const ProductMeasureModal = ({ onClose, onConfirm, measureToUpdate }) => {
+const ProductMeasureModal = ({ onClose, onConfirm, measureToUpdate, onError }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
 
     const [productMeasureName, setProductMeasureName] = useState(measureToUpdate != null ? measureToUpdate.name : '');
@@ -29,8 +29,13 @@ const ProductMeasureModal = ({ onClose, onConfirm, measureToUpdate }) => {
 
         const data = { name: productMeasureName };
 
-        await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'POST', data);
-
+        try {
+            await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'POST', data);
+        }
+        catch (error) {
+            onError(error.message);
+        }
+        
         onConfirm();
     };
 
@@ -38,7 +43,12 @@ const ProductMeasureModal = ({ onClose, onConfirm, measureToUpdate }) => {
 
         const data = { name: productMeasureName };
 
-        await makeRequest(ApiEndpoints.ProductMeasuresId_Endpoint(measureToUpdate.id), 'PUT', data);
+        try {
+            await makeRequest(ApiEndpoints.ProductMeasuresId_Endpoint(measureToUpdate.id), 'PUT', data);
+        }
+        catch (error) {
+            onError(error.message);
+        }
 
         onConfirm();
     };
@@ -61,7 +71,8 @@ const ProductMeasureModal = ({ onClose, onConfirm, measureToUpdate }) => {
 ProductMeasureModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     onConfirm: PropTypes.func,
-    measureToUpdate: PropTypes.object
+    measureToUpdate: PropTypes.object,
+    onError: PropTypes.func
 };
 
 export default ProductMeasureModal;
