@@ -38,10 +38,22 @@ function ProductMeasures() {
 
     const { makeRequest } = useApiRequest();
 
+    const filterProductMeasuresByName = async (measureName) => {
+        setSearchInput(measureName);
+
+        await getProductMeasures(measureName);
+    };
+
+    const getProductMeasures = async (measureName) => {
+        const filteredEntities = { Name: measureName };
+
+        const measuresResponse = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET', null, filteredEntities);
+        setMeasures(measuresResponse);
+    };
+
     const fetchData = async () => {
         try {
-            const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
-            setMeasures(responseData);
+            await getProductMeasures(searchInput);
         } catch (error) {
             console.log(error);
         }
@@ -131,7 +143,7 @@ function ProductMeasures() {
                 <Searchbar placeholder={PlaceholderConsts.SearchMeasures}
                     label={PlaceholderConsts.Search}
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)} />
+                    onChange={(e) => filterProductMeasuresByName(e.target.value)} />
             </div>
 
             {measures != null && measures.length > 0 && (
