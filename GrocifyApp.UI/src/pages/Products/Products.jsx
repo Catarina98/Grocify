@@ -9,6 +9,7 @@ import useApiRequest from '../../hooks/useApiRequests';
 import BaseModal from '../../components/modals/BaseModal';
 import ProductModal from '../../components/modals/Products/ProductModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
+import Alert from '../../components/Alert';
 import EmptyState from '../../components/EmptyState';
 
 //Assets & Css
@@ -24,6 +25,8 @@ import ApiEndpoints from '../../consts/ApiEndpoints';
 import styles from './Products.module.scss';
 
 function Products() {
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const [searchInput, setSearchInput] = useState('');
 
     const [sections, setSections] = useState([]);
@@ -131,9 +134,16 @@ function Products() {
         openModal();
     };
 
+    const cleanErrorMessage = () => {
+        setErrorMessage(null);
+    }
+
     return (
         <Layout>
-            {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} productSections={sections} productToUpdate={selectedProduct} />}
+            {errorMessage && <Alert message={errorMessage} onClose={cleanErrorMessage} />}
+
+            {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} productSections={sections}
+                productToUpdate={selectedProduct} onError={(error) => setErrorMessage(error)} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
                 onEdit={{ text: ModalConsts.EditEntity(EntityConsts.Product), method: () => editProduct() }}
