@@ -9,6 +9,7 @@ import useApiRequest from '../../hooks/useApiRequests';
 import BaseModal from '../../components/modals/BaseModal';
 import ProductModal from '../../components/modals/Products/ProductModal';
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
+import EmptyState from '../../components/EmptyState';
 
 //Assets & Css
 import DotsIcon from '../../assets/3-dots-ic.svg';
@@ -26,7 +27,7 @@ function Products() {
     const [searchInput, setSearchInput] = useState('');
 
     const [sections, setSections] = useState([]);
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState(null);
 
     const [selectedSection, setSelectedSection] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -119,10 +120,10 @@ function Products() {
 
         setIsMoreOptionsOpen(false);
     };
-        
+
     const onConfirmProduct = async (sectionId) => {
         setSelectedSection(sectionId);
-        await filterProductsBySection(sectionId);        
+        await filterProductsBySection(sectionId);
     };
 
     const editProduct = () => {
@@ -135,7 +136,7 @@ function Products() {
             {isModalOpen && <ProductModal onClose={closeModal} onConfirm={onConfirmProduct} productSections={sections} productToUpdate={selectedProduct} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={closeMoreOptionsModal}
-                onEdit={{text: ModalConsts.EditEntity(EntityConsts.Product), method: () => editProduct()}}
+                onEdit={{ text: ModalConsts.EditEntity(EntityConsts.Product), method: () => editProduct() }}
                 onDelete={{ text: ModalConsts.DeleteEntity(EntityConsts.Product), method: () => openDeleteModal() }} />}
 
             {selectedProduct != null && isModalDeleteOpen && (
@@ -165,27 +166,38 @@ function Products() {
                 ))}
             </div>
 
-            <div className={styles.containerProducts}>
-                {products.map(product => (
-                    <div className={styles.sectionRow} key={product.id}>
-                        <div className={styles.sectionInfo}>
-                            <div className="text text-ellipsis">{product.name}</div>
-                        </div>
+            {products != null && products.length > 0 && (
+                <>
+                    <div className={styles.containerProducts}>
+                        {products.map(product => (
+                            <div className={styles.sectionRow} key={product.id}>
+                                <div className={styles.sectionInfo}>
+                                    <div className="text text-ellipsis">{product.name}</div>
+                                </div>
 
-                        {product.houseId != null && (
-                            <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(product)}>
-                                <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                {product.houseId != null && (
+                                    <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(product)}>
+                                        <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                    </div>
+                                )}
                             </div>
-                        )}
+                        ))}
                     </div>
-                ))}
-            </div>
 
-            <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
-                <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+                    <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
+                        <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+                        {ButtonConsts.NewProduct}
+                    </button>
+                </>
+            )}
 
-                {ButtonConsts.NewProduct}
-            </button>
+            {products != null && products.length === 0 &&
+                <EmptyState entity={EntityConsts.Product} onCreate={() => openModal()} buttonText={ButtonConsts.NewProduct} />}
+
+            {products === null &&
+                <div className="loading bigger">
+                    <div className="loading-button bigger"></div>
+                </div>}
         </Layout>
     );
 }
