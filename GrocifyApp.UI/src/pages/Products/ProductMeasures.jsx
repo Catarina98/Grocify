@@ -9,6 +9,7 @@ import ProductMeasureModal from '../../components/modals/Products/ProductMeasure
 import MoreOptionsModal from '../../components/modals/MoreOptionsModal';
 import BaseModal from '../../components/modals/BaseModal';
 import EmptyState from '../../components/EmptyState';
+import Alert from '../../components/Alert';
 import useApiRequest from '../../hooks/useApiRequests';
 
 //Assets & Css
@@ -22,6 +23,8 @@ import { PlaceholderConsts, ButtonConsts, ModalConsts, EntityConsts, GenericCons
 import ApiEndpoints from '../../consts/ApiEndpoints';
 
 function ProductMeasures() {
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const [searchInput, setSearchInput] = useState('');
 
     const [measures, setMeasures] = useState(null);
@@ -35,10 +38,22 @@ function ProductMeasures() {
 
     const { makeRequest } = useApiRequest();
 
+    const filterProductMeasuresByName = async (measureName) => {
+        setSearchInput(measureName);
+
+        await getProductMeasures(measureName);
+    };
+
+    const getProductMeasures = async (measureName) => {
+        const filteredEntities = { Name: measureName };
+
+        const measuresResponse = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET', null, filteredEntities);
+        setMeasures(measuresResponse);
+    };
+
     const fetchData = async () => {
         try {
-            const responseData = await makeRequest(ApiEndpoints.ProductMeasures_Endpoint, 'GET');
-            setMeasures([responseData]);
+            await getProductMeasures(searchInput);
         } catch (error) {
             console.log(error);
         }
@@ -101,9 +116,16 @@ function ProductMeasures() {
         openModal();
     };
 
+    const cleanErrorMessage = () => {
+        setErrorMessage(null);
+    }
+
     return (
         <Layout>
-            {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} measureToUpdate={selectedMeasure} />}
+            {errorMessage && <Alert message={errorMessage} onClose={cleanErrorMessage} />}
+
+            {isModalOpen && <ProductMeasureModal onClose={closeModal} onConfirm={onConfirmMeasure} measureToUpdate={selectedMeasure}
+                onError={(error) => setErrorMessage(error)} />}
 
             {isMoreOptionsOpen && <MoreOptionsModal onClose={() => closeMoreOptionsModal(true)}
                 onEdit={{ text: ModalConsts.EditEntity(EntityConsts.ProductMeasure), method: () => editMeasure() }}
@@ -121,29 +143,31 @@ function ProductMeasures() {
                 <Searchbar placeholder={PlaceholderConsts.SearchMeasures}
                     label={PlaceholderConsts.Search}
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)} />
+                    onChange={(e) => filterProductMeasuresByName(e.target.value)} />
             </div>
 
-            {measures != null && measures.length > 0 && (<>
-                <div className={styles.containerMeasures}>
-                    {measures.map(measure => (
-                        <div className={styles.measureRow} key={measure.id}>
-                            <div className="text">{measure.name}</div>
+            {measures != null && measures.length > 0 && (
+                <>
+                    <div className={styles.containerMeasures}>
+                        {measures.map(measure => (
+                            <div className={styles.measureRow} key={measure.id}>
+                                <div className="text">{measure.name}</div>
 
-                            {measure.houseId != null && (
-                                <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(measure)}>
-                                    <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
+                                {measure.houseId != null && (
+                                    <div className="icon icon-options cursor-pointer" onClick={() => openMoreOptionsModal(measure)}>
+                                        <ReactSVG className="react-svg icon-color--n600" src={DotsIcon} />
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
 
-                <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
-                    <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
+                    <button className="primary-button btn--l btn-float" onClick={() => openModal()}>
+                        <ReactSVG className="react-svg icon-color--n100" src={PlusCircleIcon} />
 
-                    {ButtonConsts.NewMeasure}
-                </button> </>
+                        {ButtonConsts.NewMeasure}
+                    </button>
+                </>
             )}
 
             {measures != null && measures.length === 0 &&

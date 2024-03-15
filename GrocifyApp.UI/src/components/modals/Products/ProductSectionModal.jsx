@@ -48,7 +48,12 @@ const ProductSectionModal = ({ onClose, onConfirm, sectionToUpdate, onError }) =
 
         const data = { name: productSectionName, icon: productSectionIcon };
 
-        await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(sectionToUpdate.id), 'PUT', data);
+        try {
+            await makeRequest(ApiEndpoints.ProductSectionsId_Endpoint(sectionToUpdate.id), 'PUT', data);
+        }
+        catch (error) {
+            onError(error.message);
+        }
 
         onConfirm();
     };
