@@ -15,6 +15,7 @@ namespace GrocifyApp.BLL
             services.AddScoped<IShoppingListService, ShoppingListService>();
             services.AddScoped<IInventoryService, InventoryService>();
             services.AddScoped<IMealService, MealService>();
+            services.AddScoped<IProductService, ProductService>();
         }
     }
 }

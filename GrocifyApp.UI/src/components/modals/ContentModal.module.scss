@@ -12,3 +12,16 @@
         width: 22%;
     }
 }
+
+.containerModal, .list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 //Internal components
 import useApiRequest from '../../hooks/useApiRequests';
+import ShoppingListProductModal from '../../components/modals/ShoppingLists/ShoppingListProductModal';
 
 //Assets & Css
 import PlusCircleIcon from '../../assets/plus-circle-ic.svg';
@@ -25,7 +26,27 @@ function ShoppingListDetail({ shoppingList }) {
     const [selectedProduct, setSelectedProduct] = useState('');
     const [checkedProducts, setCheckedProducts] = useState([]);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddProductsModalOpen, setAddProductsIsModalOpen] = useState(false);
+
     const { makeRequest } = useApiRequest();
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        //setSelectedSection(null);
+        setIsModalOpen(false);
+    };
+
+    const openAddProductsModal = () => {
+        setAddProductsIsModalOpen(true);
+    };
+
+    const closeAddProductsModal = () => {
+        setAddProductsIsModalOpen(false);
+    };
 
     const getProductSections = async () => {
         return await makeRequest(ApiEndpoints.ProductSections_Endpoint, 'GET', null);
@@ -107,11 +128,13 @@ function ShoppingListDetail({ shoppingList }) {
 
     return (
         <div className={styles.containerList}>
-            <button className={"subtle-button btn--m " + styles.subtleButton} onClick={() => addProductsToShoppingList()}>
+            <button className={"subtle-button btn--m " + styles.subtleButton} onClick={() => openAddProductsModal()}>
                 <ReactSVG className={"react-svg icon-color--primary " + styles.subtleButton} src={PlusCircleIcon} />
 
                 {ButtonConsts.AddProduct}
             </button>
+                        
+            {isAddProductsModalOpen && <ShoppingListProductModal onClose={closeAddProductsModal} onConfirm={addProductsToShoppingList} />}
 
             {Object.entries(groupedProducts).map(([sectionId, sectionProducts]) => (
                 <div key={sectionId} className={styles.productsList}>
