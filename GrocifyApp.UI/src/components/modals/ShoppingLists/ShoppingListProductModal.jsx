@@ -9,6 +9,7 @@ import useApiRequest from '../../../hooks/useApiRequests';
 
 //Assets & Css
 import PlusCircleIcon from '../../../assets/plus-circle-ic.svg';
+import MinusCircleIcon from '../../../assets/minus-circle-ic.svg';
 import styles from '../ContentModal.module.scss';
 
 //Consts
@@ -16,22 +17,21 @@ import { PlaceholderConsts, ButtonConsts, ModalConsts } from '../../../consts/EN
 import InputType from '../../../consts/InputType';
 import ApiEndpoints from '../../../consts/ApiEndpoints';
 
-const ShoppingListProductModal = ({ onClose, onConfirm, onError }) => {
+const ShoppingListProductModal = ({ onClose, onConfirm, onError, shoppingListProducts }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
 
     const [searchInput, setSearchInput] = useState('');
 
     const [products, setProducts] = useState([]);
-    const [productsSelected, setProductsSelected] = useState(null);
+    const [productsSelected, setProductsSelected] = useState(shoppingListProducts);
 
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
-        setButtonDisabled(productsSelected === null || !productsSelected.Any());
+        setButtonDisabled(productsSelected === shoppingListProducts);
     }, [productsSelected]);
 
     const addProductToList = async (addProductId) => {
-
         const data = { quantity: 1, productId: addProductId };
 
         try {
@@ -69,6 +69,14 @@ const ShoppingListProductModal = ({ onClose, onConfirm, onError }) => {
         fetchData();
     }, []);
 
+    const toggleProductSelection = (newProduct) => {
+        if (productsSelected.includes(newProduct)) {
+            setProductsSelected(prevProducts => prevProducts.filter(p => p !== newProduct));
+        } else {
+            setProductsSelected(prevProducts => [...prevProducts, newProduct]);
+        }
+    };
+
     return (
         <BaseModal isOpen={true} onClose={onClose} onConfirm={addProductToList} isButtonDisabled={isButtonDisabled}
             buttonText={ButtonConsts.Save} hasSearchbar={true}
@@ -82,8 +90,9 @@ const ShoppingListProductModal = ({ onClose, onConfirm, onError }) => {
                     <div className={styles.list}>
                         {products.map(product => (
                             <div className={styles.row} key={product.id}>
-                                <div className="icon cursor-pointer">
-                                    <ReactSVG className="react-svg icon-color--primary" src={PlusCircleIcon} />
+                                <div className="icon cursor-pointer" onClick={() => toggleProductSelection(product)}>
+                                    <ReactSVG className={"react-svg " + (productsSelected.some(p => p.id === product.id) ? "icon-color--r300" : "icon-color--primary")}
+                                        src={productsSelected.some(p => p.id === product.id) ? MinusCircleIcon : PlusCircleIcon} />
                                 </div>
 
                                 <div className="text">
@@ -102,6 +111,7 @@ const ShoppingListProductModal = ({ onClose, onConfirm, onError }) => {
 
 ShoppingListProductModal.propTypes = {
     onClose: PropTypes.func.isRequired,
+    shoppingListProducts: PropTypes.array.isRequired,
     onConfirm: PropTypes.func,
     onError: PropTypes.func
 };

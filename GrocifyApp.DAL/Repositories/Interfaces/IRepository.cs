@@ -15,6 +15,8 @@ namespace GrocifyApp.DAL.Repositories.Interfaces
         Task<List<T>> GetWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null);
         Task<List<T>> GetWhereInclude<TInclude>(Expression<Func<T, bool>> filter,
             Expression<Func<T, TInclude>> include, CancellationTokenSource? token = null);
+        Task<List<T>> GetWhereIncludeThenInclude<TInclude, TThenInclude>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TInclude>> include, Expression<Func<TInclude, TThenInclude>> thenInclude, CancellationTokenSource? token = null);
         Task<List<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
             Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null);
         Task<bool> AnyWhere(Expression<Func<T, bool>> filter, CancellationTokenSource? token = null);

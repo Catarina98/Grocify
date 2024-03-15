@@ -35,8 +35,8 @@ namespace GrocifyApp.BLL.Implementations
         
         public async Task<List<ShoppingListProduct>> GetProductsFromShoppingList(Guid shoppingListId)
         {
-            var shoppingListProducts = await _shoppingListProductRepository.GetWhereInclude<Product>(productList =>
-                productList.ShoppingListId == shoppingListId, productList => productList.Product!);
+            var shoppingListProducts = await _shoppingListProductRepository.GetWhereIncludeThenInclude<Product, ProductSection>(productList =>
+                productList.ShoppingListId == shoppingListId, productList => productList.Product!, product => product.ProductSection!);
 
             if (shoppingListProducts == null || shoppingListProducts.Count == 0)
             {
