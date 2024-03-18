@@ -17,7 +17,7 @@ import { PlaceholderConsts, ButtonConsts, ModalConsts } from '../../../consts/EN
 import InputType from '../../../consts/InputType';
 import ApiEndpoints from '../../../consts/ApiEndpoints';
 
-const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, productsArray }) => {
+const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, productsArray, onConfirm }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
 
     const [searchInput, setSearchInput] = useState('');
@@ -30,20 +30,7 @@ const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, prod
     useEffect(() => {
         setButtonDisabled(productsSelected === productsArray);
     }, [productsSelected]);
-
-    const addProductToList = async (product, quantity) => {
-        const q = quantity === null ? 1 : -quantity;
-
-        const data = { quantity: q, productId: product.id };
-
-        try {
-            await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingListProducts[0].shoppingListId), 'PUT', data);
-        }
-        catch (error) {
-            onError(error.message);
-        }
-    };
-
+    
     const filterProductsByName = async (productName) => {
         setSearchInput(productName);
 
@@ -70,11 +57,12 @@ const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, prod
     }, []);
 
     const toggleProductSelection = async (newProduct) => {
-        if (productsSelected.includes(newProduct.id)) {
-            setProductsSelected(prevProducts => prevProducts.filter(p => p !== newProduct));
+        if (productsSelected.some(product => product.id === newProduct.id)) {
+            const quantity = shoppingListProducts.find(p => p.productId === newProduct.id).quantity;
+            await onConfirm(newProduct, -quantity);
+            setProductsSelected(prevProducts => prevProducts.filter(p => p.id !== newProduct.id));
         } else {
-            await addProductToList(newProduct);
-
+            await onConfirm(newProduct, 1);
             setProductsSelected(prevProducts => [...prevProducts, newProduct]);
         }
     };
@@ -114,7 +102,8 @@ ShoppingListProductModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     shoppingListProducts: PropTypes.node.isRequired,
     productsArray: PropTypes.array.isRequired,
-    onError: PropTypes.func
+    onError: PropTypes.func,
+    onConfirm: PropTypes.func
 };
 
 export default ShoppingListProductModal;

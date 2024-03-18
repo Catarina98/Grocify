@@ -82,10 +82,10 @@ function ShoppingListDetail({ shoppingList }) {
         setProducts(products);
     };
 
-    const addProductsToShoppingList = async (product, isToIncrement) => {
-        const q = isToIncrement ? 1 : -1;
+    const updateProductsToShoppingList = async (product, quantity) => {
+        //const q = isToIncrement ? 1 : -1;
         
-        const data = { quantity: q, productId: product.id };
+        const data = { quantity: quantity, productId: product.id };
 
         try {
             await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'PUT', data);
@@ -125,7 +125,8 @@ function ShoppingListDetail({ shoppingList }) {
                 {ButtonConsts.AddProduct}
             </button>
 
-            {isAddProductsModalOpen && <ShoppingListProductModal onClose={closeAddProductsModal} shoppingListProducts={list} productsArray={products} />}
+            {isAddProductsModalOpen && <ShoppingListProductModal onClose={closeAddProductsModal} shoppingListProducts={list} productsArray={products}
+                onConfirm={updateProductsToShoppingList} />}
 
             {Object.entries(groupedProducts).map(([sectionId, sectionProducts]) => (
                 <div key={sectionId} className={styles.productsList}>
@@ -152,7 +153,7 @@ function ShoppingListDetail({ shoppingList }) {
                             {measures !== null && measures.length > 0 && (
                                 <div className={styles.quantitySection} onClick={() => setSelectedProduct(pair.product.id)}>
                                     <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}
-                                        onClick={() => addProductsToShoppingList(pair.product, false)}>
+                                        onClick={() => updateProductsToShoppingList(pair.product, -1)}>
                                         <ReactSVG className="react-svg" src={MinusIcon} />
                                     </div>
 
@@ -162,7 +163,7 @@ function ShoppingListDetail({ shoppingList }) {
                                     </div>
 
                                     <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}
-                                        onClick={() => addProductsToShoppingList(pair.product, true)}>
+                                        onClick={() => updateProductsToShoppingList(pair.product, 1)}>
                                         <ReactSVG className="react-svg" src={PlusIcon} />
                                     </div>
                                 </div>
