@@ -17,31 +17,29 @@ import { PlaceholderConsts, ButtonConsts, ModalConsts } from '../../../consts/EN
 import InputType from '../../../consts/InputType';
 import ApiEndpoints from '../../../consts/ApiEndpoints';
 
-const ShoppingListProductModal = ({ onClose, onConfirm, onError, shoppingListProducts }) => {
+const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, productsArray }) => {
     const [isButtonDisabled, setButtonDisabled] = useState(true);
 
     const [searchInput, setSearchInput] = useState('');
 
     const [products, setProducts] = useState([]);
-    const [productsSelected, setProductsSelected] = useState(shoppingListProducts);
+    const [productsSelected, setProductsSelected] = useState(productsArray);
 
     const { makeRequest } = useApiRequest();
 
     useEffect(() => {
-        setButtonDisabled(productsSelected === shoppingListProducts);
+        setButtonDisabled(productsSelected === productsArray);
     }, [productsSelected]);
 
-    const addProductToList = async (addProductId) => {
-        const data = { quantity: 1, productId: addProductId };
+    const addProductToList = async (product) => {
+        const data = { quantity: 1, productId: product.id };
 
         try {
-            await makeRequest(ApiEndpoints.ShoppingList_Endpoint, 'POST', data);
+            await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingListProducts[0].shoppingListId), 'PUT', data);
         }
         catch (error) {
             onError(error.message);
         }
-
-        onConfirm();
     };
 
     const filterProductsByName = async (productName) => {
@@ -69,17 +67,18 @@ const ShoppingListProductModal = ({ onClose, onConfirm, onError, shoppingListPro
         fetchData();
     }, []);
 
-    const toggleProductSelection = (newProduct) => {
+    const toggleProductSelection = async (newProduct) => {
         if (productsSelected.includes(newProduct)) {
             setProductsSelected(prevProducts => prevProducts.filter(p => p !== newProduct));
         } else {
+            await addProductToList(newProduct);
+
             setProductsSelected(prevProducts => [...prevProducts, newProduct]);
         }
     };
 
     return (
-        <BaseModal isOpen={true} onClose={onClose} onConfirm={addProductToList} isButtonDisabled={isButtonDisabled}
-            buttonText={ButtonConsts.Save} hasSearchbar={true}
+        <BaseModal isOpen={true} onClose={onClose} isButtonDisabled={isButtonDisabled} buttonText={ButtonConsts.Save} noFooter={true}
             titleModal={ButtonConsts.AddProduct} modalBody={
                 <div className={styles.containerModal}>
                     <Searchbar placeholder={PlaceholderConsts.Search}
@@ -111,8 +110,8 @@ const ShoppingListProductModal = ({ onClose, onConfirm, onError, shoppingListPro
 
 ShoppingListProductModal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    shoppingListProducts: PropTypes.array.isRequired,
-    onConfirm: PropTypes.func,
+    shoppingListProducts: PropTypes.node.isRequired,
+    productsArray: PropTypes.array.isRequired,
     onError: PropTypes.func
 };
 

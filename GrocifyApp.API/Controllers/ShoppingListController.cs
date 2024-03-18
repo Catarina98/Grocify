@@ -40,22 +40,19 @@ namespace GrocifyApp.API.Controllers
         /// <response code="201">Products added successfully.</response>
         /// <response code="400">Unable to add products due to validation error.</response>
         [HttpPut("{id}/products")]
-        public async Task<ActionResult> AddProductsToShoppingList(Guid id, [FromBody] IEnumerable<ShoppingListProductRequestModel> shoppingListProductRequest)
+        public async Task<ActionResult> AddProductsToShoppingList(Guid id, [FromBody] ShoppingListProductRequestModel shoppingListProductRequest)
         {
             var shoppingListProducts = new Dictionary<Guid, ShoppingListProduct>();
 
-            foreach (var sLProduct in shoppingListProductRequest)
-            {
-                var e = _mapper.Map<ShoppingListProduct>(sLProduct);
+            var sLProduct = _mapper.Map<ShoppingListProduct>(shoppingListProductRequest);
 
-                e.ShoppingListId = id;
+            sLProduct.ShoppingListId = id;
 
-                shoppingListProducts.Add(e.ProductId, e);
-            }
+            shoppingListProducts.Add(sLProduct.ProductId, sLProduct);
 
             await _shoppingListService.AddProductsToShoppingList(id, shoppingListProducts);
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>

@@ -123,8 +123,7 @@ function ShoppingListDetail({ shoppingList }) {
                 {ButtonConsts.AddProduct}
             </button>
 
-            {isAddProductsModalOpen && <ShoppingListProductModal onClose={closeAddProductsModal} onConfirm={addProductsToShoppingList}
-                shoppingListProducts={products} />}
+            {isAddProductsModalOpen && <ShoppingListProductModal onClose={closeAddProductsModal} shoppingListProducts={list} productsArray={products} />}
 
             {Object.entries(groupedProducts).map(([sectionId, sectionProducts]) => (
                 <div key={sectionId} className={styles.productsList}>
