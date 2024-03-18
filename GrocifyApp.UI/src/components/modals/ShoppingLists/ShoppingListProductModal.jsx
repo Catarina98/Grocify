@@ -31,8 +31,10 @@ const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, prod
         setButtonDisabled(productsSelected === productsArray);
     }, [productsSelected]);
 
-    const addProductToList = async (product) => {
-        const data = { quantity: 1, productId: product.id };
+    const addProductToList = async (product, quantity) => {
+        const q = quantity === null ? 1 : -quantity;
+
+        const data = { quantity: q, productId: product.id };
 
         try {
             await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingListProducts[0].shoppingListId), 'PUT', data);
@@ -68,7 +70,7 @@ const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, prod
     }, []);
 
     const toggleProductSelection = async (newProduct) => {
-        if (productsSelected.includes(newProduct)) {
+        if (productsSelected.includes(newProduct.id)) {
             setProductsSelected(prevProducts => prevProducts.filter(p => p !== newProduct));
         } else {
             await addProductToList(newProduct);

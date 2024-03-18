@@ -83,12 +83,14 @@ function ShoppingListDetail({ shoppingList }) {
     };
 
     const addProductsToShoppingList = async (product, isToIncrement) => {
-        const q = 1;
+        const q = isToIncrement ? 1 : -1;
+        
         const data = { quantity: q, productId: product.id };
 
         try {
             await makeRequest(ApiEndpoints.ShoppingListProducts_Endpoint(shoppingList.id), 'PUT', data);
-            await getShoppingListProducts(); // Fetch products after adding
+
+            await getShoppingListProducts();
         }
         catch (error) {
             console.error(error);
@@ -103,7 +105,7 @@ function ShoppingListDetail({ shoppingList }) {
             setSelectedProduct(null);
         }
     };
-
+    
     const groupedProducts = {};
     list.forEach(pair => {
         const product = pair.product;
@@ -148,7 +150,7 @@ function ShoppingListDetail({ shoppingList }) {
                             </div>
 
                             {measures !== null && measures.length > 0 && (
-                                <div className={styles.quantitySection}>
+                                <div className={styles.quantitySection} onClick={() => setSelectedProduct(pair.product.id)}>
                                     <div className={"icon cursor-pointer " + (pair.product.id === selectedProduct ? '' : styles.displayNone)}
                                         onClick={() => addProductsToShoppingList(pair.product, false)}>
                                         <ReactSVG className="react-svg" src={MinusIcon} />

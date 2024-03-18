@@ -50,7 +50,7 @@ namespace GrocifyApp.API.Controllers
 
             shoppingListProducts.Add(sLProduct.ProductId, sLProduct);
 
-            await _shoppingListService.AddProductsToShoppingList(id, shoppingListProducts);
+            await _shoppingListService.UpdateProductsToShoppingList(id, shoppingListProducts);
 
             return NoContent();
         }
