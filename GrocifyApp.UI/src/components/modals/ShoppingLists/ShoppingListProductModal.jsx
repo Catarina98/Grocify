@@ -14,7 +14,6 @@ import styles from '../ContentModal.module.scss';
 
 //Consts
 import { PlaceholderConsts, ButtonConsts, ModalConsts } from '../../../consts/ENConsts';
-import InputType from '../../../consts/InputType';
 import ApiEndpoints from '../../../consts/ApiEndpoints';
 
 const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, productsArray, onConfirm }) => {
