@@ -24,6 +24,7 @@ const ButtonConsts = {
     NewProduct: "New product",
     NewList: "New shopping list",
     AddProduct: "Add product",
+    NewInventory: "New inventory",
 };
 
 const SettingsConsts = {
@@ -48,6 +49,7 @@ const PlaceholderConsts = {
     SearchMeasures: "Search for product measures...",
     SearchProducts: "Search for products...",
     SearchLists: "Search for shopping lists...",
+    SearchInventories: "Search for inventories...",
     AddSectionName: "Add section name",
     AddMeasureName: "Add measure name",
     AddProductName: "Add product name",
