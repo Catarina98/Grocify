@@ -8,7 +8,9 @@ const AppRoutes = {
     ProductMeaures: '/settings/product-measures',
     Products: '/settings/products',
 
-    ShoppingLists: '/shopping-lists'
+    ShoppingLists: '/shopping-lists',
+
+    Inventories: '/inventories'
 };
 
 export default AppRoutes;

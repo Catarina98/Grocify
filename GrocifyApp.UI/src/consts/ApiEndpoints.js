@@ -14,6 +14,8 @@ const ApiEndpoints = {
 
     ShoppingList_Endpoint: 'api/ShoppingList', 
     ShoppingListProducts_Endpoint: (shoppingListId) => `api/ShoppingList/${shoppingListId}/products`,
+
+    Inventory_Endpoint: 'api/Inventory',
     
     Filtered: '/filtered'
 };
