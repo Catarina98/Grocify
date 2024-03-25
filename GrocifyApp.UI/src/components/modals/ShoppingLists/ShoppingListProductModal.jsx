@@ -99,7 +99,7 @@ const ShoppingListProductModal = ({ onClose, onError, shoppingListProducts, prod
 
 ShoppingListProductModal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    shoppingListProducts: PropTypes.node.isRequired,
+    shoppingListProducts: PropTypes.array.isRequired,
     productsArray: PropTypes.array.isRequired,
     onError: PropTypes.func,
     onConfirm: PropTypes.func
