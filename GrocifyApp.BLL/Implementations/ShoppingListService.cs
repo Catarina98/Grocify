@@ -33,31 +33,17 @@ namespace GrocifyApp.BLL.Implementations
             return true;
         }
         
-        public async Task<Dictionary<Product, int>> GetProductsFromShoppingList(Guid shoppingListId)
+        public async Task<List<ShoppingListProduct>> GetProductsFromShoppingList(Guid shoppingListId)
         {
-            var products = await _shoppingListProductRepository.GetWhere<Product>(productList => 
-                productList.ShoppingListId == shoppingListId, productList => productList.Product!);
+            var shoppingListProducts = await _shoppingListProductRepository.GetWhereIncludeThenInclude<Product, ProductSection>(productList =>
+                productList.ShoppingListId == shoppingListId, productList => productList.Product!, product => product.ProductSection!);
 
-            if (products == null || products.Count == 0)
+            if (shoppingListProducts == null || shoppingListProducts.Count == 0)
             {
                 throw new NotFoundException(GenericConsts.Exceptions.NoProductsFoundInList);
             }
 
-            var productQuantities = new Dictionary<Product, int>();
-
-            foreach (var product in products)
-            {
-                if (productQuantities.ContainsKey(product))
-                {
-                    productQuantities[product]++;
-                }
-                else
-                {
-                    productQuantities.Add(product, 1);
-                }
-            }
-
-            return productQuantities;
+            return shoppingListProducts;
         }
 
         /// <summary>
@@ -67,16 +53,23 @@ namespace GrocifyApp.BLL.Implementations
         /// </summary>
         /// <param name="id">Shopping list Id</param>
         /// <param name="shoppingListProducts">Products to insert or update in the shopping list</param>
-        public async Task AddProductsToShoppingList(Guid id, Dictionary<Guid, ShoppingListProduct> shoppingListProducts, CancellationTokenSource? token = null)
+        public async Task UpdateProductsToShoppingList(Guid id, Dictionary<Guid, ShoppingListProduct> shoppingListProducts, CancellationTokenSource? token = null)
         {
             var entitiesToUpdate = await _shoppingListProductRepository.GetWhere(
                 x => x.ShoppingListId == id && shoppingListProducts.Keys.Contains(x.ProductId));
 
             foreach (var entity in entitiesToUpdate)
             {
-                entity.Quantity += shoppingListProducts[entity.ProductId].Quantity;
+                if(entity.Quantity + shoppingListProducts[entity.ProductId].Quantity == 0)
+                {
+                    await _shoppingListProductRepository.Delete(entity);
+                }
+                else
+                {
+                    entity.Quantity += shoppingListProducts[entity.ProductId].Quantity;
 
-                await _shoppingListProductRepository.Update(entity, false, token);
+                    await _shoppingListProductRepository.Update(entity, false, token);
+                }                
             }
 
             if (entitiesToUpdate.ToList().Count < shoppingListProducts.Count)

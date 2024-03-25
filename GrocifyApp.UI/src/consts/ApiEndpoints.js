@@ -11,6 +11,7 @@ const ApiEndpoints = {
     ProductMeasuresId_Endpoint: (productMeasureId) => `/api/ProductMeasure/${productMeasureId}`,
     Products_Endpoint: '/api/Product',
     ProductId_Endpoint: (productId) => `/api/Product/${productId}`,
+    ProductsWSections_Endpoint: '/api/Product/productswsections',
 
     ShoppingList_Endpoint: 'api/ShoppingList', 
     ShoppingListProducts_Endpoint: (shoppingListId) => `api/ShoppingList/${shoppingListId}/products`,

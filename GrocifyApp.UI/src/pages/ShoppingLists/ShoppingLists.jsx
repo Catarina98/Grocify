@@ -4,6 +4,7 @@ import { ReactSVG } from 'react-svg';
 //Internal components
 import Searchbar from '../../components/Searchbar';
 import Layout from '../../components/Layout/Layout';
+import ShoppingListModal from '../../components/modals/ShoppingLists/ShoppingListModal';
 import useApiRequest from '../../hooks/useApiRequests';
 import ShoppingListDetail from './ShoppingListDetail';
 
@@ -19,6 +20,8 @@ import styles from './ShoppingLists.module.scss';
 function ShoppingLists() {
     const [searchInput, setSearchInput] = useState('');
 
+    const [selectedList, setSelectedList] = useState(null);
+
     const [lists, setLists] = useState([]);
     const [listDetailId, setListDetailId] = useState('');
 
@@ -30,16 +33,16 @@ function ShoppingLists() {
         const listsResponse = await makeRequest(ApiEndpoints.ShoppingList_Endpoint, 'GET', null);
         setLists(listsResponse);
     };
+    
+    const fetchData = async () => {
+        try {
+            await getShoppingLists();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await getShoppingLists();
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
         fetchData();
     }, []);
 
@@ -48,13 +51,17 @@ function ShoppingLists() {
     };
 
     const closeModal = () => {
-        //setSelectedSection(null);
+        setSelectedList(null);
         setIsModalOpen(false);
+    };
+
+    const onConfirmList = async () => {
+        await fetchData();
     };
 
     return (
         <Layout>
-            {isModalOpen && <ProductSectionModal onClose={closeModal} onConfirm={onConfirmSection} sectionToUpdate={selectedSection} />}
+            {isModalOpen && <ShoppingListModal onClose={closeModal} onConfirm={onConfirmList} sectionToUpdate={selectedList} />}
 
             <Searchbar placeholder={PlaceholderConsts.SearchLists}
                 label={PlaceholderConsts.SearchLists}

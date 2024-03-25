@@ -8,7 +8,7 @@ import styles from './BaseModal.module.scss';
 //Consts
 import { ButtonConsts } from '../../consts/ENConsts';
 
-const BaseModal = ({ isOpen, onClose, titleModal, modalBody, onConfirm, isButtonDisabled, buttonText, noFooter, isConfirmModal }) => {
+const BaseModal = ({ isOpen, onClose, titleModal, modalBody, onConfirm, isButtonDisabled, buttonText, noFooter, isConfirmModal, hasSearchbar }) => {
     const toggleModal = () => {
         onClose(!isOpen);
     };
@@ -33,7 +33,7 @@ const BaseModal = ({ isOpen, onClose, titleModal, modalBody, onConfirm, isButton
                             </div>
                         </div>
                 
-                        {modalBody && (<div className={`${styles.modalContent} ${noFooter ? styles.noFooter : ''}`}>{modalBody}</div>)}
+                        {modalBody && (<div className={`${styles.modalContent} ${noFooter ? styles.noFooter : ''} ${hasSearchbar ? styles.hasSearchbar : ''}`}>{modalBody}</div>)}
 
                         {!noFooter && <div className={styles.modalFooter + " modal-footer"}>
                             <button className="secondary-button btn--m" onClick={toggleModal}>
@@ -61,7 +61,8 @@ BaseModal.propTypes = {
     isButtonDisabled: PropTypes.bool,
     buttonText: PropTypes.string,
     noFooter: PropTypes.bool,
-    isConfirmModal: PropTypes.bool
+    isConfirmModal: PropTypes.bool,
+    hasSearchbar: PropTypes.bool
 };
 
 export default BaseModal;

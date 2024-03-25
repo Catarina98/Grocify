@@ -7,7 +7,7 @@ import CustomInputApp from '../../CustomInputApp';
 import useApiRequest from '../../../hooks/useApiRequests';
 
 //Assets & Css
-import styles from './ShoppingListModal.module.scss';
+import styles from '../ContentModal.module.scss';
 
 //Consts
 import { PlaceholderConsts, LabelConsts, ButtonConsts, ModalConsts } from '../../../consts/ENConsts';

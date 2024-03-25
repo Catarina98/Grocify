@@ -83,6 +83,32 @@ namespace GrocifyApp.DAL.Repositories.Implementations
             return await ToListAsync(s, token);
         }
 
+        public async Task<List<T>> GetWhereInclude<TInclude>(Expression<Func<T, bool>> filter, 
+            Expression<Func<T, TInclude>> include, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            var s = entities.Where(filter).Include(include);
+
+            return await ToListAsync(s, token);
+        }
+
+        public async Task<List<T>> GetWhereIncludeThenInclude<TInclude, TThenInclude>(Expression<Func<T, bool>> filter,
+            Expression<Func<T, TInclude>> include, Expression<Func<TInclude, TThenInclude>> thenInclude, CancellationTokenSource? token = null)
+        {
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            var query = entities.Where(filter).Include(include).ThenInclude(thenInclude);
+
+            return await ToListAsync(query, token);
+        }
+
         public async Task<List<TSelector>> GetWhere<TSelector>(Expression<Func<T, bool>> filter,
             Expression<Func<T, TSelector>> selector, CancellationTokenSource? token = null)
         {

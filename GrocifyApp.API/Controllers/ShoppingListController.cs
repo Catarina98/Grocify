@@ -3,7 +3,6 @@ using GrocifyApp.API.Models.RequestModels;
 using GrocifyApp.API.Models.ResponseModels;
 using GrocifyApp.API.Services;
 using GrocifyApp.BLL.Interfaces;
-using GrocifyApp.DAL.Exceptions;
 using GrocifyApp.DAL.Filters;
 using GrocifyApp.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +26,11 @@ namespace GrocifyApp.API.Controllers
         /// <response code="404">ShoppingLits or products not found!</response>
         /// <response code="400">Unable to get products due to validation error.</response>
         [HttpGet("{id}/products")]
-        public async Task<ActionResult<IEnumerable<KeyValuePair<Product, int>>>> GetProductsFromShoppingList(Guid id)
+        public async Task<ActionResult<IEnumerable<ShoppingListProduct>>> GetProductsFromShoppingList(Guid id)
         {
-            var productsWithQuantities = await _shoppingListService.GetProductsFromShoppingList(id);
+            var shoppingListProducts = await _shoppingListService.GetProductsFromShoppingList(id);
 
-            var productList = productsWithQuantities.Select(kv => new KeyValuePair<Product, int>(kv.Key, kv.Value)).ToList();
-
-            return Ok(productList);
+            return Ok(shoppingListProducts);
         }
 
         /// <summary>
@@ -42,22 +39,19 @@ namespace GrocifyApp.API.Controllers
         /// <response code="201">Products added successfully.</response>
         /// <response code="400">Unable to add products due to validation error.</response>
         [HttpPut("{id}/products")]
-        public async Task<ActionResult> AddProductsToShoppingList(Guid id, [FromBody] IEnumerable<ShoppingListProductRequestModel> shoppingListProductRequest)
+        public async Task<ActionResult> AddProductsToShoppingList(Guid id, [FromBody] ShoppingListProductRequestModel shoppingListProductRequest)
         {
             var shoppingListProducts = new Dictionary<Guid, ShoppingListProduct>();
 
-            foreach (var sLProduct in shoppingListProductRequest)
-            {
-                var e = _mapper.Map<ShoppingListProduct>(sLProduct);
+            var sLProduct = _mapper.Map<ShoppingListProduct>(shoppingListProductRequest);
 
-                e.ShoppingListId = id;
+            sLProduct.ShoppingListId = id;
 
-                shoppingListProducts.Add(e.ProductId, e);
-            }
+            shoppingListProducts.Add(sLProduct.ProductId, sLProduct);
 
-            await _shoppingListService.AddProductsToShoppingList(id, shoppingListProducts);
+            await _shoppingListService.UpdateProductsToShoppingList(id, shoppingListProducts);
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>

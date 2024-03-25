@@ -24,6 +24,7 @@ const ButtonConsts = {
     NewProduct: "New product",
     NewList: "New shopping list",
     AddProduct: "Add product",
+    Save: "Save",
 };
 
 const SettingsConsts = {
@@ -111,6 +112,7 @@ const ModalConsts = {
     EditProductSection: (sectionName) => `Edit <span class="color--primary">${sectionName}</span> section`,
     EditProductMeasure: (measureName) => `Edit <span class="color--primary">${measureName}</span> measure`,
     EditProduct: (productName) => `Edit <span class="color--primary">${productName}</span> product`,
+    InSection: (sectionName) => `in ${sectionName}`,
 };
 
 const EmptyStateConsts = {

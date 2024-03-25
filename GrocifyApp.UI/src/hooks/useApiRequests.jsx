@@ -18,7 +18,7 @@ const useApiRequest = () => {
                 .join('&');
 
             const url = queryString ? `${endpoint}${ApiEndpoints.Filtered}?${queryString}` : endpoint;
-
+            
             const bodyJson = body != null ? JSON.stringify(body) : null;
 
             const response = await fetch(url, {
